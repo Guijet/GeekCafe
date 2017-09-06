@@ -13,6 +13,14 @@
 		460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */; };
 		460644C01F57801700BD08E5 /* SignUp1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644BF1F57801700BD08E5 /* SignUp1.swift */; };
 		460644C21F579A6500BD08E5 /* navController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644C11F579A6500BD08E5 /* navController.swift */; };
+		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
+		462CF6E01F604E6000326426 /* HomePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 462CF6DF1F604E6000326426 /* HomePage.storyboard */; };
+		462CF6E51F604E9F00326426 /* HomePage Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 462CF6E41F604E9F00326426 /* HomePage Assets.xcassets */; };
+		462CF6E81F604EC200326426 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6E71F604EC200326426 /* HomePage.swift */; };
+		462CF6EA1F604EE200326426 /* navControllerMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6E91F604EE200326426 /* navControllerMainPage.swift */; };
+		462CF6EC1F604EEF00326426 /* APIRequestHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EB1F604EEF00326426 /* APIRequestHomePage.swift */; };
+		462CF6EE1F604F2E00326426 /* UtilityHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6ED1F604F2E00326426 /* UtilityHomePage.swift */; };
+		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7891F5722700085181F /* AppDelegate.swift */; };
@@ -42,6 +50,7 @@
 		46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB881F5F56550008D3F7 /* SignUp3.swift */; };
 		46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB8A1F5F8C240008D3F7 /* SignUp5.swift */; };
 		46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB8C1F5F8C2F0008D3F7 /* SignUp4.swift */; };
+		AC5D0F6C1D81105667411EDB /* Pods_GeekCafe_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0ABDD82E2A5DA408EE72F /* Pods_GeekCafe_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,12 +71,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2213CA028F8C9D9BA52EE119 /* Pods-GeekCafe-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekCafe-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		4606448E1F573FE800BD08E5 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		460644901F57407000BD08E5 /* Login-SignUp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Login-SignUp.storyboard"; sourceTree = "<group>"; };
 		460644951F57410D00BD08E5 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImageLogin-SignUp.xcassets"; sourceTree = "<group>"; };
 		460644BF1F57801700BD08E5 /* SignUp1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp1.swift; sourceTree = "<group>"; };
 		460644C11F579A6500BD08E5 /* navController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navController.swift; sourceTree = "<group>"; };
+		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
+		462CF6DF1F604E6000326426 /* HomePage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomePage.storyboard; sourceTree = "<group>"; };
+		462CF6E41F604E9F00326426 /* HomePage Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "HomePage Assets.xcassets"; sourceTree = "<group>"; };
+		462CF6E71F604EC200326426 /* HomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
+		462CF6E91F604EE200326426 /* navControllerMainPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navControllerMainPage.swift; sourceTree = "<group>"; };
+		462CF6EB1F604EEF00326426 /* APIRequestHomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestHomePage.swift; sourceTree = "<group>"; };
+		462CF6ED1F604F2E00326426 /* UtilityHomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityHomePage.swift; sourceTree = "<group>"; };
+		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		46A8F7861F5722700085181F /* GeekCafe-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeekCafe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +121,9 @@
 		46D1DB881F5F56550008D3F7 /* SignUp3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp3.swift; sourceTree = "<group>"; };
 		46D1DB8A1F5F8C240008D3F7 /* SignUp5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp5.swift; sourceTree = "<group>"; };
 		46D1DB8C1F5F8C2F0008D3F7 /* SignUp4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp4.swift; sourceTree = "<group>"; };
+		46D1DB8E1F60324E0008D3F7 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		AEC664A6B8B1D2AB96919BE5 /* Pods-GeekCafe-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekCafe-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		D2D0ABDD82E2A5DA408EE72F /* Pods_GeekCafe_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeekCafe_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC5D0F6C1D81105667411EDB /* Pods_GeekCafe_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,12 +152,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B63DA113D10A839692D5884 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AEC664A6B8B1D2AB96919BE5 /* Pods-GeekCafe-iOS.debug.xcconfig */,
+				2213CA028F8C9D9BA52EE119 /* Pods-GeekCafe-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4606448A1F573F8900BD08E5 /* Flow Login-SignUp */ = {
 			isa = PBXGroup;
 			children = (
 				460644941F5740F400BD08E5 /* Utility */,
 				460644931F5740E800BD08E5 /* StoryBoard */,
-				460644921F5740D700BD08E5 /* Swift Files */,
+				462CF6DB1F604DD800326426 /* API Request Files */,
+				460644921F5740D700BD08E5 /* UI Swift Files */,
 			);
 			name = "Flow Login-SignUp";
 			sourceTree = "<group>";
@@ -153,7 +185,7 @@
 			name = "Main Files";
 			sourceTree = "<group>";
 		};
-		460644921F5740D700BD08E5 /* Swift Files */ = {
+		460644921F5740D700BD08E5 /* UI Swift Files */ = {
 			isa = PBXGroup;
 			children = (
 				4606448E1F573FE800BD08E5 /* LoginViewController.swift */,
@@ -163,7 +195,7 @@
 				46D1DB8C1F5F8C2F0008D3F7 /* SignUp4.swift */,
 				46D1DB8A1F5F8C240008D3F7 /* SignUp5.swift */,
 			);
-			name = "Swift Files";
+			name = "UI Swift Files";
 			sourceTree = "<group>";
 		};
 		460644931F5740E800BD08E5 /* StoryBoard */ = {
@@ -184,14 +216,71 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
+		462CF6DB1F604DD800326426 /* API Request Files */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6DC1F604E1500326426 /* APIRequestLogin.swift */,
+				462CF6EF1F60514B00326426 /* User.swift */,
+			);
+			name = "API Request Files";
+			sourceTree = "<group>";
+		};
+		462CF6DE1F604E3400326426 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6E61F604EAA00326426 /* StoryBoard */,
+				462CF6E31F604E7F00326426 /* Utility */,
+				462CF6E21F604E7000326426 /* API Request Files */,
+				462CF6E11F604E6500326426 /* UI Swift Files */,
+			);
+			name = HomePage;
+			sourceTree = "<group>";
+		};
+		462CF6E11F604E6500326426 /* UI Swift Files */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6E71F604EC200326426 /* HomePage.swift */,
+			);
+			name = "UI Swift Files";
+			sourceTree = "<group>";
+		};
+		462CF6E21F604E7000326426 /* API Request Files */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6EB1F604EEF00326426 /* APIRequestHomePage.swift */,
+			);
+			name = "API Request Files";
+			sourceTree = "<group>";
+		};
+		462CF6E31F604E7F00326426 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6E41F604E9F00326426 /* HomePage Assets.xcassets */,
+				462CF6E91F604EE200326426 /* navControllerMainPage.swift */,
+				462CF6ED1F604F2E00326426 /* UtilityHomePage.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		462CF6E61F604EAA00326426 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6DF1F604E6000326426 /* HomePage.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
 		46A8F77D1F5722700085181F = {
 			isa = PBXGroup;
 			children = (
+				46D1DB8E1F60324E0008D3F7 /* Bridging-Header.h */,
 				46D1DB871F5F52450008D3F7 /* Fonts */,
 				46A8F7881F5722700085181F /* GeekCafe-iOS */,
 				46A8F79D1F5722700085181F /* GeekCafe-iOSTests */,
 				46A8F7A81F5722700085181F /* GeekCafe-iOSUITests */,
 				46A8F7871F5722700085181F /* Products */,
+				0B63DA113D10A839692D5884 /* Pods */,
+				D56559EF11E624A126F43246 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,6 +297,7 @@
 		46A8F7881F5722700085181F /* GeekCafe-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				462CF6DE1F604E3400326426 /* HomePage */,
 				4606448B1F573F9800BD08E5 /* Main Files */,
 				4606448A1F573F8900BD08E5 /* Flow Login-SignUp */,
 			);
@@ -257,6 +347,14 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		D56559EF11E624A126F43246 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2D0ABDD82E2A5DA408EE72F /* Pods_GeekCafe_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -264,9 +362,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46A8F7AE1F5722700085181F /* Build configuration list for PBXNativeTarget "GeekCafe-iOS" */;
 			buildPhases = (
+				78C84EDB440A524F2488B3C9 /* [CP] Check Pods Manifest.lock */,
 				46A8F7821F5722700085181F /* Sources */,
 				46A8F7831F5722700085181F /* Frameworks */,
 				46A8F7841F5722700085181F /* Resources */,
+				4B373CB48A1DAEDE3463CDA9 /* [CP] Embed Pods Frameworks */,
+				B7F8D351AFEFF290CC235A97 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -375,6 +476,7 @@
 				46D1DB831F5F52340008D3F7 /* Lato-Semibold.ttf in Resources */,
 				46D1DB761F5F52340008D3F7 /* Lato-BlackItalic.ttf in Resources */,
 				46D1DB781F5F52340008D3F7 /* Lato-BoldItalic.ttf in Resources */,
+				462CF6E01F604E6000326426 /* HomePage.storyboard in Resources */,
 				460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */,
 				460644911F57407000BD08E5 /* Login-SignUp.storyboard in Resources */,
 				46D1DB7C1F5F52340008D3F7 /* Lato-HeavyItalic.ttf in Resources */,
@@ -383,6 +485,7 @@
 				46D1DB7A1F5F52340008D3F7 /* Lato-HairlineItalic.ttf in Resources */,
 				46D1DB7F1F5F52340008D3F7 /* Lato-LightItalic.ttf in Resources */,
 				46D1DB851F5F52340008D3F7 /* Lato-Thin.ttf in Resources */,
+				462CF6E51F604E9F00326426 /* HomePage Assets.xcassets in Resources */,
 				46D1DB801F5F52340008D3F7 /* Lato-Medium.ttf in Resources */,
 				46D1DB861F5F52340008D3F7 /* Lato-ThinItalic.ttf in Resources */,
 				46D1DB791F5F52340008D3F7 /* Lato-Hairline.ttf in Resources */,
@@ -409,17 +512,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B373CB48A1DAEDE3463CDA9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78C84EDB440A524F2488B3C9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B7F8D351AFEFF290CC235A97 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		46A8F7821F5722700085181F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
+				462CF6EC1F604EEF00326426 /* APIRequestHomePage.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
+				462CF6F01F60514B00326426 /* User.swift in Sources */,
+				462CF6EA1F604EE200326426 /* navControllerMainPage.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
+				462CF6E81F604EC200326426 /* HomePage.swift in Sources */,
+				462CF6EE1F604F2E00326426 /* UtilityHomePage.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
@@ -575,6 +732,7 @@
 		};
 		46A8F7AF1F5722700085181F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEC664A6B8B1D2AB96919BE5 /* Pods-GeekCafe-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
@@ -582,12 +740,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		46A8F7B01F5722700085181F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2213CA028F8C9D9BA52EE119 /* Pods-GeekCafe-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
@@ -595,6 +755,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -81,7 +81,7 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     }
     
     func nextPressed(sender:UIButton){
-        print("next page")
+        performSegue(withIdentifier: "toCardInformation", sender: nil)
     }
     
     //

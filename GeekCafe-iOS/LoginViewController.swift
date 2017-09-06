@@ -258,7 +258,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     }
     
     func connectButtonPressed(sender:UIButton){
-        print("Connect")
+        let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
     
     func createAccountPressed(sender:UIButton){
