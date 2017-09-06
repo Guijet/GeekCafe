@@ -21,6 +21,14 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     let nextButton = UIButton()
     var isKeyBoardActive:Bool = false
     
+    var firstName:String!
+    var lastName:String!
+    var sexe:String!
+    var birthdate:String!
+    var phone:String!
+    var email:String!
+    var password:String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         buildBackground()
@@ -80,9 +88,6 @@ class SignUp3: UIViewController,UITextFieldDelegate{
         self.view.endEditing(true)
     }
     
-    func nextPressed(sender:UIButton){
-        performSegue(withIdentifier: "toCardInformation", sender: nil)
-    }
     
     //
     //
@@ -155,6 +160,40 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    //
+    //
+    //
+    //EVENTS FOR NEXT PAGE
+    //
+    //
+    //
+    func nextPressed(sender:UIButton){
+        if(TB_Password.text! != "" && TB_Confirm.text! != ""){
+            if(TB_Confirm.text! != TB_Password.text!){
+                password = TB_Password.text!
+                performSegue(withIdentifier: "toCardInformation", sender: nil)
+            }
+            else{
+                Utility().alert(message: "Les mot de passe ne correspond pas", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toCardInformation"){
+            (segue.destination as! SignUp4).firstName = self.firstName
+            (segue.destination as! SignUp4).lastName = self.lastName
+            (segue.destination as! SignUp4).sexe = self.sexe
+            (segue.destination as! SignUp4).birthdate = self.birthdate
+            (segue.destination as! SignUp4).phone = self.phone
+            (segue.destination as! SignUp4).email = self.email
+            (segue.destination as! SignUp4).password = self.password
+        }
     }
 
 }

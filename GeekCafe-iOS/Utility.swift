@@ -428,10 +428,6 @@
         return UIImage()
     }
     
-    
-    
-    
-    
     func createOverTapListener(x: CGFloat,y: CGFloat, width: CGFloat,height: CGFloat,view: UIView,selector: Selector,withTag tag: Int) {
         let btn = UIButton()
         btn.frame = CGRect(x: x, y: y, width: width, height: height)
@@ -439,6 +435,69 @@
         btn.addTarget(self, action: selector, for: .touchUpInside)
         btn.tag = tag
         view.addSubview(btn)
+    }
+    
+    func getJson(url:String,method:String,body:String = "",needToken:Bool = false)->[String:Any]{
+        
+        var finish = false
+        var result: [String: Any]!
+        
+        DispatchQueue.global(qos:.background).async {
+            var request = URLRequest(url: URL(string: url)!)
+            request.httpMethod = method
+            
+            if(method == "POST") {
+                let postString = body
+                request.httpBody = postString.data(using: .utf8)
+            }
+            else if(method == "PUT"){
+                let putString = body
+                request.httpBody = putString.data(using: .utf8)
+            }
+            
+            if(needToken){
+                request.addValue("Bearer \(Global.global.userInfo.token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            let config = URLSessionConfiguration.default
+            config.httpMaximumConnectionsPerHost = 100
+            let session = URLSession(configuration: config)
+            let task = session.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                    print("error=\(String(describing: error))")
+                    finish = true
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, buxt is \(httpStatus.statusCode)")
+                    print("response = \(String(describing: response))")
+                    result = ["nil":"nil"]
+                }
+                do
+                {
+                    
+                    if let parsedData = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:Any]{
+                        result = parsedData
+                    } else {
+                        result = ["nil":"nil"]
+                    }
+                    
+                    finish = true
+                }
+                catch let error as NSError
+                {
+                    print(error)
+                    result = ["nil":"nil"]
+                    finish = true
+                }
+            }
+            task.resume()
+            session.finishTasksAndInvalidate()
+            
+        }
+        while(!finish) { usleep(300) }
+        return result
     }
     
  }

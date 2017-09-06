@@ -27,7 +27,21 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let nextButton = UIButton()
     
     var isKeyBoardActive:Bool = false
-
+    
+    var firstName:String!
+    var lastName:String!
+    var sexe:String!
+    var birthdate:String!
+    var phone:String!
+    var email:String!
+    var password:String!
+    
+    //Carte information
+    var last4:String!
+    var expYear:String!
+    var expMonth: String!
+    var brand: String!
+    var cardName:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,5 +123,25 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     func nextPressed(sender:UIButton){
         performSegue(withIdentifier: "toCardInfo", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toCardInfo"){
+            //User info
+            (segue.destination as! SignUp5).firstName = self.firstName
+            (segue.destination as! SignUp5).lastName = self.lastName
+            (segue.destination as! SignUp5).sexe = self.sexe
+            (segue.destination as! SignUp5).birthdate = self.birthdate
+            (segue.destination as! SignUp5).phone = self.phone
+            (segue.destination as! SignUp5).email = self.email
+            (segue.destination as! SignUp5).password = self.password
+            
+            //Card information
+            (segue.destination as! SignUp5).last4 = self.last4
+            (segue.destination as! SignUp5).expYear = self.expYear
+            (segue.destination as! SignUp5).expMonth = self.expMonth
+            (segue.destination as! SignUp5).brand = self.brand
+            (segue.destination as! SignUp5).cardName = self.cardName
+        }
     }
 }

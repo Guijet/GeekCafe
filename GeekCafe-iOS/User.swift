@@ -9,29 +9,33 @@
 import UIKit
 
 struct User{
-    init(firstname:String,lastname:String,email:String,sexe:String,birthdate:String,phone:String,card:userCard){
+    init(firstname:String,lastname:String,email:String,sexe:String,birthdate:String,phone:String,id:Int,image_url:String,token:String){
         self.firstname = firstname
         self.lastname = lastname
         self.birthdate = birthdate
         self.phone = phone
         self.email = email
         self.sexe = sexe
-        self.card = card
+        self.id = id
+        self.image_url = image_url
+        self.token = token
+        
     }
+    var id:Int
     var firstname:String
     var lastname:String
     var email:String
     var sexe:String
     var birthdate:String
     var phone:String
-    var card:userCard
+    var image_url:String
+    var token:String
+
 }
 
 struct userCard{
-    init(last4:String,validMonth:String,validYear:String,expMonth:String,expYear:String,brand:String,name:String){
+    init(last4:String,expMonth:String,expYear:String,brand:String,name:String){
         self.last4 = last4
-        self.validYear = validYear
-        self.validMonth = validMonth
         self.expMonth = expMonth
         self.expYear = expYear
         self.brand = brand
@@ -39,8 +43,6 @@ struct userCard{
     }
     
     var last4:String
-    var validMonth:String
-    var validYear:String
     var expMonth:String
     var expYear:String
     var brand:String

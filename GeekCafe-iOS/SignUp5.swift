@@ -28,6 +28,24 @@ class SignUp5: UIViewController {
     //Textview information
     let textView = UITextView()
     
+    
+    var user:User!
+    //user information
+    var firstName:String!
+    var lastName:String!
+    var sexe:String!
+    var birthdate:String!
+    var phone:String!
+    var email:String!
+    var password:String!
+    
+    //Carte information
+    var last4:String!
+    var expYear:String!
+    var expMonth: String!
+    var brand: String!
+    var cardName:String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
@@ -36,6 +54,7 @@ class SignUp5: UIViewController {
         setUpButton()
         loadUserInformation()
     }
+    
     
     //Set up image of green card
     func setUpCardImage(){
@@ -131,8 +150,15 @@ class SignUp5: UIViewController {
     }
     
     func nextPressed(sender:UIButton){
-        let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
-        let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
-        UIApplication.shared.keyWindow?.rootViewController = main
+        //Create Account and add Global Card and UserInfo
+        if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
+            let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+            let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }
+        else{
+            Utility().alert(message: "Impossible de créer le compte réessayer plus tard", title: "Erreur", control: self)
+        }
+        
     }
 }
