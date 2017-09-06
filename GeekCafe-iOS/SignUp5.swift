@@ -12,7 +12,7 @@ class SignUp5: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("TESST GITHUB")
         // Do any additional setup after loading the view.
     }
 
