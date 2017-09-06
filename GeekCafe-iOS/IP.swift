@@ -6,4 +6,9 @@
 //  Copyright © 2017 Guillaume Jette. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+final class Global{
+    static let global = Global()
+    var ip:String!
+}

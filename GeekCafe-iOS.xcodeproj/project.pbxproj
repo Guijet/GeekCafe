@@ -21,6 +21,7 @@
 		462CF6EC1F604EEF00326426 /* APIRequestHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EB1F604EEF00326426 /* APIRequestHomePage.swift */; };
 		462CF6EE1F604F2E00326426 /* UtilityHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6ED1F604F2E00326426 /* UtilityHomePage.swift */; };
 		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
+		462CF6F21F60546C00326426 /* IP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6F11F60546C00326426 /* IP.swift */; };
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7891F5722700085181F /* AppDelegate.swift */; };
@@ -86,6 +87,7 @@
 		462CF6EB1F604EEF00326426 /* APIRequestHomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestHomePage.swift; sourceTree = "<group>"; };
 		462CF6ED1F604F2E00326426 /* UtilityHomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityHomePage.swift; sourceTree = "<group>"; };
 		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		462CF6F11F60546C00326426 /* IP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IP.swift; sourceTree = "<group>"; };
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		46A8F7861F5722700085181F /* GeekCafe-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeekCafe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 				46A8F7901F5722700085181F /* Assets.xcassets */,
 				460644951F57410D00BD08E5 /* Utility.swift */,
 				46A8F7891F5722700085181F /* AppDelegate.swift */,
+				462CF6F11F60546C00326426 /* IP.swift */,
 				46A8F7951F5722700085181F /* Info.plist */,
 				46A8F7921F5722700085181F /* LaunchScreen.storyboard */,
 				46A8F78D1F5722700085181F /* Main.storyboard */,
@@ -571,6 +574,7 @@
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
 				462CF6EA1F604EE200326426 /* navControllerMainPage.swift in Sources */,
+				462CF6F21F60546C00326426 /* IP.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
