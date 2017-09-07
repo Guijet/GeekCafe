@@ -60,15 +60,24 @@ class APIRequestLogin{
         return worked
     }
     
+    func verifyEmail(email:String)->Bool{
+        var isOK:Bool = true
+        var json = Utility().getJson(url: "\(Global.global.ip!)verify", method: "POST",body: "email=\(email)")
+        if let _ = json["errors"] as? [String:Any]{
+            isOK = false
+        }
+        return isOK
+    }
+    
     func getGenderForRequest(gender:String)->String{
         if(gender == "Homme"){
-            return "male"
+            return "Male"
         }
         else if(gender == "Femme"){
-            return "female"
+            return "Female"
         }
         else if(gender == "Autre"){
-            return "other"
+            return "Other"
         }
         return ""
     }

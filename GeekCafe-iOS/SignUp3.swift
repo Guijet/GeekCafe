@@ -171,12 +171,12 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     //
     func nextPressed(sender:UIButton){
         if(TB_Password.text! != "" && TB_Confirm.text! != ""){
-            if(TB_Confirm.text! != TB_Password.text!){
+            if(TB_Confirm.text! == TB_Password.text!){
                 password = TB_Password.text!
                 performSegue(withIdentifier: "toCardInformation", sender: nil)
             }
             else{
-                Utility().alert(message: "Les mot de passe ne correspond pas", title: "Message", control: self)
+                Utility().alert(message: "Les mot de passe ne correspond pas à la confirmation", title: "Message", control: self)
             }
         }
         else{

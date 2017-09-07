@@ -61,6 +61,7 @@ class SignUp2: UIViewController,UITextFieldDelegate{
         for x in arrayTextField{
             x.delegate = self
             x.autocorrectionType = .no
+            x.autocapitalizationType = .none
             x.frame = CGRect(x: rw(57.5), y: yTo, width: rw(272), height: 34)
             x.placeholder = arrayPlaceholders[index]
             x.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(20.0))
@@ -159,9 +160,15 @@ class SignUp2: UIViewController,UITextFieldDelegate{
     //
     func nextPressed(sender:UIButton){
         if(TB_Email.text! != "" && TB_Telephone.text != ""){
-            phone = TB_Telephone.text!
-            email = TB_Email.text!
-            performSegue(withIdentifier: "toSignUp3", sender: nil)
+            if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){
+                phone = TB_Telephone.text!
+                email = TB_Email.text!
+                performSegue(withIdentifier: "toSignUp3", sender: nil)
+            }
+            else{
+                Utility().alert(message: "This email is already being used!", title: "Message", control: self)
+            }
+            
         }
         else{
             Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
