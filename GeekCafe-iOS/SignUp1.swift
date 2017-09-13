@@ -215,6 +215,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     //EVENT ON CLICK NEXT
     //
     func nextPressed(sender:UIButton){
+        endEditing()
         if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Sexe.text != "" && TB_Birth.text != ""){
             firstName = TB_Nom.text!
             lastName = TB_Prenom.text!

@@ -170,10 +170,17 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     //
     //
     func nextPressed(sender:UIButton){
+        endEditing()
         if(TB_Password.text! != "" && TB_Confirm.text! != ""){
             if(TB_Confirm.text! == TB_Password.text!){
-                password = TB_Password.text!
-                performSegue(withIdentifier: "toCardInformation", sender: nil)
+                if((TB_Password.text?.characters.count)! >= 7){
+                    password = TB_Password.text!
+                    performSegue(withIdentifier: "toCardInformation", sender: nil)
+                }
+                else{
+                    Utility().alert(message: "Le mot de passe doit contenir au moins 7 caractères.", title: "Message", control: self)
+                }
+                
             }
             else{
                 Utility().alert(message: "Les mot de passe ne correspond pas à la confirmation", title: "Message", control: self)

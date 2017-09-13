@@ -177,13 +177,9 @@
 		4606448B1F573F9800BD08E5 /* Main Files */ = {
 			isa = PBXGroup;
 			children = (
-				46A8F7901F5722700085181F /* Assets.xcassets */,
-				460644951F57410D00BD08E5 /* Utility.swift */,
-				46A8F7891F5722700085181F /* AppDelegate.swift */,
-				462CF6F11F60546C00326426 /* Global.swift */,
-				46A8F7951F5722700085181F /* Info.plist */,
-				46A8F7921F5722700085181F /* LaunchScreen.storyboard */,
-				46A8F78D1F5722700085181F /* Main.storyboard */,
+				46D25C931F69BE2E0033A634 /* InfoPlist_AppDelegate */,
+				46D25C921F69BE1F0033A634 /* StoryBoard */,
+				46D25C911F69BE100033A634 /* Utility */,
 			);
 			name = "Main Files";
 			sourceTree = "<group>";
@@ -303,6 +299,7 @@
 				462CF6DE1F604E3400326426 /* HomePage */,
 				4606448B1F573F9800BD08E5 /* Main Files */,
 				4606448A1F573F8900BD08E5 /* Flow Login-SignUp */,
+				46D25C8C1F69BDC10033A634 /* Dashboard */,
 			);
 			path = "GeekCafe-iOS";
 			sourceTree = "<group>";
@@ -348,6 +345,73 @@
 				46D1DB741F5F52340008D3F7 /* Lato-ThinItalic.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		46D25C8C1F69BDC10033A634 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				46D25C901F69BE000033A634 /* API Request Files */,
+				46D25C8F1F69BDF00033A634 /* UI Swift Files */,
+				46D25C8E1F69BDE70033A634 /* Storyboard */,
+				46D25C8D1F69BDE00033A634 /* Utility */,
+			);
+			name = Dashboard;
+			sourceTree = "<group>";
+		};
+		46D25C8D1F69BDE00033A634 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		46D25C8E1F69BDE70033A634 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		46D25C8F1F69BDF00033A634 /* UI Swift Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "UI Swift Files";
+			sourceTree = "<group>";
+		};
+		46D25C901F69BE000033A634 /* API Request Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "API Request Files";
+			sourceTree = "<group>";
+		};
+		46D25C911F69BE100033A634 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				462CF6F11F60546C00326426 /* Global.swift */,
+				460644951F57410D00BD08E5 /* Utility.swift */,
+				46A8F7901F5722700085181F /* Assets.xcassets */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		46D25C921F69BE1F0033A634 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				46A8F7921F5722700085181F /* LaunchScreen.storyboard */,
+				46A8F78D1F5722700085181F /* Main.storyboard */,
+			);
+			name = StoryBoard;
+			sourceTree = "<group>";
+		};
+		46D25C931F69BE2E0033A634 /* InfoPlist_AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				46A8F7891F5722700085181F /* AppDelegate.swift */,
+				46A8F7951F5722700085181F /* Info.plist */,
+			);
+			name = InfoPlist_AppDelegate;
 			sourceTree = "<group>";
 		};
 		D56559EF11E624A126F43246 /* Frameworks */ = {

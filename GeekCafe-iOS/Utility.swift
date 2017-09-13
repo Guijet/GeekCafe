@@ -462,7 +462,11 @@
             let config = URLSessionConfiguration.default
             config.httpMaximumConnectionsPerHost = 100
             let session = URLSession(configuration: config)
+            
             let task = session.dataTask(with: request) { data, response, error in
+                
+                let responseText: String = String(data: data!, encoding: String.Encoding.utf8)!
+                print(responseText)
                 guard let data = data, error == nil else {                                                 // check for fundamental networking error
                     print("error=\(String(describing: error))")
                     finish = true

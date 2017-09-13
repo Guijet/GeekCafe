@@ -14,20 +14,18 @@ import AVFoundation
 
 class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
 
-    var arrayPlaceholders = ["Numéro de carte crédit","Date d'expiration","CVC"]
-    let TB_CreditNumber = UITextField()
-    let TB_Exiraprion = UITextField()
-    let TB_CVC = UITextField()
-    var arrayTextField = [UITextField]()
-    
+    let contentViewIO = UIView()
     let cardIOView = CardIOView()
-    let cameraCardButton = UIButton()
     let backgroundImage = UIImageView()
-    let imageLogo = UIImageView()
+    let TB_CardNumber = UITextField()
+    let TB_Expiration = UITextField()
+    let TB_CardHolderName = UITextField()
+    let TB_CVC = UITextField()
     let nextButton = UIButton()
     
     var isKeyBoardActive:Bool = false
     
+    //User info
     var firstName:String!
     var lastName:String!
     var sexe:String!
@@ -47,82 +45,259 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         super.viewDidLoad()
         //Ask for camera usage
         buildBackground()
-        setUpTop()
-        setUpTextFields()
-        setUpButtonCamera()
+        buildTopCard()
         setUpButton()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        TB_CardNumber.becomeFirstResponder()
+    }
+    
     //Background image
     func buildBackground(){
-        let tapCancelEditing = UITapGestureRecognizer(target: self, action: #selector(endEditing))
-        view.addGestureRecognizer(tapCancelEditing)
         backgroundImage.setUpBackgroundImage(containerView: self.view)
     }
     
-    //Image Geek Cafe Top
-    func setUpTop(){
-        imageLogo.setUpImageLogoLogin(frame:CGRect(x: rw(135), y: rw(39), width: rw(105), height: rw(131)),containerView:self.view)
-    }
-    
-    //TextFields
-    func setUpTextFields(){
-        arrayTextField = [TB_CreditNumber,TB_Exiraprion,TB_CVC]
-        var index = 0
-        var yTo:CGFloat = rh(239)
+    func buildTopCard(){
+        let topCard = UIImageView()
+        topCard.frame = CGRect(x: rw(28), y: rh(76), width: rw(319), height: rh(172))
+        topCard.image = UIImage(named: "CardRectangle")
+        view.addSubview(topCard)
         
-        for x in arrayTextField{
-            x.delegate = self
-            x.frame = CGRect(x: rw(57.5), y: yTo, width: rw(272), height: 34)
-            x.placeholder = arrayPlaceholders[index]
-            x.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(20.0))
-            x.textAlignment = .center
-            x.autocorrectionType = .no
-            x.autocapitalizationType = .none
-            view.addSubview(x)
-            
-            let separator = UIView()
-            separator.backgroundColor = Utility().hexStringToUIColor(hex: "#DCDCDC")
-            separator.frame = CGRect(x: rw(57.5), y: x.frame.maxY + rh(7), width: rw(272), height: 1)
-            view.addSubview(separator)
-            yTo += rh(60)
-            index += 1
-        }
+        let labelCardNumber = UILabel()
+        labelCardNumber.frame = CGRect(x: rw(42), y: rh(112), width: rw(84), height: rh(11))
+        labelCardNumber.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        labelCardNumber.font = UIFont(name: "Lato-Bold", size: rw(9))
+        labelCardNumber.textAlignment = .left
+        labelCardNumber.text = "CARD NUMBER".uppercased()
+        view.addSubview(labelCardNumber)
+        
+        let cameraButton = UIButton()
+        cameraButton.frame = CGRect(x: rw(130), y: rh(105), width: rw(25), height: rw(25))
+        cameraButton.setImage(UIImage(named:"CameraButton"), for: .normal)
+        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 3, bottom: 4, right: 3)
+        cameraButton.addTarget(self, action: #selector(showCardIOView(sender:)), for: .touchUpInside)
+        view.addSubview(cameraButton)
+        
+        TB_CardNumber.delegate = self
+        TB_CardNumber.autocorrectionType = .no
+        TB_CardNumber.keyboardType = .numberPad
+        TB_CardNumber.frame = CGRect(x: rw(165), y: rh(108), width: rh(168), height: rh(17))
+        TB_CardNumber.textColor = Utility().hexStringToUIColor(hex: "#171616")
+        TB_CardNumber.placeholder = "Numéro de carte"
+        TB_CardNumber.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(14))
+        TB_CardNumber.font = UIFont(name: "Lato-Regular", size: rw(15))
+        TB_CardNumber.textAlignment = .right
+        view.addSubview(TB_CardNumber)
+        
+        Utility().createHR(x: rw(42), y: rh(132), width: rw(291), view: self.view, color: Utility().hexStringToUIColor(hex: "#EEEEEE"))
+        
+        
+        let expirationDate = UILabel()
+        expirationDate.frame = CGRect(x: rw(42), y: rh(162), width: rw(87), height: rh(11))
+        expirationDate.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        expirationDate.font = UIFont(name: "Lato-Bold", size: rw(9))
+        expirationDate.textAlignment = .left
+        expirationDate.text = "EXPIRATION DATE".uppercased()
+        view.addSubview(expirationDate)
+        
+        TB_Expiration.delegate = self
+        TB_Expiration.autocorrectionType = .no
+        TB_Expiration.keyboardType = .numberPad
+        TB_Expiration.frame = CGRect(x: rw(151), y: rh(157), width: rh(70), height: rh(17))
+        TB_Expiration.textColor = Utility().hexStringToUIColor(hex: "#171616")
+        TB_Expiration.font = UIFont(name: "Lato-Regular", size: rw(14))
+        TB_Expiration.placeholder = "Expiration"
+        TB_Expiration.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(14))
+        TB_Expiration.textAlignment = .right
+        view.addSubview(TB_Expiration)
+        
+        let labelCVC = UILabel()
+        labelCVC.frame = CGRect(x: rw(245), y: rh(162), width: rw(23), height: rh(17))
+        labelCVC.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        labelCVC.font = UIFont(name: "Lato-Bold", size: rw(9))
+        labelCVC.textAlignment = .left
+        labelCVC.text = "CVC".uppercased()
+        view.addSubview(labelCVC)
+        
+        TB_CVC.delegate = self
+        TB_CVC.autocorrectionType = .no
+        TB_CVC.keyboardType = .numberPad
+        TB_CVC.frame = CGRect(x: rw(297), y: rh(157), width: rh(36), height: rh(17))
+        TB_CVC.textColor = Utility().hexStringToUIColor(hex: "#171616")
+        TB_CVC.placeholder = "CVC"
+        TB_CVC.font = UIFont(name: "Lato-Regular", size: rw(14))
+        TB_CVC.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(12))
+        TB_CVC.textAlignment = .right
+        view.addSubview(TB_CVC)
+        
+        Utility().createHR(x: rw(42), y: rh(178), width: rw(180), view: self.view, color: Utility().hexStringToUIColor(hex: "#EEEEEE"))
+        
+        Utility().createHR(x: rw(245), y: rh(178), width: rw(88), view: self.view, color: Utility().hexStringToUIColor(hex: "#EEEEEE"))
+        
+        let labelCardHolder = UILabel()
+        labelCardHolder.frame = CGRect(x: rw(42), y: rh(208), width: rw(100), height: rh(11))
+        labelCardHolder.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        labelCardHolder.font = UIFont(name: "Lato-Bold", size: rw(9))
+        labelCardHolder.textAlignment = .left
+        labelCardHolder.text = "CARDHOLDER NAME".uppercased()
+        view.addSubview(labelCardHolder)
+        
+        TB_CardHolderName.delegate = self
+        TB_CardHolderName.autocorrectionType = .no
+        TB_CardHolderName.frame = CGRect(x: rw(153), y: rh(205), width: rh(180), height: rh(17))
+        TB_CardHolderName.textColor = Utility().hexStringToUIColor(hex: "#171616")
+        TB_CardHolderName.placeholder = "Card Holder Name"
+        TB_CardHolderName.font = UIFont(name: "Lato-Regular", size: rw(14))
+        TB_CardHolderName.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(12))
+        TB_CardHolderName.textAlignment = .right
+        view.addSubview(TB_CardHolderName)
+        
+        Utility().createHR(x: rw(42), y: rh(225), width: rw(291), view: self.view, color: Utility().hexStringToUIColor(hex: "#EEEEEE"))
+        
     }
-    
-    func setUpButtonCamera(){
-        cameraCardButton.frame = CGRect(x: rw(50), y: rh(420), width: view.frame.width - rw(100), height: rh(21))
-        cameraCardButton.setTitle("Créer un compte", for: .normal)
-        cameraCardButton.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
-        cameraCardButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(17))
-        cameraCardButton.addTarget(self, action: #selector(showCardIOCamera(sender:)), for: .touchUpInside)
-        view.addSubview(cameraCardButton)
-    }
+
     
     //Bottom Button
     func setUpButton(){
         
-        nextButton.createCreateButton(title: "Suivant", frame: CGRect(x: rw(88), y: rh(553), width: rw(200), height: rh(50)),fontSize:rw(20),containerView:self.view)
+        nextButton.createCreateButton(title: "Terminé", frame: CGRect(x: rw(88), y: rh(280), width: rw(200), height: rh(50)),fontSize:rw(20),containerView:self.view)
         nextButton.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         
+        let noCardButton = UIButton()
+        noCardButton.frame = CGRect(x: rw(104), y: rh(350), width: rw(168), height: rh(25))
+        noCardButton.setTitle("Pas de carte", for: .normal)
+        noCardButton.setTitleColor(Utility().hexStringToUIColor(hex: "#DCDCDC"), for: .normal)
+        noCardButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(20))
+        noCardButton.addTarget(self, action: #selector(nextNoCard(sender:)), for: .touchUpInside)
+        view.addSubview(noCardButton)
     }
+    
+    
+    
+    func cardIOView(_ cardIOView: CardIOView!, didScanCard cardInfo: CardIOCreditCardInfo!) {
+        TB_CardNumber.text = splitCardNumberWithSpace(number:cardInfo.cardNumber)
+        TB_Expiration.text = "\(cardInfo.expiryMonth) / \(cardInfo.expiryYear)"
+        TB_CardHolderName.text = cardInfo.cardholderName
+        removeViewIO()
+    }
+    
+    func showCardIOView(sender:UIButton){
+        endEditing()
+        self.navigationController?.navigationBar.isHidden = true
+        contentViewIO.frame = view.frame
+        contentViewIO.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        view.addSubview(contentViewIO)
+        
+        cardIOView.delegate = self
+        cardIOView.hideCardIOLogo = true
+        cardIOView.languageOrLocale = "fr"
+        
+        cardIOView.frame = CGRect(x: rw(30), y: (view.frame.height - rh(400))/2, width: view.frame.width - rw(60), height: rh(400))
+        contentViewIO.addSubview(cardIOView)
+        
+        let cancelButton = UIButton()
+        
+        cancelButton.frame = CGRect(x: cardIOView.frame.maxX - rw(20), y: cardIOView.frame.minY - rw(20), width: rw(40), height: rw(40))
+        cancelButton.setImage(UIImage(named:"close_IO"), for: .normal)
+        cancelButton.addTarget(self, action: #selector(removeViewIO), for: .touchUpInside)
+        contentViewIO.addSubview(cancelButton)
+        
+    }
+    
+    func removeViewIO(){
+        TB_CardNumber.becomeFirstResponder()
+        self.navigationController?.navigationBar.isHidden = false
+        contentViewIO.removeFromSuperview()
+    }
+    
+    
+    
+    
     
     func endEditing(){
         self.view.endEditing(true)
     }
-    func cardIOView(_ cardIOView: CardIOView!, didScanCard cardInfo: CardIOCreditCardInfo!) {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-    }
-    func showCardIOCamera(sender:UIButton){
-        //Camera
-        cardIOView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        cardIOView.delegate = self
-        self.view.addSubview(cardIOView)
+        let  char = string.cString(using: String.Encoding.utf8)!
+        let isBackSpace = strcmp(char, "\\b")
+        
+        if(textField == TB_Expiration){
+            let lenght = textField.text?.characters.count
+            if(lenght! == 2){
+                if (isBackSpace != -92) {
+                    TB_Expiration.text?.append("/")
+                }
+            }
+            if(lenght! > 4){
+                if (isBackSpace != -92) {
+                    return false
+                }
+            }
+        }
+        
+        if(textField == TB_CVC){
+            let lenght = textField.text?.characters.count
+            if(lenght! > 2){
+                if (isBackSpace != -92) {
+                    return false
+                }
+            }
+        }
+        
+        if(textField == TB_CardNumber){
+            let lenght = textField.text?.characters.count
+            if (isBackSpace != -92) {
+                if(lenght == 4 || lenght == 9 || lenght == 14){
+                    textField.text?.append(" ")
+                }
+            }
+            if(lenght! > 18){
+                if (isBackSpace != -92) {
+                    return false
+                }
+            }
+        }
 
+        return true
+    }
+
+    
+    func splitCardNumberWithSpace(number:String)->String{
+        var index:Int = 0
+        var splitNumber:String = ""
+        for x in number.characters{
+            splitNumber.append(x)
+            if(index == 3){
+                splitNumber.append(" ")
+                index = 0
+            }
+            else{
+                index += 1
+            }
+        }
+        return splitNumber
     }
     
     func nextPressed(sender:UIButton){
-        performSegue(withIdentifier: "toCardInfo", sender: nil)
+        if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
+            //METTRE LA CARTE QUAND CE SERA FAIT
+            performSegue(withIdentifier: "toCardInfo", sender: nil)
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
+        }
+    }
+    
+    func nextNoCard(sender:UIButton){
+        if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
+            let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+            let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
