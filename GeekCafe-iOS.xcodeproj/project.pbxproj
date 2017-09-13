@@ -51,6 +51,9 @@
 		46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB881F5F56550008D3F7 /* SignUp3.swift */; };
 		46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB8A1F5F8C240008D3F7 /* SignUp5.swift */; };
 		46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1DB8C1F5F8C2F0008D3F7 /* SignUp4.swift */; };
+		46D25C951F69CB110033A634 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D25C941F69CB110033A634 /* Dashboard.storyboard */; };
+		46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D25C961F69CC540033A634 /* DashBoardNavController.swift */; };
+		46D25C991F69CC610033A634 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D25C981F69CC610033A634 /* Dashboard.swift */; };
 		AC5D0F6C1D81105667411EDB /* Pods_GeekCafe_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0ABDD82E2A5DA408EE72F /* Pods_GeekCafe_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +127,9 @@
 		46D1DB8A1F5F8C240008D3F7 /* SignUp5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp5.swift; sourceTree = "<group>"; };
 		46D1DB8C1F5F8C2F0008D3F7 /* SignUp4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp4.swift; sourceTree = "<group>"; };
 		46D1DB8E1F60324E0008D3F7 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		46D25C941F69CB110033A634 /* Dashboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		46D25C961F69CC540033A634 /* DashBoardNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardNavController.swift; sourceTree = "<group>"; };
+		46D25C981F69CC610033A634 /* Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		AEC664A6B8B1D2AB96919BE5 /* Pods-GeekCafe-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekCafe-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D2D0ABDD82E2A5DA408EE72F /* Pods_GeekCafe_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeekCafe_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -350,10 +356,10 @@
 		46D25C8C1F69BDC10033A634 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				46D25C8D1F69BDE00033A634 /* Utility */,
 				46D25C901F69BE000033A634 /* API Request Files */,
 				46D25C8F1F69BDF00033A634 /* UI Swift Files */,
 				46D25C8E1F69BDE70033A634 /* Storyboard */,
-				46D25C8D1F69BDE00033A634 /* Utility */,
 			);
 			name = Dashboard;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 		46D25C8D1F69BDE00033A634 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				46D25C961F69CC540033A634 /* DashBoardNavController.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -368,6 +375,7 @@
 		46D25C8E1F69BDE70033A634 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				46D25C941F69CB110033A634 /* Dashboard.storyboard */,
 			);
 			name = Storyboard;
 			sourceTree = "<group>";
@@ -375,6 +383,7 @@
 		46D25C8F1F69BDF00033A634 /* UI Swift Files */ = {
 			isa = PBXGroup;
 			children = (
+				46D25C981F69CC610033A634 /* Dashboard.swift */,
 			);
 			name = "UI Swift Files";
 			sourceTree = "<group>";
@@ -552,6 +561,7 @@
 				46D1DB7A1F5F52340008D3F7 /* Lato-HairlineItalic.ttf in Resources */,
 				46D1DB7F1F5F52340008D3F7 /* Lato-LightItalic.ttf in Resources */,
 				46D1DB851F5F52340008D3F7 /* Lato-Thin.ttf in Resources */,
+				46D25C951F69CB110033A634 /* Dashboard.storyboard in Resources */,
 				462CF6E51F604E9F00326426 /* HomePage Assets.xcassets in Resources */,
 				46D1DB801F5F52340008D3F7 /* Lato-Medium.ttf in Resources */,
 				46D1DB861F5F52340008D3F7 /* Lato-ThinItalic.ttf in Resources */,
@@ -632,6 +642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */,
 				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				462CF6EC1F604EEF00326426 /* APIRequestHomePage.swift in Sources */,
@@ -640,6 +651,7 @@
 				462CF6EA1F604EE200326426 /* navControllerMainPage.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
+				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,

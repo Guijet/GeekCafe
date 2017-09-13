@@ -294,7 +294,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     func nextNoCard(sender:UIButton){
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
-            let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
             UIApplication.shared.keyWindow?.rootViewController = main
         }
