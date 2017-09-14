@@ -19,6 +19,13 @@ class SignUp2: UIViewController,UITextFieldDelegate{
     let nextButton = UIButton()
     var isKeyBoardActive:Bool = false
     
+    var firstName:String!
+    var lastName:String!
+    var sexe:String!
+    var birthdate:String!
+    var phone:String!
+    var email:String!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +61,7 @@ class SignUp2: UIViewController,UITextFieldDelegate{
         for x in arrayTextField{
             x.delegate = self
             x.autocorrectionType = .no
+            x.autocapitalizationType = .none
             x.frame = CGRect(x: rw(57.5), y: yTo, width: rw(272), height: 34)
             x.placeholder = arrayPlaceholders[index]
             x.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(20.0))
@@ -151,13 +159,32 @@ class SignUp2: UIViewController,UITextFieldDelegate{
     //EVENT ON CLICK NEXT
     //
     func nextPressed(sender:UIButton){
-        performSegue(withIdentifier: "toSignUp3", sender: nil)
+        endEditing()
+        if(TB_Email.text! != "" && TB_Telephone.text != ""){
+            if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){
+                phone = TB_Telephone.text!
+                email = TB_Email.text!
+                performSegue(withIdentifier: "toSignUp3", sender: nil)
+            }
+            else{
+                Utility().alert(message: "This email is already being used!", title: "Message", control: self)
+            }
+            
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toSignUp3"){
-            
+            (segue.destination as! SignUp3).firstName = self.firstName
+            (segue.destination as! SignUp3).lastName = self.lastName
+            (segue.destination as! SignUp3).sexe = self.sexe
+            (segue.destination as! SignUp3).birthdate = self.birthdate
+            (segue.destination as! SignUp3).phone = self.phone
+            (segue.destination as! SignUp3).email = self.email
         }
     }
-
 }
