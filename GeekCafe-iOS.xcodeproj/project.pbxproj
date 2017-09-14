@@ -13,6 +13,7 @@
 		460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */; };
 		460644C01F57801700BD08E5 /* SignUp1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644BF1F57801700BD08E5 /* SignUp1.swift */; };
 		460644C21F579A6500BD08E5 /* navController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644C11F579A6500BD08E5 /* navController.swift */; };
+		46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */; };
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6E01F604E6000326426 /* HomePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 462CF6DF1F604E6000326426 /* HomePage.storyboard */; };
 		462CF6E51F604E9F00326426 /* HomePage Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 462CF6E41F604E9F00326426 /* HomePage Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImageLogin-SignUp.xcassets"; sourceTree = "<group>"; };
 		460644BF1F57801700BD08E5 /* SignUp1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp1.swift; sourceTree = "<group>"; };
 		460644C11F579A6500BD08E5 /* navController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navController.swift; sourceTree = "<group>"; };
+		46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Dashboard.xcassets; sourceTree = "<group>"; };
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6DF1F604E6000326426 /* HomePage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomePage.storyboard; sourceTree = "<group>"; };
 		462CF6E41F604E9F00326426 /* HomePage Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "HomePage Assets.xcassets"; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				46D25C961F69CC540033A634 /* DashBoardNavController.swift */,
+				46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 			files = (
 				46D1DB7E1F5F52340008D3F7 /* Lato-Light.ttf in Resources */,
 				46D1DB7B1F5F52340008D3F7 /* Lato-Heavy.ttf in Resources */,
+				46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */,
 				46A8F7941F5722700085181F /* LaunchScreen.storyboard in Resources */,
 				46D1DB821F5F52340008D3F7 /* Lato-Regular.ttf in Resources */,
 				46A8F7911F5722700085181F /* Assets.xcassets in Resources */,
