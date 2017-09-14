@@ -257,8 +257,27 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         print("Facebook")
     }
     
+
+    //When the user connect to the app
     func connectButtonPressed(sender:UIButton){
-        print("Connect")
+        if(TB_Email.text! != "" && TB_Password.text! != ""){
+            if(APIRequestLogin().login(password: TB_Password.text!, email: TB_Email.text!)){
+                if(APIRequestLogin().viewUser()){
+                    let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }
+                else{
+                    Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
+                }
+            }
+            else{
+                Utility().alert(message: "Nom d'utilisateur ou mot de passe invalide", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
     }
     
     func createAccountPressed(sender:UIButton){

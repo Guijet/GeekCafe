@@ -20,6 +20,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     let TB_Sexe = UITextField()
     let TB_Birth = UITextField()
     
+    
     let nextButton = UIButton()
     var isKeyboardActive:Bool = false
     
@@ -27,6 +28,11 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     let pickerViewSexe = UIPickerView()
     let arraySexe:[String] = ["Homme","Femme","Autre"]
     
+    //Elements to pass
+    var firstName:String!
+    var lastName:String!
+    var sexe:String!
+    var birthdate:String!
     
     
     override func viewDidLoad() {
@@ -209,12 +215,26 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     //EVENT ON CLICK NEXT
     //
     func nextPressed(sender:UIButton){
-        performSegue(withIdentifier: "toSignUp2", sender: nil)
+        endEditing()
+        if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Sexe.text != "" && TB_Birth.text != ""){
+            firstName = TB_Nom.text!
+            lastName = TB_Prenom.text!
+            sexe = TB_Sexe.text!
+            birthdate = TB_Birth.text!
+            
+            performSegue(withIdentifier: "toSignUp2", sender: nil)
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toSignUp2"){
-            //Passer les infos ici
+            (segue.destination as! SignUp2).firstName = self.firstName
+            (segue.destination as! SignUp2).lastName = self.lastName
+            (segue.destination as! SignUp2).sexe = self.sexe
+            (segue.destination as! SignUp2).birthdate = self.birthdate
         }
     }
 
