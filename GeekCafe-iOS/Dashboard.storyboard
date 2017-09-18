@@ -13,7 +13,7 @@
         <scene sceneID="QP2-3S-5Qt">
             <objects>
                 <navigationController id="MWT-7t-GrI" customClass="DashBoardNavController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="ffv-6l-7Z1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ffv-6l-7Z1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -34,7 +34,7 @@
                         <viewControllerLayoutGuide type="bottom" id="f7c-Fb-6u2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ksf-Us-8Lp">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

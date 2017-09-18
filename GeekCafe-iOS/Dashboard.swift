@@ -12,40 +12,81 @@ class Dashboard:UIViewController{
     
     let cardView = UIView()
     let labelNbPoints = UILabel()
+    let menu = MenuClass()
+    let containerView = UIView()
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        menu.setUpMenu(view: self.view)
+        setUpContainerView()
         setUPTopCard()
+        setFakeNavBar()
         setUpMidPart()
     }
-    func setUpNavItems(){
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    func setUpContainerView(){
+        containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        containerView.backgroundColor = UIColor.white
+        view.addSubview(containerView)
+    }
+    
+    func setFakeNavBar(){
+    
+        let fakeBar = UIView()
+        fakeBar.backgroundColor = UIColor.white
+        fakeBar.layer.cornerRadius = 5
+        fakeBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
+        containerView.addSubview(fakeBar)
         
+        Utility().createHR(x: 0, y: fakeBar.frame.height - 1, width: view.frame.width, view: fakeBar, color: Utility().hexStringToUIColor(hex: "#DCDCDC"))
+        
+        let tilte = UILabel()
+        
+        
+        let geekIcon = UIButton(type: .system)
+        geekIcon.tintColor = Utility().hexStringToUIColor(hex: "#6CA743")
+        geekIcon.setImage(#imageLiteral(resourceName: "menuLeftImage"),for:.normal)
+        geekIcon.frame = CGRect(x: 18, y: fakeBar.frame.height/1.5 - 16, width: 28, height: 32)
+        fakeBar.addSubview(geekIcon)
+        
+        
+        let menuButton = UIButton(type: .system)
+        menuButton.frame = CGRect(x: view.frame.width - 40, y: fakeBar.frame.height/1.5 - 11, width: 22, height: 22)
+        menuButton.addTarget(self, action: #selector(triggerMenu), for: .touchUpInside)
+        menuButton.tintColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        menuButton.setImage(#imageLiteral(resourceName: "open_menu"),for:.normal)
+        menuButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 2, bottom: 4, right: 2)
+        fakeBar.addSubview(menuButton)
     }
     
     func setUPTopCard(){
         
-        cardView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(191))
+        cardView.frame = CGRect(x: 0, y: 64, width: view.frame.width, height: rh(191))
         cardView.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         cardView.makeShadow(x: 9, y: -10, blur: 38, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.5, spread: 0)
-        view.addSubview(cardView)
+        containerView.addSubview(cardView)
         
         let geekImg = UIImageView()
-        geekImg.frame = CGRect(x: rw(264), y: rh(34), width: rw(111), height: rh(157))
+        geekImg.frame = CGRect(x: rw(264), y: rh(98), width: rw(111), height: rh(157))
         geekImg.image = UIImage(named: "geek_dash")
-        view.addSubview(geekImg)
+        containerView.addSubview(geekImg)
         
         let bienVenueLabel = UILabel()
-        bienVenueLabel.frame = CGRect(x: rw(28), y: rh(73), width: rw(184), height: rh(21))
+        bienVenueLabel.frame = CGRect(x: rw(28), y: rh(137), width: rw(184), height: rh(21))
         bienVenueLabel.text = "Bienvenue au"
         bienVenueLabel.textColor = Utility().hexStringToUIColor(hex: "#CCCCCC")
         bienVenueLabel.font = UIFont(name: "Lato-Regular", size: rw(17))
         bienVenueLabel.textAlignment = .left
-        view.addSubview(bienVenueLabel)
+        containerView.addSubview(bienVenueLabel)
         
         let geekTitle = UIImageView()
-        geekTitle.frame = CGRect(x: rw(29), y: rh(93), width: rw(184), height: rh(31))
+        geekTitle.frame = CGRect(x: rw(29), y: rh(157), width: rw(184), height: rh(31))
         geekTitle.image = UIImage(named: "geektext_dash")
-        view.addSubview(geekTitle)
+        containerView.addSubview(geekTitle)
     }
     
     func setUpMidPart(){
@@ -55,7 +96,7 @@ class Dashboard:UIViewController{
         midLabel.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         midLabel.font = UIFont(name: "Lato-Regular", size: rw(18))
         midLabel.textAlignment = .left
-        view.addSubview(midLabel)
+        containerView.addSubview(midLabel)
         
         //BOUTON 1
         let firstButton = UIButton()
@@ -63,7 +104,7 @@ class Dashboard:UIViewController{
         firstButton.backgroundColor = UIColor.white
         firstButton.makeShadow(x: 2, y: 2, blur: 4, cornerRadius: 10, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.09, spread: 1)
         firstButton.addTarget(self, action: #selector(commanderPressed(sender:)), for: .touchUpInside)
-        view.addSubview(firstButton)
+        containerView.addSubview(firstButton)
         
         let firstButtonText = UILabel()
         firstButtonText.frame = CGRect(x: rw(29), y: (firstButton.frame.height/2) - rh(13), width: rw(281), height: rh(26))
@@ -85,7 +126,7 @@ class Dashboard:UIViewController{
         secondButton.backgroundColor = UIColor.white
         secondButton.makeShadow(x: 2, y: 2, blur: 4, cornerRadius: 10, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.09, spread: 1)
         secondButton.addTarget(self, action: #selector(abonnementPressed(sender:)), for: .touchUpInside)
-        view.addSubview(secondButton)
+        containerView.addSubview(secondButton)
         
         let secondButtonText = UILabel()
         secondButtonText.frame = CGRect(x: rw(29), y: (secondButton.frame.height/2) - rh(13), width: rw(281), height: rh(26))
@@ -107,7 +148,7 @@ class Dashboard:UIViewController{
         thirdButton.backgroundColor = UIColor.white
         thirdButton.makeShadow(x: 2, y: 2, blur: 4, cornerRadius: 10, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.09, spread: 1)
         thirdButton.addTarget(self, action: #selector(promotionPressed(sender:)), for: .touchUpInside)
-        view.addSubview(thirdButton)
+        containerView.addSubview(thirdButton)
         
         let thirdButtonText = UILabel()
         thirdButtonText.frame = CGRect(x: rw(29), y: (thirdButton.frame.height/2) - rh(13), width: rw(281), height: rh(26))
@@ -124,9 +165,9 @@ class Dashboard:UIViewController{
         thirdButton.addSubview(arrowImage3)
         
         let greenCard = UIImageView()
-        greenCard.frame = CGRect(x: rw(3), y: rh(522), width: rw(370), height: rh(70))
+        greenCard.frame = CGRect(x: rw(3), y: rh(586), width: rw(370), height: rh(70))
         greenCard.image = UIImage(named: "greenCard_dash")
-        view.addSubview(greenCard)
+        containerView.addSubview(greenCard)
         
         let labelAccumuler = UILabel()
         labelAccumuler.frame = CGRect(x: rw(24), y: (greenCard.frame.height/2) - rh(12), width: rw(178), height: rh(24))
@@ -153,6 +194,9 @@ class Dashboard:UIViewController{
         
     }
     
+    func triggerMenu(){
+        menu.triggerMenu(view: containerView, navController: self.navigationController!)
+    }
     
     func commanderPressed(sender:UIButton){
         print("Commande")

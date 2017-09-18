@@ -13,6 +13,8 @@
 		460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */; };
 		460644C01F57801700BD08E5 /* SignUp1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644BF1F57801700BD08E5 /* SignUp1.swift */; };
 		460644C21F579A6500BD08E5 /* navController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644C11F579A6500BD08E5 /* navController.swift */; };
+		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
+		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
 		46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */; };
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6E01F604E6000326426 /* HomePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 462CF6DF1F604E6000326426 /* HomePage.storyboard */; };
@@ -83,6 +85,8 @@
 		460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImageLogin-SignUp.xcassets"; sourceTree = "<group>"; };
 		460644BF1F57801700BD08E5 /* SignUp1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp1.swift; sourceTree = "<group>"; };
 		460644C11F579A6500BD08E5 /* navController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navController.swift; sourceTree = "<group>"; };
+		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
+		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
 		46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Dashboard.xcassets; sourceTree = "<group>"; };
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6DF1F604E6000326426 /* HomePage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomePage.storyboard; sourceTree = "<group>"; };
@@ -223,6 +227,31 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
+		460D5BC81F702AEB00245F27 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				460D5BCA1F702B3C00245F27 /* Utility */,
+				460D5BC91F702AFB00245F27 /* Swift Files */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		460D5BC91F702AFB00245F27 /* Swift Files */ = {
+			isa = PBXGroup;
+			children = (
+				460D5BCD1F702B8F00245F27 /* MenuClass.swift */,
+			);
+			name = "Swift Files";
+			sourceTree = "<group>";
+		};
+		460D5BCA1F702B3C00245F27 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				460D5BCB1F702B4600245F27 /* Menu.xcassets */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
 		462CF6DB1F604DD800326426 /* API Request Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +337,7 @@
 				4606448B1F573F9800BD08E5 /* Main Files */,
 				4606448A1F573F8900BD08E5 /* Flow Login-SignUp */,
 				46D25C8C1F69BDC10033A634 /* Dashboard */,
+				460D5BC81F702AEB00245F27 /* Menu */,
 			);
 			path = "GeekCafe-iOS";
 			sourceTree = "<group>";
@@ -561,6 +591,7 @@
 				460644911F57407000BD08E5 /* Login-SignUp.storyboard in Resources */,
 				46D1DB7C1F5F52340008D3F7 /* Lato-HeavyItalic.ttf in Resources */,
 				46D1DB811F5F52340008D3F7 /* Lato-MediumItalic.ttf in Resources */,
+				460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */,
 				46D1DB7D1F5F52340008D3F7 /* Lato-Italic.ttf in Resources */,
 				46D1DB7A1F5F52340008D3F7 /* Lato-HairlineItalic.ttf in Resources */,
 				46D1DB7F1F5F52340008D3F7 /* Lato-LightItalic.ttf in Resources */,
@@ -655,6 +686,7 @@
 				462CF6EA1F604EE200326426 /* navControllerMainPage.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
+				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
