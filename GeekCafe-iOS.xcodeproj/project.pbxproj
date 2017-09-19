@@ -36,6 +36,9 @@
 		4687853B1F7195A10009C292 /* PromotionsAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4687853A1F7195A10009C292 /* PromotionsAssets.xcassets */; };
 		4687853D1F7195AC0009C292 /* Promotions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687853C1F7195AC0009C292 /* Promotions.storyboard */; };
 		4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4687853E1F7195BA0009C292 /* PromotionMainPage.swift */; };
+		468785411F71A6F30009C292 /* HistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785401F71A6F30009C292 /* HistoryList.swift */; };
+		468785431F71B90C0009C292 /* InfoHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785421F71B90C0009C292 /* InfoHistory.swift */; };
+		468785451F71CF5C0009C292 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785441F71CF5C0009C292 /* Promotion.swift */; };
 		46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7891F5722700085181F /* AppDelegate.swift */; };
 		46A8F78F1F5722700085181F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F78D1F5722700085181F /* Main.storyboard */; };
 		46A8F7911F5722700085181F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F7901F5722700085181F /* Assets.xcassets */; };
@@ -117,6 +120,9 @@
 		4687853A1F7195A10009C292 /* PromotionsAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PromotionsAssets.xcassets; sourceTree = "<group>"; };
 		4687853C1F7195AC0009C292 /* Promotions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Promotions.storyboard; sourceTree = "<group>"; };
 		4687853E1F7195BA0009C292 /* PromotionMainPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromotionMainPage.swift; sourceTree = "<group>"; };
+		468785401F71A6F30009C292 /* HistoryList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryList.swift; sourceTree = "<group>"; };
+		468785421F71B90C0009C292 /* InfoHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHistory.swift; sourceTree = "<group>"; };
+		468785441F71CF5C0009C292 /* Promotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
 		46A8F7861F5722700085181F /* GeekCafe-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeekCafe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A8F7891F5722700085181F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46A8F78E1F5722700085181F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -294,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				468785101F7186BA0009C292 /* HistoriqueList.swift */,
+				468785421F71B90C0009C292 /* InfoHistory.swift */,
 			);
 			name = "Swift Files";
 			sourceTree = "<group>";
@@ -301,6 +308,7 @@
 		4687850B1F7186480009C292 /* API Request */ = {
 			isa = PBXGroup;
 			children = (
+				468785401F71A6F30009C292 /* HistoryList.swift */,
 			);
 			name = "API Request";
 			sourceTree = "<group>";
@@ -452,8 +460,8 @@
 			children = (
 				468785271F7194850009C292 /* Utility */,
 				468785261F7194800009C292 /* Storyboard */,
-				468785241F7194720009C292 /* UI Files */,
 				468785251F7194770009C292 /* Request Files */,
+				468785241F7194720009C292 /* UI Files */,
 			);
 			name = Promotions;
 			sourceTree = "<group>";
@@ -469,6 +477,7 @@
 		468785251F7194770009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				468785441F71CF5C0009C292 /* Promotion.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -878,6 +887,7 @@
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
+				468785411F71A6F30009C292 /* HistoryList.swift in Sources */,
 				468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
@@ -885,8 +895,10 @@
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
+				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
+				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,

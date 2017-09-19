@@ -156,11 +156,11 @@ class MenuClass{
         fakeBar.addSubview(menuButton)
         
         let title = UILabel()
-        title.frame = CGRect(x: (view.frame.width/2 - rw(100,view)), y: (menuButton.frame.midY) - rh(10,view), width: rw(200,view), height: rh(20,view))
+        title.frame = CGRect(x: (view.frame.width/2 - rw(100,view)), y: (menuButton.frame.midY) - rh(12,view), width: rw(200,view), height: rh(20,view))
         title.text = titleTop
         title.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         title.textAlignment = .center
-        title.font = UIFont(name: "Lato-Bold", size: rw(17,view))
+        title.font = UIFont(name: "Lato-Regular", size: rw(17,view))
         fakeBar.addSubview(title)
     }
     

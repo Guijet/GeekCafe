@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="W94-ES-OMa">
             <objects>
-                <navigationController storyboardIdentifier="CommmandeMainPage" id="TpS-A5-Wcy" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CommmandeMainPage" id="TpS-A5-Wcy" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HgP-6y-hTu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

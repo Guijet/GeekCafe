@@ -13,7 +13,7 @@
         <scene sceneID="QP2-3S-5Qt">
             <objects>
                 <navigationController storyboardIdentifier="DashMain" id="MWT-7t-GrI" customClass="DashBoardNavController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ffv-6l-7Z1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ffv-6l-7Z1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

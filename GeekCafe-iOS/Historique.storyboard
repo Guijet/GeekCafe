@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="5VA-R6-uJX">
             <objects>
-                <navigationController storyboardIdentifier="HistoriqueMainPage" id="KTc-py-Tdi" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HistoriqueMainPage" id="KTc-py-Tdi" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="9iJ-d3-URf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -39,10 +39,31 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="H86-CD-Xpl"/>
+                    <connections>
+                        <segue destination="TDi-SC-i2s" kind="show" identifier="toInfoHistory" id="APC-nn-3AC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C4L-39-Poi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-319" y="-165"/>
+        </scene>
+        <!--Info History-->
+        <scene sceneID="e2v-QL-ae4">
+            <objects>
+                <viewController id="TDi-SC-i2s" customClass="InfoHistory" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ktq-Jr-dvx"/>
+                        <viewControllerLayoutGuide type="bottom" id="OW0-I5-msb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eRD-yR-oxd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MtK-eQ-Iaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="522" y="-165"/>
         </scene>
     </scenes>
 </document>
