@@ -37,30 +37,35 @@ class Dashboard:UIViewController{
     func setFakeNavBar(){
     
         let fakeBar = UIView()
-        fakeBar.backgroundColor = UIColor.white
-        fakeBar.layer.cornerRadius = 5
         fakeBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
-        containerView.addSubview(fakeBar)
+        fakeBar.backgroundColor = UIColor.white
+        self.containerView.addSubview(fakeBar)
         
         Utility().createHR(x: 0, y: fakeBar.frame.height - 1, width: view.frame.width, view: fakeBar, color: Utility().hexStringToUIColor(hex: "#DCDCDC"))
-        
-        let tilte = UILabel()
-        
         
         let geekIcon = UIButton(type: .system)
         geekIcon.tintColor = Utility().hexStringToUIColor(hex: "#6CA743")
         geekIcon.setImage(#imageLiteral(resourceName: "menuLeftImage"),for:.normal)
-        geekIcon.frame = CGRect(x: 18, y: fakeBar.frame.height/1.5 - 16, width: 28, height: 32)
+        geekIcon.frame = CGRect(x: 18, y: fakeBar.frame.height/1.5 - 16, width: 22, height: 28)
         fakeBar.addSubview(geekIcon)
         
         
         let menuButton = UIButton(type: .system)
-        menuButton.frame = CGRect(x: view.frame.width - 40, y: fakeBar.frame.height/1.5 - 11, width: 22, height: 22)
+        menuButton.frame = CGRect(x: view.frame.width - 40, y: fakeBar.frame.height/1.5 - 17, width: 34, height: 34)
         menuButton.addTarget(self, action: #selector(triggerMenu), for: .touchUpInside)
         menuButton.tintColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         menuButton.setImage(#imageLiteral(resourceName: "open_menu"),for:.normal)
-        menuButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 2, bottom: 4, right: 2)
+        menuButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 8, bottom: 10, right: 8)
         fakeBar.addSubview(menuButton)
+        
+        let title = UILabel()
+        title.frame = CGRect(x: (view.frame.width/2 - rw(100)), y: (menuButton.frame.midY) - rh(10), width: rw(200), height: rh(20))
+        title.text = "Accueil"
+        title.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
+        title.textAlignment = .center
+        title.font = UIFont(name: "Lato-Bold", size: rw(17))
+        fakeBar.addSubview(title)
+        
     }
     
     func setUPTopCard(){
@@ -195,7 +200,7 @@ class Dashboard:UIViewController{
     }
     
     func triggerMenu(){
-        menu.triggerMenu(view: containerView, navController: self.navigationController!)
+        menu.triggerMenu(view: containerView)
     }
     
     func commanderPressed(sender:UIButton){
