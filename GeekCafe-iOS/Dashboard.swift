@@ -38,7 +38,7 @@ class Dashboard:UIViewController{
         
         cardView.frame = CGRect(x: 0, y: 64, width: view.frame.width, height: rh(191))
         cardView.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        cardView.makeShadow(x: 9, y: -10, blur: 38, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.5, spread: 0)
+        cardView.makeShadow(x: 9, y: -10, blur: 21, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.5, spread: 0)
         containerView.addSubview(cardView)
         
         let geekImg = UIImageView()

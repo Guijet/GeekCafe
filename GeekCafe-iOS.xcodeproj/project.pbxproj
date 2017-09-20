@@ -39,6 +39,7 @@
 		468785411F71A6F30009C292 /* HistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785401F71A6F30009C292 /* HistoryList.swift */; };
 		468785431F71B90C0009C292 /* InfoHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785421F71B90C0009C292 /* InfoHistory.swift */; };
 		468785451F71CF5C0009C292 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785441F71CF5C0009C292 /* Promotion.swift */; };
+		468785471F72AEEE0009C292 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785461F72AEEE0009C292 /* Item.swift */; };
 		46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7891F5722700085181F /* AppDelegate.swift */; };
 		46A8F78F1F5722700085181F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F78D1F5722700085181F /* Main.storyboard */; };
 		46A8F7911F5722700085181F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F7901F5722700085181F /* Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		468785401F71A6F30009C292 /* HistoryList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryList.swift; sourceTree = "<group>"; };
 		468785421F71B90C0009C292 /* InfoHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHistory.swift; sourceTree = "<group>"; };
 		468785441F71CF5C0009C292 /* Promotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
+		468785461F72AEEE0009C292 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		46A8F7861F5722700085181F /* GeekCafe-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeekCafe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A8F7891F5722700085181F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46A8F78E1F5722700085181F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				468785401F71A6F30009C292 /* HistoryList.swift */,
+				468785461F72AEEE0009C292 /* Item.swift */,
 			);
 			name = "API Request";
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				468785331F7195630009C292 /* AbonnementMainPage.swift in Sources */,
+				468785471F72AEEE0009C292 /* Item.swift in Sources */,
 				46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */,
 				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,

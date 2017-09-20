@@ -9,16 +9,18 @@
 import UIKit
 
 struct HistoryList{
-    init(date:String,country:String,city:String,amount:String,id:Int){
+    init(date:String,country:String,city:String,amount:String,id:Int,items:[Item]){
         self.date = date
         self.city = city
         self.country = country
         self.amount = amount
         self.id = id
+        self.items = items
     }
     var date:String
     var country:String
     var city:String
     var amount:String
     var id:Int
+    var items:[Item]
 }
