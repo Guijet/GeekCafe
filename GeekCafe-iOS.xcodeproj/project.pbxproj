@@ -125,6 +125,7 @@
 		468785421F71B90C0009C292 /* InfoHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHistory.swift; sourceTree = "<group>"; };
 		468785441F71CF5C0009C292 /* Promotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
 		468785461F72AEEE0009C292 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		4687854C1F72D8A60009C292 /* GeekCafe-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "GeekCafe-iOS.entitlements"; sourceTree = "<group>"; };
 		46A8F7861F5722700085181F /* GeekCafe-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeekCafe-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A8F7891F5722700085181F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46A8F78E1F5722700085181F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -528,6 +529,7 @@
 		46A8F7881F5722700085181F /* GeekCafe-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				4687854C1F72D8A60009C292 /* GeekCafe-iOS.entitlements */,
 				4606448B1F573F9800BD08E5 /* Main Files */,
 				4606448A1F573F8900BD08E5 /* Login-SignUp */,
 				46D25C8C1F69BDC10033A634 /* Dashboard */,
@@ -736,6 +738,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 6WYLQZ268S;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					46A8F7991F5722700085181F = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -1063,6 +1070,7 @@
 			baseConfigurationReference = AEC664A6B8B1D2AB96919BE5 /* Pods-GeekCafe-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1078,6 +1086,7 @@
 			baseConfigurationReference = 2213CA028F8C9D9BA52EE119 /* Pods-GeekCafe-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController,UITextFieldDelegate{
+class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButtonDelegate{
 
     //Controller variables
     let backgroundImage = UIImageView()
     let imageLogo = UIImageView()
     let TB_Email = UITextField()
     let TB_Password = UITextField()
-    let facebookButton = UIButton()
+    let facebookButton = FBSDKLoginButton()
     let createAccountButton = UIButton()
     let connectButton = UIButton()
     let separator = UIView()
@@ -109,13 +110,14 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     
     func setUpButton(){
         
+        facebookButton.delegate = self
         facebookButton.frame = CGRect(x: rw(56), y: rh(562), width: rw(262.5), height: rh(39))
-        facebookButton.backgroundColor = Utility().hexStringToUIColor(hex: "#3E549C")
-        facebookButton.layer.cornerRadius = rw(10)
-        facebookButton.setTitle("Se connecter avec Facebook", for: .normal)
-        facebookButton.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
-        facebookButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: rw(16))
-        facebookButton.addTarget(self, action: #selector(fbButtonPressed(sender:)), for: .touchUpInside)
+//        facebookButton.backgroundColor = Utility().hexStringToUIColor(hex: "#3E549C")
+//        facebookButton.layer.cornerRadius = rw(10)
+//        facebookButton.setTitle("Se connecter avec Facebook", for: .normal)
+//        facebookButton.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
+//        facebookButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: rw(16))
+//        facebookButton.addTarget(self, action: #selector(fbButtonPressed(sender:)), for: .touchUpInside)
         view.addSubview(facebookButton)
         
         connectButton.isHidden = true
@@ -282,6 +284,46 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     
     func createAccountPressed(sender:UIButton){
         performSegue(withIdentifier: "toCreateAccount", sender: nil)
+    }
+    
+    
+    
+    //
+    //
+    //
+    //FACEBOOK DELEGATE FUNCTION
+    //
+    //
+    //
+    func fetchProfile(){
+        
+        let parameters: [String: Any] = ["fields": "email,first_name,last_name,birthday"]
+        FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: { (connection, result, error) -> Void in
+            if ((error) != nil)
+            {
+                print("Error: \(String(describing: error))")
+            }
+            else{
+                //CREER LE COMPTE
+                print(String(describing: FBSDKAccessToken.current().tokenString!))
+            }
+        })
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("Logged Out")
+    }
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if error != nil{
+            print(error)
+            return
+        }
+        if result.isCancelled{
+            print("Cancelled")
+        }else{
+            fetchProfile()
+        }
     }
     
 }
