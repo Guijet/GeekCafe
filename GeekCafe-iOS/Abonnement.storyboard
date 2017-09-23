@@ -45,12 +45,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oLP-Kx-A9m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1026" y="-236"/>
+            <point key="canvasLocation" x="964" y="-236"/>
         </scene>
-        <!--View Controller-->
+        <!--List Abonnement-->
         <scene sceneID="cC1-fd-zZs">
             <objects>
-                <viewController id="fau-Ax-thG" sceneMemberID="viewController">
+                <viewController id="fau-Ax-thG" customClass="ListAbonnement" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O8W-fG-3Ud"/>
                         <viewControllerLayoutGuide type="bottom" id="1KE-MB-88z"/>
@@ -63,7 +63,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Zj-be-CZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1836" y="-236"/>
+            <point key="canvasLocation" x="1617" y="-236"/>
         </scene>
     </scenes>
 </document>
