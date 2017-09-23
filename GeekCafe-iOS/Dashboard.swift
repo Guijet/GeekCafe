@@ -166,15 +166,21 @@ class Dashboard:UIViewController{
     }
     
     func commanderPressed(sender:UIButton){
-        print("Commande")
+        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
     
     func abonnementPressed(sender:UIButton){
-        print("Abonnement")
+        let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
     
     func promotionPressed(sender:UIButton){
-        print("Promotion")
+        let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
 }
 

@@ -22,6 +22,7 @@
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
+		464012691F76E37D00E271B2 /* Abonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012681F76E37D00E271B2 /* Abonnement.swift */; };
 		4687850F1F7186740009C292 /* Historique.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687850E1F7186740009C292 /* Historique.storyboard */; };
 		468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785101F7186BA0009C292 /* HistoriqueList.swift */; };
 		468785131F7186C70009C292 /* Historique.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 468785121F7186C70009C292 /* Historique.xcassets */; };
@@ -108,6 +109,7 @@
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
+		464012681F76E37D00E271B2 /* Abonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abonnement.swift; sourceTree = "<group>"; };
 		4687850E1F7186740009C292 /* Historique.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Historique.storyboard; sourceTree = "<group>"; };
 		468785101F7186BA0009C292 /* HistoriqueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoriqueList.swift; sourceTree = "<group>"; };
 		468785121F7186C70009C292 /* Historique.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Historique.xcassets; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 		4687851C1F7194200009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				464012681F76E37D00E271B2 /* Abonnement.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -895,6 +898,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				468785331F7195630009C292 /* AbonnementMainPage.swift in Sources */,
+				464012691F76E37D00E271B2 /* Abonnement.swift in Sources */,
 				468785471F72AEEE0009C292 /* Item.swift in Sources */,
 				46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */,
 				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,

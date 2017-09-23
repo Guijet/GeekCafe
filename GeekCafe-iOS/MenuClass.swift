@@ -331,8 +331,6 @@ class MenuClass{
         view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.menuItemsContainer.frame.origin.x = self.xItemsAnimate
-            //self.shadowImagePale.frame.origin.x = self.xPaleShadow
-            //self.shadowImageHard.frame.origin.x = self.xHardShadow
         }, completion: { _ in
             view.isUserInteractionEnabled = true
         })
@@ -349,8 +347,6 @@ class MenuClass{
         view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.menuItemsContainer.frame.origin.x = self.xItemsAnimate + view.frame.width
-            //self.shadowImagePale.frame.origin.x = self.xPaleShadow + view.frame.width
-            //self.shadowImageHard.frame.origin.x = self.xHardShadow + view.frame.width
         }, completion: { _ in
             view.isUserInteractionEnabled = true
         })
