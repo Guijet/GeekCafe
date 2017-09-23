@@ -121,13 +121,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         view.addSubview(facebookButton)
         
         connectButton.isHidden = true
-        connectButton.frame = CGRect(x: rw(56), y: rh(562), width: rw(262.5), height: rh(39))
-        connectButton.backgroundColor = Utility().hexStringToUIColor(hex: "#6CA743")
-        connectButton.layer.cornerRadius = rw(10)
-        connectButton.setTitle("Se connecter", for: .normal)
-        connectButton.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
-        connectButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: rw(16))
-        connectButton.addTarget(self, action: #selector(connectButtonPressed(sender:)), for: .touchUpInside)
+        connectButton.createCreateButton(title: "Suivant", frame: CGRect(x: rw(87), y: rh(549), width: rw(202), height: rh(50)),fontSize:rw(20),containerView:self.view)
         view.addSubview(connectButton)
         
         createAccountButton.frame = CGRect(x: rw(56), y: rh(613), width: rw(262.5), height: rh(21))

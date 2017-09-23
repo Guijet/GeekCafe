@@ -97,7 +97,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     //Bottom Button
     func setUpButton(){
         
-        nextButton.createCreateButton(title: "Suivant", frame: CGRect(x: rw(88), y: rh(553), width: rw(200), height: rh(50)),fontSize:rw(20),containerView:self.view)
+        nextButton.createCreateButton(title: "Suivant", frame: CGRect(x: rw(87), y: rh(561), width: rw(202), height: rh(50)),fontSize:rw(20),containerView:self.view)
         nextButton.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         //view.addSubview(nextButton)
     }
