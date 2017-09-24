@@ -15,6 +15,12 @@
 		460644C21F579A6500BD08E5 /* navController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644C11F579A6500BD08E5 /* navController.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
+		461232971F77388100D04E30 /* ItemCommande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232961F77388100D04E30 /* ItemCommande.swift */; };
+		461232A51F782EFC00D04E30 /* FondueMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A41F782EFC00D04E30 /* FondueMain.swift */; };
+		461232A71F782F0400D04E30 /* CrepeMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A61F782F0400D04E30 /* CrepeMain.swift */; };
+		461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A81F782F0D00D04E30 /* PatisserieMain.swift */; };
+		461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AA1F782F1A00D04E30 /* BrevageMain.swift */; };
+		461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AE1F78310400D04E30 /* CartCommmande.swift */; };
 		46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */; };
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
@@ -102,6 +108,12 @@
 		460644C11F579A6500BD08E5 /* navController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navController.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
+		461232961F77388100D04E30 /* ItemCommande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCommande.swift; sourceTree = "<group>"; };
+		461232A41F782EFC00D04E30 /* FondueMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FondueMain.swift; sourceTree = "<group>"; };
+		461232A61F782F0400D04E30 /* CrepeMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrepeMain.swift; sourceTree = "<group>"; };
+		461232A81F782F0D00D04E30 /* PatisserieMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatisserieMain.swift; sourceTree = "<group>"; };
+		461232AA1F782F1A00D04E30 /* BrevageMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrevageMain.swift; sourceTree = "<group>"; };
+		461232AE1F78310400D04E30 /* CartCommmande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCommmande.swift; sourceTree = "<group>"; };
 		46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Dashboard.xcassets; sourceTree = "<group>"; };
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -283,6 +295,54 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
+		461232A01F782EB000D04E30 /* Breuvage */ = {
+			isa = PBXGroup;
+			children = (
+				461232AA1F782F1A00D04E30 /* BrevageMain.swift */,
+			);
+			name = Breuvage;
+			sourceTree = "<group>";
+		};
+		461232A11F782EC400D04E30 /* Patisserie */ = {
+			isa = PBXGroup;
+			children = (
+				461232A81F782F0D00D04E30 /* PatisserieMain.swift */,
+			);
+			name = Patisserie;
+			sourceTree = "<group>";
+		};
+		461232A21F782EC900D04E30 /* Crepe */ = {
+			isa = PBXGroup;
+			children = (
+				461232A61F782F0400D04E30 /* CrepeMain.swift */,
+			);
+			name = Crepe;
+			sourceTree = "<group>";
+		};
+		461232A31F782ED000D04E30 /* Fondue */ = {
+			isa = PBXGroup;
+			children = (
+				461232A41F782EFC00D04E30 /* FondueMain.swift */,
+			);
+			name = Fondue;
+			sourceTree = "<group>";
+		};
+		461232AC1F782F1F00D04E30 /* Main UI */ = {
+			isa = PBXGroup;
+			children = (
+				4687852C1F7195370009C292 /* CommandeMainPage.swift */,
+			);
+			name = "Main UI";
+			sourceTree = "<group>";
+		};
+		461232AD1F7830EE00D04E30 /* ListeCommande */ = {
+			isa = PBXGroup;
+			children = (
+				461232AE1F78310400D04E30 /* CartCommmande.swift */,
+			);
+			name = ListeCommande;
+			sourceTree = "<group>";
+		};
 		462CF6DB1F604DD800326426 /* API Request Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,10 +400,10 @@
 		468785141F71939E0009C292 /* Commandes */ = {
 			isa = PBXGroup;
 			children = (
-				468785171F7193D80009C292 /* Utility */,
 				468785181F7193DD0009C292 /* Storyboard */,
-				468785161F7193D10009C292 /* UI Files */,
+				468785171F7193D80009C292 /* Utility */,
 				468785151F7193C60009C292 /* Requests Files */,
+				468785161F7193D10009C292 /* UI Files */,
 			);
 			name = Commandes;
 			sourceTree = "<group>";
@@ -351,6 +411,7 @@
 		468785151F7193C60009C292 /* Requests Files */ = {
 			isa = PBXGroup;
 			children = (
+				461232961F77388100D04E30 /* ItemCommande.swift */,
 			);
 			name = "Requests Files";
 			sourceTree = "<group>";
@@ -358,7 +419,12 @@
 		468785161F7193D10009C292 /* UI Files */ = {
 			isa = PBXGroup;
 			children = (
-				4687852C1F7195370009C292 /* CommandeMainPage.swift */,
+				461232AC1F782F1F00D04E30 /* Main UI */,
+				461232AD1F7830EE00D04E30 /* ListeCommande */,
+				461232A31F782ED000D04E30 /* Fondue */,
+				461232A21F782EC900D04E30 /* Crepe */,
+				461232A11F782EC400D04E30 /* Patisserie */,
+				461232A01F782EB000D04E30 /* Breuvage */,
 			);
 			name = "UI Files";
 			sourceTree = "<group>";
@@ -897,10 +963,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461232A71F782F0400D04E30 /* CrepeMain.swift in Sources */,
 				468785331F7195630009C292 /* AbonnementMainPage.swift in Sources */,
 				464012691F76E37D00E271B2 /* Abonnement.swift in Sources */,
 				468785471F72AEEE0009C292 /* Item.swift in Sources */,
 				46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */,
+				461232971F77388100D04E30 /* ItemCommande.swift in Sources */,
 				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
@@ -908,17 +976,21 @@
 				468785411F71A6F30009C292 /* HistoryList.swift in Sources */,
 				468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
+				461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
 				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
+				461232A51F782EFC00D04E30 /* FondueMain.swift in Sources */,
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
+				461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
 				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,
+				461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */,
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,

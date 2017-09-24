@@ -15,7 +15,7 @@ extension UIButton{
         self.setBackgroundImage(UIImage(named:"BackgroundButton"), for: .normal)
         self.setTitle(title, for: .normal)
         self.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
-        self.titleLabel?.font = UIFont(name: "Lato-Regular", size: fontSize)
+        self.titleLabel?.font = UIFont(name: "Lato-Bold", size: fontSize)
         containerView.addSubview(self)
     }
 }
