@@ -29,6 +29,7 @@
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
 		464012691F76E37D00E271B2 /* Abonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012681F76E37D00E271B2 /* Abonnement.swift */; };
+		4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4664F1F31F79300F00908778 /* ChoosePatisserie.swift */; };
 		4687850F1F7186740009C292 /* Historique.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687850E1F7186740009C292 /* Historique.storyboard */; };
 		468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785101F7186BA0009C292 /* HistoriqueList.swift */; };
 		468785131F7186C70009C292 /* Historique.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 468785121F7186C70009C292 /* Historique.xcassets */; };
@@ -122,6 +123,7 @@
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
 		464012681F76E37D00E271B2 /* Abonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abonnement.swift; sourceTree = "<group>"; };
+		4664F1F31F79300F00908778 /* ChoosePatisserie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePatisserie.swift; sourceTree = "<group>"; };
 		4687850E1F7186740009C292 /* Historique.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Historique.storyboard; sourceTree = "<group>"; };
 		468785101F7186BA0009C292 /* HistoriqueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoriqueList.swift; sourceTree = "<group>"; };
 		468785121F7186C70009C292 /* Historique.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Historique.xcassets; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				461232A81F782F0D00D04E30 /* PatisserieMain.swift */,
+				4664F1F31F79300F00908778 /* ChoosePatisserie.swift */,
 			);
 			name = Patisserie;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
+				4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
 				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,

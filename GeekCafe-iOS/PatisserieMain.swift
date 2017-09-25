@@ -104,7 +104,7 @@ class PatisserieMain: UIViewController {
     }
     
     func patisseriePressed(sender:UIButton){
-        print(sender.tag)
+        performSegue(withIdentifier: "toChoosePatisserie", sender: nil)
     }
     
     func fillArrayPatisserie(){
