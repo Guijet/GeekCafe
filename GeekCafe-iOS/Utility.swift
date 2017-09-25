@@ -1085,6 +1085,35 @@
     }
  }
  
-
+ extension UILabel {
+    func addCharactersSpacing(spacing:CGFloat, text:String) {
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, text.characters.count))
+        self.attributedText = attributedString
+    }
+    
+    func createLabel(frame:CGRect,textColor:UIColor,fontName:String,fontSize:CGFloat,textAignment:NSTextAlignment,text:String){
+        self.frame = frame
+        self.textColor = textColor
+        self.font = UIFont(name:fontName, size: fontSize)
+        self.textAlignment = textAignment
+        self.text = text
+    }
+ }
  
+ 
+ extension UIView{
+    func setGradientBackground(color1:UIColor,color2:UIColor){
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.colors = [color1, color2]
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
+        self.layer.insertSublayer(gradient, at: 0)
+    }
+ }
+ 
+
 

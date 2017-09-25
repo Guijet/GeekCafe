@@ -194,6 +194,8 @@ class MenuClass{
     //
     @objc private func closeMenu(){
         if(isOpen){
+            self.closingSwipe.removeTarget(self, action: #selector(closeMenu))
+            self.viewToAnimate.isUserInteractionEnabled = false
             self.closingView.removeFromSuperview()
             self.closingView.removeFromSuperview()
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
@@ -203,6 +205,8 @@ class MenuClass{
             }, completion: {_ in
                 self.closingView.removeFromSuperview()
                 self.isOpen = false
+                self.viewToAnimate.isUserInteractionEnabled = true
+                self.closingSwipe.addTarget(self, action: #selector(self.closeMenu))
             })
         }
     }
@@ -327,8 +331,6 @@ class MenuClass{
         view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.menuItemsContainer.frame.origin.x = self.xItemsAnimate
-            //self.shadowImagePale.frame.origin.x = self.xPaleShadow
-            //self.shadowImageHard.frame.origin.x = self.xHardShadow
         }, completion: { _ in
             view.isUserInteractionEnabled = true
         })
@@ -345,8 +347,6 @@ class MenuClass{
         view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.menuItemsContainer.frame.origin.x = self.xItemsAnimate + view.frame.width
-            //self.shadowImagePale.frame.origin.x = self.xPaleShadow + view.frame.width
-            //self.shadowImageHard.frame.origin.x = self.xHardShadow + view.frame.width
         }, completion: { _ in
             view.isUserInteractionEnabled = true
         })

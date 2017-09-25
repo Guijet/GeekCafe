@@ -32,7 +32,7 @@ class PromotionMainPage: UIViewController {
         menu.setUpFakeNavBar(view: containerView, titleTop: "Promotions")
         
         //Page set up
-        backgroundImage.setUpBackgroundImage(containerView: containerView)
+        //backgroundImage.setUpBackgroundImage(containerView: containerView)
         setUpScrollView()
         fillScrollView()
     }
@@ -72,7 +72,7 @@ class PromotionMainPage: UIViewController {
                 let backgroundCard = UIButton()
                 backgroundCard.frame = CGRect(x: rw(8), y: newY, width: rw(360), height: rh(179))
                 backgroundCard.backgroundColor = UIColor.white
-                backgroundCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor(white: 0.0, alpha: 0.12), shadowOpacity: 0.24, spread: 0)
+                backgroundCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.30, spread: 0)
                 backgroundCard.tag = x.id
                 backgroundCard.addTarget(self, action: #selector(promoTapped(sender:)), for: .touchUpInside)
                 scrollViewPromotion.addSubview(backgroundCard)
@@ -98,7 +98,7 @@ class PromotionMainPage: UIViewController {
                 image.image = x.image
                 backgroundCard.addSubview(image)
                 
-                newY += rh(188)
+                newY += rh(209)
             }
             scrollViewPromotion.contentSize = CGSize(width: 1.0, height: newY)
         }

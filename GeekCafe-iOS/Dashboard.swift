@@ -38,7 +38,7 @@ class Dashboard:UIViewController{
         
         cardView.frame = CGRect(x: 0, y: 64, width: view.frame.width, height: rh(191))
         cardView.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        cardView.makeShadow(x: 9, y: -10, blur: 38, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.5, spread: 0)
+        cardView.makeShadow(x: 9, y: -10, blur: 21, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#000000"), shadowOpacity: 0.5, spread: 0)
         containerView.addSubview(cardView)
         
         let geekImg = UIImageView()
@@ -166,15 +166,21 @@ class Dashboard:UIViewController{
     }
     
     func commanderPressed(sender:UIButton){
-        print("Commande")
+        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
     
     func abonnementPressed(sender:UIButton){
-        print("Abonnement")
+        let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
     
     func promotionPressed(sender:UIButton){
-        print("Promotion")
+        let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
+        UIApplication.shared.keyWindow?.rootViewController = main
     }
 }
 
