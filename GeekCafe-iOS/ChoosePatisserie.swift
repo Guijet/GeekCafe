@@ -12,6 +12,7 @@ class ChoosePatisserie: UIViewController{
 
     let backgroudImage = UIImageView()
     let containerView = UIView()
+    let labelNumberItems = UILabel()
     var yAt:CGFloat = 0
     var numberOfItems:Int = 1
     
@@ -75,8 +76,9 @@ class ChoosePatisserie: UIViewController{
         buttonRight.addTarget(self, action: #selector(rightPressed), for: .touchUpInside)
         buttonRight.makeShadow(x: 0, y: 5, blur: 10, cornerRadius: buttonRight.frame.width/2, shadowColor: UIColor.black, shadowOpacity: 0.35, spread: 0)
         
-        let labelNumberItems = UILabel()
+        
         labelNumberItems.createLabel(frame: CGRect(x: rw(139), y: yAt + rh(18), width: rw(96), height: rw(60)), textColor: Utility().hexStringToUIColor(hex: "#666666"), fontName: "Lato-Light", fontSize: rw(50), textAignment: .center, text: String(numberOfItems))
+        
         
         
         let LBL_Quantite = UILabel()
@@ -97,15 +99,21 @@ class ChoosePatisserie: UIViewController{
     }
     
     func leftPressed(){
-        
+        if(numberOfItems > 1){
+            numberOfItems -= 1
+            labelNumberItems.text = String(numberOfItems)
+        }
     }
     
     func rightPressed(){
-        
+        if(numberOfItems < 99){
+            numberOfItems += 1
+            labelNumberItems.text = String(numberOfItems)
+        }
     }
     
     func addItem(){
-        print("Items added")
+        performSegue(withIdentifier: "patisserieToEndOrder", sender: nil)
     }
     
     

@@ -227,6 +227,16 @@
         view.addSubview(hr)
     }
     
+    func createVerticalHR(x: CGFloat,y: CGFloat, height: CGFloat,view: UIView,color: UIColor){
+        let hr = UITextView()
+        hr.isSelectable = false
+        hr.isEditable = false
+        hr.frame = CGRect(x: x, y: y, width: 1, height: height)
+        hr.backgroundColor = color
+        hr.isUserInteractionEnabled = false
+        view.addSubview(hr)
+    }
+    
     func setAllTextFieldType(rootView: UIView,type: UIKeyboardType) {
         if rootView is UITextField {
             (rootView as! UITextField).keyboardType = type

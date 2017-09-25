@@ -102,10 +102,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="Afs-PK-XC0" kind="show" identifier="patisserieToEndOrder" id="AVL-y2-VDB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYQ-ut-muF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2350" y="-204"/>
+        </scene>
+        <!--End Order-->
+        <scene sceneID="O8Q-Ia-rFB">
+            <objects>
+                <viewController id="Afs-PK-XC0" customClass="EndOrder" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="L1v-sw-afs"/>
+                        <viewControllerLayoutGuide type="bottom" id="vpe-XO-H0O"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ziU-sP-r2X">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ln3-IQ-kEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3879" y="114"/>
         </scene>
         <!--Crepe Main-->
         <scene sceneID="3DH-Ak-USQ">
