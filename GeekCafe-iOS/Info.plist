@@ -49,6 +49,7 @@
 	<string>Camera will be used for profile picture and we offer the chance to scan your card instead of entering informations manually</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Lato-Hairline.ttf</string>
 		<string>Lato-Medium.ttf</string>
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-Hairline.ttf</string>

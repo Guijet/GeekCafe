@@ -25,6 +25,8 @@
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
 		462CF6F21F60546C00326426 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6F11F60546C00326426 /* Global.swift */; };
+		46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */; };
+		46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */; };
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
@@ -120,6 +122,8 @@
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		462CF6F11F60546C00326426 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandRed.swift; sourceTree = "<group>"; };
+		46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandGreen.swift; sourceTree = "<group>"; };
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
@@ -345,6 +349,8 @@
 			children = (
 				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				4694CE451F796B6900953D75 /* EndOrder.swift */,
+				46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */,
+				46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */,
 			);
 			name = ListeCommande;
 			sourceTree = "<group>";
@@ -983,6 +989,7 @@
 				468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
 				461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */,
+				46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
 				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
 				461232A51F782EFC00D04E30 /* FondueMain.swift in Sources */,
@@ -994,6 +1001,7 @@
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
 				4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */,
+				46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
 				4694CE461F796B6900953D75 /* EndOrder.swift in Sources */,
 				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
