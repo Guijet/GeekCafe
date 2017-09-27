@@ -15,6 +15,9 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     var arrayItem = [Item]()
     let bottomView = UIView()
     
+    //BOOL IF USER HAS ENOUGH CREDIT
+    var isCredit:Bool = false
+    
     //Promo view elements
     let promoContainer = UIView()
     let promoTitle = UILabel()
@@ -121,42 +124,9 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     //
     //
-    //NEW VIE THAT MATHIEU CREATED
+    //BOTTOM VIEWS SET UP
     //
     //
-    func animatePayView(){
-        removeAllFromBottomView()
-        self.buildFirstBottomView()
-        
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveLinear, animations: {
-            self.bottomView.frame.size.height = self.rh(195)
-            self.bottomView.frame.origin.y = self.view.frame.height - self.rh(195)
-        }, completion:  { _ in
-            self.scrollView.frame.size.height = ((self.view.frame.height) - self.bottomView.frame.height)
-        })
-//        removeAllFromBottomView()
-//        self.buildSecondeBottomView()
-//        UIView.animate(withDuration: 0.4, delay: 0, options: .curveLinear, animations: {
-//            self.bottomView.frame.size.height = self.rh(240.5)
-//            self.bottomView.frame.origin.y = self.rh(426)
-//        }, completion:  { _ in
-//            self.scrollView.frame.size.height = ((self.view.frame.height) - self.bottomView.frame.height)
-//        })
-    }
-    
-    func removeAllFromBottomView(){
-        for x in bottomView.subviews{
-            x.removeFromSuperview()
-        }
-    }
-    func setBaseBottomView(){
-        resetBottomView(function: self.resetBuildBaseBottomView, height: rh(75))
-    }
-    
-    func payInApp(){
-        resetBottomView(function: buildSecondeBottomView, height: rh(240.5))
-    }
-    
     func resetBottomView(function:@escaping ()->(),height:CGFloat){
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
@@ -188,6 +158,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         payButton.titleLabel?.font = UIFont(name: "Lato-Bold", size: rw(20))
         payButton.addTarget(self, action: #selector(animatePayView), for: .touchUpInside)
         bottomView.addSubview(payButton)
+        
+        
     }
     
     func buildFirstBottomView(){
@@ -205,49 +177,78 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         closeButton.addTarget(self, action: #selector(setBaseBottomView), for: .touchUpInside)
         topInnerView.addSubview(closeButton)
         
-        
         let bottomInnerView = UIView()
-        bottomInnerView.frame = CGRect(x: 0, y: topInnerView.frame.maxY, width: view.frame.width, height: rh(150))
+        bottomInnerView.frame = CGRect(x: 0, y: topInnerView.frame.maxY, width: view.frame.width, height: rh(136))
         bottomInnerView.backgroundColor = UIColor.white
         bottomView.addSubview(bottomInnerView)
         
-        
+        Utility().createHR(x: 0, y: 0, width: view.frame.width, view: bottomInnerView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
         
         let labelComptoir = UILabel()
         labelComptoir.isUserInteractionEnabled = true
-        labelComptoir.createLabel(frame: CGRect(x:0,y:labelComptoir.frame.height/0.25,width:view.frame.width/2,height:20), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer au comptoir")
+        labelComptoir.createLabel(frame: CGRect(x:rw(205),y:rh(101),width:rw(120),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer au comptoir")
         bottomInnerView.addSubview(labelComptoir)
+        
+        let buttonImageInStore = UIButton()
+        buttonImageInStore.frame = CGRect(x: rw(245), y: rh(25), width: rw(64), height: rw(64))
+        buttonImageInStore.setImage(UIImage(named:"pay_in_store"), for: .normal)
+        buttonImageInStore.addTarget(self, action: #selector(payInStore), for: .touchUpInside)
+        bottomInnerView.addSubview(buttonImageInStore)
         
         let tapPayInApp = UITapGestureRecognizer(target: self, action: #selector(payInApp))
         
         let labelPayInApp = UILabel()
         labelPayInApp.isUserInteractionEnabled = true
         labelPayInApp.addGestureRecognizer(tapPayInApp)
-        labelPayInApp.createLabel(frame: CGRect(x:view.frame.width/2,y:labelComptoir.frame.height/0.25,width:view.frame.width/2,height:20), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer dans l'app")
+        labelPayInApp.createLabel(frame: CGRect(x:rw(29.5),y:rh(101),width:rw(120),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer dans l'app")
         bottomInnerView.addSubview(labelPayInApp)
+        
+        let buttonImageInApp = UIButton()
+        buttonImageInApp.frame = CGRect(x: rw(57), y: rh(16), width: rw(74), height: rw(74))
+        buttonImageInApp.setImage(UIImage(named:"pay_in_app"), for: .normal)
+        buttonImageInApp.addTarget(self, action: #selector(payInApp), for: .touchUpInside)
+        bottomInnerView.addSubview(buttonImageInApp)
         
         
     }
     
     func buildSecondeBottomView(){
-        Utility().createHR(x: rw(14), y: 0, width: rw(361), view: bottomView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
-        Utility().createHR(x: rw(14), y: rh(53), width: rw(361), view: bottomView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
-        Utility().createHR(x: rw(14), y: rh(141), width: rw(361), view: bottomView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
-        Utility().createVerticalHR(x: rw(265), y: rh(6.5), height: rh(41), view: bottomView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        
+        let topInnerView = UIView()
+        topInnerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(45))
+        topInnerView.backgroundColor = Utility().hexStringToUIColor(hex: "#F7F7F7")
+        bottomView.addSubview(topInnerView)
+        
+        let closeButton = UIButton()
+        closeButton.frame = CGRect(x: rw(300), y: rh(5), width: rw(60), height: rh(35))
+        closeButton.setTitle("Fermer", for: .normal)
+        closeButton.setTitleColor(Utility().hexStringToUIColor(hex: "#000000"), for: .normal)
+        closeButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
+        closeButton.addTarget(self, action: #selector(setBaseBottomView), for: .touchUpInside)
+        topInnerView.addSubview(closeButton)
+        
+        let containerMainView = UIView()
+        containerMainView.frame = CGRect(x: 0, y: topInnerView.frame.maxY, width: view.frame.width, height: rh(240.5))
+        bottomView.addSubview(containerMainView)
+        
+        Utility().createHR(x: 0, y: 0, width: view.frame.width, view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        Utility().createHR(x: rw(14), y: rh(53), width: rw(361), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        Utility().createHR(x: rw(14), y: rh(141), width: rw(361), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        Utility().createVerticalHR(x: rw(265), y: rh(6.5), height: rh(41), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
         
         let LBL_CartePaiement = UILabel()
         LBL_CartePaiement.createLabel(frame: CGRect(x:rw(14),y:rh(10.5),width:rw(76),height:rh(32)), textColor: Utility().hexStringToUIColor(hex: "#ABABAD"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "CARTE DE PAIEMENT".uppercased())
         LBL_CartePaiement.numberOfLines = 2
         LBL_CartePaiement.lineBreakMode = .byTruncatingHead
-        bottomView.addSubview(LBL_CartePaiement)
+        containerMainView.addSubview(LBL_CartePaiement)
         
         let LBL_Provider = UILabel()
         LBL_Provider.createLabel(frame: CGRect(x:rw(99),y:rh(8.5),width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "American Express")
-        bottomView.addSubview(LBL_Provider)
+        containerMainView.addSubview(LBL_Provider)
         
         let LBL_CardNumber = UILabel()
         LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• 5449)")
-        bottomView.addSubview(LBL_CardNumber)
+        containerMainView.addSubview(LBL_CardNumber)
         
         let tapAddPromo = UITapGestureRecognizer(target: self, action: #selector(toEnterPromoCode))
         
@@ -257,38 +258,141 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         LBL_AddPromo.numberOfLines = 2
         LBL_AddPromo.lineBreakMode = .byTruncatingHead
         LBL_AddPromo.addGestureRecognizer(tapAddPromo)
-        bottomView.addSubview(LBL_AddPromo)
+        containerMainView.addSubview(LBL_AddPromo)
         
         //Design labels
         let dSubTotal = UILabel()
         dSubTotal.createLabel(frame: CGRect(x:rw(99),y:rh(66.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Total")
-        bottomView.addSubview(dSubTotal)
+        containerMainView.addSubview(dSubTotal)
         
         let dTaxes = UILabel()
         dTaxes.createLabel(frame: CGRect(x:rw(99),y:dSubTotal.frame.maxY,width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Sales taxes")
-        bottomView.addSubview(dTaxes)
+        containerMainView.addSubview(dTaxes)
         
         let dTotal = UILabel()
         dTotal.createLabel(frame: CGRect(x:rw(99),y:rh(111.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Payment")
-        bottomView.addSubview(dTotal)
+        containerMainView.addSubview(dTotal)
         
         let SubTotal = UILabel()
         SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "$2.99")
-        bottomView.addSubview(SubTotal)
+        containerMainView.addSubview(SubTotal)
         
         let Taxes = UILabel()
         Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "$0.99")
-        bottomView.addSubview(Taxes)
+        containerMainView.addSubview(Taxes)
         
         let Total = UILabel()
         Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "$3.78")
-        bottomView.addSubview(Total)
+        containerMainView.addSubview(Total)
         
         
         let BTN_Pay = UIButton()
-        BTN_Pay.createCreateButton(title: "Payer", frame: CGRect(x:rw(88),y:rh(166.5),width:rw(202),height:rh(50)), fontSize: rw(20), containerView: bottomView)
+        BTN_Pay.createCreateButton(title: "Payer", frame: CGRect(x:rw(88),y:rh(166.5),width:rw(202),height:rh(50)), fontSize: rw(20), containerView: containerMainView)
         BTN_Pay.addTarget(self, action: #selector(payPressed(sender:)), for: .touchUpInside)
         
+    }
+    
+    
+    func buildThirdBottomView(){
+        //Total = 204
+        
+        let topInnerView = UIView()
+        topInnerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(45))
+        topInnerView.backgroundColor = Utility().hexStringToUIColor(hex: "#F7F7F7")
+        bottomView.addSubview(topInnerView)
+        
+        let labelTotalInCash = UILabel()
+        labelTotalInCash.createLabel(frame: CGRect(x:rw(20),y:topInnerView.frame.height/2 - rh(10),width:view.frame.width/2,height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(14), textAignment: .left, text: "10,00$")
+        labelTotalInCash.sizeToFit()
+        topInnerView.addSubview(labelTotalInCash)
+        
+        let labelCreditD = UILabel()
+        labelCreditD.createLabel(frame: CGRect(x:labelTotalInCash.frame.maxX + rw(2),y:topInnerView.frame.height/2 - rh(10),width:rw(100),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Light", fontSize: rw(12), textAignment: .left, text: "crédit disponible")
+        topInnerView.addSubview(labelCreditD)
+        
+        let closeButton = UIButton()
+        closeButton.frame = CGRect(x: rw(300), y: rh(5), width: rw(60), height: rh(35))
+        closeButton.setTitle("Fermer", for: .normal)
+        closeButton.setTitleColor(Utility().hexStringToUIColor(hex: "#000000"), for: .normal)
+        closeButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
+        closeButton.addTarget(self, action: #selector(setBaseBottomView), for: .touchUpInside)
+        topInnerView.addSubview(closeButton)
+        
+        let bottomInnerView = UIView()
+        bottomInnerView.frame = CGRect(x: 0, y: topInnerView.frame.maxY, width: view.frame.width, height: rh(159))
+        bottomView.addSubview(bottomInnerView)
+        
+        Utility().createHR(x: 0, y: 0, width: view.frame.width, view: bottomInnerView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        
+        let labelLine1D = UILabel()
+        labelLine1D.createLabel(frame: CGRect(x:0,y:rh(16),width:view.frame.width,height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#9B9B9B"), fontName: "Lato-Light", fontSize: rw(20), textAignment: .center, text: "Vous avez assez de crédit pour")
+        bottomInnerView.addSubview(labelLine1D)
+        
+        let labelLine2D = UILabel()
+        labelLine2D.createLabel(frame: CGRect(x:0,y:labelLine1D.frame.maxY,width:view.frame.width,height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#9B9B9B"), fontName: "Lato-Light", fontSize: rw(20), textAignment: .center, text: "complété votre achat")
+        bottomInnerView.addSubview(labelLine2D)
+        
+        let BTN_PayWithCredit = UIButton()
+        BTN_PayWithCredit.createCreateButton(title: "Payer avec mes crédits", frame: CGRect(x:rw(25),y:rh(89),width:rw(219),height:rh(50)), fontSize: rw(20), containerView: bottomInnerView)
+        BTN_PayWithCredit.addTarget(self, action: #selector(payWithPoints), for: .touchUpInside)
+        
+        let BTN_NonMerci = UIButton()
+        BTN_NonMerci.frame = CGRect(x: rw(263), y: rh(94), width: rw(80), height: rh(40))
+        BTN_NonMerci.setTitle("Non Merci", for: .normal)
+        BTN_NonMerci.setTitleColor(Utility().hexStringToUIColor(hex: "#9B9B9B"), for: .normal)
+        BTN_NonMerci.titleLabel?.font = UIFont(name: "Lato-Light", size: rw(13))
+        BTN_NonMerci.addTarget(self, action: #selector(noCreditsChoose), for: .touchUpInside)
+        bottomInnerView.addSubview(BTN_NonMerci)
+    }
+    
+    
+    //
+    //
+    //BOTTOM VIEWS ACTIONS
+    //
+    //
+    func removeAllFromBottomView(){
+        for x in bottomView.subviews{
+            x.removeFromSuperview()
+        }
+    }
+    
+    func animatePayView(){
+        if(isCredit){
+            resetBottomView(function: buildThirdBottomView, height: rh(204))
+        }
+        else{
+            resetBottomView(function: buildFirstBottomView, height: rh(191))
+        }
+    }
+    
+    func noCreditsChoose(){
+        resetBottomView(function: buildFirstBottomView, height: rh(191))
+    }
+    
+    func setBaseBottomView(){
+        resetBottomView(function: self.resetBuildBaseBottomView, height: rh(64))
+    }
+    
+    func payInApp(){
+        resetBottomView(function: buildSecondeBottomView, height: rh(285.5))
+    }
+    
+    func payInStore(){
+        //PAYER EN MAGASIN
+    }
+    
+    func payWithPoints(){
+        //PAYER AVEC LES POINTS
+    }
+    
+    func payPressed(sender:UIButton){
+        performSegue(withIdentifier: "toConfirmation", sender: nil)
+    }
+    
+    func addMore(){
+        //TODO: ADD ITEMS TO THE LIST AND MAKE THE FLOW AGAIN
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     //
@@ -296,7 +400,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //PROMO CODE VIEWS HANDLING
     //
     //
-    
     func buildPromoView(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endEditing))
         arrAlphaAnimation = [promoContainer,promoTitle,TB_Promo,HR,X_Button,BTN_Apply]
@@ -337,7 +440,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         //y to 592
         BTN_Apply.createCreateButton(title: "Appliquer", frame: CGRect(x:rw(88),y:rh(592) + 64,width:rw(202),height:rh(50)), fontSize: rw(20), containerView: promoContainer)
-        
         
         UIApplication.shared.keyWindow?.addSubview(promoContainer)
     }
@@ -413,16 +515,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         self.promoContainer.endEditing(true)
     }
     
-    //
-    //Performing Segues
-    //
-    func payPressed(sender:UIButton){
-        performSegue(withIdentifier: "toConfirmation", sender: nil)
-    }
-    
-    func addMore(){
-        self.navigationController?.popToRootViewController(animated: true)
-    }
     
     func fillFakeInfosArray(){
         
