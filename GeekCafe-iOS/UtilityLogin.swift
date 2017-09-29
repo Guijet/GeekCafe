@@ -10,12 +10,12 @@ import UIKit
 
 extension UIButton{
     func createCreateButton(title:String,frame:CGRect,fontSize:CGFloat,containerView:UIView){
-        
+        //Radent 0.1 a 1.0
         self.frame = frame
-        self.setBackgroundImage(UIImage(named:"greenButton"), for: .normal)
+        self.setBackgroundImage(UIImage(named:"BackgroundButton"), for: .normal)
         self.setTitle(title, for: .normal)
         self.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
-        self.titleLabel?.font = UIFont(name: "Lato-Regular", size: fontSize)
+        self.titleLabel?.font = UIFont(name: "Lato-Bold", size: fontSize)
         containerView.addSubview(self)
     }
 }

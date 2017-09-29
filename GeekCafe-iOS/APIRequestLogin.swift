@@ -14,7 +14,6 @@ class APIRequestLogin{
     func login(password:String,email:String)->Bool{
         var worked:Bool = false
         var json:[String:Any] = Utility().getJson(url: "\(Global.global.ip!)token", method: "POST",body: "email=\(email)&password=\(password)")
-
         if let token = json["token"] as? String{
             Global.global.userInfo.token = token
             worked = true
@@ -69,15 +68,19 @@ class APIRequestLogin{
         return isOK
     }
     
+    func addPaymentMethod(){
+        
+    }
+    
     func getGenderForRequest(gender:String)->String{
         if(gender == "Homme"){
-            return "Male"
+            return "male"
         }
         else if(gender == "Femme"){
-            return "Female"
+            return "female"
         }
         else if(gender == "Autre"){
-            return "Other"
+            return "other"
         }
         return ""
     }

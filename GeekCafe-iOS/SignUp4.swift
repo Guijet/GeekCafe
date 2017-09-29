@@ -10,6 +10,8 @@
 //WAIT FOR MATHIEU FOR NEW DESIGN
 
 import UIKit
+import Stripe
+import AFNetworking
 import AVFoundation
 
 class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
@@ -162,7 +164,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     //Bottom Button
     func setUpButton(){
         
-        nextButton.createCreateButton(title: "Terminé", frame: CGRect(x: rw(88), y: rh(280), width: rw(200), height: rh(50)),fontSize:rw(20),containerView:self.view)
+        nextButton.createCreateButton(title: "Terminer", frame: CGRect(x: rw(87), y: rh(280), width: rw(202), height: rh(50)),fontSize:rw(20),containerView:self.view)
         nextButton.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
         
         let noCardButton = UIButton()
@@ -213,6 +215,33 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     }
     
     
+    
+    func getCardToken(cardNumber:String,cvv:String,expiryMonth:String,expiryYear:String)->String{
+        var tokenStripe:String = ""
+        do {
+            
+            let stripCard = STPCard()
+            stripCard.number = cardNumber
+            stripCard.cvc = cvv
+            stripCard.expMonth = UInt(expiryMonth)!
+            stripCard.expYear = UInt("20\(expiryYear)")!
+            
+            try stripCard.validateReturningError()
+            STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
+                if error == nil {
+                    tokenStripe = token!.tokenId
+                }
+                else{
+                    print(error)
+                }
+            })
+            
+
+        } catch let error as NSError{
+            print(error)
+        }
+        return tokenStripe
+    }
     
     
     
@@ -284,8 +313,9 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     func nextPressed(sender:UIButton){
         if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
-            //METTRE LA CARTE QUAND CE SERA FAIT
-            performSegue(withIdentifier: "toCardInfo", sender: nil)
+            
+            let tokenStripe = getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
+            print(tokenStripe)
         }
         else{
             Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
@@ -295,9 +325,14 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func nextNoCard(sender:UIButton){
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+            let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
             UIApplication.shared.keyWindow?.rootViewController = main
         }
+    }
+    
+    func splitExpiration(expiration:String)->[String]{
+        let arrayString = expiration.components(separatedBy: "/")
+        return [arrayString[0],arrayString[1]]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

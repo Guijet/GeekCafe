@@ -10,5 +10,7 @@
 #define Bridging_Header_h
 
 #import "CardIO.h"
+#import <Stripe/Stripe.h>
+#import <AFNetworking/AFNetworking.h>
 
 #endif /* Bridging_Header_h */
