@@ -242,7 +242,6 @@
 			children = (
 				46D25C931F69BE2E0033A634 /* InfoPlist_AppDelegate */,
 				46D25C921F69BE1F0033A634 /* StoryBoard */,
-				46D25C911F69BE100033A634 /* Utility */,
 			);
 			name = "Main Files";
 			sourceTree = "<group>";
@@ -623,6 +622,7 @@
 				4687851E1F7194370009C292 /* TrouvezRestaurant */,
 				468785231F71946B0009C292 /* Promotions */,
 				460D5BC81F702AEB00245F27 /* Menu */,
+				46D25C911F69BE100033A634 /* Utility */,
 			);
 			path = "GeekCafe-iOS";
 			sourceTree = "<group>";

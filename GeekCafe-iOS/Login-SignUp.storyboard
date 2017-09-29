@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8mU-dJ-ffU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation View Controller-->
+        <scene sceneID="oAI-Sw-NkS">
+            <objects>
+                <navigationController storyboardIdentifier="MainLogin" id="8mU-dJ-ffU" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pO8-ih-ho5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Wyz-W3-T7O" kind="relationship" relationship="rootViewController" id="UOu-4X-wXx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yq9-N7-K8j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-794" y="190"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="JP9-di-ny8">
+            <objects>
+                <viewController id="Wyz-W3-T7O" customClass="LoginViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="L2B-Al-LFj"/>
+                        <viewControllerLayoutGuide type="bottom" id="JjT-Sd-UuM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fKQ-sl-fia">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ZgZ-S6-4yU"/>
+                    <connections>
+                        <segue destination="Qa3-gj-EED" kind="show" identifier="toCreateAccount" id="pR8-07-ASC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Kw-oR-qQt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="180" y="192"/>
+        </scene>
+        <!--Sign Up1-->
+        <scene sceneID="XIa-41-WQ1">
+            <objects>
+                <viewController id="Qa3-gj-EED" customClass="SignUp1" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iJ1-vc-vFd"/>
+                        <viewControllerLayoutGuide type="bottom" id="gmk-pG-CMp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pyz-6b-KYd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="0aS-RZ-kEE" kind="show" identifier="toSignUp2" id="sZz-oq-Mhu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oRd-bT-nGm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="180" y="906"/>
+        </scene>
+        <!--Sign Up2-->
+        <scene sceneID="25M-rp-mDc">
+            <objects>
+                <viewController id="0aS-RZ-kEE" customClass="SignUp2" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dbw-Gt-hyE"/>
+                        <viewControllerLayoutGuide type="bottom" id="W5x-Ud-QGi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8iP-Bs-7P9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="8Fc-GC-R1I" kind="show" identifier="toSignUp3" id="KUe-3l-zn1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xYL-HK-pdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1038" y="905"/>
+        </scene>
+        <!--Sign Up3-->
+        <scene sceneID="OKp-mk-TWI">
+            <objects>
+                <viewController id="8Fc-GC-R1I" customClass="SignUp3" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="x8C-sb-0ff"/>
+                        <viewControllerLayoutGuide type="bottom" id="095-z6-H2K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2n9-J3-Lf6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="i4Z-yK-ibw" kind="show" identifier="toCardInformation" id="gOM-KL-D75"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5YZ-3A-Bz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="905"/>
+        </scene>
+        <!--Sign Up4-->
+        <scene sceneID="ey1-IU-XTb">
+            <objects>
+                <viewController id="i4Z-yK-ibw" customClass="SignUp4" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aoB-do-dZi"/>
+                        <viewControllerLayoutGuide type="bottom" id="PqY-RS-Twv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Toz-Zw-mcv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="DUo-Ym-qcn" kind="show" identifier="toCardInfo" id="D0X-RT-0Go"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Dv-9n-fBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2801" y="905"/>
+        </scene>
+        <!--Sign Up5-->
+        <scene sceneID="Srq-5Z-QHe">
+            <objects>
+                <viewController id="DUo-Ym-qcn" customClass="SignUp5" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="w9A-e1-TCO"/>
+                        <viewControllerLayoutGuide type="bottom" id="euD-E9-IXE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1dX-yV-rDL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bld-gy-nPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3710" y="905"/>
+        </scene>
+    </scenes>
+</document>
