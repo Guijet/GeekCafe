@@ -32,6 +32,9 @@
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
 		464012691F76E37D00E271B2 /* Abonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012681F76E37D00E271B2 /* Abonnement.swift */; };
 		4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4664F1F31F79300F00908778 /* ChoosePatisserie.swift */; };
+		466EE1F61F82668400014B68 /* ChooseBrevageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */; };
+		466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */; };
+		466EE1FA1F82852300014B68 /* Subitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F91F82852300014B68 /* Subitem.swift */; };
 		4687850F1F7186740009C292 /* Historique.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687850E1F7186740009C292 /* Historique.storyboard */; };
 		468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785101F7186BA0009C292 /* HistoriqueList.swift */; };
 		468785131F7186C70009C292 /* Historique.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 468785121F7186C70009C292 /* Historique.xcassets */; };
@@ -129,6 +132,9 @@
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
 		464012681F76E37D00E271B2 /* Abonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abonnement.swift; sourceTree = "<group>"; };
 		4664F1F31F79300F00908778 /* ChoosePatisserie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePatisserie.swift; sourceTree = "<group>"; };
+		466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBrevageSize.swift; sourceTree = "<group>"; };
+		466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropBrevage.swift; sourceTree = "<group>"; };
+		466EE1F91F82852300014B68 /* Subitem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subitem.swift; sourceTree = "<group>"; };
 		4687850E1F7186740009C292 /* Historique.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Historique.storyboard; sourceTree = "<group>"; };
 		468785101F7186BA0009C292 /* HistoriqueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoriqueList.swift; sourceTree = "<group>"; };
 		468785121F7186C70009C292 /* Historique.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Historique.xcassets; sourceTree = "<group>"; };
@@ -306,6 +312,8 @@
 			isa = PBXGroup;
 			children = (
 				461232AA1F782F1A00D04E30 /* BrevageMain.swift */,
+				466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */,
+				466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */,
 			);
 			name = Breuvage;
 			sourceTree = "<group>";
@@ -423,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				461232961F77388100D04E30 /* ItemCommande.swift */,
+				466EE1F91F82852300014B68 /* Subitem.swift */,
 			);
 			name = "Requests Files";
 			sourceTree = "<group>";
@@ -981,6 +990,7 @@
 				468785471F72AEEE0009C292 /* Item.swift in Sources */,
 				46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */,
 				461232971F77388100D04E30 /* ItemCommande.swift in Sources */,
+				466EE1F61F82668400014B68 /* ChooseBrevageSize.swift in Sources */,
 				462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */,
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
@@ -1007,7 +1017,9 @@
 				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,
 				461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */,
+				466EE1FA1F82852300014B68 /* Subitem.swift in Sources */,
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
+				466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,
 				4687852D1F7195370009C292 /* CommandeMainPage.swift in Sources */,

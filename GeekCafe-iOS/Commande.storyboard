@@ -63,10 +63,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="c4S-Ic-R9u" kind="show" identifier="toChooseBrevageSize" id="9Yl-f2-SmS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="en3-JM-sO8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1551" y="-932"/>
+        </scene>
+        <!--Choose Brevage Size-->
+        <scene sceneID="xL8-1a-SKg">
+            <objects>
+                <viewController id="c4S-Ic-R9u" customClass="ChooseBrevageSize" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pUr-m6-SNU"/>
+                        <viewControllerLayoutGuide type="bottom" id="OH0-yl-Tc5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UhP-Ze-FXk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="8IZ-lj-T4W" kind="show" identifier="toDragAndDropCafe" id="oKy-Dn-ScA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gfu-fg-fSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2350" y="-932"/>
+        </scene>
+        <!--Drag And Drop Brevage-->
+        <scene sceneID="bCH-aj-iTf">
+            <objects>
+                <viewController id="8IZ-lj-T4W" customClass="DragAndDropBrevage" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PgJ-Zz-tGL"/>
+                        <viewControllerLayoutGuide type="bottom" id="N5S-OH-HiZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YgB-zf-Do9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromBrevage" id="cSu-Sw-hfV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Ju-0h-VFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3129" y="-932"/>
         </scene>
         <!--Patisserie Main-->
         <scene sceneID="bAo-By-N6e">
@@ -204,4 +249,7 @@
             <point key="canvasLocation" x="1550" y="1205"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cSu-Sw-hfV"/>
+    </inferredMetricsTieBreakers>
 </document>

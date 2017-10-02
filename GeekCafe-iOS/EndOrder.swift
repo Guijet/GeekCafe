@@ -129,13 +129,13 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //
     func resetBottomView(function:@escaping ()->(),height:CGFloat){
         self.view.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveLinear, animations: {
             self.bottomView.frame.origin.y = self.view.frame.height
         }, completion: {  _ in
             self.removeAllFromBottomView()
             function()
             self.bottomView.frame.size.height = height
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveLinear, animations: {
                 self.bottomView.frame.origin.y = self.view.frame.height - height
             }, completion: {  _ in
                 self.scrollView.frame.size.height = ((self.view.frame.height) - self.bottomView.frame.height)

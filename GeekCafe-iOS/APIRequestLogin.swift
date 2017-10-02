@@ -36,7 +36,7 @@ class APIRequestLogin{
             let image_url = user["profile_image"] as! String
             let token = Global.global.userInfo.token
             
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token)
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, cards: [userCard]())
             worked = true
         }
         return worked
@@ -52,7 +52,7 @@ class APIRequestLogin{
             let data = json["data"] as! [String:Any]
             let id = data["id"] as! Int
             let image_url = data["profile_image"] as! String
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token)
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token,cards:[userCard]())
             
             worked = true
         }
@@ -68,8 +68,28 @@ class APIRequestLogin{
         return isOK
     }
     
-    func addPaymentMethod(){
+    func addPaymentMethod(card_token:String)->Bool{
+        var worked:Bool = false
+        var json = Utility().getJson(url: "\(Global.global.ip!)user/payment", method: "POST",body: "card_token=\(card_token)",needToken: true)
+        if let _ = json["status"]{
+            worked = true
+        }
+        return worked
+    }
+    
+    func indexPaymentsMethod(cardHolderName:String)->[userCard]{
+        var arrayCards:[userCard] = [userCard]()
+        var json = Utility().getJson(url: "\(Global.global.ip!)user/payments", method: "GET",needToken:true)
         
+        if let cards = json["cards"] as? [[String:Any]]{
+            if(cards.count > 0){
+                for x in 0...cards.count - 1{
+                    let a = userCard(last4: cards[x]["last4"] as! String, expMonth: String(cards[x]["exp_month"] as! Int), expYear: String(cards[x]["exp_year"] as! Int), brand: cards[x]["brand"] as! String, name: cardHolderName)
+                    arrayCards.append(a)
+                }
+            }
+        }
+        return arrayCards
     }
     
     func getGenderForRequest(gender:String)->String{
