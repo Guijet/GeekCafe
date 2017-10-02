@@ -1,5 +1,6 @@
+
 //
-//  DragAndDropBrevage.swift
+//  FlavourFondue.swift
 //  GeekCafe-iOS
 //
 //  Created by Guillaume Jette on 2017-10-02.
@@ -8,20 +9,17 @@
 
 import UIKit
 
-class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
+class FlavourFondue: UIViewController {
 
     var arraySubitems = [Subitem]()
     let backgroundImage = UIImageView()
-    let coffeImage = UIImageView()
+    let bolImage = UIImageView()
     let bottomScrollView = UIScrollView()
-    let panGesture = UIPanGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getSubItems()
-        panGesture.addTarget(self, action: #selector(dragView(sender:)))
-        panGesture.delegate = self
-        self.title = "Café"
+        self.title = "Crêpe"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
         setUpImageCoffee()
@@ -37,21 +35,21 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
-        LBL_DTop1.createLabel(frame: CGRect(x:rw(92),y:rh(94),width:rw(191),height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Que mettez-vous dans\nvotre café?")
-        LBL_DTop1.numberOfLines = 2
+        LBL_DTop1.createLabel(frame: CGRect(x:rw(92),y:rh(100),width:rw(191),height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Recouvrement")
         view.addSubview(LBL_DTop1)
         
         let LBL_DTop2 = UILabel()
-        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(137),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez dans votre tasse ce que vous désirez")
+        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(122),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez sur la crêpe le style de\n couvrement que vous désirez")
+        LBL_DTop2.numberOfLines = 2
         view.addSubview(LBL_DTop2)
     }
     
     func setUpImageCoffee(){
-       
-        coffeImage.frame = CGRect(x: 0, y: rh(165), width: view.frame.width, height: rh(419))
-        coffeImage.image = UIImage(named:"bigCoffe")
-        coffeImage.contentMode = .scaleAspectFit
-        self.view.addSubview(coffeImage)
+        
+        bolImage.frame = CGRect(x: rw(69), y: rh(215), width: rw(238), height: rh(211))
+        bolImage.image = UIImage(named:"bolFondue")
+        bolImage.contentMode = .scaleAspectFit
+        self.view.addSubview(bolImage)
     }
     
     func setUpBottom(){
@@ -85,22 +83,21 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
             for x in arraySubitems{
                 
                 let image = UIImageView()
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(50), height: rw(50))
+                image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
                 image.layer.masksToBounds = false
+                image.contentMode = .scaleAspectFit
                 image.layer.cornerRadius = rw(25)
                 image.image = x.image
                 image.tag = x.id
-                image.isUserInteractionEnabled = true
-                image.addGestureRecognizer(panGesture)
                 bottomScrollView.addSubview(image)
                 
                 let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX,y:image.frame.maxY + rh(6),width:image.frame.width,height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                 titleItem.numberOfLines = 2
                 titleItem.lineBreakMode = .byTruncatingTail
                 bottomScrollView.addSubview(titleItem)
                 
-                newX += rw(91.7)
+                newX += rw(98)
             }
             bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
             
@@ -108,26 +105,14 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
     }
     
     func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 5, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 6, image: UIImage(named:"Milk")!, name: "Milk"))
-    }
-    
-    func dragView(sender:UIPanGestureRecognizer){
-        let translation = sender.translation(in: self.view)
-        if let view = sender.view {
-            view.center = CGPoint(x:view.center.x + translation.x,
-                                  y:view.center.y + translation.y)
-        }
-        sender.setTranslation(CGPoint.zero, in: self.view)
+        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
+        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"chocBlanc")!, name: "Chocolat Blanc"))
+        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"pateBiscuit")!, name: "Pâte à biscuit"))
+        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
     }
     
     func nextPressed(){
-        performSegue(withIdentifier: "toEndOrderFromBrevage", sender: nil)
+        performSegue(withIdentifier: "toSubitemsFondue", sender: nil)
     }
-    
-    
+
 }
