@@ -91,7 +91,7 @@ class SubitemsFondue: UIViewController {
                 image.layer.cornerRadius = rw(25)
                 image.isUserInteractionEnabled = true
                 image.addGestureRecognizer(panGesture)
-                image.image = x.image
+                //image.image = x.image
                 image.tag = x.id
                 bottomScrollView.addSubview(image)
                 
@@ -111,10 +111,10 @@ class SubitemsFondue: UIViewController {
     }
     
     func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"fraise")!, name: "Fraise"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"framboise")!, name: "Framboise"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"banane")!, name: "Banane"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"bleuet")!, name: "Bleut"))
+//        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"fraise")!, name: "Fraise"))
+//        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"framboise")!, name: "Framboise"))
+//        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"banane")!, name: "Banane"))
+//        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"bleuet")!, name: "Bleut"))
     }
     
     func dragView(sender:UIPanGestureRecognizer){

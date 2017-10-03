@@ -8,19 +8,18 @@
 
 import UIKit
 
-class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
+class DragAndDropBrevage: UIViewController{
 
-    var arraySubitems = [Subitem]()
     let backgroundImage = UIImageView()
     let coffeImage = UIImageView()
     let bottomScrollView = UIScrollView()
     let panGesture = UIPanGestureRecognizer()
     
+    var infoItem:Item!
+    var priceItem:String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSubItems()
-        panGesture.addTarget(self, action: #selector(dragView(sender:)))
-        panGesture.delegate = self
         self.title = "Café"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
@@ -33,7 +32,7 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
     func setUpTopPart(){
         
         let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: priceItem)
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -81,17 +80,15 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
     
     func fillScrollView(){
         var newX:CGFloat = rw(33)
-        if(arraySubitems.count > 0){
-            for x in arraySubitems{
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
                 
                 let image = UIImageView()
                 image.frame = CGRect(x: newX, y: rh(15), width: rw(50), height: rw(50))
-                image.layer.masksToBounds = false
+                image.layer.masksToBounds = true
                 image.layer.cornerRadius = rw(25)
-                image.image = x.image
+                image.getOptimizeImageAsync(url: x.image)
                 image.tag = x.id
-                image.isUserInteractionEnabled = true
-                image.addGestureRecognizer(panGesture)
                 bottomScrollView.addSubview(image)
                 
                 let titleItem = UILabel()
@@ -105,15 +102,6 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
             bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
             
         }
-    }
-    
-    func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 5, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 6, image: UIImage(named:"Milk")!, name: "Milk"))
     }
     
     func dragView(sender:UIPanGestureRecognizer){

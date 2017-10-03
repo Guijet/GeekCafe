@@ -11,10 +11,10 @@ import UIKit
 
 class FlavourFondue: UIViewController {
 
-    var arraySubitems = [Subitem]()
     let backgroundImage = UIImageView()
     let bolImage = UIImageView()
     let bottomScrollView = UIScrollView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,36 +79,36 @@ class FlavourFondue: UIViewController {
     
     func fillScrollView(){
         var newX:CGFloat = rw(33)
-        if(arraySubitems.count > 0){
-            for x in arraySubitems{
-                
-                let image = UIImageView()
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
-                image.layer.masksToBounds = false
-                image.contentMode = .scaleAspectFit
-                image.layer.cornerRadius = rw(25)
-                image.image = x.image
-                image.tag = x.id
-                bottomScrollView.addSubview(image)
-                
-                let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
-                titleItem.numberOfLines = 2
-                titleItem.lineBreakMode = .byTruncatingTail
-                bottomScrollView.addSubview(titleItem)
-                
-                newX += rw(98)
-            }
-            bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
-            
-        }
+//        if(arraySubitems.count > 0){
+//            for x in arraySubitems{
+//                
+//                let image = UIImageView()
+//                image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
+//                image.layer.masksToBounds = false
+//                image.contentMode = .scaleAspectFit
+//                image.layer.cornerRadius = rw(25)
+//                image.image = x.image
+//                image.tag = x.id
+//                bottomScrollView.addSubview(image)
+//                
+//                let titleItem = UILabel()
+//                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+//                titleItem.numberOfLines = 2
+//                titleItem.lineBreakMode = .byTruncatingTail
+//                bottomScrollView.addSubview(titleItem)
+//                
+//                newX += rw(98)
+//            }
+//            bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
+//            
+//        }
     }
     
     func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"chocBlanc")!, name: "Chocolat Blanc"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"pateBiscuit")!, name: "Pâte à biscuit"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
+//        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
+//        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"chocBlanc")!, name: "Chocolat Blanc"))
+//        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"pateBiscuit")!, name: "Pâte à biscuit"))
+//        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
     }
     
     func nextPressed(){

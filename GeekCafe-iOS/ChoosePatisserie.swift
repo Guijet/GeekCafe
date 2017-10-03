@@ -16,6 +16,8 @@ class ChoosePatisserie: UIViewController{
     var yAt:CGFloat = 0
     var numberOfItems:Int = 1
     
+    var infoItem:Item!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Muffin"
@@ -35,22 +37,22 @@ class ChoosePatisserie: UIViewController{
     
     func setUpPrice(){
         let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:view.frame.width/2,y:rh(22),width:(view.frame.width/2) - rw(25.3),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        LBL_Price.createLabel(frame: CGRect(x:view.frame.width/2,y:rh(22),width:(view.frame.width/2) - rw(25.3),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: String(format: "$%.2f", infoItem.prices[0].price.floatValue))
         containerView.addSubview(LBL_Price)
     }
     
     func setUpImage(){
         let imageItems = UIImageView()
         imageItems.frame = CGRect(x: (view.frame.width/2) - rw(95), y: rw(80.45), width: rw(190), height: rw(190))
-        imageItems.image = UIImage(named:"bigMuffinInfo")
+        imageItems.getOptimizeImageAsync(url: infoItem.image)
         containerView.addSubview(imageItems)
         
         let titleItem = UILabel()
-        titleItem.createLabel(frame: CGRect(x: rw(23), y: imageItems.frame.maxY + rh(24), width: view.frame.width - rw(46), height: rh(28)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(23), textAignment: .left, text: "Muffin au caramel")
+        titleItem.createLabel(frame: CGRect(x: rw(23), y: imageItems.frame.maxY + rh(24), width: view.frame.width - rw(46), height: rh(28)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(23), textAignment: .left, text: infoItem.name)
         containerView.addSubview(titleItem)
         
         let description = UILabel()
-        description.createLabel(frame: CGRect(x: rw(22), y: titleItem.frame.maxY + rh(8), width: view.frame.width - rw(44), height: rh(80)), textColor: Utility().hexStringToUIColor(hex: "#919191"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .left, text: "Our muffin unites rich, dense chocolate with a gooey caramel center for bliss in every bite. As far as we're concerned, there's no such thing as too much caramel. ")
+        description.createLabel(frame: CGRect(x: rw(22), y: titleItem.frame.maxY + rh(8), width: view.frame.width - rw(44), height: rh(80)), textColor: Utility().hexStringToUIColor(hex: "#919191"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .left, text: infoItem.description)
         description.numberOfLines = 4
         description.lineBreakMode = .byTruncatingHead
         containerView.addSubview(description)

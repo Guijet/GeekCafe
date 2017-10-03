@@ -10,14 +10,16 @@ import UIKit
 
 class FlavourCrepe: UIViewController {
 
-    var arraySubitems = [Subitem]()
     let backgroundImage = UIImageView()
     let crepeImage = UIImageView()
     let bottomScrollView = UIScrollView()
+    let LBL_Price = UILabel()
+
+    var infoItem:Item!
+    var price:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSubItems()
         self.title = "Crêpe"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
@@ -29,8 +31,8 @@ class FlavourCrepe: UIViewController {
     
     func setUpTopPart(){
         
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+     
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: price)
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -78,15 +80,15 @@ class FlavourCrepe: UIViewController {
     
     func fillScrollView(){
         var newX:CGFloat = rw(33)
-        if(arraySubitems.count > 0){
-            for x in arraySubitems{
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
                 
                 let image = UIImageView()
                 image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
                 image.layer.masksToBounds = false
                 image.contentMode = .scaleAspectFit
                 image.layer.cornerRadius = rw(25)
-                image.image = x.image
+                image.getOptimizeImageAsync(url: x.image)
                 image.tag = x.id
                 bottomScrollView.addSubview(image)
                 
@@ -102,16 +104,18 @@ class FlavourCrepe: UIViewController {
             
         }
     }
-    
-    func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"chocBlanc")!, name: "Chocolat Blanc"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"pateBiscuit")!, name: "Pâte à biscuit"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
-    }
+
     
     func nextPressed(){
+        price = LBL_Price.text
         performSegue(withIdentifier: "toSubItemsCrepe", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toSubItemsCrepe"){
+            (segue.destination as! SubitemsCrepe).infoItem = self.infoItem
+            (segue.destination as! SubitemsCrepe).price = self.price
+        }
     }
 
 }

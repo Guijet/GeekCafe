@@ -1,5 +1,5 @@
 //
-//  Subitems.swift
+//  ItemList.swift
 //  GeekCafe-iOS
 //
 //  Created by Guillaume Jette on 2017-10-03.
@@ -8,15 +8,13 @@
 
 import UIKit
 
-struct Subitem{
-    init(id:Int,name:String,price:NSNumber,image:String){
+struct ItemList{
+    init(id:Int,name:String,image:String){
         self.id = id
         self.name = name
-        self.price = price
         self.image = image
     }
     var id:Int
     var name:String
-    var price:NSNumber
     var image:String
 }

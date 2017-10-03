@@ -60,7 +60,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
-                imageItem.image = x.image
+                //imageItem.image = x.image
                 containerView.addSubview(imageItem)
                 
                 let price = UILabel()
@@ -68,7 +68,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                price.text = "$\(x.price)"
+                //price.text = "$\(x.price)"
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
@@ -76,7 +76,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
-                flavour.text = "\(x.flavour)"
+                //flavour.text = "\(x.flavour)"
                 containerView.addSubview(flavour)
                 
                 let type = UILabel()
@@ -518,12 +518,12 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     func fillFakeInfosArray(){
         
-        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
-        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Caramel", price: "7.50"))
-        arrayItem.append(Item(image:UIImage(named:"item1")!, type: "Drink", flavour: "Vanille", price: "4.00"))
-        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Choco", price: "3.75"))
-        arrayItem.append(Item(image: UIImage(named:"item2")!, type: "Drink", flavour: "Choco", price: "3.75"))
-        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
+//        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
+//        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Caramel", price: "7.50"))
+//        arrayItem.append(Item(image:UIImage(named:"item1")!, type: "Drink", flavour: "Vanille", price: "4.00"))
+//        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Choco", price: "3.75"))
+//        arrayItem.append(Item(image: UIImage(named:"item2")!, type: "Drink", flavour: "Choco", price: "3.75"))
+//        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
     }
 
 }

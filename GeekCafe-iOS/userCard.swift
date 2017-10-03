@@ -10,6 +10,7 @@ import UIKit
 
 
 struct userCard{
+    
     init(last4:String,expMonth:String,expYear:String,brand:String,name:String){
         self.last4 = last4
         self.expMonth = expMonth

@@ -19,6 +19,8 @@ class ChooseSizeFondue: UIViewController {
     let middleViewDashed = UIView()
     let smallViewDashed = UIView()
     
+    var listItemToPass:[ItemList]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()

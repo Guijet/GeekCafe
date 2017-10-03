@@ -12,12 +12,15 @@ class ChooseBrevageSize: UIViewController {
 
     var arrayButtons = [UIButton]()
     let backgroundImage = UIImageView()
+    let LBL_Price = UILabel()
     
     //Dashed Views
     var arrayDashedViews = [UIView]()
     let bigViewDashed = UIView()
     let middleViewDashed = UIView()
     let smallViewDashed = UIView()
+    var infoItem:Item!
+    var priceItem:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,17 +29,16 @@ class ChooseBrevageSize: UIViewController {
         self.extendedLayoutIncludesOpaqueBars = true
         setUpTopPart()
         setDashedLines()
-        resetDashedViews()
         setButtonAdd()
     }
 
     func setUpTopPart(){
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: String(format: "$%.2f", infoItem.prices[1].price.floatValue))
         view.addSubview(LBL_Price)
         
         let BTN_HeaderLeft = UIButton()
-        BTN_HeaderLeft.tag = 1
+        BTN_HeaderLeft.tag = infoItem.prices[0].id
         BTN_HeaderLeft.frame = CGRect(x: rw(62), y: rh(146), width: rw(72), height: rh(30))
         BTN_HeaderLeft.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
         BTN_HeaderLeft.layer.borderWidth = 1
@@ -49,20 +51,20 @@ class ChooseBrevageSize: UIViewController {
         view.addSubview(BTN_HeaderLeft)
         
         let BTN_HeaderCenter = UIButton()
-        BTN_HeaderCenter.tag = 2
+        BTN_HeaderCenter.tag = infoItem.prices[1].id
         BTN_HeaderCenter.frame = CGRect(x: rw(152), y: rh(146), width: rw(72), height: rh(30))
-        BTN_HeaderCenter.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
+        BTN_HeaderCenter.layer.borderColor = Utility().hexStringToUIColor(hex: "#16EA7C").cgColor
         BTN_HeaderCenter.layer.borderWidth = 1
         BTN_HeaderCenter.layer.cornerRadius = rw(14)
-        BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
+        BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#16EA7C")
         BTN_HeaderCenter.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
         BTN_HeaderCenter.setTitle("Moyen", for: .normal)
-        BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
+        BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
         
         let BTN_HeaderRight = UIButton()
-        BTN_HeaderRight.tag = 3
+        BTN_HeaderRight.tag = infoItem.prices[2].id
         BTN_HeaderRight.frame = CGRect(x: rw(242), y: rh(146), width: rw(72), height: rh(30))
         BTN_HeaderRight.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
         BTN_HeaderRight.layer.borderWidth = 1
@@ -86,7 +88,7 @@ class ChooseBrevageSize: UIViewController {
         
         
         middleViewDashed.frame = CGRect(x: rw(68), y: rw(214), width: rw(240), height: rw(240))
-        middleViewDashed.addDashedBorder(color: Utility().hexStringToUIColor(hex: "#D6D6D6"), lineWidth: 1, linePattern: [16,8.4])
+        middleViewDashed.addDashedBorder(color: Utility().hexStringToUIColor(hex: "#16E9A6"), lineWidth: 4, linePattern: [16,8.4])
         view.addSubview(middleViewDashed)
         
         
@@ -104,6 +106,9 @@ class ChooseBrevageSize: UIViewController {
     }
     
     func buttonTopPressed(sender:UIButton){
+        
+        LBL_Price.text = getPriceByID(id_price: sender.tag)
+        
         resetButtonStateTop()
         resetDashedViews()
         
@@ -142,10 +147,10 @@ class ChooseBrevageSize: UIViewController {
     }
     
     func getDashedViewToChanged(tag:Int)->UIView{
-        if(tag == 3){
+        if(tag == infoItem.prices[2].id){
             return bigViewDashed
         }
-        else if(tag == 2){
+        else if(tag == infoItem.prices[1].id){
             return middleViewDashed
         }
         else{
@@ -153,8 +158,32 @@ class ChooseBrevageSize: UIViewController {
         }
     }
     
+    
+    
+    func getPriceByID(id_price:Int)->String{
+        var price:String = ""
+        if(infoItem.prices.count > 0){
+            for x in infoItem.prices{
+                if(id_price == x.id){
+                    price = String(format: "$%.2f", x.price.floatValue)
+                    break
+                }
+            }
+        }
+        return price
+        
+    }
+    
     func buttonAddPressed(){
+        priceItem = LBL_Price.text
         performSegue(withIdentifier: "toDragAndDropCafe", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toDragAndDropCafe"){
+            (segue.destination as! DragAndDropBrevage).infoItem = self.infoItem
+            (segue.destination as! DragAndDropBrevage).priceItem = self.priceItem
+        }
     }
 }
 
