@@ -19,9 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Stripe.setDefaultPublishableKey("pk_test_o0lxSGDv1ugQycwyPzSxqe5U")
+        Stripe.setDefaultPublishableKey("pk_test_8tGMOp2AUxHPPKunjW6PnZwk")
+        
         Global.global.ip = "http://localhost:8888/GeekCafe-API/public/api/"
-        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "")
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
     
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         

@@ -105,7 +105,7 @@ class BrevageMain: UIViewController {
     }
     
     func drinkPressed(sender:UIButton){
-        print(sender.tag)
+        performSegue(withIdentifier: "toChooseBrevageSize", sender: nil)
     }
     
     func fillArrayBreuvage(){

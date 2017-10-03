@@ -24,6 +24,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let TB_CardHolderName = UITextField()
     let TB_CVC = UITextField()
     let nextButton = UIButton()
+    var cardToken:String!
     
     var isKeyBoardActive:Bool = false
     
@@ -216,8 +217,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     
     
-    func getCardToken(cardNumber:String,cvv:String,expiryMonth:String,expiryYear:String)->String{
-        var tokenStripe:String = ""
+    func getCardToken(cardNumber:String,cvv:String,expiryMonth:String,expiryYear:String){
         do {
             
             let stripCard = STPCard()
@@ -229,18 +229,26 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             try stripCard.validateReturningError()
             STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
                 if error == nil {
-                    tokenStripe = token!.tokenId
+                    print(token!.tokenId)
+                    if(APIRequestLogin().createAcount(first_name: self.firstName, last_name: self.lastName, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
+                        if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
+                            
+                            Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
+                            self.performSegue(withIdentifier: "toCardInfo", sender: nil)
+                        }
+                        else{
+                            Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
+                        }
+                    }
                 }
                 else{
-                    print(error)
+                    Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
                 }
             })
-            
-
-        } catch let error as NSError{
+        }
+        catch let error as NSError{
             print(error)
         }
-        return tokenStripe
     }
     
     
@@ -313,9 +321,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     func nextPressed(sender:UIButton){
         if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
-            
-            let tokenStripe = getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
-            print(tokenStripe)
+            getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
         }
         else{
             Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
@@ -345,13 +351,6 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             (segue.destination as! SignUp5).phone = self.phone
             (segue.destination as! SignUp5).email = self.email
             (segue.destination as! SignUp5).password = self.password
-            
-            //Card information
-            (segue.destination as! SignUp5).last4 = self.last4
-            (segue.destination as! SignUp5).expYear = self.expYear
-            (segue.destination as! SignUp5).expMonth = self.expMonth
-            (segue.destination as! SignUp5).brand = self.brand
-            (segue.destination as! SignUp5).cardName = self.cardName
         }
     }
 }
