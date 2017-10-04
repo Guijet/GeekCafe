@@ -37,13 +37,6 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     var email:String!
     var password:String!
     
-    //Carte information
-    var last4:String!
-    var expYear:String!
-    var expMonth: String!
-    var brand: String!
-    var cardName:String!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //Ask for camera usage
@@ -229,7 +222,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             try stripCard.validateReturningError()
             STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
                 if error == nil {
-                    print(token!.tokenId)
+                    
                     if(APIRequestLogin().createAcount(first_name: self.firstName, last_name: self.lastName, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
                         if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
                             

@@ -341,6 +341,10 @@ class MenuClass{
     //
     @objc fileprivate func logOutPressed(){
         Utility().alertYesNo(message: "Ëtes-vous certain de vouloir vous déconnecter?", title: "Message", control: viewToAnimate.parentViewController!, yesAction: {
+            
+            UserDefaults.standard.removeObject(forKey: "Token")
+            UserDefaults.standard.removeObject(forKey: "FB_Token")
+            
             let storyboard = UIStoryboard(name: "Login-SignUp", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "MainLogin")
             UIApplication.shared.keyWindow?.rootViewController = main

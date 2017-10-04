@@ -12,4 +12,5 @@ final class Global{
     static let global = Global()
     var ip:String!
     var userInfo:User!
+    var fbToken:String!
 }

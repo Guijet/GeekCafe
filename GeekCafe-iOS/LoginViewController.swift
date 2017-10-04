@@ -37,7 +37,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         setUpButton()
         animateIn()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        UserDefaults.standard.synchronize()
+        if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
+            autoLoginFB(access_token: tokenTB)
+        }
+        else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
+            autoLogin(token: token)
+        }
+        
+    }
     override func viewWillDisappear(_ animated: Bool) {
         self.view.endEditing(true)
     }
@@ -281,7 +290,35 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         performSegue(withIdentifier: "toCreateAccount", sender: nil)
     }
     
+    //
+    //
+    //AUTO LOGIN
+    //
+    //
+    func autoLogin(token:String){
+        if(APIRequestLogin().verifyToken(token: token)){
+            if(APIRequestLogin().viewUser()){
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIApplication.shared.keyWindow?.rootViewController = main
+            }
+            else{
+                Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
+            }
+        }
+    }
     
+    func autoLoginFB(access_token:String){
+        if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
+            if(APIRequestLogin().viewUser()){
+                
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIApplication.shared.keyWindow?.rootViewController = main
+                
+            }
+        }
+    }
     
     //
     //
@@ -299,8 +336,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
                 print("Error: \(String(describing: error))")
             }
             else{
-                //CREER LE COMPTE
-                print(String(describing: FBSDKAccessToken.current().tokenString!))
+                if(APIRequestLogin().createAccountFacebbok(accessToken: FBSDKAccessToken.current().tokenString!)){
+                    print("Account created")
+                }
             }
         })
     }
@@ -320,7 +358,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
             fetchProfile()
         }
     }
-    
 }
 
 

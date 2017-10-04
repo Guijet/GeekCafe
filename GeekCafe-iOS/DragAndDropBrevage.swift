@@ -18,8 +18,11 @@ class DragAndDropBrevage: UIViewController{
     var infoItem:Item!
     var priceItem:String!
     
+    let swipeSubItems = UIPanGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        swipeSubItems.addTarget(self, action: #selector(dragView(sender:)))
         self.title = "Café"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
