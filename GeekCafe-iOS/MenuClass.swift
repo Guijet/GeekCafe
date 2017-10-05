@@ -26,7 +26,7 @@ class MenuClass{
     //Membership
     fileprivate let status = UILabel()
     //Menu buttons elements
-    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions"]
+    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Profil"]
     //Deconnexion button
     fileprivate let deconnexionButton = UIButton()
     //Image deconnexion
@@ -114,7 +114,7 @@ class MenuClass{
         }
         
         deconnexionButton.setTitle("Déconnexion", for: .normal)
-        deconnexionButton.frame = CGRect(x: rw(27, view), y: rw(531,view), width: view.frame.width - rw(88, view) - rw(15, view), height: rw(12, view))
+        deconnexionButton.frame = CGRect(x: rw(27, view), y: rw(548,view), width: view.frame.width - rw(88, view) - rw(15, view), height: rw(12, view))
         deconnexionButton.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         deconnexionButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(14, view))
         deconnexionButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
@@ -122,7 +122,7 @@ class MenuClass{
         deconnexionButton.addTarget(self, action: #selector(MenuClass.logOutPressed), for: .touchUpInside)
         menuItemsContainer.addSubview(deconnexionButton)
         
-        deconnexionImage.frame = CGRect(x: 0, y: rw(530, view), width: rw(12, view), height: rw(13, view))
+        deconnexionImage.frame = CGRect(x: 0, y: rw(546, view), width: rw(12, view), height: rw(13, view))
         deconnexionImage.image = UIImage(named: "logoutIcon")
         menuItemsContainer.addSubview(deconnexionImage)
     }
@@ -301,6 +301,22 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }
+            }
+        }
+        
+        if(sender.tag == 7){
+            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "PromotionMainPage"{
+                closeMenu()
+                return
+            }
+            closeMenu()
+            DispatchQueue.global().async {
+                while self.isOpen{usleep(500)}
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "ProfileMainPage")
                     UIApplication.shared.keyWindow?.rootViewController = main
                 }
             }

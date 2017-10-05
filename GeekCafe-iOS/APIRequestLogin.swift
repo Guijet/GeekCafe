@@ -39,7 +39,10 @@ class APIRequestLogin{
                 phoneUser = ""
             }
             let birth_date = user["birth_date"] as! String
-            let image_url = user["profile_image"] as! String
+            let image_id = user["profile_image"] as! String
+            let image_url = "\(Global.global.ip!)image/\(image_id)"
+            
+            
             let token = Global.global.userInfo.token
             
             Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, cards: [userCard]())

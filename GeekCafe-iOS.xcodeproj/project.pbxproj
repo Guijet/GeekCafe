@@ -65,6 +65,10 @@
 		46A8F7941F5722700085181F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F7921F5722700085181F /* LaunchScreen.storyboard */; };
 		46A8F79F1F5722700085181F /* GeekCafe_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F79E1F5722700085181F /* GeekCafe_iOSTests.swift */; };
 		46A8F7AA1F5722700085181F /* GeekCafe_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7A91F5722700085181F /* GeekCafe_iOSUITests.swift */; };
+		46C7CCFB1F86BF5800C7961B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C7CCFA1F86BF5800C7961B /* Profile.storyboard */; };
+		46C7CCFD1F86BF9600C7961B /* APIRequestProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7CCFC1F86BF9600C7961B /* APIRequestProfile.swift */; };
+		46C7CCFF1F86BFA300C7961B /* AssetsProfile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46C7CCFE1F86BFA300C7961B /* AssetsProfile.xcassets */; };
+		46C7CD011F86BFB200C7961B /* MainPageProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7CD001F86BFB200C7961B /* MainPageProfile.swift */; };
 		46D1DB751F5F52340008D3F7 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D1DB631F5F52340008D3F7 /* Lato-Black.ttf */; };
 		46D1DB761F5F52340008D3F7 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D1DB641F5F52340008D3F7 /* Lato-BlackItalic.ttf */; };
 		46D1DB771F5F52340008D3F7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D1DB651F5F52340008D3F7 /* Lato-Bold.ttf */; };
@@ -181,6 +185,10 @@
 		46A8F7A51F5722700085181F /* GeekCafe-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GeekCafe-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A8F7A91F5722700085181F /* GeekCafe_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeekCafe_iOSUITests.swift; sourceTree = "<group>"; };
 		46A8F7AB1F5722700085181F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46C7CCFA1F86BF5800C7961B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		46C7CCFC1F86BF9600C7961B /* APIRequestProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestProfile.swift; sourceTree = "<group>"; };
+		46C7CCFE1F86BFA300C7961B /* AssetsProfile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsProfile.xcassets; sourceTree = "<group>"; };
+		46C7CD001F86BFB200C7961B /* MainPageProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageProfile.swift; sourceTree = "<group>"; };
 		46D1DB631F5F52340008D3F7 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Black.ttf"; path = "Fonts/Lato/Lato-Black.ttf"; sourceTree = "<group>"; };
 		46D1DB641F5F52340008D3F7 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-BlackItalic.ttf"; path = "Fonts/Lato/Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
 		46D1DB651F5F52340008D3F7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Bold.ttf"; path = "Fonts/Lato/Lato-Bold.ttf"; sourceTree = "<group>"; };
@@ -329,6 +337,7 @@
 		460F7B8C1F83EDD50043B7E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46C7CCF51F86BF1E00C7961B /* Profile */,
 				468785231F71946B0009C292 /* Promotions */,
 				4687851E1F7194370009C292 /* TrouvezRestaurant */,
 				468785191F7193F10009C292 /* Abonnement */,
@@ -704,6 +713,49 @@
 			path = "GeekCafe-iOSUITests";
 			sourceTree = "<group>";
 		};
+		46C7CCF51F86BF1E00C7961B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				46C7CCF71F86BF3700C7961B /* Utility */,
+				46C7CCF91F86BF4700C7961B /* Storyboard */,
+				46C7CCF81F86BF3D00C7961B /* APIRequest */,
+				46C7CCF61F86BF2D00C7961B /* Controllers */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		46C7CCF61F86BF2D00C7961B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				46C7CD001F86BFB200C7961B /* MainPageProfile.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		46C7CCF71F86BF3700C7961B /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				46C7CCFE1F86BFA300C7961B /* AssetsProfile.xcassets */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		46C7CCF81F86BF3D00C7961B /* APIRequest */ = {
+			isa = PBXGroup;
+			children = (
+				46C7CCFC1F86BF9600C7961B /* APIRequestProfile.swift */,
+			);
+			name = APIRequest;
+			sourceTree = "<group>";
+		};
+		46C7CCF91F86BF4700C7961B /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				46C7CCFA1F86BF5800C7961B /* Profile.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
 		46D1DB871F5F52450008D3F7 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -963,6 +1015,7 @@
 				46D1DB761F5F52340008D3F7 /* Lato-BlackItalic.ttf in Resources */,
 				4687853D1F7195AC0009C292 /* Promotions.storyboard in Resources */,
 				46D1DB781F5F52340008D3F7 /* Lato-BoldItalic.ttf in Resources */,
+				46C7CCFF1F86BFA300C7961B /* AssetsProfile.xcassets in Resources */,
 				460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */,
 				460644911F57407000BD08E5 /* Login-SignUp.storyboard in Resources */,
 				46D1DB7C1F5F52340008D3F7 /* Lato-HeavyItalic.ttf in Resources */,
@@ -980,6 +1033,7 @@
 				46D1DB861F5F52340008D3F7 /* Lato-ThinItalic.ttf in Resources */,
 				46D1DB791F5F52340008D3F7 /* Lato-Hairline.ttf in Resources */,
 				46D1DB751F5F52340008D3F7 /* Lato-Black.ttf in Resources */,
+				46C7CCFB1F86BF5800C7961B /* Profile.storyboard in Resources */,
 				468785351F7195760009C292 /* TrouverRestoAssets.xcassets in Resources */,
 				46A8F78F1F5722700085181F /* Main.storyboard in Resources */,
 				46D1DB771F5F52340008D3F7 /* Lato-Bold.ttf in Resources */,
@@ -1083,12 +1137,14 @@
 				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
+				46C7CD011F86BFB200C7961B /* MainPageProfile.swift in Sources */,
 				461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
 				467BC11F1F82E2B200C300AF /* ChooseSizeFondue.swift in Sources */,
 				46FDA4E31F84016D00B6A07B /* PriceItem.swift in Sources */,
+				46C7CCFD1F86BF9600C7961B /* APIRequestProfile.swift in Sources */,
 				4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */,
 				46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
