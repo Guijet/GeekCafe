@@ -311,7 +311,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
     func autoLoginFB(access_token:String){
         if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
             if(APIRequestLogin().viewUser()){
-                
                 let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                 let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
                 UIApplication.shared.keyWindow?.rootViewController = main
@@ -333,11 +332,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: { (connection, result, error) -> Void in
             if ((error) != nil)
             {
-                print("Error: \(String(describing: error))")
+                Utility().alert(message: "Error: \(String(describing: error))", title: "Erreur", control: self)
             }
             else{
-                if(APIRequestLogin().createAccountFacebbok(accessToken: FBSDKAccessToken.current().tokenString!)){
-                    print("Account created")
+                if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
+                    if(APIRequestLogin().viewUser()){
+                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }
                 }
             }
         })

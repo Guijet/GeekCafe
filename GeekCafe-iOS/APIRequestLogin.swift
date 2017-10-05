@@ -112,20 +112,27 @@ class APIRequestLogin{
         return isSaved
     }
     
-    func createAccountFacebbok(accessToken:String)->Bool{
+    func facebookRequest(accessToken:String)->Bool{
         var worked:Bool = false
         var json = Utility().getJson(url: "\(Global.global.ip!)loginfacebook", method: "POST",body:"access_token=\(accessToken)")
         
         var idUser:Int!
         var token_user,firstname_user,lastname_user,gender_user,birthdate_user,email_user,phone_user,image_user:String!
         
+        //TOKEN
+        if let token = json["token"] as? String{
+            worked = true
+            saveFBacessToken(access_token: accessToken)
+            Global.global.userInfo.token = token
+            token_user = token
+        }
+        else{
+            token_user = ""
+        }
+        
+        //USER DATA
         if let data = json["data"] as? [String:Any]{
-            if let token = json["token"] as? String{
-                token_user = token
-            }
-            else{
-                token_user = ""
-            }
+            
             if let id = data["id"] as? Int{
                 idUser = id
             }
@@ -180,9 +187,7 @@ class APIRequestLogin{
                 image_user = ""
             }
             worked = true
-            saveFBacessToken(access_token: accessToken)
             Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, cards: [userCard]())
-            
         }
         return worked
     }
