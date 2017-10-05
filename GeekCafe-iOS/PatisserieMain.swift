@@ -8,30 +8,21 @@
 
 import UIKit
 
-struct patisserie{
-    init(id:Int,name:String,image:UIImage){
-        self.id = id
-        self.name = name
-        self.image = image
-    }
-    var id:Int
-    var name:String
-    var image:UIImage
-}
-
-class PatisserieMain: UIViewController {
+class PatisserieMain: UIViewController{
 
     let scrollView = UIScrollView()
     let backgroundImage = UIImageView()
-    var arrayPatisserie = [patisserie]()
+    
+    var listItemToPass:[ItemList]!
+    var infoItem:Item!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
-        fillArrayPatisserie()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
         fillScrollView()
+        
     }
     
     //To make bar all white non translucent and appearing
@@ -63,8 +54,8 @@ class PatisserieMain: UIViewController {
         
         var newY:CGFloat = rh(15)
         
-        if(arrayPatisserie.count > 0){
-            for x in arrayPatisserie{
+        if(listItemToPass.count > 0){
+            for x in listItemToPass{
                 let containerButton = UIButton()
                 containerButton.backgroundColor = UIColor.clear
                 containerButton.tag = x.id
@@ -85,7 +76,7 @@ class PatisserieMain: UIViewController {
                 
                 let imagePatisserie = UIImageView()
                 imagePatisserie.frame = CGRect(x: ((containerButton.frame.width/2) - rw((70/2))), y: rh(9), width: rw(70), height: rh(82))
-                imagePatisserie.image = x.image
+                imagePatisserie.getOptimizeImageAsync(url: x.image)
                 containerButton.addSubview(imagePatisserie)
                 
                 let titlePatisserie = UILabel()
@@ -104,12 +95,13 @@ class PatisserieMain: UIViewController {
     }
     
     func patisseriePressed(sender:UIButton){
-        print(sender.tag)
+        infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
+        performSegue(withIdentifier: "toChoosePatisserie", sender: nil)
     }
     
-    func fillArrayPatisserie(){
-        for x in 1...13{
-            arrayPatisserie.append(patisserie(id: x, name: "patisserie \(x)", image: UIImage(named:"muffinListimg")!))
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toChoosePatisserie"){
+            (segue.destination as! ChoosePatisserie).infoItem = self.infoItem
         }
     }
 

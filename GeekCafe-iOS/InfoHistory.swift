@@ -56,7 +56,7 @@ class InfoHistory: UIViewController {
                 
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(10), width: rw(60), height: rw(60))
-                imageItem.image = x.image
+                //imageItem.image = x.image
                 containerView.addSubview(imageItem)
                 
                 let price = UILabel()
@@ -64,7 +64,7 @@ class InfoHistory: UIViewController {
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                price.text = "$\(x.price)"
+                //price.text = "$\(x.price)"
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
@@ -72,7 +72,7 @@ class InfoHistory: UIViewController {
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
-                flavour.text = "\(x.flavour)"
+                //flavour.text = "\(x.flavour)"
                 containerView.addSubview(flavour)
                 
                 let type = UILabel()

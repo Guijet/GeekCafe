@@ -340,7 +340,15 @@ class MenuClass{
     //Action du logout
     //
     @objc fileprivate func logOutPressed(){
-        print("Log Out")
+        Utility().alertYesNo(message: "Ëtes-vous certain de vouloir vous déconnecter?", title: "Message", control: viewToAnimate.parentViewController!, yesAction: {
+            
+            UserDefaults.standard.removeObject(forKey: "Token")
+            UserDefaults.standard.removeObject(forKey: "FB_Token")
+            
+            let storyboard = UIStoryboard(name: "Login-SignUp", bundle: nil)
+            let main = storyboard.instantiateViewController(withIdentifier: "MainLogin")
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, noAction: nil, titleYes: "Continuer", titleNo: "Annuler", style: .alert)
     }
     
     private func animateCloseItems(view:UIView){
@@ -362,4 +370,17 @@ class MenuClass{
         return val * (view.frame.height / 667)
     }
     
+}
+
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
 }

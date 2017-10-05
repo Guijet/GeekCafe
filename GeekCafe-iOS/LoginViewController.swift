@@ -37,7 +37,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         setUpButton()
         animateIn()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        UserDefaults.standard.synchronize()
+        if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
+            autoLoginFB(access_token: tokenTB)
+        }
+        else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
+            autoLogin(token: token)
+        }
+        
+    }
     override func viewWillDisappear(_ animated: Bool) {
         self.view.endEditing(true)
     }
@@ -122,6 +131,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         
         connectButton.isHidden = true
         connectButton.createCreateButton(title: "Suivant", frame: CGRect(x: rw(87), y: rh(549), width: rw(202), height: rh(50)),fontSize:rw(20),containerView:self.view)
+        connectButton.addTarget(self, action: #selector(connectButtonPressed(sender:)), for: .touchUpInside)
         view.addSubview(connectButton)
         
         createAccountButton.frame = CGRect(x: rw(56), y: rh(613), width: rw(262.5), height: rh(21))
@@ -259,8 +269,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         if(TB_Email.text! != "" && TB_Password.text! != ""){
             if(APIRequestLogin().login(password: TB_Password.text!, email: TB_Email.text!)){
                 if(APIRequestLogin().viewUser()){
-                    let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
-                    let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
                     UIApplication.shared.keyWindow?.rootViewController = main
                 }
                 else{
@@ -280,7 +290,34 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         performSegue(withIdentifier: "toCreateAccount", sender: nil)
     }
     
+    //
+    //
+    //AUTO LOGIN
+    //
+    //
+    func autoLogin(token:String){
+        if(APIRequestLogin().verifyToken(token: token)){
+            if(APIRequestLogin().viewUser()){
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIApplication.shared.keyWindow?.rootViewController = main
+            }
+            else{
+                Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
+            }
+        }
+    }
     
+    func autoLoginFB(access_token:String){
+        if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
+            if(APIRequestLogin().viewUser()){
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIApplication.shared.keyWindow?.rootViewController = main
+                
+            }
+        }
+    }
     
     //
     //
@@ -295,11 +332,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: { (connection, result, error) -> Void in
             if ((error) != nil)
             {
-                print("Error: \(String(describing: error))")
+                Utility().alert(message: "Error: \(String(describing: error))", title: "Erreur", control: self)
             }
             else{
-                //CREER LE COMPTE
-                print(String(describing: FBSDKAccessToken.current().tokenString!))
+                if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
+                    if(APIRequestLogin().viewUser()){
+                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }
+                }
             }
         })
     }
@@ -319,7 +361,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
             fetchProfile()
         }
     }
-    
 }
 
 

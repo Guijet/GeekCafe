@@ -227,6 +227,16 @@
         view.addSubview(hr)
     }
     
+    func createVerticalHR(x: CGFloat,y: CGFloat, height: CGFloat,view: UIView,color: UIColor){
+        let hr = UITextView()
+        hr.isSelectable = false
+        hr.isEditable = false
+        hr.frame = CGRect(x: x, y: y, width: 1, height: height)
+        hr.backgroundColor = color
+        hr.isUserInteractionEnabled = false
+        view.addSubview(hr)
+    }
+    
     func setAllTextFieldType(rootView: UIView,type: UIKeyboardType) {
         if rootView is UITextField {
             (rootView as! UITextField).keyboardType = type
@@ -1113,7 +1123,28 @@
         gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    func addDashedBorder(color:UIColor,lineWidth:CGFloat,linePattern:[NSNumber]) {
+        let color = color
+        
+        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        let frameSize = self.frame.size
+        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
+        
+        shapeLayer.bounds = shapeRect
+        shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.lineWidth = lineWidth
+        shapeLayer.lineJoin = kCALineJoinRound
+        shapeLayer.lineDashPattern = linePattern
+        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: shapeRect.width/2).cgPath
+        
+        self.layer.addSublayer(shapeLayer)
+    }
  }
+ 
+
  
 
 

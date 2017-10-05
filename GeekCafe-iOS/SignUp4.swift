@@ -10,6 +10,8 @@
 //WAIT FOR MATHIEU FOR NEW DESIGN
 
 import UIKit
+import Stripe
+import AFNetworking
 import AVFoundation
 
 class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
@@ -22,6 +24,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let TB_CardHolderName = UITextField()
     let TB_CVC = UITextField()
     let nextButton = UIButton()
+    var cardToken:String!
     
     var isKeyBoardActive:Bool = false
     
@@ -33,13 +36,6 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     var phone:String!
     var email:String!
     var password:String!
-    
-    //Carte information
-    var last4:String!
-    var expYear:String!
-    var expMonth: String!
-    var brand: String!
-    var cardName:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,6 +210,40 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     
     
+    func getCardToken(cardNumber:String,cvv:String,expiryMonth:String,expiryYear:String){
+        do {
+            
+            let stripCard = STPCard()
+            stripCard.number = cardNumber
+            stripCard.cvc = cvv
+            stripCard.expMonth = UInt(expiryMonth)!
+            stripCard.expYear = UInt("20\(expiryYear)")!
+            
+            try stripCard.validateReturningError()
+            STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
+                if error == nil {
+                    
+                    if(APIRequestLogin().createAcount(first_name: self.firstName, last_name: self.lastName, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
+                        if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
+                            
+                            Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
+                            self.performSegue(withIdentifier: "toCardInfo", sender: nil)
+                        }
+                        else{
+                            Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
+                        }
+                    }
+                }
+                else{
+                    Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
+                }
+            })
+        }
+        catch let error as NSError{
+            print(error)
+        }
+    }
+    
     
     
     func endEditing(){
@@ -284,8 +314,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     func nextPressed(sender:UIButton){
         if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
-            //METTRE LA CARTE QUAND CE SERA FAIT
-            performSegue(withIdentifier: "toCardInfo", sender: nil)
+            getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
         }
         else{
             Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
@@ -295,9 +324,14 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func nextNoCard(sender:UIButton){
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+            let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
             UIApplication.shared.keyWindow?.rootViewController = main
         }
+    }
+    
+    func splitExpiration(expiration:String)->[String]{
+        let arrayString = expiration.components(separatedBy: "/")
+        return [arrayString[0],arrayString[1]]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -310,13 +344,6 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             (segue.destination as! SignUp5).phone = self.phone
             (segue.destination as! SignUp5).email = self.email
             (segue.destination as! SignUp5).password = self.password
-            
-            //Card information
-            (segue.destination as! SignUp5).last4 = self.last4
-            (segue.destination as! SignUp5).expYear = self.expYear
-            (segue.destination as! SignUp5).expMonth = self.expMonth
-            (segue.destination as! SignUp5).brand = self.brand
-            (segue.destination as! SignUp5).cardName = self.cardName
         }
     }
 }

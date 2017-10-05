@@ -8,6 +8,8 @@
 
 import UIKit
 import FBSDKCoreKit
+import Stripe
+import AFNetworking
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,9 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Stripe.setDefaultPublishableKey("pk_test_8tGMOp2AUxHPPKunjW6PnZwk")
         
-        Global.global.ip = "http://192.168.168.113:8888/GeekCafe-API/public/"
-        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "")
+        Global.global.ip = "http://localhost:8888/GeekCafe-API/public/api/"
+        Global.global.fbResult = ""
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
     
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
