@@ -884,7 +884,7 @@
     func getOptimizeImageAsync(url: String){
         let refrsh = UIActivityIndicatorView()
         refrsh.frame = CGRect(x: self.bounds.midX - (self.frame.height / 2), y: self.bounds.minY, width: self.frame.height, height: self.frame.height)
-        refrsh.color = Utility().hexStringToUIColor(hex: "#A94B07")
+        refrsh.color = Utility().hexStringToUIColor(hex: "#6CA743")
         self.addSubview(refrsh)
         refrsh.startAnimating()
         DispatchQueue.global(qos: .background).async {
