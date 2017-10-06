@@ -325,7 +325,9 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-            UIApplication.shared.keyWindow?.rootViewController = main
+            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                UIApplication.shared.keyWindow?.rootViewController = main
+            }, completion: nil)
         }
     }
     
