@@ -25,6 +25,7 @@
 		462CF6F21F60546C00326426 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6F11F60546C00326426 /* Global.swift */; };
 		46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */; };
 		46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */; };
+		46360DDA1F8C013F00EC2E04 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 46360DD91F8C013F00EC2E04 /* style.json */; };
 		4639D7431F851C65008DAFF3 /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4639D7421F851C65008DAFF3 /* LoadingAnimation.swift */; };
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
@@ -138,6 +139,7 @@
 		462CF6F11F60546C00326426 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandRed.swift; sourceTree = "<group>"; };
 		46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandGreen.swift; sourceTree = "<group>"; };
+		46360DD91F8C013F00EC2E04 /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = style.json; path = ../../style.json; sourceTree = "<group>"; };
 		4639D7421F851C65008DAFF3 /* LoadingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimation.swift; sourceTree = "<group>"; };
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 		46A8F77D1F5722700085181F = {
 			isa = PBXGroup;
 			children = (
+				46360DD91F8C013F00EC2E04 /* style.json */,
 				46D1DB8E1F60324E0008D3F7 /* Bridging-Header.h */,
 				46D1DB871F5F52450008D3F7 /* Fonts */,
 				46A8F7881F5722700085181F /* GeekCafe-iOS */,
@@ -1018,6 +1021,7 @@
 				46C7CCFF1F86BFA300C7961B /* AssetsProfile.xcassets in Resources */,
 				460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */,
 				460644911F57407000BD08E5 /* Login-SignUp.storyboard in Resources */,
+				46360DDA1F8C013F00EC2E04 /* style.json in Resources */,
 				46D1DB7C1F5F52340008D3F7 /* Lato-HeavyItalic.ttf in Resources */,
 				468785291F7195120009C292 /* CommandesAssets.xcassets in Resources */,
 				46D1DB811F5F52340008D3F7 /* Lato-MediumItalic.ttf in Resources */,
