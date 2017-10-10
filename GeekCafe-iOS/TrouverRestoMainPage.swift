@@ -16,6 +16,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     let containerView = UIView()
     
     var coordinates:[CLLocationCoordinate2D] = [CLLocationCoordinate2D]()
+    var searchLocation:CLLocation = CLLocation()
     var markers = [GMSMarker]()
     let mapView = GMSMapView()
     let regionRadius: CLLocationDistance = 1000
@@ -47,6 +48,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         containerView.backgroundColor = UIColor.white
         view.addSubview(containerView)
     }
+  
     func setUpMap(){
         mapView.delegate = self
         mapView.frame = CGRect(x: 0, y: 64, width: view.frame.width, height: rh(486))
@@ -83,15 +85,38 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //
     //
     func setUpPinOnMap(){
+        
+        
         for x in coordinates{
             let marker = GMSMarker()
+            
             marker.position = x
-            marker.title = "My Pin"
+            marker.title = "31 boul du faubourg, Boisbriand, J7F4G9"
             marker.icon = UIImage(named:"pin_little")
             marker.map = self.mapView
             marker.opacity = 1.0
             markers.append(marker)
         }
+        
+    }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let containerView = UIView()
+        containerView.frame.size = CGSize(width: rw(280), height: rh(45))
+        containerView.backgroundColor = UIColor.clear
+        
+        let markerImage = UIImage(named: "Tooltip")
+        let viewImage = UIImageView(image:markerImage)
+        viewImage.frame = CGRect(x: 0, y: 0, width: rw(140), height: rh(40))
+        containerView.addSubview(viewImage)
+        
+        let title = UILabel()
+        title.createLabel(frame: CGRect(x:rw(5),y:rh(2),width:viewImage.frame.width - rw(10),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: marker.title!)
+        title.numberOfLines = 2
+        title.lineBreakMode = .byTruncatingTail
+        viewImage.addSubview(title)
+        
+        return containerView
     }
     
     //
@@ -100,8 +125,8 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //
     //
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        
-        
+        focusMapOnSingleMarker(marker: marker)
+        mapView.selectedMarker = marker
         return true
     }
     
@@ -113,12 +138,62 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     func focusMapToShowAllMarkers() {
         let myLocation: CLLocationCoordinate2D = self.markers.first!.position
         var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
-        
         for marker in self.markers {
             bounds = bounds.includingCoordinate(marker.position)
         }
         let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
         self.mapView.animate(with:update)
+    }
+    
+    func focusMapOnSingleMarker(marker:GMSMarker){
+        let myLocation: CLLocationCoordinate2D = marker.position
+        let bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
+        let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
+        self.mapView.animate(with:update)
+    }
+    
+    //
+    //
+    //Get closest pin the entered location
+    //
+    //
+    func getClosestPin(postalCode:String)->GMSMarker{
+        var closestMarker = GMSMarker()
+        getLocationSearch(postalCode: postalCode)
+    
+        var index = 0
+        var smallestDistance:Double = 0
+        for x in markers{
+            let markerLocation = CLLocation(latitude: x.position.latitude, longitude: x.position.longitude)
+            let metres = searchLocation.distance(from: markerLocation)
+
+            if(index == 0){
+                smallestDistance = metres
+            }
+            
+            if(smallestDistance > metres){
+                smallestDistance = metres
+                closestMarker = x
+            }
+            
+            index += 1
+        }
+        
+        return closestMarker
+    }
+    
+    func getLocationSearch(postalCode:String){
+        //var coordinates = CLLocationCoordinate2D()
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(postalCode) { (placemarks, error) in
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first?.location
+                else {
+                    return
+            }
+            self.searchLocation = location
+        }
     }
     
     //
@@ -127,11 +202,11 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //
     //
     func fillFakeCoordinates(){
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(47.4925), longitude: CLLocationDegrees(19.6613)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(46.728), longitude: CLLocationDegrees(19.2583)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(46.528), longitude: CLLocationDegrees(19.1553)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(47.228), longitude: CLLocationDegrees(19.4543)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(46.249), longitude: CLLocationDegrees(19.4533)))
+        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.69179211), longitude: CLLocationDegrees(-73.644104)))
+        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.64764837), longitude: CLLocationDegrees(-73.85009766)))
+        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.68987354), longitude: CLLocationDegrees(-73.77868652)))
+        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.65244829), longitude: CLLocationDegrees(-74.09729004)))
+        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.55637174), longitude: CLLocationDegrees(-73.90365601)))
     }
     
     //
