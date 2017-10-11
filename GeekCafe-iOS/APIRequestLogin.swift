@@ -41,6 +41,7 @@ class APIRequestLogin{
             let birth_date = user["birth_date"] as! String
             let image_id = user["profile_image"] as! String
             let image_url = "\(Global.global.ip!)image/\(image_id)"
+            print(image_url)
             
             
             let token = Global.global.userInfo.token

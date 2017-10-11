@@ -858,6 +858,7 @@
 		46FDA4DE1F83F67700B6A07B /* Good */ = {
 			isa = PBXGroup;
 			children = (
+				468785441F71CF5C0009C292 /* Promotion.swift */,
 				462CF6EF1F60514B00326426 /* User.swift */,
 				460F7B8F1F83EE530043B7E8 /* userCard.swift */,
 				46FDA4DA1F83F06A00B6A07B /* ItemType.swift */,
@@ -875,7 +876,6 @@
 				464012661F75C62800E271B2 /* ListAbonnement.swift */,
 				468785321F7195630009C292 /* AbonnementMainPage.swift */,
 				468785401F71A6F30009C292 /* HistoryList.swift */,
-				468785441F71CF5C0009C292 /* Promotion.swift */,
 			);
 			name = TODO;
 			sourceTree = "<group>";
