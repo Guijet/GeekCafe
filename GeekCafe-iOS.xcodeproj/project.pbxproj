@@ -13,6 +13,7 @@
 		460644981F57412300BD08E5 /* ImageLogin-SignUp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */; };
 		460644C01F57801700BD08E5 /* SignUp1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644BF1F57801700BD08E5 /* SignUp1.swift */; };
 		460644C21F579A6500BD08E5 /* navController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460644C11F579A6500BD08E5 /* navController.swift */; };
+		460B121E1F912D1600A79A62 /* Commande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B121D1F912D1600A79A62 /* Commande.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
 		460F7B901F83EE530043B7E8 /* userCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7B8F1F83EE530043B7E8 /* userCard.swift */; };
@@ -127,6 +128,7 @@
 		460644971F57412300BD08E5 /* ImageLogin-SignUp.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImageLogin-SignUp.xcassets"; sourceTree = "<group>"; };
 		460644BF1F57801700BD08E5 /* SignUp1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp1.swift; sourceTree = "<group>"; };
 		460644C11F579A6500BD08E5 /* navController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navController.swift; sourceTree = "<group>"; };
+		460B121D1F912D1600A79A62 /* Commande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commande.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
 		460F7B8F1F83EE530043B7E8 /* userCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userCard.swift; sourceTree = "<group>"; };
@@ -866,6 +868,7 @@
 				46FDA4DF1F84008E00B6A07B /* Subitem.swift */,
 				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
 				46FDA4E41F84062500B6A07B /* ItemList.swift */,
+				460B121D1F912D1600A79A62 /* Commande.swift */,
 			);
 			name = Good;
 			sourceTree = "<group>";
@@ -1138,6 +1141,7 @@
 				46FDA4DB1F83F06A00B6A07B /* ItemType.swift in Sources */,
 				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
+				460B121E1F912D1600A79A62 /* Commande.swift in Sources */,
 				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
