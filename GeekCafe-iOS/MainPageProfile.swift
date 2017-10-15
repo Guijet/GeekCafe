@@ -15,7 +15,7 @@ class MainPageProfile: UIViewController {
     let scrollView = UIScrollView()
     let backgroundImage = UIImageView()
     let switchNotif = UISwitch()
-    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Niveaux"]
+    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,7 +157,7 @@ class MainPageProfile: UIViewController {
             //To termes et condition
         }
         else if(sender.tag == 5){
-            //TO NIveau
+            //To Paiements
         }
     }
     

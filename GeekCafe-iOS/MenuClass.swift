@@ -30,7 +30,7 @@ class MenuClass{
     fileprivate let LBL_CreditD = UILabel()
     
     //Menu buttons elements
-    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Profil"]
+    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Mes crédits","Profil"]
     //Deconnexion button
     fileprivate let deconnexionButton = UIButton()
     //Image deconnexion
@@ -320,7 +320,25 @@ class MenuClass{
         }
         
         if(sender.tag == 7){
-            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "PromotionMainPage"{
+            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
+                closeMenu()
+                return
+            }
+            closeMenu()
+            DispatchQueue.global().async {
+                while self.isOpen{usleep(500)}
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }
+            }
+        }
+        
+        if(sender.tag == 8){
+            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "ProfileMainPage"{
                 closeMenu()
                 return
             }
