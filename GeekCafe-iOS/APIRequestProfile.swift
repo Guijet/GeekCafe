@@ -6,4 +6,41 @@
 //  Copyright © 2017 Guillaume Jette. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class APIRequestProfile{
+    
+    func modifyEmail(newemail:String,password:String)->Bool{
+        let json = Utility().getJson(url: "\(Global.global.ip!)changeemail", method: "PUT", body: "password=\(password)&email=\(newemail)", needToken: true)
+        
+        if let _ = json["status"] as? String{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    
+    func modifyPassword(oldpassword:String,newpassword:String)->Bool{
+        let json = Utility().getJson(url: "\(Global.global.ip!)changeemail", method: "PUT", body: "password=\(newpassword)&newpassword=\(newpassword)", needToken: true)
+        
+        if let _ = json["status"] as? String{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func modifyUser(first_name:String = "",last_name:String = "",image_id:Int = 0)->Bool{
+        let json = Utility().getJson(url: "\(Global.global.ip!)user", method: "PUT", body: "first_name=\(first_name)&last_name=\(last_name)&image_id=\(image_id)", needToken: true)
+        
+        if let _ = json["status"] as? String{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+}
