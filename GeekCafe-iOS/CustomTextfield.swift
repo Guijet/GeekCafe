@@ -12,32 +12,35 @@ class CustomTextField:UITextField,UITextFieldDelegate{
     let placeholderLabel = UILabel()
     let separator = UIView()
     
-    init(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat){
+    init(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
         super.init(frame: CGRect.zero)
-        buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos)
+        buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos,superView:superView)
     }
     
-    fileprivate func buildViews(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat){
+    fileprivate func buildViews(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
         
         //Instantiate textfield base
-        self.frame = CGRect(x: xPos, y: yPos, width: containerView.rw(272), height: containerView.rh(32))
+        self.frame = CGRect(x: xPos, y: yPos, width: superView.rw(272), height: superView.rh(32))
         self.delegate = self
         self.autocorrectionType = .no
         self.autocapitalizationType = .none
-        self.font = UIFont(name:"Lato-Bold",size:containerView.rw(16))
+        self.font = UIFont(name:"Lato-Bold",size:superView.rw(16))
         self.textAlignment = .left
+        self.accessibilityIdentifier = "CTB"
         containerView.addSubview(self)
         
         //Instantiate custom text field placeholder
         
-        placeholderLabel.frame = CGRect(x: self.frame.minX, y: (self.frame.midY - containerView.rh(10)), width: self.frame.width, height: containerView.rh(20))
+        placeholderLabel.frame = CGRect(x: self.frame.minX, y: (self.frame.midY - superView.rh(10)), width: self.frame.width, height: superView.rh(20))
         placeholderLabel.textAlignment = .left
+        placeholderLabel.accessibilityIdentifier = "CTB"
         placeholderLabel.text = placeholderText
-        placeholderLabel.font = UIFont(name:"Lato-Bold",size:containerView.rw(16))
+        placeholderLabel.font = UIFont(name:"Lato-Bold",size:superView.rw(16))
         containerView.addSubview(placeholderLabel)
         
         
         separator.frame = CGRect(x: self.frame.minX, y: self.frame.maxY + 5, width: self.frame.width, height: 1)
+        separator.accessibilityIdentifier = "CTB"
         separator.backgroundColor = Utility().hexStringToUIColor(hex: "#DCDCDC")
         containerView.addSubview(separator)
     }

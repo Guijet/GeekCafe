@@ -10,12 +10,11 @@ import UIKit
 
 class AnimationsLogin{
     
-    func animateItemsLeft(containerView:UIView,items:[UIView]){
+    func animateItemsLeft(containerView:UIView,itemToMove:UIView){
         containerView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-            for x in items{
-                x.center.x -= containerView.frame.width
-            }
+            itemToMove.center.x -= containerView.frame.width
+            
         }, completion: { _ in
             containerView.isUserInteractionEnabled = true
         })
