@@ -105,6 +105,8 @@
 		46D25C951F69CB110033A634 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D25C941F69CB110033A634 /* Dashboard.storyboard */; };
 		46D25C971F69CC540033A634 /* DashBoardNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D25C961F69CC540033A634 /* DashBoardNavController.swift */; };
 		46D25C991F69CC610033A634 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D25C981F69CC610033A634 /* Dashboard.swift */; };
+		46DA4AA41FA001C100AE9DC4 /* APIRequestHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DA4AA31FA001C100AE9DC4 /* APIRequestHistory.swift */; };
+		46DA4AA61FA0255600AE9DC4 /* HistoryItemsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */; };
 		46FDA4DB1F83F06A00B6A07B /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FDA4DA1F83F06A00B6A07B /* ItemType.swift */; };
 		46FDA4DD1F83F21800B6A07B /* APIRequestCommande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FDA4DC1F83F21800B6A07B /* APIRequestCommande.swift */; };
 		46FDA4E01F84008E00B6A07B /* Subitem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FDA4DF1F84008E00B6A07B /* Subitem.swift */; };
@@ -238,6 +240,8 @@
 		46D25C941F69CB110033A634 /* Dashboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		46D25C961F69CC540033A634 /* DashBoardNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardNavController.swift; sourceTree = "<group>"; };
 		46D25C981F69CC610033A634 /* Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		46DA4AA31FA001C100AE9DC4 /* APIRequestHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestHistory.swift; sourceTree = "<group>"; };
+		46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemsInfo.swift; sourceTree = "<group>"; };
 		46FDA4DA1F83F06A00B6A07B /* ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemType.swift; sourceTree = "<group>"; };
 		46FDA4DC1F83F21800B6A07B /* APIRequestCommande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestCommande.swift; sourceTree = "<group>"; };
 		46FDA4DF1F84008E00B6A07B /* Subitem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subitem.swift; sourceTree = "<group>"; };
@@ -575,6 +579,7 @@
 		4687850B1F7186480009C292 /* API Request */ = {
 			isa = PBXGroup;
 			children = (
+				46DA4AA31FA001C100AE9DC4 /* APIRequestHistory.swift */,
 			);
 			name = "API Request";
 			sourceTree = "<group>";
@@ -987,6 +992,8 @@
 				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
 				46FDA4E41F84062500B6A07B /* ItemList.swift */,
 				460B121D1F912D1600A79A62 /* Commande.swift */,
+				468785401F71A6F30009C292 /* HistoryList.swift */,
+				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
 			);
 			name = Good;
 			sourceTree = "<group>";
@@ -996,7 +1003,6 @@
 			children = (
 				464012661F75C62800E271B2 /* ListAbonnement.swift */,
 				468785321F7195630009C292 /* AbonnementMainPage.swift */,
-				468785401F71A6F30009C292 /* HistoryList.swift */,
 			);
 			name = TODO;
 			sourceTree = "<group>";
@@ -1255,11 +1261,13 @@
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
 				467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */,
+				46DA4AA61FA0255600AE9DC4 /* HistoryItemsInfo.swift in Sources */,
 				468785411F71A6F30009C292 /* HistoryList.swift in Sources */,
 				468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */,
 				462CF6F21F60546C00326426 /* Global.swift in Sources */,
 				468C710D1F9BC53E007141B3 /* CustomTextfield.swift in Sources */,
 				468C711A1F9E312F007141B3 /* FirstView.swift in Sources */,
+				46DA4AA41FA001C100AE9DC4 /* APIRequestHistory.swift in Sources */,
 				46047E6C1F93F98E0000246C /* MainPageLoginV2.swift in Sources */,
 				461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */,
 				46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */,

@@ -297,6 +297,10 @@
         return "\(getDayOfWeek(date: date)), \(day) \(month)"
     }
     
+    func getCleanDate(date:String)->String{
+        //2017-10-25 00:50:33.000000
+        return date.substring(to: date.index(date.startIndex, offsetBy: 10))
+    }
     
     func getDayOfWeek(date: String) -> String{
         var weekDay = [String]()
