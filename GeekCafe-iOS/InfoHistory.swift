@@ -113,7 +113,7 @@ class InfoHistory: UIViewController {
         location.textColor = Utility().hexStringToUIColor(hex: "#D6D6D6")
         location.font = UIFont(name: "Lato-Regular", size: rw(15))
         location.textAlignment = .left
-        location.text = "\(historyToPass.country), \(historyToPass.city)"
+        location.text = "\(historyToPass.city), \(historyToPass.country)"
         bottomView.addSubview(location)
         
         let buttonFacture = UIButton()

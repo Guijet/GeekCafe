@@ -14,6 +14,7 @@ class APIRequestLogin{
     func login(password:String,email:String)->Bool{
         var worked:Bool = false
         var json:[String:Any] = Utility().getJson(url: "\(Global.global.ip!)token", method: "POST",body: "email=\(email)&password=\(password)")
+        print(json)
         if let token = json["token"] as? String{
             Global.global.userInfo.token = token
             saveToken(token: token)
@@ -95,7 +96,7 @@ class APIRequestLogin{
         if let cards = json["cards"] as? [[String:Any]]{
             if(cards.count > 0){
                 for x in 0...cards.count - 1{
-                    let a = userCard(last4: cards[x]["last4"] as! String, expMonth: String(cards[x]["exp_month"] as! Int), expYear: String(cards[x]["exp_year"] as! Int), brand: cards[x]["brand"] as! String, name: cardHolderName)
+                    let a = userCard(last4: cards[x]["last4"] as! String, expMonth: String(cards[x]["exp_month"] as! Int), expYear: String(cards[x]["exp_year"] as! Int), brand: cards[x]["brand"] as! String, name: cardHolderName, id_card: cards[x]["id"] as! String)
                     arrayCards.append(a)
                 }
             }

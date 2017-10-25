@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		460207BC1FA0F24600446E7A /* APIRequestPromotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460207BB1FA0F24600446E7A /* APIRequestPromotion.swift */; };
+		460207BE1FA0F45000446E7A /* APIRequestPaiement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460207BD1FA0F45000446E7A /* APIRequestPaiement.swift */; };
+		460207C01FA0FD3E00446E7A /* AssetPaiment.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460207BF1FA0FD3E00446E7A /* AssetPaiment.xcassets */; };
+		460207C21FA1010300446E7A /* loadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460207C11FA1010300446E7A /* loadingIndicator.swift */; };
 		46047E6A1F93F9040000246C /* LoginV2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46047E691F93F9040000246C /* LoginV2.storyboard */; };
 		46047E6C1F93F98E0000246C /* MainPageLoginV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46047E6B1F93F98E0000246C /* MainPageLoginV2.swift */; };
 		46047E6E1F93FB6A0000246C /* AssetLoginV2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46047E6D1F93FB6A0000246C /* AssetLoginV2.xcassets */; };
@@ -134,6 +138,10 @@
 
 /* Begin PBXFileReference section */
 		2213CA028F8C9D9BA52EE119 /* Pods-GeekCafe-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekCafe-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-GeekCafe-iOS/Pods-GeekCafe-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		460207BB1FA0F24600446E7A /* APIRequestPromotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestPromotion.swift; sourceTree = "<group>"; };
+		460207BD1FA0F45000446E7A /* APIRequestPaiement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestPaiement.swift; sourceTree = "<group>"; };
+		460207BF1FA0FD3E00446E7A /* AssetPaiment.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetPaiment.xcassets; sourceTree = "<group>"; };
+		460207C11FA1010300446E7A /* loadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadingIndicator.swift; sourceTree = "<group>"; };
 		46047E691F93F9040000246C /* LoginV2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginV2.storyboard; sourceTree = "<group>"; };
 		46047E6B1F93F98E0000246C /* MainPageLoginV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageLoginV2.swift; sourceTree = "<group>"; };
 		46047E6D1F93FB6A0000246C /* AssetLoginV2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetLoginV2.xcassets; sourceTree = "<group>"; };
@@ -394,6 +402,7 @@
 		460B12241F93F47D00A79A62 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				460207BF1FA0FD3E00446E7A /* AssetPaiment.xcassets */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -409,6 +418,7 @@
 		460B12261F93F48900A79A62 /* API Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				460207BD1FA0F45000446E7A /* APIRequestPaiement.swift */,
 			);
 			name = "API Request Files";
 			sourceTree = "<group>";
@@ -754,6 +764,7 @@
 		468785251F7194770009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				460207BB1FA0F24600446E7A /* APIRequestPromotion.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -958,6 +969,7 @@
 				460644951F57410D00BD08E5 /* Utility.swift */,
 				46A8F7901F5722700085181F /* Assets.xcassets */,
 				468C710C1F9BC53E007141B3 /* CustomTextfield.swift */,
+				460207C11FA1010300446E7A /* loadingIndicator.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -1144,6 +1156,7 @@
 				46A8F7911F5722700085181F /* Assets.xcassets in Resources */,
 				46D1DB831F5F52340008D3F7 /* Lato-Semibold.ttf in Resources */,
 				46D1DB761F5F52340008D3F7 /* Lato-BlackItalic.ttf in Resources */,
+				460207C01FA0FD3E00446E7A /* AssetPaiment.xcassets in Resources */,
 				4687853D1F7195AC0009C292 /* Promotions.storyboard in Resources */,
 				46D1DB781F5F52340008D3F7 /* Lato-BoldItalic.ttf in Resources */,
 				46C7CCFF1F86BFA300C7961B /* AssetsProfile.xcassets in Resources */,
@@ -1284,6 +1297,7 @@
 				461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */,
 				46D1DB8D1F5F8C2F0008D3F7 /* SignUp4.swift in Sources */,
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
+				460207C21FA1010300446E7A /* loadingIndicator.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
 				467BC11F1F82E2B200C300AF /* ChooseSizeFondue.swift in Sources */,
 				46FDA4E31F84016D00B6A07B /* PriceItem.swift in Sources */,
@@ -1302,7 +1316,9 @@
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
 				467BC1251F82E4D700C300AF /* SubitemsFondue.swift in Sources */,
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,
+				460207BE1FA0F45000446E7A /* APIRequestPaiement.swift in Sources */,
 				467BC11D1F82E27500C300AF /* ChooseSizeCrepe.swift in Sources */,
+				460207BC1FA0F24600446E7A /* APIRequestPromotion.swift in Sources */,
 				4639D7431F851C65008DAFF3 /* LoadingAnimation.swift in Sources */,
 				46FDA4DD1F83F21800B6A07B /* APIRequestCommande.swift in Sources */,
 				467BC1271F82E7D200C300AF /* SubitemsCrepe.swift in Sources */,

@@ -26,6 +26,8 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let nextButton = UIButton()
     var cardToken:String!
     
+    let load = loadingIndicator()
+    
     var isKeyBoardActive:Bool = false
     
     //User info
@@ -225,16 +227,24 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
                     
                     if(APIRequestLogin().createAcount(first_name: self.firstName, last_name: self.lastName, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
                         if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
-                            
+                            DispatchQueue.main.async {
+                                self.load.stopAnimatingAndRemove(view: self.view)
+                            }
                             Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
                             self.performSegue(withIdentifier: "toCardInfo", sender: nil)
                         }
                         else{
+                            DispatchQueue.main.async {
+                                self.load.stopAnimatingAndRemove(view: self.view)
+                            }
                             Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
                         }
                     }
                 }
                 else{
+                    DispatchQueue.main.async {
+                        self.load.stopAnimatingAndRemove(view: self.view)
+                    }
                     Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
                 }
             })
@@ -313,12 +323,18 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     }
     
     func nextPressed(sender:UIButton){
-        if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
-            getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
+        
+        load.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos: .background).async {
+            if(!(self.TB_CardNumber.text?.isEmpty)! && !(self.TB_Expiration.text?.isEmpty)! && !(self.TB_CVC.text?.isEmpty)! && !(self.TB_CardHolderName.text?.isEmpty)!){
+                self.getCardToken(cardNumber: self.TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: self.TB_CVC.text!, expiryMonth: self.splitExpiration(expiration: self.TB_Expiration.text!)[0], expiryYear: self.splitExpiration(expiration: self.TB_Expiration.text!)[1])
+            }
+            else{
+                Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
+            }
+            
         }
-        else{
-            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
-        }
+        
     }
     
     func nextNoCard(sender:UIButton){

@@ -37,7 +37,7 @@ class APIRequestHistory{
             let dataItems = items["data"] as! [[String:Any]]
             if(dataItems.count > 0){
                 for x in dataItems{
-                    itemsinlist.append(itemInfo(price: x["id"] as! NSNumber, image_url: "\(Global.global.ip!)image/\(x["image"] as! String)", name: x["name"] as! String, type: x["type"] as! String))
+                    itemsinlist.append(itemInfo(price: x["price"] as! NSNumber, image_url: "\(Global.global.ip!)image/\(x["image"] as! String)", name: x["name"] as! String, type: x["type"] as! String))
                 }
             }
 

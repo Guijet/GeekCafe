@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Stripe.setDefaultPublishableKey("pk_test_8tGMOp2AUxHPPKunjW6PnZwk")
         GMSServices.provideAPIKey("AIzaSyAB_DuRMN3fh1tUlNIsw405-hQghA4lqRw")
-        Global.global.ip = "http://localhost:8888/GeekCafe-API/public/api/"
+        Global.global.ip = "http://laravel.dev/"
         Global.global.fbResult = ""
         Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
     

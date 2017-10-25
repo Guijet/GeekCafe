@@ -30,7 +30,7 @@ class MenuClass{
     fileprivate let LBL_CreditD = UILabel()
     
     //Menu buttons elements
-    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Mes crédits","Profil"]
+    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Paiements","Profil"]
     //Deconnexion button
     fileprivate let deconnexionButton = UIButton()
     //Image deconnexion

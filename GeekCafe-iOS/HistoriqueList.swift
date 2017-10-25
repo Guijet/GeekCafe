@@ -132,6 +132,6 @@ class HistoriqueList: UIViewController {
 
 extension Float {
     var twoDecimal: String {
-        return self .truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.2f", self) : String(self)
+        return String(format: "%.2f", self)
     }
 }
