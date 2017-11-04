@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Global.global.ip = "http://laravel.dev/"
         Global.global.fbResult = ""
         Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
+        Global.global.itemsOrder = [itemOrder]()
     
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         

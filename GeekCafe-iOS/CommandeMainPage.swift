@@ -9,15 +9,17 @@
 import UIKit
 
 class CommandeMainPage: UIViewController {
-    
+   
+    //Visual usage
     let menu = MenuClass()
     let containerView = UIView()
-    
     let backgroundGeek = UIImageView()
     let scrollView = UIScrollView()
     var arrayItems = [ItemType]()
     
+    //List items
     var listItemToPass:[ItemList]!
+    var order:Order = Order(items: [itemOrder](), card_pay: false, id_branch: 0, id_counter: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()

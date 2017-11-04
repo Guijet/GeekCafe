@@ -41,8 +41,7 @@ class APIRequestLogin{
             }
             let birth_date = user["birth_date"] as! String
             let image_id = user["profile_image"] as! String
-            let image_url = "\(Global.global.ip!)image/\(image_id)"
-            print(image_url)
+            let image_url = image_id
             
             
             let token = Global.global.userInfo.token
@@ -186,7 +185,7 @@ class APIRequestLogin{
                 phone_user = ""
             }
             if let image = data["profile_image"] as? String{
-                image_user = "\(Global.global.ip!)image/\(image)"
+                image_user = image
             }
             else{
                 image_user = ""

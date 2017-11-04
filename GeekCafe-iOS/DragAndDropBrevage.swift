@@ -9,20 +9,23 @@
 import UIKit
 
 class DragAndDropBrevage: UIViewController{
-
+    
+    let LBL_Price = UILabel()
     let backgroundImage = UIImageView()
     let coffeImage = UIImageView()
     let bottomScrollView = UIScrollView()
     let panGesture = UIPanGestureRecognizer()
     
+    //View Items all info
     var infoItem:Item!
-    var priceItem:String!
-    
-    let swipeSubItems = UIPanGestureRecognizer()
+    var typeItem:String!
+    var priceItem:NSNumber!
+    var priceId:NSNumber!
+    var subitemsIds = [NSNumber]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        swipeSubItems.addTarget(self, action: #selector(dragView(sender:)))
+
         self.title = "Café"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
@@ -34,8 +37,8 @@ class DragAndDropBrevage: UIViewController{
     
     func setUpTopPart(){
         
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: priceItem)
+        
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "\(priceItem.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -84,9 +87,12 @@ class DragAndDropBrevage: UIViewController{
     func fillScrollView(){
         var newX:CGFloat = rw(33)
         if(infoItem.subitems.count > 0){
+            
             for x in infoItem.subitems{
-                
+                let tapGestureImage = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
                 let image = UIImageView()
+                image.isUserInteractionEnabled = true
+                image.addGestureRecognizer(tapGestureImage)
                 image.frame = CGRect(x: newX, y: rh(15), width: rw(50), height: rw(50))
                 image.layer.masksToBounds = true
                 image.layer.cornerRadius = rw(25)
@@ -107,6 +113,11 @@ class DragAndDropBrevage: UIViewController{
         }
     }
     
+    func getItemsForOrder()->itemOrder{
+        let item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price: priceItem)
+        return item
+    }
+    
     func dragView(sender:UIPanGestureRecognizer){
         let translation = sender.translation(in: self.view)
         if let view = sender.view {
@@ -116,9 +127,41 @@ class DragAndDropBrevage: UIViewController{
         sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
+    func tapSubitem(sender:UITapGestureRecognizer){
+        let imageTag = sender.view!.tag
+        updateBadge(containerView:sender.view!)
+        subitemsIds.append(imageTag as NSNumber)
+        updatePriceSubitems(subItemId: imageTag)
+        print(imageTag)
+    }
+    
+    func updateBadge(containerView:UIView){
+        let containerBadge = UIView()
+        containerBadge.frame = CGRect(x: containerView.frame.maxX - rw(12), y: containerView.frame.minY, width: rw(20), height: rw(20))
+        containerBadge.backgroundColor = UIColor.red
+        containerBadge.layer.cornerRadius = rw(10)
+        containerView.superview!.addSubview(containerBadge)
+    }
+    
+    func updatePriceSubitems(subItemId:Int){
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
+                if(x.id == subItemId){
+                    let totalPrice = priceItem.floatValue + x.price.floatValue
+                    priceItem = totalPrice as NSNumber
+                    
+                    LBL_Price.text = "\(priceItem.floatValue.twoDecimal)"
+                }
+            }
+        }
+        
+    }
+    
     func nextPressed(){
+        Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromBrevage", sender: nil)
     }
+    
     
     
 }

@@ -18,7 +18,7 @@ class APIRequestCommande{
             if(data.count > 0){
                 for x in 0...data.count - 1{
                     
-                    arrItemTypes.append(ItemType(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: "\(Global.global.ip!)image/\(data[x]["image"] as! String)"))
+                    arrItemTypes.append(ItemType(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: data[x]["image"] as! String))
                 }
             }
         }
@@ -33,7 +33,7 @@ class APIRequestCommande{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in 0...data.count - 1{
-                    itemsList.append(ItemList(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: "\(Global.global.ip!)image/\(data[x]["image"] as! String)"))
+                    itemsList.append(ItemList(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: data[x]["image"] as! String))
                 }
             }
         }
@@ -52,7 +52,7 @@ class APIRequestCommande{
             let name = data["name"] as! String
             let description = data["description"] as! String
             let type = data["type"] as! String
-            let image = "\(Global.global.ip!)image/\(data["image"] as! String)"
+            let image = data["image"] as! String
             var arrPrices = [PriceItem]()
             var arrSubItems = [Subitem]()
             //Array Price
@@ -83,7 +83,7 @@ class APIRequestCommande{
                     else{
                         price = 0
                     }
-                    arrSubItems.append(Subitem(id: subitemsData[y]["id"] as! Int, name: subitemsData[y]["name"] as! String, price: price, image: "\(Global.global.ip!)image/\(subitemsData[y]["image"] as! String)"))
+                    arrSubItems.append(Subitem(id: subitemsData[y]["id"] as! Int, name: subitemsData[y]["name"] as! String, price: price, image: subitemsData[y]["image"] as! String))
                 }
             }
             
@@ -92,5 +92,14 @@ class APIRequestCommande{
         }
         
         return item
+    }
+    
+    
+    func order(arrayItems:[itemOrder]){
+        let json = Utility().getJson(url: "\(Global.global.ip!)order", method: "POST",body:"",needToken:true)
+    }
+    
+    func buildJsonOrder(arrayItems:[itemOrder])->[String:Any]{
+        return ["test":"test"]
     }
 }

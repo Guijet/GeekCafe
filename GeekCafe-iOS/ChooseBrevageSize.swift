@@ -19,8 +19,15 @@ class ChooseBrevageSize: UIViewController {
     let bigViewDashed = UIView()
     let middleViewDashed = UIView()
     let smallViewDashed = UIView()
+    
+    //INFO ITEMS
     var infoItem:Item!
-    var priceItem:String!
+    
+    //NEEDED FOR ORDER
+    var priceItem:NSNumber!
+    var priceId:NSNumber!
+    
+    var item:itemOrder!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +37,7 @@ class ChooseBrevageSize: UIViewController {
         setUpTopPart()
         setDashedLines()
         setButtonAdd()
+        print(infoItem)
     }
 
     func setUpTopPart(){
@@ -45,7 +53,7 @@ class ChooseBrevageSize: UIViewController {
         BTN_HeaderLeft.layer.cornerRadius = rw(14)
         BTN_HeaderLeft.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderLeft.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderLeft.setTitle("Petit", for: .normal)
+        BTN_HeaderLeft.setTitle(infoItem.prices[0].size, for: .normal)
         BTN_HeaderLeft.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderLeft.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderLeft)
@@ -58,10 +66,13 @@ class ChooseBrevageSize: UIViewController {
         BTN_HeaderCenter.layer.cornerRadius = rw(14)
         BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#16EA7C")
         BTN_HeaderCenter.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderCenter.setTitle("Moyen", for: .normal)
+        BTN_HeaderCenter.setTitle(infoItem.prices[1].size, for: .normal)
         BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
+        
+        priceItem = infoItem.prices[1].price
+        priceId = infoItem.prices[1].id as NSNumber
         
         let BTN_HeaderRight = UIButton()
         BTN_HeaderRight.tag = infoItem.prices[2].id
@@ -71,7 +82,7 @@ class ChooseBrevageSize: UIViewController {
         BTN_HeaderRight.layer.cornerRadius = rw(14)
         BTN_HeaderRight.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderRight.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderRight.setTitle("Grand", for: .normal)
+        BTN_HeaderRight.setTitle(infoItem.prices[2].size, for: .normal)
         BTN_HeaderRight.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderRight.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderRight)
@@ -106,9 +117,10 @@ class ChooseBrevageSize: UIViewController {
     }
     
     func buttonTopPressed(sender:UIButton){
+        priceId = sender.tag as NSNumber
         
         LBL_Price.text = getPriceByID(id_price: sender.tag)
-        
+    
         resetButtonStateTop()
         resetDashedViews()
         
@@ -165,17 +177,17 @@ class ChooseBrevageSize: UIViewController {
         if(infoItem.prices.count > 0){
             for x in infoItem.prices{
                 if(id_price == x.id){
+                    priceItem = x.price
                     price = String(format: "$%.2f", x.price.floatValue)
                     break
                 }
             }
         }
         return price
-        
     }
     
     func buttonAddPressed(){
-        priceItem = LBL_Price.text
+
         performSegue(withIdentifier: "toDragAndDropCafe", sender: nil)
     }
     
@@ -183,6 +195,7 @@ class ChooseBrevageSize: UIViewController {
         if(segue.identifier == "toDragAndDropCafe"){
             (segue.destination as! DragAndDropBrevage).infoItem = self.infoItem
             (segue.destination as! DragAndDropBrevage).priceItem = self.priceItem
+            (segue.destination as! DragAndDropBrevage).priceId = self.priceId
         }
     }
 }

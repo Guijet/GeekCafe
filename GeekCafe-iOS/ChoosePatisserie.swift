@@ -114,10 +114,22 @@ class ChoosePatisserie: UIViewController{
         }
     }
     
+    
+    func getItemOrder()->itemOrder{
+        let item = itemOrder(price_id: infoItem.prices[0].id as NSNumber, subItemIds: [NSNumber](), image: infoItem.image, name: infoItem.name, type: infoItem.type, price: infoItem.prices[0].price)
+        return item
+    }
+    
     func addItem(){
+        addItemsToGlobalByNumber()
         performSegue(withIdentifier: "patisserieToEndOrder", sender: nil)
     }
     
+    func addItemsToGlobalByNumber(){
+        for _ in 0...numberOfItems - 1{
+            Global.global.itemsOrder.append(getItemOrder())
+        }
+    }
     
 
 }

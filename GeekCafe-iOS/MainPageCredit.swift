@@ -14,9 +14,11 @@ class MainPageCredit: UIViewController {
     var arrayCards = [userCard]()
     let scrollView = UIScrollView()
     let containerView = UIView()
+    let load = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        load.buildViewAndStartAnimate(view: self.view)
         DispatchQueue.global(qos: .background).async {
             self.arrayCards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
             DispatchQueue.main.async {
@@ -26,6 +28,7 @@ class MainPageCredit: UIViewController {
                 self.setUpScrollView()
                 self.setUpBottomButton()
                 self.fillScrollView()
+                self.load.stopAnimatingAndRemove(view: self.view)
             }
         }
         

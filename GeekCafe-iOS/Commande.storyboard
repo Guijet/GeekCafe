@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpS-A5-Wcy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpS-A5-Wcy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -169,33 +169,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="tEY-Dk-whW" kind="show" identifier="toSubItemsCrepe" id="Zkq-Y3-SC0"/>
+                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromCrepe" id="2ag-o2-1Ln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eP7-eu-fJD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2350" y="493"/>
-        </scene>
-        <!--Subitems Crepe-->
-        <scene sceneID="8Ca-VI-Kna">
-            <objects>
-                <viewController id="tEY-Dk-whW" customClass="SubitemsCrepe" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZYE-3i-VKV"/>
-                        <viewControllerLayoutGuide type="bottom" id="xZc-t0-372"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ymS-qj-wIZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromCrepe" id="F0x-ku-uOF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="b4g-Pk-pOw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3158" y="493"/>
         </scene>
         <!--End Order-->
         <scene sceneID="O8Q-Ia-rFB">
@@ -340,6 +319,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yAh-Sb-u9r"/>
+        <segue reference="2ag-o2-1Ln"/>
     </inferredMetricsTieBreakers>
 </document>

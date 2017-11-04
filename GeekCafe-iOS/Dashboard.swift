@@ -18,15 +18,20 @@ class Dashboard:UIViewController{
     let whiteButton = UIButton()
     let tapOnCard = UITapGestureRecognizer()
     let tapOnCardClose = UITapGestureRecognizer()
-    
+    let load = loadingIndicator()
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        setUPTopCard()
-        menu.setUpFakeNavBar(view:containerView,titleTop:"Accueil")
-        setUpMidPart()
+        load.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.main.async {
+            self.menu.setUpMenu(view: self.view)
+            self.setUpContainerView()
+            self.setUPTopCard()
+            self.menu.setUpFakeNavBar(view:self.containerView,titleTop:"Accueil")
+            self.setUpMidPart()
+            self.load.stopAnimatingAndRemove(view: self.view)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

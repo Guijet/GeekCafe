@@ -48,7 +48,6 @@
 		467BC11F1F82E2B200C300AF /* ChooseSizeFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC11E1F82E2B200C300AF /* ChooseSizeFondue.swift */; };
 		467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1201F82E4BD00C300AF /* FlavourFondue.swift */; };
 		467BC1251F82E4D700C300AF /* SubitemsFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1241F82E4D700C300AF /* SubitemsFondue.swift */; };
-		467BC1271F82E7D200C300AF /* SubitemsCrepe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1261F82E7D200C300AF /* SubitemsCrepe.swift */; };
 		467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */; };
 		4687850F1F7186740009C292 /* Historique.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687850E1F7186740009C292 /* Historique.storyboard */; };
 		468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785101F7186BA0009C292 /* HistoriqueList.swift */; };
@@ -179,7 +178,6 @@
 		467BC11E1F82E2B200C300AF /* ChooseSizeFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSizeFondue.swift; sourceTree = "<group>"; };
 		467BC1201F82E4BD00C300AF /* FlavourFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavourFondue.swift; sourceTree = "<group>"; };
 		467BC1241F82E4D700C300AF /* SubitemsFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubitemsFondue.swift; sourceTree = "<group>"; };
-		467BC1261F82E7D200C300AF /* SubitemsCrepe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubitemsCrepe.swift; sourceTree = "<group>"; };
 		467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavourCrepe.swift; sourceTree = "<group>"; };
 		4687850E1F7186740009C292 /* Historique.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Historique.storyboard; sourceTree = "<group>"; };
 		468785101F7186BA0009C292 /* HistoriqueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoriqueList.swift; sourceTree = "<group>"; };
@@ -516,7 +514,6 @@
 			children = (
 				467BC11C1F82E27500C300AF /* ChooseSizeCrepe.swift */,
 				467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */,
-				467BC1261F82E7D200C300AF /* SubitemsCrepe.swift */,
 			);
 			name = "Crêpe";
 			sourceTree = "<group>";
@@ -542,8 +539,8 @@
 		461232AD1F7830EE00D04E30 /* ListeCommande */ = {
 			isa = PBXGroup;
 			children = (
-				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				4694CE451F796B6900953D75 /* EndOrder.swift */,
+				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */,
 				46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */,
 			);
@@ -1003,9 +1000,9 @@
 				46FDA4DF1F84008E00B6A07B /* Subitem.swift */,
 				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
 				46FDA4E41F84062500B6A07B /* ItemList.swift */,
-				460B121D1F912D1600A79A62 /* Commande.swift */,
 				468785401F71A6F30009C292 /* HistoryList.swift */,
 				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
+				460B121D1F912D1600A79A62 /* Commande.swift */,
 			);
 			name = Good;
 			sourceTree = "<group>";
@@ -1321,7 +1318,6 @@
 				460207BC1FA0F24600446E7A /* APIRequestPromotion.swift in Sources */,
 				4639D7431F851C65008DAFF3 /* LoadingAnimation.swift in Sources */,
 				46FDA4DD1F83F21800B6A07B /* APIRequestCommande.swift in Sources */,
-				467BC1271F82E7D200C300AF /* SubitemsCrepe.swift in Sources */,
 				4687852D1F7195370009C292 /* CommandeMainPage.swift in Sources */,
 				468785391F7195910009C292 /* TrouverRestoMainPage.swift in Sources */,
 			);

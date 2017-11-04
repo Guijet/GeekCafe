@@ -12,7 +12,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
 
     let backgroundImage = UIImageView()
     let scrollView = UIScrollView()
-    var arrayItem = [Item]()
+    var arrayItems = [itemOrder]()
     let bottomView = UIView()
     
     //BOOL IF USER HAS ENOUGH CREDIT
@@ -34,7 +34,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         super.viewDidLoad()
         self.title = "Commande"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
-        fillFakeInfosArray()
         setUpScrollView()
         fillScrollView()
         setBottomView()
@@ -50,8 +49,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     func fillScrollView(){
         var newY:CGFloat = rh(5)
-        if(arrayItem.count > 0){
-            for x in 0...7{
+        if(Global.global.itemsOrder.count > 0){
+            for x in Global.global.itemsOrder{
                 
                 let containerView = UIView()
                 containerView.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: 72)
@@ -60,7 +59,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
-                imageItem.image = #imageLiteral(resourceName: "muffin")
+                imageItem.getOptimizeImageAsync(url: x.image)
                 containerView.addSubview(imageItem)
                 
                 let price = UILabel()
@@ -68,7 +67,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                price.text = "$ 10.00"
+                price.text = "\(x.price.floatValue.twoDecimal)"
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
@@ -76,7 +75,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
-                flavour.text = "Caramel"
+                flavour.text = x.name
                 containerView.addSubview(flavour)
                 
                 let type = UILabel()
@@ -84,7 +83,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 type.textColor = Utility().hexStringToUIColor(hex: "#D6D6D6")
                 type.font = UIFont(name: "Lato-Regular", size: rw(13))
                 type.textAlignment = .left
-                type.text = "Patisserie"
+                type.text = x.type
                 containerView.addSubview(type)
                 newY += (72 + rh(10))
             }
@@ -117,10 +116,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         bottomView.addSubview(payButton)
         
     }
-    
-    
-    
-    
     
     //
     //
@@ -514,16 +509,4 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     func endEditing(){
         self.promoContainer.endEditing(true)
     }
-    
-    
-    func fillFakeInfosArray(){
-        
-//        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
-//        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Caramel", price: "7.50"))
-//        arrayItem.append(Item(image:UIImage(named:"item1")!, type: "Drink", flavour: "Vanille", price: "4.00"))
-//        arrayItem.append(Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Choco", price: "3.75"))
-//        arrayItem.append(Item(image: UIImage(named:"item2")!, type: "Drink", flavour: "Choco", price: "3.75"))
-//        arrayItem.append(Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75"))
-    }
-
 }

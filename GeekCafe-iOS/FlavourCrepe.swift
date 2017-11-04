@@ -16,7 +16,9 @@ class FlavourCrepe: UIViewController {
     let LBL_Price = UILabel()
 
     var infoItem:Item!
-    var price:String!
+    var price:NSNumber!
+    var priceId:NSNumber!
+    var subitemsIds = [NSNumber]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,7 @@ class FlavourCrepe: UIViewController {
     func setUpTopPart(){
         
      
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: price)
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: price.floatValue.twoDecimal)
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -82,8 +84,10 @@ class FlavourCrepe: UIViewController {
         var newX:CGFloat = rw(33)
         if(infoItem.subitems.count > 0){
             for x in infoItem.subitems{
-                
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
                 let image = UIImageView()
+                image.isUserInteractionEnabled = true
+                image.addGestureRecognizer(tapGesture)
                 image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
                 image.layer.masksToBounds = false
                 image.contentMode = .scaleAspectFit
@@ -105,17 +109,43 @@ class FlavourCrepe: UIViewController {
         }
     }
 
-    
-    func nextPressed(){
-        price = LBL_Price.text
-        performSegue(withIdentifier: "toSubItemsCrepe", sender: nil)
+    func getItemsForOrder()->itemOrder{
+        let item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price)
+        return item
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toSubItemsCrepe"){
-            (segue.destination as! SubitemsCrepe).infoItem = self.infoItem
-            (segue.destination as! SubitemsCrepe).price = self.price
+    
+    func tapSubitem(sender:UITapGestureRecognizer){
+        let imageTag = sender.view!.tag
+        updateBadge(containerView:sender.view!)
+        subitemsIds.append(imageTag as NSNumber)
+        updatePriceSubitems(subItemId: imageTag)
+        print(imageTag)
+    }
+    
+    func updateBadge(containerView:UIView){
+        let containerBadge = UIView()
+        containerBadge.frame = CGRect(x: containerView.frame.maxX - rw(12), y: containerView.frame.minY, width: rw(20), height: rw(20))
+        containerBadge.backgroundColor = UIColor.red
+        containerBadge.layer.cornerRadius = rw(10)
+        containerView.superview!.addSubview(containerBadge)
+    }
+    
+    func updatePriceSubitems(subItemId:Int){
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
+                if(x.id == subItemId){
+                    let totalPrice = price.floatValue + x.price.floatValue
+                    price = totalPrice as NSNumber
+                    
+                    LBL_Price.text = "\(price.floatValue.twoDecimal)"
+                }
+            }
         }
     }
-
+    
+    func nextPressed(){
+        Global.global.itemsOrder.append(getItemsForOrder())
+        performSegue(withIdentifier: "toEndOrderFromCrepe", sender: nil)
+    }
 }
