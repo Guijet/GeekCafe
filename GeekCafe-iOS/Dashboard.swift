@@ -30,8 +30,7 @@ class Dashboard:UIViewController{
             self.menu.setUpFakeNavBar(view:self.containerView,titleTop:"Accueil")
             self.setUpMidPart()
             self.load.stopAnimatingAndRemove(view: self.view)
-        }
-        
+        }                
     }
     
     override func viewWillAppear(_ animated: Bool) {

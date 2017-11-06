@@ -382,11 +382,17 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     func payPressed(sender:UIButton){
-        performSegue(withIdentifier: "toConfirmation", sender: nil)
+        //REQUEST TO ORDER
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1)){
+            performSegue(withIdentifier: "toConfirmation", sender: nil)
+        }
+        else{
+            print("Error")
+        }
+        
     }
     
     func addMore(){
-        //TODO: ADD ITEMS TO THE LIST AND MAKE THE FLOW AGAIN
         self.navigationController?.popToRootViewController(animated: true)
     }
     
