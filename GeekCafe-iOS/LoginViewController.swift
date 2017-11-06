@@ -271,7 +271,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
                 if(APIRequestLogin().viewUser()){
                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
                 else{
                     Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
@@ -300,7 +302,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
             if(APIRequestLogin().viewUser()){
                 let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                 let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                UIApplication.shared.keyWindow?.rootViewController = main
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
             }
             else{
                 Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
@@ -313,7 +317,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
             if(APIRequestLogin().viewUser()){
                 let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                 let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                UIApplication.shared.keyWindow?.rootViewController = main
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
                 
             }
         }
@@ -339,7 +345,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
                     if(APIRequestLogin().viewUser()){
                         let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                         let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                        UIApplication.shared.keyWindow?.rootViewController = main
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
                     }
                 }
             }

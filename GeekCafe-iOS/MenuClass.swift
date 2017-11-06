@@ -25,8 +25,12 @@ class MenuClass{
     fileprivate let name = UILabel()
     //Membership
     fileprivate let status = UILabel()
+    //Credit
+    fileprivate let LBL_Money = UILabel()
+    fileprivate let LBL_CreditD = UILabel()
+    
     //Menu buttons elements
-    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Profil"]
+    fileprivate let menuButtonsTitle = ["Accueil","Commander","Historique", "Abonnement","Trouvez un restaurant","Promotions","Paiements","Profil"]
     //Deconnexion button
     fileprivate let deconnexionButton = UIButton()
     //Image deconnexion
@@ -59,26 +63,18 @@ class MenuClass{
     func setUpMenu(view:UIView){
         
         closingWithSwipe(view: view)
-        xHardShadow = rw(-100, view)
-        shadowImageHard.frame = CGRect(x: rw(-100,view), y: rw(74, view), width: rw(270, view), height: rw(520, view))
-        shadowImageHard.image = UIImage(named: "CardFonce")
-        //view.addSubview(shadowImageHard)
-        
-        xPaleShadow = rw(-110, view)
-        shadowImagePale.frame = CGRect(x: rw(-110, view), y: rw(53, view), width: rw(270, view), height: rw(560, view))
-        shadowImagePale.image = UIImage(named: "CardPale")
-        //view.addSubview(shadowImagePale)
         
         menuItemsContainer.frame = CGRect(x: rw(161,view) + view.frame.width, y: 0, width: view.frame.width - rw(161,view), height: view.frame.height)
         view.addSubview(menuItemsContainer)
         
         profileImage.frame = CGRect(x: 0, y: rw(91,view), width: rw(50,view), height: rw(50, view))
         profileImage.layer.cornerRadius = profileImage.frame.width/2
-        profileImage.image = UIImage(named:"User")
+        profileImage.layer.masksToBounds = true
+        profileImage.getOptimizeImageAsync(url: Global.global.userInfo.image_url)
         menuItemsContainer.addSubview(profileImage)
         
         name.frame = CGRect(x: rw(56,view), y: rw(104,view), width: (view.frame.width - profileImage.frame.maxY) - rw(15,view), height: rw(16,view))
-        name.text = "Guillaume Jette"
+        name.text = "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)"
         name.textColor = Utility().hexStringToUIColor(hex: "#161616")
         name.textAlignment = .left
         name.font = UIFont(name: "Lato-Regular", size: rw(13, view))
@@ -91,7 +87,12 @@ class MenuClass{
         status.font = UIFont(name: "Lato-Regular", size: rw(10,view))
         menuItemsContainer.addSubview(status)
         
+        LBL_Money.createLabel(frame: CGRect(x:status.frame.minX,y:status.frame.maxY + rh(3,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(9,view), textAignment: .left, text: "10.00$")
+        LBL_Money.sizeToFit()
+        menuItemsContainer.addSubview(LBL_Money)
         
+        LBL_CreditD.createLabel(frame: CGRect(x:LBL_Money.frame.maxX + rw(3,view),y:status.frame.maxY + rh(4,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Light", fontSize: rw(7,view), textAignment: .left, text: "crédit disponible")
+        menuItemsContainer.addSubview(LBL_CreditD)
         
         var newY = rw(204, view)
         var index = 1
@@ -225,7 +226,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
@@ -241,7 +244,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Commande", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
@@ -256,7 +261,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Historique", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "HistoriqueMainPage")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
@@ -271,7 +278,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
@@ -286,7 +295,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "TrouverRestau", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "FindRestoMainPage")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
@@ -301,13 +312,33 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }
         
         if(sender.tag == 7){
-            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "PromotionMainPage"{
+            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
+                closeMenu()
+                return
+            }
+            closeMenu()
+            DispatchQueue.global().async {
+                while self.isOpen{usleep(500)}
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }
+            }
+        }
+        
+        if(sender.tag == 8){
+            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "ProfileMainPage"{
                 closeMenu()
                 return
             }
@@ -317,7 +348,9 @@ class MenuClass{
                 DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "Profile", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "ProfileMainPage")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
             }
         }

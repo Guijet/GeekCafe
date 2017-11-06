@@ -6,4 +6,6 @@ pod ‘AFNetworking‘, ‘~> 2.5.4‘
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
+pod ‘GooglePlaces‘
+pod ‘GoogleMaps’
 end

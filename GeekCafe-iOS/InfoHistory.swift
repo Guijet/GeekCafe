@@ -10,12 +10,15 @@ import UIKit
 
 class InfoHistory: UIViewController {
 
-    var structToPass:HistoryList!
+    var idToPass:Int!
     let scrollView = UIScrollView()
+    var arrayItems = [itemInfo]()
+    var historyToPass:HistoryList!
     let backgroundImage = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        arrayItems = APIRequestHistory().getItemFromOrderID(id: idToPass)
         automaticallyAdjustsScrollViewInsets = false
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setNavigationTitle()
@@ -47,34 +50,34 @@ class InfoHistory: UIViewController {
     
     func fillScrollView(){
         var newY:CGFloat = rh(10)
-        if(structToPass.items.count > 0){
-            for x in structToPass.items{
+        if(arrayItems.count > 0){
+            for x in arrayItems{
                 let containerView = UIView()
                 containerView.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: 80)
                 containerView.backgroundColor = UIColor.clear
                 scrollView.addSubview(containerView)
-                
+
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(10), width: rw(60), height: rw(60))
-                //imageItem.image = x.image
+                imageItem.getOptimizeImageAsync(url: x.image_url)
                 containerView.addSubview(imageItem)
-                
+
                 let price = UILabel()
                 price.frame = CGRect(x: rw(260), y: (containerView.frame.height/2) - rh(10), width: rw(100), height: rh(20))
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                //price.text = "$\(x.price)"
+                price.text = "$\(x.price.floatValue.twoDecimal)"
                 containerView.addSubview(price)
-                
+
                 let flavour = UILabel()
                 flavour.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2) - rh(18)), width: price.frame.minX - rh(85), height: rh(18))
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
-                //flavour.text = "\(x.flavour)"
+                flavour.text = "\(x.name)"
                 containerView.addSubview(flavour)
-                
+
                 let type = UILabel()
                 type.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2)), width: price.frame.minX - rh(85), height: rh(10))
                 type.textColor = Utility().hexStringToUIColor(hex: "#D6D6D6")
@@ -82,8 +85,8 @@ class InfoHistory: UIViewController {
                 type.textAlignment = .left
                 type.text = "\(x.type)"
                 containerView.addSubview(type)
-                
-                
+
+
                 newY += (80 + rh(10))
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
@@ -102,7 +105,7 @@ class InfoHistory: UIViewController {
         date.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         date.font = UIFont(name: "Lato-Regular", size: rw(22))
         date.textAlignment = .left
-        date.text = structToPass.date
+        date.text = Utility().getCleanDate(date: historyToPass.date)
         bottomView.addSubview(date)
         
         let location = UILabel()
@@ -110,7 +113,7 @@ class InfoHistory: UIViewController {
         location.textColor = Utility().hexStringToUIColor(hex: "#D6D6D6")
         location.font = UIFont(name: "Lato-Regular", size: rw(15))
         location.textAlignment = .left
-        location.text = "\(structToPass.country), \(structToPass.city)"
+        location.text = "\(historyToPass.city), \(historyToPass.country)"
         bottomView.addSubview(location)
         
         let buttonFacture = UIButton()
@@ -126,7 +129,7 @@ class InfoHistory: UIViewController {
         totalPrice.textColor = Utility().hexStringToUIColor(hex: "#6CA642")
         totalPrice.font = UIFont(name: "Lato-Regular", size: rw(26))
         totalPrice.textAlignment = .right
-        totalPrice.text = "$ 10.00"
+        totalPrice.text = "$\(historyToPass.amount.floatValue.twoDecimal)"
         bottomView.addSubview(totalPrice)
         
         let priceAndTaxe = UILabel()

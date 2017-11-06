@@ -15,7 +15,7 @@ class MainPageProfile: UIViewController {
     let scrollView = UIScrollView()
     let backgroundImage = UIImageView()
     let switchNotif = UISwitch()
-    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Niveaux"]
+    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +52,36 @@ class MainPageProfile: UIViewController {
     
     func setUpTopView(containerView:UIView){
         let profileImage = UIImageView()
-        profileImage.frame = CGRect(x: rw(133), y: rh(32), width: rw(111), height: rw(111))
+        profileImage.frame = CGRect(x: rw(133), y: rh(36), width: rw(111), height: rw(111))
         profileImage.layer.cornerRadius = rw(111)/2
         profileImage.getOptimizeImageAsync(url: Global.global.userInfo.image_url)
         profileImage.layer.masksToBounds = true
         containerView.addSubview(profileImage)
+        
+        let name = UILabel()
+        name.createLabel(frame: CGRect(x:rw(50),y:profileImage.frame.maxY + rh(10),width:view.frame.width - rw(100),height:rh(30)), textColor: Utility().hexStringToUIColor(hex:"#161616"), fontName: "Lato-Regular", fontSize: rw(25), textAignment: .center, text: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+        containerView.addSubview(name)
+        
+        let subscription = UILabel()
+        subscription.createLabel(frame: CGRect(x:rw(50),y:name.frame.maxY,width:view.frame.width - rw(100),height:rh(22)), textColor: Utility().hexStringToUIColor(hex:"#6CA642"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "Coffee Addicted Pro")
+        containerView.addSubview(subscription)
+    
+        let buttonChangeSub = UIButton()
+        buttonChangeSub.frame = CGRect(x: rw(60), y: subscription.frame.maxY, width: view.frame.width - rw(120), height: rh(20))
+        buttonChangeSub.setTitle("Gérer mon abonnement", for: .normal)
+        buttonChangeSub.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
+        buttonChangeSub.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
+        buttonChangeSub.addTarget(self, action: #selector(changeSub), for: .touchUpInside)
+        containerView.addSubview(buttonChangeSub)
+        
+        let LBL_CreditD = UILabel()
+        LBL_CreditD.createLabel(frame: CGRect(x:view.frame.width - rw(50),y:buttonChangeSub.frame.maxY + rh(16),width:rw(40),height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(10), textAignment: .left, text: "Crédit")
+        containerView.addSubview(LBL_CreditD)
+        
+        let LBL_Money = UILabel()
+        LBL_Money.createLabel(frame: CGRect(x:(LBL_CreditD.frame.minX - (view.frame.width/2)) - rw(5),y:LBL_CreditD.frame.minY - rh(4),width:view.frame.width/2,height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .right, text: "10.00$")
+        containerView.addSubview(LBL_Money)
+        
     }
 
     func setUpTopView(){
@@ -75,6 +100,7 @@ class MainPageProfile: UIViewController {
             let buttonContainer = UIButton()
             buttonContainer.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: rh(82))
             buttonContainer.backgroundColor = UIColor.white
+            buttonContainer.tag = index
             buttonContainer.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
             scrollView.addSubview(buttonContainer)
             
@@ -95,7 +121,12 @@ class MainPageProfile: UIViewController {
                 buttonContainer.addSubview(switchNotif)
             }
             else{
-                //METTRE UNE FLECHE
+                let fleche = UIImageView()
+                fleche.frame = CGRect(x: rw(328), y: rh(30), width: rw(20), height: rw(20))
+                fleche.image = #imageLiteral(resourceName: "rightArrow")
+                fleche.contentMode = .scaleAspectFit
+                buttonContainer.addSubview(fleche)
+                
             }
             
             Utility().createHR(x: 0, y: buttonContainer.bounds.maxY - 1, width: view.frame.width, view: buttonContainer, color: Utility().hexStringToUIColor(hex: "#E7E8E9"))
@@ -111,8 +142,23 @@ class MainPageProfile: UIViewController {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-    func buttonPressed(sender:UIButton){
+    func changeSub(){
         
+    }
+    
+    func buttonPressed(sender:UIButton){
+        if(sender.tag == 2){
+            //To modify pofile
+        }
+        else if(sender.tag == 3){
+            //TO evaluez app
+        }
+        else if(sender.tag == 4){
+            //To termes et condition
+        }
+        else if(sender.tag == 5){
+            //To Paiements
+        }
     }
     
 }

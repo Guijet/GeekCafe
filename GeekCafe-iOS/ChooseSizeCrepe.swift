@@ -23,7 +23,8 @@ class ChooseSizeCrepe: UIViewController {
     
     var listItemToPass:[ItemList]!
     var infoItem:Item!
-    var price:String!
+    var price:NSNumber!
+    var priceId:NSNumber!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +64,7 @@ class ChooseSizeCrepe: UIViewController {
         BTN_HeaderLeft.layer.cornerRadius = rw(14)
         BTN_HeaderLeft.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderLeft.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderLeft.setTitle("1 Choix", for: .normal)
+        BTN_HeaderLeft.setTitle(infoItem.prices[0].size, for: .normal)
         BTN_HeaderLeft.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderLeft.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderLeft)
@@ -76,10 +77,13 @@ class ChooseSizeCrepe: UIViewController {
         BTN_HeaderCenter.layer.cornerRadius = rw(14)
         BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#16EA7C")
         BTN_HeaderCenter.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderCenter.setTitle("2 Choix", for: .normal)
+        BTN_HeaderCenter.setTitle(infoItem.prices[1].size, for: .normal)
         BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
+        
+        price = infoItem.prices[1].price
+        priceId = infoItem.prices[1].id as NSNumber
         
         let BTN_HeaderRight = UIButton()
         BTN_HeaderRight.tag = infoItem.prices[2].id
@@ -89,7 +93,7 @@ class ChooseSizeCrepe: UIViewController {
         BTN_HeaderRight.layer.cornerRadius = rw(14)
         BTN_HeaderRight.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderRight.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderRight.setTitle("3 Choix", for: .normal)
+        BTN_HeaderRight.setTitle(infoItem.prices[2].size, for: .normal)
         BTN_HeaderRight.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderRight.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderRight)
@@ -124,7 +128,8 @@ class ChooseSizeCrepe: UIViewController {
     }
     
     func buttonTopPressed(sender:UIButton){
-        LBL_Price.text = getPriceByID(id_price: sender.tag)
+        priceId = sender.tag as NSNumber
+        LBL_Price.text = getPriceByID(id_price: sender.tag).floatValue.twoDecimal
         
         resetButtonStateTop()
         resetDashedViews()
@@ -175,22 +180,23 @@ class ChooseSizeCrepe: UIViewController {
         }
     }
     
-    func getPriceByID(id_price:Int)->String{
-        var price:String = ""
+    func getPriceByID(id_price:Int)->NSNumber{
+        var priceT:NSNumber!
         if(infoItem.prices.count > 0){
             for x in infoItem.prices{
                 if(id_price == x.id){
-                    price = String(format: "$%.2f", x.price.floatValue)
+                    priceT = x.price as NSNumber
+                    price = x.price as NSNumber
                     break
                 }
             }
         }
-        return price
+        return priceT
         
     }
     
     func buttonAddPressed(){
-        price = LBL_Price.text
+        self.price = NSString(string:LBL_Price.text!).floatValue as NSNumber
         performSegue(withIdentifier: "toFlavourCrepe", sender: nil)
     }
     
@@ -198,6 +204,7 @@ class ChooseSizeCrepe: UIViewController {
         if(segue.identifier == "toFlavourCrepe"){
             (segue.destination as! FlavourCrepe).infoItem = self.infoItem
             (segue.destination as! FlavourCrepe).price = self.price
+            (segue.destination as! FlavourCrepe).priceId = self.priceId
         }
     }
 

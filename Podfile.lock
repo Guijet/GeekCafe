@@ -33,6 +33,13 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.26.0):
     - FBSDKCoreKit
+  - GoogleMaps (2.4.0):
+    - GoogleMaps/Maps (= 2.4.0)
+  - GoogleMaps/Base (2.4.0)
+  - GoogleMaps/Maps (2.4.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.4.0):
+    - GoogleMaps/Base (= 2.4.0)
   - Stripe (4.0.3):
     - Stripe/Checkout (= 4.0.3)
     - Stripe/Core (= 4.0.3)
@@ -46,6 +53,8 @@ DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - GoogleMaps
+  - GooglePlaces
   - Stripe (~> 4.0)
 
 SPEC CHECKSUMS:
@@ -55,8 +64,10 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
   FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
   FBSDKShareKit: 320712d8293fde6392872c91eb80ef0da5d73cc3
+  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
+  GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
   Stripe: 43a4307dc789483a61668d187c4a917d1348b0b6
 
-PODFILE CHECKSUM: e3216e73f73f150d96b0e11a8ce1f9b6ad6c849a
+PODFILE CHECKSUM: 633c47fd45f1f28bbf7bfd684e0df44158af20f1
 
 COCOAPODS: 1.2.1
