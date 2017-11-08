@@ -191,11 +191,30 @@
                     </view>
                     <connections>
                         <segue destination="nhH-ou-bgB" kind="show" identifier="toConfirmation" id="ftS-yC-fR4"/>
+                        <segue destination="G3c-XJ-n22" kind="show" identifier="toFailedOrder" id="ZtV-pI-gfD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ln3-IQ-kEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4753" y="61"/>
+        </scene>
+        <!--Done Command Red-->
+        <scene sceneID="KkW-g4-Mi2">
+            <objects>
+                <viewController id="G3c-XJ-n22" customClass="DoneCommandRed" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7E2-uC-to3"/>
+                        <viewControllerLayoutGuide type="bottom" id="FZo-3n-tJB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jak-lI-izH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BtK-Si-aLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5745" y="-348"/>
         </scene>
         <!--Done Command Green-->
         <scene sceneID="1W2-wL-Bgi">
@@ -213,7 +232,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1T-Fw-ZJ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5612" y="61"/>
+            <point key="canvasLocation" x="5745" y="397"/>
         </scene>
         <!--Choose Size Crepe-->
         <scene sceneID="3DH-Ak-USQ">

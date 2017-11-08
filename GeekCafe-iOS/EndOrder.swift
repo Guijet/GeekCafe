@@ -32,6 +32,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "Commande"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
@@ -374,10 +375,16 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     func payInStore(){
-        //PAYER EN MAGASIN
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1)){
+            performSegue(withIdentifier: "toConfirmation", sender: nil)
+        }
+        else{
+            performSegue(withIdentifier: "toFailedOrder", sender: nil)
+        }
     }
     
     func payWithPoints(){
+        //TODO
         //PAYER AVEC LES POINTS
     }
     
@@ -387,7 +394,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
         else{
-            print("Error")
+            performSegue(withIdentifier: "toFailedOrder", sender: nil)
         }
         
     }

@@ -12,6 +12,9 @@ class DoneCommandRed: UIViewController {
 
     let backgroundImage = UIImageView()
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.isHidden = true
+        //RESET COMMANDE ORDER
+        Global.global.itemsOrder.removeAll()
         super.viewDidLoad()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpPage()

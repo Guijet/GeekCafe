@@ -21,6 +21,7 @@ class DragAndDropBrevage: UIViewController{
     var typeItem:String!
     var priceItem:NSNumber!
     var priceId:NSNumber!
+    var nbChoix:Int!
     var subitemsIds = [NSNumber]()
     
     override func viewDidLoad() {
@@ -93,18 +94,25 @@ class DragAndDropBrevage: UIViewController{
                 let image = UIImageView()
                 image.isUserInteractionEnabled = true
                 image.addGestureRecognizer(tapGestureImage)
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(50), height: rw(50))
-                image.layer.masksToBounds = true
-                image.layer.cornerRadius = rw(25)
+                image.frame = CGRect(x: newX, y: rh(10), width: rw(50), height: rw(50))
+                //image.layer.masksToBounds = true
+                //image.layer.cornerRadius = rw(25)
                 image.getOptimizeImageAsync(url: x.image)
                 image.tag = x.id
                 bottomScrollView.addSubview(image)
                 
                 let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX,y:image.frame.maxY + rh(6),width:image.frame.width,height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                titleItem.createLabel(frame: CGRect(x:image.frame.minX,y:image.frame.maxY,width:image.frame.width,height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                 titleItem.numberOfLines = 2
                 titleItem.lineBreakMode = .byTruncatingTail
                 bottomScrollView.addSubview(titleItem)
+                
+                if(x.price != 0){
+                    let additionnalPrice = UILabel()
+                    additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
+                    bottomScrollView.addSubview(additionnalPrice)
+                }
+                
                 
                 newX += rw(91.7)
             }
@@ -118,29 +126,62 @@ class DragAndDropBrevage: UIViewController{
         return item
     }
     
-    func dragView(sender:UIPanGestureRecognizer){
-        let translation = sender.translation(in: self.view)
-        if let view = sender.view {
-            view.center = CGPoint(x:view.center.x + translation.x,
-                                  y:view.center.y + translation.y)
-        }
-        sender.setTranslation(CGPoint.zero, in: self.view)
-    }
-    
+
     func tapSubitem(sender:UITapGestureRecognizer){
         let imageTag = sender.view!.tag
-        updateBadge(containerView:sender.view!)
+        updateBadge(imageViewSubitem:sender.view!)
         subitemsIds.append(imageTag as NSNumber)
         updatePriceSubitems(subItemId: imageTag)
-        print(imageTag)
     }
     
-    func updateBadge(containerView:UIView){
+    func updateBadge(imageViewSubitem:UIView){
+        if(!isSetBadge(imageView: imageViewSubitem)){
+            buildBadgeView(imageViewSubitem: imageViewSubitem)
+        }
+        else{
+            updateBadgeLabel(imageView: imageViewSubitem)
+        }
+    }
+    
+    func buildBadgeView(imageViewSubitem:UIView){
         let containerBadge = UIView()
-        containerBadge.frame = CGRect(x: containerView.frame.maxX - rw(12), y: containerView.frame.minY, width: rw(20), height: rw(20))
-        containerBadge.backgroundColor = UIColor.red
+        containerBadge.frame = CGRect(x: rw(30), y: 0, width: rw(20), height: rw(20))
+        containerBadge.backgroundColor = Utility().hexStringToUIColor(hex: "#00DEAD")
         containerBadge.layer.cornerRadius = rw(10)
-        containerView.superview!.addSubview(containerBadge)
+        containerBadge.accessibilityIdentifier = "Badge"
+        imageViewSubitem.addSubview(containerBadge)
+        
+        let lbl_number = UILabel()
+        lbl_number.frame = CGRect(x: 0, y: 0, width: rw(20), height: rw(20))
+        lbl_number.accessibilityIdentifier = "NumberItems"
+        lbl_number.textAlignment = .center
+        lbl_number.text = "1"
+        lbl_number.tag = 1
+        lbl_number.textColor = UIColor.white
+        lbl_number.font = UIFont(name:"Lato-Light",size:rw(11))
+        containerBadge.addSubview(lbl_number)
+    }
+    
+    func updateBadgeLabel(imageView:UIView){
+        for x in imageView.subviews{
+            if let badge = x as? UIView{
+                for y in badge.subviews{
+                    if let lbl = y as? UILabel{
+                        lbl.tag += 1
+                        lbl.text = "\(lbl.tag)"
+                    }
+                }
+            }
+        }
+    }
+    
+    func isSetBadge(imageView:UIView)->Bool{
+        if(imageView.subviews.count > 0){
+            return true
+        }
+        else{
+            return false
+        }
     }
     
     func updatePriceSubitems(subItemId:Int){
