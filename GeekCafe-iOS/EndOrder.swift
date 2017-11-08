@@ -271,17 +271,17 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         let subTotalF:NSNumber = Prices().getTotalBeforeTaxes(arrayPrices:fillArrayPrices())
         let SubTotal = UILabel()
-        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:subTotalF.floatValue.twoDecimal)
+        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(subTotalF.floatValue.twoDecimal) $")
         containerMainView.addSubview(SubTotal)
         
         let taxesF:NSNumber = Prices().getTaxes(price: subTotalF.floatValue)
         let Taxes = UILabel()
-        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: taxesF.floatValue.twoDecimal)
+        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(taxesF.floatValue.twoDecimal) $")
         containerMainView.addSubview(Taxes)
         
         let total = Prices().getTotalWithTaxes(taxes: taxesF.floatValue, price: subTotalF.floatValue)
         let Total = UILabel()
-        Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: total.floatValue.twoDecimal)
+        Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(total.floatValue.twoDecimal) $")
         containerMainView.addSubview(Total)
         
         let BTN_Pay = UIButton()

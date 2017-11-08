@@ -23,7 +23,7 @@
 		460B121E1F912D1600A79A62 /* Commande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B121D1F912D1600A79A62 /* Commande.swift */; };
 		460B12221F91311100A79A62 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 460B12211F91311100A79A62 /* style.json */; };
 		460B12291F93F4DC00A79A62 /* Credits.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460B12281F93F4DC00A79A62 /* Credits.storyboard */; };
-		460B122B1F93F51100A79A62 /* MainPageCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPageCredit.swift */; };
+		460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPagePaiement.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
 		460F7B901F83EE530043B7E8 /* userCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7B8F1F83EE530043B7E8 /* userCard.swift */; };
@@ -154,7 +154,7 @@
 		460B121D1F912D1600A79A62 /* Commande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commande.swift; sourceTree = "<group>"; };
 		460B12211F91311100A79A62 /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		460B12281F93F4DC00A79A62 /* Credits.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Credits.storyboard; sourceTree = "<group>"; };
-		460B122A1F93F51100A79A62 /* MainPageCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageCredit.swift; sourceTree = "<group>"; };
+		460B122A1F93F51100A79A62 /* MainPagePaiement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPagePaiement.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
 		460F7B8F1F83EE530043B7E8 /* userCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userCard.swift; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
-		460B12231F93F47000A79A62 /* Crédits */ = {
+		460B12231F93F47000A79A62 /* Paiements */ = {
 			isa = PBXGroup;
 			children = (
 				460B12241F93F47D00A79A62 /* Utility */,
@@ -396,7 +396,7 @@
 				460B12261F93F48900A79A62 /* API Request Files */,
 				460B12271F93F49200A79A62 /* UI Swift Files */,
 			);
-			name = "Crédits";
+			name = Paiements;
 			sourceTree = "<group>";
 		};
 		460B12241F93F47D00A79A62 /* Utility */ = {
@@ -426,7 +426,7 @@
 		460B12271F93F49200A79A62 /* UI Swift Files */ = {
 			isa = PBXGroup;
 			children = (
-				460B122A1F93F51100A79A62 /* MainPageCredit.swift */,
+				460B122A1F93F51100A79A62 /* MainPagePaiement.swift */,
 			);
 			name = "UI Swift Files";
 			sourceTree = "<group>";
@@ -466,7 +466,7 @@
 				468785091F7185F30009C292 /* Historique */,
 				468785141F71939E0009C292 /* Commandes */,
 				46D25C8C1F69BDC10033A634 /* Dashboard */,
-				460B12231F93F47000A79A62 /* Crédits */,
+				460B12231F93F47000A79A62 /* Paiements */,
 				4606448A1F573F8900BD08E5 /* Login-SignUp */,
 				46047E641F93F8A80000246C /* Login_V2 */,
 			);
@@ -1291,7 +1291,7 @@
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
 				460B121E1F912D1600A79A62 /* Commande.swift in Sources */,
 				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
-				460B122B1F93F51100A79A62 /* MainPageCredit.swift in Sources */,
+				460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46C7CD011F86BFB200C7961B /* MainPageProfile.swift in Sources */,

@@ -469,6 +469,11 @@
                 let putString = body
                 request.httpBody = putString.data(using: .utf8)
             }
+            else if(method == "DELETE"){
+                let deleteString = body
+                request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                request.httpBody = deleteString.data(using: .utf8)
+            }
             
             if(needToken){
                 request.addValue("Bearer \(Global.global.userInfo.token)", forHTTPHeaderField: "Authorization")

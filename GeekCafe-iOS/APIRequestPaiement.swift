@@ -11,8 +11,9 @@ import UIKit
 class APIRequestPaiement{
     
     func deleteCard(card_token:String)->Bool{
-        
+        print(card_token)
         let json = Utility().getJson(url: "\(Global.global.ip!)user/payment", method: "DELETE",body: "card_token=\(card_token)",needToken: true)
+        print(json)
         if let _ = json["status"] as? String{
             return true
         }
