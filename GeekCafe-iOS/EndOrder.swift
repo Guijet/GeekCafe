@@ -32,6 +32,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title = "Commande"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
@@ -268,18 +269,20 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         dTotal.createLabel(frame: CGRect(x:rw(99),y:rh(111.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Payment")
         containerMainView.addSubview(dTotal)
         
+        let subTotalF:NSNumber = Prices().getTotalBeforeTaxes(arrayPrices:fillArrayPrices())
         let SubTotal = UILabel()
-        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "$2.99")
+        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(subTotalF.floatValue.twoDecimal) $")
         containerMainView.addSubview(SubTotal)
         
+        let taxesF:NSNumber = Prices().getTaxes(price: subTotalF.floatValue)
         let Taxes = UILabel()
-        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "$0.99")
+        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(taxesF.floatValue.twoDecimal) $")
         containerMainView.addSubview(Taxes)
         
+        let total = Prices().getTotalWithTaxes(taxes: taxesF.floatValue, price: subTotalF.floatValue)
         let Total = UILabel()
-        Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "$3.78")
+        Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(total.floatValue.twoDecimal) $")
         containerMainView.addSubview(Total)
-        
         
         let BTN_Pay = UIButton()
         BTN_Pay.createCreateButton(title: "Payer", frame: CGRect(x:rw(88),y:rh(166.5),width:rw(202),height:rh(50)), fontSize: rw(20), containerView: containerMainView)
@@ -289,7 +292,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     
     func buildThirdBottomView(){
-        //Total = 204
+       
         
         let topInnerView = UIView()
         topInnerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(45))
@@ -374,10 +377,16 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     func payInStore(){
-        //PAYER EN MAGASIN
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1)){
+            performSegue(withIdentifier: "toConfirmation", sender: nil)
+        }
+        else{
+            performSegue(withIdentifier: "toFailedOrder", sender: nil)
+        }
     }
     
     func payWithPoints(){
+        //TODO
         //PAYER AVEC LES POINTS
     }
     
@@ -387,7 +396,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
         else{
-            print("Error")
+            performSegue(withIdentifier: "toFailedOrder", sender: nil)
         }
         
     }
@@ -514,5 +523,15 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     func endEditing(){
         self.promoContainer.endEditing(true)
+    }
+    
+    func fillArrayPrices()->[NSNumber]{
+        var arrayPrices:[NSNumber] = [NSNumber]()
+        
+        for x in Global.global.itemsOrder{
+            arrayPrices.append(x.price)
+        }
+        
+        return arrayPrices
     }
 }

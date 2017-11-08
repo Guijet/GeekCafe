@@ -18,6 +18,8 @@ class FlavourCrepe: UIViewController {
     var infoItem:Item!
     var price:NSNumber!
     var priceId:NSNumber!
+    var nbChoix:Int!
+    var nbSelectionChoix:Int = 0
     var subitemsIds = [NSNumber]()
     
     override func viewDidLoad() {
@@ -97,10 +99,16 @@ class FlavourCrepe: UIViewController {
                 bottomScrollView.addSubview(image)
                 
                 let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                 titleItem.numberOfLines = 2
                 titleItem.lineBreakMode = .byTruncatingTail
                 bottomScrollView.addSubview(titleItem)
+                
+                if(x.price != 0){
+                    let additionnalPrice = UILabel()
+                    additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
+                    bottomScrollView.addSubview(additionnalPrice)
+                }
                 
                 newX += rw(98)
             }
@@ -116,19 +124,66 @@ class FlavourCrepe: UIViewController {
     
     
     func tapSubitem(sender:UITapGestureRecognizer){
-        let imageTag = sender.view!.tag
-        updateBadge(containerView:sender.view!)
-        subitemsIds.append(imageTag as NSNumber)
-        updatePriceSubitems(subItemId: imageTag)
-        print(imageTag)
+        if(nbSelectionChoix < nbChoix){
+            let imageTag = sender.view!.tag
+            updateBadge(imageViewSubitem:sender.view!)
+            subitemsIds.append(imageTag as NSNumber)
+            updatePriceSubitems(subItemId: imageTag)
+            nbSelectionChoix += 1
+        }
+        else{
+            Utility().alert(message: "Vous avez déja choisi vos \(nbChoix!) choix!", title: "Message", control: self)
+        }
     }
     
-    func updateBadge(containerView:UIView){
+    func updateBadge(imageViewSubitem:UIView){
+        if(!isSetBadge(imageView: imageViewSubitem)){
+            buildBadgeView(imageViewSubitem: imageViewSubitem)
+        }
+        else{
+            updateBadgeLabel(imageView: imageViewSubitem)
+        }
+    }
+    
+    func buildBadgeView(imageViewSubitem:UIView){
         let containerBadge = UIView()
-        containerBadge.frame = CGRect(x: containerView.frame.maxX - rw(12), y: containerView.frame.minY, width: rw(20), height: rw(20))
-        containerBadge.backgroundColor = UIColor.red
+        containerBadge.frame = CGRect(x: rw(50), y: 0, width: rw(20), height: rw(20))
+        containerBadge.backgroundColor = Utility().hexStringToUIColor(hex: "#00DEAD")
         containerBadge.layer.cornerRadius = rw(10)
-        containerView.superview!.addSubview(containerBadge)
+        containerBadge.accessibilityIdentifier = "Badge"
+        imageViewSubitem.addSubview(containerBadge)
+        
+        let lbl_number = UILabel()
+        lbl_number.frame = CGRect(x: 0, y: 0, width: rw(20), height: rw(20))
+        lbl_number.accessibilityIdentifier = "NumberItems"
+        lbl_number.textAlignment = .center
+        lbl_number.text = "1"
+        lbl_number.tag = 1
+        lbl_number.textColor = UIColor.white
+        lbl_number.font = UIFont(name:"Lato-Light",size:rw(11))
+        containerBadge.addSubview(lbl_number)
+    }
+    
+    func updateBadgeLabel(imageView:UIView){
+        for x in imageView.subviews{
+            if let badge = x as? UIView{
+                for y in badge.subviews{
+                    if let lbl = y as? UILabel{
+                        lbl.tag += 1
+                        lbl.text = "\(lbl.tag)"
+                    }
+                }
+            }
+        }
+    }
+    
+    func isSetBadge(imageView:UIView)->Bool{
+        if(imageView.subviews.count > 0){
+            return true
+        }
+        else{
+            return false
+        }
     }
     
     func updatePriceSubitems(subItemId:Int){

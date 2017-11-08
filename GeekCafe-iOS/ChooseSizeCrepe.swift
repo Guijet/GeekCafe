@@ -25,6 +25,7 @@ class ChooseSizeCrepe: UIViewController {
     var infoItem:Item!
     var price:NSNumber!
     var priceId:NSNumber!
+    var nbChoix = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,12 +171,15 @@ class ChooseSizeCrepe: UIViewController {
     
     func getDashedViewToChanged(tag:Int)->UIView{
         if(tag == infoItem.prices[2].id){
+            nbChoix = 3
             return bigViewDashed
         }
         else if(tag == infoItem.prices[1].id){
+            nbChoix = 2
             return middleViewDashed
         }
         else{
+            nbChoix = 1
             return smallViewDashed
         }
     }
@@ -205,6 +209,7 @@ class ChooseSizeCrepe: UIViewController {
             (segue.destination as! FlavourCrepe).infoItem = self.infoItem
             (segue.destination as! FlavourCrepe).price = self.price
             (segue.destination as! FlavourCrepe).priceId = self.priceId
+            (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
         }
     }
 

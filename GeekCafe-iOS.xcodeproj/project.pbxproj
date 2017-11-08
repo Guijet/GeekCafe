@@ -23,13 +23,14 @@
 		460B121E1F912D1600A79A62 /* Commande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B121D1F912D1600A79A62 /* Commande.swift */; };
 		460B12221F91311100A79A62 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 460B12211F91311100A79A62 /* style.json */; };
 		460B12291F93F4DC00A79A62 /* Credits.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460B12281F93F4DC00A79A62 /* Credits.storyboard */; };
-		460B122B1F93F51100A79A62 /* MainPageCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPageCredit.swift */; };
+		460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPagePaiement.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
 		460F7B901F83EE530043B7E8 /* userCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7B8F1F83EE530043B7E8 /* userCard.swift */; };
 		461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A81F782F0D00D04E30 /* PatisserieMain.swift */; };
 		461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AA1F782F1A00D04E30 /* BrevageMain.swift */; };
 		461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AE1F78310400D04E30 /* CartCommmande.swift */; };
+		461A89961FB368480008AA5C /* Prices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461A89951FB368480008AA5C /* Prices.swift */; };
 		46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */; };
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
@@ -153,13 +154,14 @@
 		460B121D1F912D1600A79A62 /* Commande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commande.swift; sourceTree = "<group>"; };
 		460B12211F91311100A79A62 /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		460B12281F93F4DC00A79A62 /* Credits.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Credits.storyboard; sourceTree = "<group>"; };
-		460B122A1F93F51100A79A62 /* MainPageCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageCredit.swift; sourceTree = "<group>"; };
+		460B122A1F93F51100A79A62 /* MainPagePaiement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPagePaiement.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
 		460F7B8F1F83EE530043B7E8 /* userCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userCard.swift; sourceTree = "<group>"; };
 		461232A81F782F0D00D04E30 /* PatisserieMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatisserieMain.swift; sourceTree = "<group>"; };
 		461232AA1F782F1A00D04E30 /* BrevageMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrevageMain.swift; sourceTree = "<group>"; };
 		461232AE1F78310400D04E30 /* CartCommmande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCommmande.swift; sourceTree = "<group>"; };
+		461A89951FB368480008AA5C /* Prices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prices.swift; sourceTree = "<group>"; };
 		46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Dashboard.xcassets; sourceTree = "<group>"; };
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -386,7 +388,7 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
-		460B12231F93F47000A79A62 /* Crédits */ = {
+		460B12231F93F47000A79A62 /* Paiements */ = {
 			isa = PBXGroup;
 			children = (
 				460B12241F93F47D00A79A62 /* Utility */,
@@ -394,7 +396,7 @@
 				460B12261F93F48900A79A62 /* API Request Files */,
 				460B12271F93F49200A79A62 /* UI Swift Files */,
 			);
-			name = "Crédits";
+			name = Paiements;
 			sourceTree = "<group>";
 		};
 		460B12241F93F47D00A79A62 /* Utility */ = {
@@ -424,7 +426,7 @@
 		460B12271F93F49200A79A62 /* UI Swift Files */ = {
 			isa = PBXGroup;
 			children = (
-				460B122A1F93F51100A79A62 /* MainPageCredit.swift */,
+				460B122A1F93F51100A79A62 /* MainPagePaiement.swift */,
 			);
 			name = "UI Swift Files";
 			sourceTree = "<group>";
@@ -464,7 +466,7 @@
 				468785091F7185F30009C292 /* Historique */,
 				468785141F71939E0009C292 /* Commandes */,
 				46D25C8C1F69BDC10033A634 /* Dashboard */,
-				460B12231F93F47000A79A62 /* Crédits */,
+				460B12231F93F47000A79A62 /* Paiements */,
 				4606448A1F573F8900BD08E5 /* Login-SignUp */,
 				46047E641F93F8A80000246C /* Login_V2 */,
 			);
@@ -543,6 +545,7 @@
 				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */,
 				46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */,
+				461A89951FB368480008AA5C /* Prices.swift */,
 			);
 			name = ListeCommande;
 			sourceTree = "<group>";
@@ -677,6 +680,8 @@
 		4687851B1F7194130009C292 /* UI Files */ = {
 			isa = PBXGroup;
 			children = (
+				464012661F75C62800E271B2 /* ListAbonnement.swift */,
+				468785321F7195630009C292 /* AbonnementMainPage.swift */,
 			);
 			name = "UI Files";
 			sourceTree = "<group>";
@@ -684,7 +689,6 @@
 		4687851C1F7194200009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
-				464012681F76E37D00E271B2 /* Abonnement.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -1010,8 +1014,7 @@
 		46FDA4E11F8400FB00B6A07B /* TODO */ = {
 			isa = PBXGroup;
 			children = (
-				464012661F75C62800E271B2 /* ListAbonnement.swift */,
-				468785321F7195630009C292 /* AbonnementMainPage.swift */,
+				464012681F76E37D00E271B2 /* Abonnement.swift */,
 			);
 			name = TODO;
 			sourceTree = "<group>";
@@ -1270,6 +1273,7 @@
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
+				461A89961FB368480008AA5C /* Prices.swift in Sources */,
 				467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */,
 				46DA4AA61FA0255600AE9DC4 /* HistoryItemsInfo.swift in Sources */,
 				468785411F71A6F30009C292 /* HistoryList.swift in Sources */,
@@ -1287,7 +1291,7 @@
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
 				460B121E1F912D1600A79A62 /* Commande.swift in Sources */,
 				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
-				460B122B1F93F51100A79A62 /* MainPageCredit.swift in Sources */,
+				460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46C7CD011F86BFB200C7961B /* MainPageProfile.swift in Sources */,

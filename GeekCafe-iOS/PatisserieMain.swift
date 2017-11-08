@@ -80,7 +80,9 @@ class PatisserieMain: UIViewController{
                 containerButton.addSubview(imagePatisserie)
                 
                 let titlePatisserie = UILabel()
-                titlePatisserie.createLabel(frame: CGRect(x: 0, y: imagePatisserie.frame.maxY + rh(7), width: containerButton.frame.width, height: rw(15)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: x.name)
+                titlePatisserie.createLabel(frame: CGRect(x: 0, y: imagePatisserie.frame.maxY + rh(7), width: containerButton.frame.width, height: rw(40)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: x.name)
+                titlePatisserie.numberOfLines = 2
+                titlePatisserie.lineBreakMode = .byWordWrapping
                 containerButton.addSubview(titlePatisserie)
                 
                 scrollView.addSubview(containerButton)
