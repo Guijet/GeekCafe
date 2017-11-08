@@ -30,6 +30,7 @@
 		461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A81F782F0D00D04E30 /* PatisserieMain.swift */; };
 		461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AA1F782F1A00D04E30 /* BrevageMain.swift */; };
 		461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AE1F78310400D04E30 /* CartCommmande.swift */; };
+		461A89961FB368480008AA5C /* Prices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461A89951FB368480008AA5C /* Prices.swift */; };
 		46206D8E1F6AE92300D2BE60 /* Dashboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */; };
 		462CF6DD1F604E1500326426 /* APIRequestLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6DC1F604E1500326426 /* APIRequestLogin.swift */; };
 		462CF6F01F60514B00326426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462CF6EF1F60514B00326426 /* User.swift */; };
@@ -160,6 +161,7 @@
 		461232A81F782F0D00D04E30 /* PatisserieMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatisserieMain.swift; sourceTree = "<group>"; };
 		461232AA1F782F1A00D04E30 /* BrevageMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrevageMain.swift; sourceTree = "<group>"; };
 		461232AE1F78310400D04E30 /* CartCommmande.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCommmande.swift; sourceTree = "<group>"; };
+		461A89951FB368480008AA5C /* Prices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prices.swift; sourceTree = "<group>"; };
 		46206D8D1F6AE92300D2BE60 /* Dashboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Dashboard.xcassets; sourceTree = "<group>"; };
 		462CF6DC1F604E1500326426 /* APIRequestLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestLogin.swift; sourceTree = "<group>"; };
 		462CF6EF1F60514B00326426 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */,
 				46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */,
+				461A89951FB368480008AA5C /* Prices.swift */,
 			);
 			name = ListeCommande;
 			sourceTree = "<group>";
@@ -1270,6 +1273,7 @@
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
+				461A89961FB368480008AA5C /* Prices.swift in Sources */,
 				467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */,
 				46DA4AA61FA0255600AE9DC4 /* HistoryItemsInfo.swift in Sources */,
 				468785411F71A6F30009C292 /* HistoryList.swift in Sources */,
