@@ -14,8 +14,12 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
 
     let menu = MenuClass()
     let containerView = UIView()
+    let bottomView = UIView()
     
-    var coordinates:[CLLocationCoordinate2D] = [CLLocationCoordinate2D]()
+    var isKeyboardActive = false
+    var yTo:CGFloat = 0
+    
+    var arrayBranches = [Branch]()
     var searchLocation:CLLocation = CLLocation()
     var markers = [GMSMarker]()
     var closestMarker = GMSMarker()
@@ -27,12 +31,12 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.menu.setUpMenu(view: self.view)
+
         self.setUpContainerView()
         self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Trouver un restaurant")
         DispatchQueue.global().async {
-            self.fillFakeCoordinates()
+            self.arrayBranches = APIRequestMap().getLocations()
             DispatchQueue.main.async {
                 self.setUpMap()
                 self.applyMapStyle()
@@ -65,7 +69,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     }
     
     func setUpBottom(){
-        let bottomView = UIView()
+        
         bottomView.frame = CGRect(x: 0, y: rh(547), width: view.frame.width, height: rh(120))
         bottomView.backgroundColor = UIColor.white
         bottomView.makeShadow(x: 0, y: 0, blur: 6, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.1, spread: 0)
@@ -77,6 +81,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         
         TB_Search.delegate = self
         TB_Search.frame = CGRect(x: LBL_CodePostalD.frame.minX, y: LBL_CodePostalD.frame.maxY, width: rw(141), height: rh(48))
+        TB_Search.returnKeyType = .done
         TB_Search.autocapitalizationType = .allCharacters
         TB_Search.autocorrectionType = .no
         TB_Search.placeholder = "Search..."
@@ -98,11 +103,10 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //Fill array de markers with coordinates
     //
     func setUpPinOnMap(){
-        for x in coordinates{
+        for x in arrayBranches{
             let marker = GMSMarker()
-            
-            marker.position = x
-            marker.title = "31 boul du faubourg, Boisbriand, J7F4G9"
+            marker.position = x.coordinates
+            marker.title = x.location
             marker.icon = UIImage(named:"pin_little")
             marker.map = self.mapView
             marker.opacity = 1.0
@@ -228,19 +232,6 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     
     //
     //
-    //Fill Coordinates
-    //
-    //
-    func fillFakeCoordinates(){
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.69179211), longitude: CLLocationDegrees(-73.644104)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.64764837), longitude: CLLocationDegrees(-73.85009766)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.68987354), longitude: CLLocationDegrees(-73.77868652)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.65244829), longitude: CLLocationDegrees(-74.09729004)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.55637174), longitude: CLLocationDegrees(-73.90365601)))
-    }
-    
-    //
-    //
     //Get json style for google maps
     //
     //
@@ -268,7 +259,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Search){
-            if(textField.text!.characters.count > 5){
+            if(textField.text!.count > 5){
                 if (isBackSpace != -92) {
                     return false
                 }
@@ -278,12 +269,46 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         return true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func animateUp(){
+        yTo = containerView.frame.height - bottomView.frame.height
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.containerView.subviews{
+                x.center.y -= self.yTo
+            }
+        }, completion: { _ in
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
+    func animateDown(){
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.containerView.subviews{
+                x.center.y += self.yTo
+            }
+        }, completion: { _ in
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
+        if(!isKeyboardActive){
+            animateUp()
+            isKeyboardActive = true
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        if(isKeyboardActive){
+            animateDown()
+            isKeyboardActive = false
+        }
     }
     
 }

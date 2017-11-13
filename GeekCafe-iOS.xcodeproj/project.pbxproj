@@ -42,6 +42,8 @@
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
 		464012691F76E37D00E271B2 /* Abonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012681F76E37D00E271B2 /* Abonnement.swift */; };
+		464E98481FB9FB59008783A4 /* APIRequestMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464E98471FB9FB59008783A4 /* APIRequestMap.swift */; };
+		464E984A1FB9FB7F008783A4 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464E98491FB9FB7F008783A4 /* Branch.swift */; };
 		4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4664F1F31F79300F00908778 /* ChoosePatisserie.swift */; };
 		466EE1F61F82668400014B68 /* ChooseBrevageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */; };
 		466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */; };
@@ -173,6 +175,8 @@
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
 		464012681F76E37D00E271B2 /* Abonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abonnement.swift; sourceTree = "<group>"; };
+		464E98471FB9FB59008783A4 /* APIRequestMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestMap.swift; sourceTree = "<group>"; };
+		464E98491FB9FB7F008783A4 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		4664F1F31F79300F00908778 /* ChoosePatisserie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePatisserie.swift; sourceTree = "<group>"; };
 		466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBrevageSize.swift; sourceTree = "<group>"; };
 		466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropBrevage.swift; sourceTree = "<group>"; };
@@ -723,6 +727,7 @@
 		468785201F71944E0009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				464E98471FB9FB59008783A4 /* APIRequestMap.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -1007,6 +1012,7 @@
 				468785401F71A6F30009C292 /* HistoryList.swift */,
 				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
 				460B121D1F912D1600A79A62 /* Commande.swift */,
+				464E98491FB9FB7F008783A4 /* Branch.swift */,
 			);
 			name = Good;
 			sourceTree = "<group>";
@@ -1305,9 +1311,11 @@
 				46C7CCFD1F86BF9600C7961B /* APIRequestProfile.swift in Sources */,
 				4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */,
 				46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */,
+				464E98481FB9FB59008783A4 /* APIRequestMap.swift in Sources */,
 				4606448F1F573FE800BD08E5 /* LoginViewController.swift in Sources */,
 				4694CE461F796B6900953D75 /* EndOrder.swift in Sources */,
 				468785451F71CF5C0009C292 /* Promotion.swift in Sources */,
+				464E984A1FB9FB7F008783A4 /* Branch.swift in Sources */,
 				46A8F78A1F5722700085181F /* AppDelegate.swift in Sources */,
 				46FDA4E01F84008E00B6A07B /* Subitem.swift in Sources */,
 				461232AF1F78310400D04E30 /* CartCommmande.swift in Sources */,

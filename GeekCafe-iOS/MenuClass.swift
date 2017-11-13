@@ -136,6 +136,7 @@ class MenuClass{
         
         let fakeBar = UIView()
         fakeBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
+        fakeBar.accessibilityIdentifier = "NavBarFake"
         fakeBar.backgroundColor = UIColor.white
         view.addSubview(fakeBar)
         
