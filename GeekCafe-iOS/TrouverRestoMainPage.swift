@@ -16,18 +16,17 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     let containerView = UIView()
     let bottomView = UIView()
     
+    var searchCoords:CLLocationCoordinate2D!
     var isKeyboardActive = false
     var yTo:CGFloat = 0
     
+    var searchedWorked:Bool = false
     var arrayBranches = [Branch]()
-    var searchLocation:CLLocation = CLLocation()
     var markers = [GMSMarker]()
     var closestMarker = GMSMarker()
     let mapView = GMSMapView()
     let regionRadius: CLLocationDistance = 1000
     let TB_Search = UITextField()
-    var arrayDistance = [Double]()
-    var closestDistance:Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +42,12 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                 self.setUpPinOnMap()
                 self.setUpBottom()
             }
-            //To find to closest pin send the adress in parameter or postalCode
-            //self.getLocationSearch(postalCode: "j7b1x2")
+
+
         }
+        
+
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         focusMapToShowAllMarkers()
     }
@@ -165,70 +165,50 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         self.mapView.animate(with:update)
         self.mapView.animate(toZoom: 12)
     }
-
-    //Get closest pin the entered location
-    //
-    func getClosestDistance(arrayDistance:[Double])->Double{
-        var closestDistance:Double = 0
-        var index:Int = 0
-        if(arrayDistance.count > 0){
-            for x in arrayDistance{
-                if(index == 0){
-                    closestDistance = x
-                }
-                else{
-                    if(x < closestDistance){
-                        closestDistance = x
-                    }
-                }
-                index += 1
+    func getCoordinates(adresse:String){
+        let geocoder = CLGeocoder()
+        let address = adresse
+        geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                self.searchedWorked = false
+                print("Error", error ?? "")
             }
-        }
-        return closestDistance
-    }
-    
-    //Get closest pin the entered location
-    //
-    func getClosestMarker(locationEntered:CLLocation)->GMSMarker{
-        
-        var closestMarker:GMSMarker = GMSMarker()
-        var closestDistance:Double = 0
-        var index:Int = 0
-        if(markers.count > 0){
-            for x in markers{
-                if(index == 0){
-                    closestDistance = locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude))
-                    closestMarker = x
-                }
-                else{
-                    if(locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude)) < closestDistance){
-                        closestDistance = locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude))
-                        closestMarker = x
-                    }
-                }
-                index += 1
-            }
-        }
-        return closestMarker
-    }
-    
-    //API Request to get locaton with adress entered
-    //
-    func getLocationSearch(postalCode:String){
-        
-        CLGeocoder().geocodeAddressString(postalCode, completionHandler: {(placemarks, error) in
-            if(error != nil){
-                print("There is an error")
-            }
-            else{
-                if let placemark = placemarks?.first{
-                    if let location = placemark.location{
-                        self.closestMarker = self.getClosestMarker(locationEntered: location)
-                    }
-                }
+            if let placemark = placemarks?.first {
+                self.searchedWorked = true
+                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                self.searchCoords = coordinates
+                self.zoomToClosestMarker(coordinatesSearched: placemark.location!)
             }
         })
     }
+    
+    func zoomToClosestMarker(coordinatesSearched:CLLocation){
+        if(markers.count > 0){
+            var firstRoll:Bool = true
+            var closesPin = GMSMarker()
+            var closestDistance:CGFloat = 0
+            for x in markers{
+                //Marker distance from entered values
+                let markerDistance:CGFloat = CGFloat(coordinatesSearched.distance(from: CLLocation(latitude: CLLocationDegrees(x.position.latitude), longitude: CLLocationDegrees(x.position.longitude))))
+                if(firstRoll){
+                    firstRoll = false
+                    closesPin = x
+                    closestDistance = markerDistance
+                }
+                else{
+                    if(closestDistance > markerDistance){
+                        closestDistance = markerDistance
+                        closesPin = x
+                    }
+                }
+            }
+            //ZOOM SUR CETTE PIN
+            focusMapOnSingleMarker(marker: closesPin)
+            mapView.selectedMarker = closesPin
+        }
+    }
+    
+    
     
     //
     //
@@ -265,11 +245,18 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                 }
             }
         }
-        
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if(textField == TB_Search){
+            if(textField.text!.count >= 6){
+                getCoordinates(adresse: textField.text!)
+            }
+            else{
+                Utility().alert(message: "This is not a valid postal code", title: "Message", control: self)
+            }
+        }
         textField.resignFirstResponder()
         return true
     }
