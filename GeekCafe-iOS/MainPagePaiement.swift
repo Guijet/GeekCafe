@@ -261,7 +261,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
         containerViewCard.frame = CGRect(x: 0, y: view.frame.maxY, width: view.frame.width, height: rh(370))
         containerViewCard.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        view.addSubview(containerViewCard)
+        containerView.addSubview(containerViewCard)
         
         let topCard = UIView()
         topCard.frame = CGRect(x: rw(28), y: rh(75), width: rw(319), height: rh(172))
