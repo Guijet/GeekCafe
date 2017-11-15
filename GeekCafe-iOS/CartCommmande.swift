@@ -34,7 +34,7 @@ class CartCommmande: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Commande"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -115,7 +115,7 @@ class CartCommmande: UIViewController {
         return totalPrice.twoDecimal
     }
     
-    func closeCart(){
+    @objc func closeCart(){
         _ = self.navigationController?.popViewController(animated: true)
     }
     

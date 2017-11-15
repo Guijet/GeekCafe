@@ -355,7 +355,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
     }
     
-    func animatePayView(){
+    @objc func animatePayView(){
         if(isCredit){
             resetBottomView(function: buildThirdBottomView, height: rh(204))
         }
@@ -364,19 +364,19 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
     }
     
-    func noCreditsChoose(){
+    @objc func noCreditsChoose(){
         resetBottomView(function: buildFirstBottomView, height: rh(191))
     }
     
-    func setBaseBottomView(){
+    @objc func setBaseBottomView(){
         resetBottomView(function: self.resetBuildBaseBottomView, height: rh(64))
     }
     
-    func payInApp(){
+    @objc func payInApp(){
         resetBottomView(function: buildSecondeBottomView, height: rh(285.5))
     }
     
-    func payInStore(){
+    @objc func payInStore(){
         if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
@@ -385,12 +385,12 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
     }
     
-    func payWithPoints(){
+    @objc func payWithPoints(){
         //TODO
         //PAYER AVEC LES POINTS
     }
     
-    func payPressed(sender:UIButton){
+    @objc func payPressed(sender:UIButton){
         //REQUEST TO ORDER
         if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
@@ -401,7 +401,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
     }
     
-    func addMore(){
+    @objc func addMore(){
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -455,7 +455,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     
-    func xPressed(){
+    @objc func xPressed(){
         self.endEditing()
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
@@ -468,7 +468,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         })
     }
     
-    func toEnterPromoCode(){
+    @objc func toEnterPromoCode(){
         buildPromoView()
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
@@ -521,7 +521,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         return true
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.promoContainer.endEditing(true)
     }
     

@@ -24,9 +24,13 @@ class FirstView: UIView {
     }
     
     fileprivate func setElements(containerView:UIView){
-        let TB_Pass = CustomTextField(placeholderText: "Password", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(38),superView:containerView)
+        let TB_Pass = CustomTextField()
+        TB_Pass.setUpTB(placeholderText: "Password", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(38),superView:containerView)
         TB_Pass.isSecureTextEntry = true
-        let TB_Email = CustomTextField(placeholderText: "Email", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(95),superView:containerView)
+        
+        let TB_Email = CustomTextField()
+        TB_Email.setUpTB(placeholderText: "Email", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(95),superView:containerView)
+        
     }
     
     fileprivate func setUpButtons(containerView:UIView){

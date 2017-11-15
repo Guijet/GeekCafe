@@ -100,14 +100,14 @@ class ChoosePatisserie: UIViewController{
         buttonAdd.addTarget(self, action: #selector(addItem), for: .touchUpInside)
     }
     
-    func leftPressed(){
+    @objc func leftPressed(){
         if(numberOfItems > 1){
             numberOfItems -= 1
             labelNumberItems.text = String(numberOfItems)
         }
     }
     
-    func rightPressed(){
+    @objc func rightPressed(){
         if(numberOfItems < 99){
             numberOfItems += 1
             labelNumberItems.text = String(numberOfItems)
@@ -120,7 +120,7 @@ class ChoosePatisserie: UIViewController{
         return item
     }
     
-    func addItem(){
+    @objc func addItem(){
         addItemsToGlobalByNumber()
         performSegue(withIdentifier: "patisserieToEndOrder", sender: nil)
     }

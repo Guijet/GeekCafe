@@ -185,8 +185,8 @@ class Dashboard:UIViewController{
         whiteButton.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
         whiteButton.addTarget(self, action: #selector(convertPointsToMone), for: .touchUpInside)
         
-        let attrs1 = [NSFontAttributeName : UIFont(name:"Lato-Light",size:rw(16))!, NSForegroundColorAttributeName : Utility().hexStringToUIColor(hex: "#AFAFAF")]
-        let attrs2 = [NSFontAttributeName : UIFont(name:"Lato-Light",size:rw(22))!, NSForegroundColorAttributeName : Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        let attrs1 = [NSAttributedStringKey.font : UIFont(name:"Lato-Light",size:rw(16))!, NSAttributedStringKey.foregroundColor : Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        let attrs2 = [NSAttributedStringKey.font : UIFont(name:"Lato-Light",size:rw(22))!, NSAttributedStringKey.foregroundColor : Utility().hexStringToUIColor(hex: "#AFAFAF")]
         let attributedString1 = NSMutableAttributedString(string:"Convertir en crédit ", attributes:attrs1)
         let attributedString2 = NSMutableAttributedString(string:"$3.54", attributes:attrs2)
         attributedString1.append(attributedString2)
@@ -200,7 +200,7 @@ class Dashboard:UIViewController{
         containerView.addSubview(whiteButton)
     }
     
-    func animateForPoints(sender:UITapGestureRecognizer){
+    @objc func animateForPoints(sender:UITapGestureRecognizer){
         self.view.isUserInteractionEnabled = false
         self.buildCardWhite()
         self.whiteButton.layer.zPosition = -1
@@ -216,7 +216,7 @@ class Dashboard:UIViewController{
         })
     }
     
-    func animateCloseCard(sender:UITapGestureRecognizer){
+    @objc func animateCloseCard(sender:UITapGestureRecognizer){
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
             self.greenCard.center.y += self.rh(41)
@@ -230,11 +230,11 @@ class Dashboard:UIViewController{
         })
     }
     
-    func convertPointsToMone(){
+    @objc func convertPointsToMone(){
         print("Convert")
     }
     
-    func commanderPressed(sender:UIButton){
+    @objc func commanderPressed(sender:UIButton){
         let storyboard = UIStoryboard(name: "Commande", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
         UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
@@ -242,7 +242,7 @@ class Dashboard:UIViewController{
         }, completion: nil)
     }
     
-    func abonnementPressed(sender:UIButton){
+    @objc func abonnementPressed(sender:UIButton){
         let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
         UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
@@ -250,7 +250,7 @@ class Dashboard:UIViewController{
         }, completion: nil)
     }
     
-    func promotionPressed(sender:UIButton){
+    @objc func promotionPressed(sender:UIButton){
         let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
         UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {

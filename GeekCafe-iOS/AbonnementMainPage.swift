@@ -137,7 +137,7 @@ class AbonnementMainPage: UIViewController {
         containerView.addSubview(bottomButton)
     }
     
-    func changeAbonnementPressed(sender:UIButton){
+    @objc func changeAbonnementPressed(sender:UIButton){
         performSegue(withIdentifier: "toListAbonnement", sender: nil)
     }
 

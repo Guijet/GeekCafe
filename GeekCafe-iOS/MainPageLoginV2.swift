@@ -40,7 +40,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         self.view.addGestureRecognizer(tapGesture)
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
@@ -131,7 +131,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     
     //
     //Create account pressed 
-    func inscrirePressed(){
+    @objc func inscrirePressed(){
         buildSecondView()
         firstView.animateOut(containerView:self.view)
         backgroundView.resizeCard(containerView:self.view,newHeight:rh(402),newY:rh(275))
@@ -144,7 +144,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         print("Login pressed")
     }
 
-    func toPage3(){
+    @objc func toPage3(){
         //ALLER A LA PAGE 3 COMME FAIT AVEC LA 2
     }
 

@@ -49,7 +49,7 @@ class ChooseSizeCrepe: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Crêpe"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpTopPart(){
@@ -128,7 +128,7 @@ class ChooseSizeCrepe: UIViewController {
         buttonAdd.addTarget(self, action: #selector(buttonAddPressed), for: .touchUpInside)
     }
     
-    func buttonTopPressed(sender:UIButton){
+    @objc func buttonTopPressed(sender:UIButton){
         priceId = sender.tag as NSNumber
         LBL_Price.text = getPriceByID(id_price: sender.tag).floatValue.twoDecimal
         
@@ -199,7 +199,7 @@ class ChooseSizeCrepe: UIViewController {
         
     }
     
-    func buttonAddPressed(){
+    @objc func buttonAddPressed(){
         self.price = NSString(string:LBL_Price.text!).floatValue as NSNumber
         performSegue(withIdentifier: "toFlavourCrepe", sender: nil)
     }

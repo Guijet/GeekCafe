@@ -181,7 +181,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         removeViewIO()
     }
     
-    func showCardIOView(sender:UIButton){
+    @objc func showCardIOView(sender:UIButton){
         endEditing()
         self.navigationController?.navigationBar.isHidden = true
         contentViewIO.frame = view.frame
@@ -204,7 +204,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
     }
     
-    func removeViewIO(){
+    @objc func removeViewIO(){
         TB_CardNumber.becomeFirstResponder()
         self.navigationController?.navigationBar.isHidden = false
         contentViewIO.removeFromSuperview()
@@ -266,7 +266,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Expiration){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! == 2){
                 if (isBackSpace != -92) {
                     TB_Expiration.text?.append("/")
@@ -280,7 +280,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CVC){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! > 2){
                 if (isBackSpace != -92) {
                     return false
@@ -289,7 +289,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CardNumber){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if (isBackSpace != -92) {
                 if(lenght == 4 || lenght == 9 || lenght == 14){
                     textField.text?.append(" ")
@@ -309,7 +309,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func splitCardNumberWithSpace(number:String)->String{
         var index:Int = 0
         var splitNumber:String = ""
-        for x in number.characters{
+        for x in number{
             splitNumber.append(x)
             if(index == 3){
                 splitNumber.append(" ")
@@ -322,7 +322,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         return splitNumber
     }
     
-    func nextPressed(sender:UIButton){
+    @objc func nextPressed(sender:UIButton){
         
         load.buildViewAndStartAnimate(view: self.view)
         DispatchQueue.global(qos: .background).async {
@@ -337,7 +337,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
     }
     
-    func nextNoCard(sender:UIButton){
+    @objc func nextNoCard(sender:UIButton){
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "DashMain")

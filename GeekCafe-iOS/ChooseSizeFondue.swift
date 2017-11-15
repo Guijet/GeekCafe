@@ -42,7 +42,7 @@ class ChooseSizeFondue: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Fondue"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpTopPart(){
@@ -118,7 +118,7 @@ class ChooseSizeFondue: UIViewController {
         buttonAdd.addTarget(self, action: #selector(buttonAddPressed), for: .touchUpInside)
     }
     
-    func buttonTopPressed(sender:UIButton){
+    @objc func buttonTopPressed(sender:UIButton){
         resetButtonStateTop()
         resetDashedViews()
         
@@ -168,7 +168,7 @@ class ChooseSizeFondue: UIViewController {
         }
     }
     
-    func buttonAddPressed(){
+    @objc func buttonAddPressed(){
         performSegue(withIdentifier: "toFlavourFondue", sender: nil)
     }
 

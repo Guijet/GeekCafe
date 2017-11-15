@@ -127,7 +127,7 @@ class DragAndDropBrevage: UIViewController{
     }
     
 
-    func tapSubitem(sender:UITapGestureRecognizer){
+    @objc func tapSubitem(sender:UITapGestureRecognizer){
         let imageTag = sender.view!.tag
         updateBadge(imageViewSubitem:sender.view!)
         subitemsIds.append(imageTag as NSNumber)
@@ -198,7 +198,7 @@ class DragAndDropBrevage: UIViewController{
         
     }
     
-    func nextPressed(){
+    @objc func nextPressed(){
         Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromBrevage", sender: nil)
     }

@@ -25,6 +25,7 @@ class HistoriqueList: UIViewController {
         //Fill fake info
         //Set up menu and container
         super.viewDidLoad()
+        print(Global.global.userInfo.token)
         arrayHistory = APIRequestHistory().getHisory()
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -103,7 +104,7 @@ class HistoriqueList: UIViewController {
     }
     
     
-    func historyChoose(sender:UIButton){
+    @objc func historyChoose(sender:UIButton){
         idToPass = sender.tag
         getHistoryByID(id: sender.tag)
         performSegue(withIdentifier: "toInfoHistory", sender: nil)

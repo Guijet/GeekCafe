@@ -12,8 +12,12 @@ class CustomTextField:UITextField,UITextFieldDelegate{
     let placeholderLabel = UILabel()
     let separator = UIView()
     
-    init(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
-        super.init(frame: CGRect.zero)
+    override init(frame:CGRect){
+        super.init(frame: frame)
+    }
+    
+    func setUpTB(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
+        //super.init(frame: CGRect.zero)
         buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos,superView:superView)
     }
     

@@ -44,7 +44,7 @@ class ListAbonnement: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Liste Abonnements"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -222,7 +222,7 @@ class ListAbonnement: UIViewController {
         }
     }
 
-    func performAnimationFlip(sender:UIButton){
+    @objc func performAnimationFlip(sender:UIButton){
         //ANIMATION DE FLIP POUR LE BOUTON
         UIView.transition(with: sender, duration: 0.8, options: [.transitionFlipFromBottom,.showHideTransitionViews], animations: {
             self.updateGreenCard(sender:sender)
@@ -272,7 +272,7 @@ class ListAbonnement: UIViewController {
     }
 
     //Aderer a l'abonnement
-    func getAbonnement(){
+    @objc func getAbonnement(){
         
     }
 }

@@ -126,7 +126,7 @@ class SubitemsFondue: UIViewController {
         sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
-    func nextPressed(){
+    @objc func nextPressed(){
         performSegue(withIdentifier: "toEndOrderFromFondue", sender: nil)
     }
 

@@ -35,7 +35,7 @@ class PatisserieMain: UIViewController{
     //Title and title color
     func setNavigationTitle(){
         self.title = "Pâtisseries"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -96,7 +96,7 @@ class PatisserieMain: UIViewController{
         }
     }
     
-    func patisseriePressed(sender:UIButton){
+    @objc func patisseriePressed(sender:UIButton){
         infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
         performSegue(withIdentifier: "toChoosePatisserie", sender: nil)
     }

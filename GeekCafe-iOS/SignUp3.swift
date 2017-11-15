@@ -84,7 +84,7 @@ class SignUp3: UIViewController,UITextFieldDelegate{
         
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
@@ -169,11 +169,11 @@ class SignUp3: UIViewController,UITextFieldDelegate{
     //
     //
     //
-    func nextPressed(sender:UIButton){
+    @objc func nextPressed(sender:UIButton){
         endEditing()
         if(TB_Password.text! != "" && TB_Confirm.text! != ""){
             if(TB_Confirm.text! == TB_Password.text!){
-                if((TB_Password.text?.characters.count)! >= 7){
+                if((TB_Password.text?.count)! >= 7){
                     password = TB_Password.text!
                     performSegue(withIdentifier: "toCardInformation", sender: nil)
                 }

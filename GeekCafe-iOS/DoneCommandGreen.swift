@@ -40,7 +40,7 @@ class DoneCommandGreen: UIViewController {
         toChronoButton.addTarget(self, action: #selector(toChrono), for: .touchUpInside)
     }
     
-    func toChrono(){
+    @objc func toChrono(){
         let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
         UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {

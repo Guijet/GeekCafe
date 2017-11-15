@@ -138,15 +138,15 @@ class MainPageProfile: UIViewController {
         scrollView.contentSize = CGSize(width: 1.0, height: newY)
     }
     
-    func switchValueDidChange(sender:UISwitch!) {
+    @objc func switchValueDidChange(sender:UISwitch!) {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-    func changeSub(){
+    @objc func changeSub(){
         
     }
     
-    func buttonPressed(sender:UIButton){
+    @objc func buttonPressed(sender:UIButton){
         if(sender.tag == 2){
             //To modify pofile
         }

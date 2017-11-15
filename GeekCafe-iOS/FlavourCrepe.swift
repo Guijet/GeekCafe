@@ -123,7 +123,7 @@ class FlavourCrepe: UIViewController {
     }
     
     
-    func tapSubitem(sender:UITapGestureRecognizer){
+    @objc func tapSubitem(sender:UITapGestureRecognizer){
         if(nbSelectionChoix < nbChoix){
             let imageTag = sender.view!.tag
             updateBadge(imageViewSubitem:sender.view!)
@@ -199,7 +199,7 @@ class FlavourCrepe: UIViewController {
         }
     }
     
-    func nextPressed(){
+    @objc func nextPressed(){
         Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromCrepe", sender: nil)
     }

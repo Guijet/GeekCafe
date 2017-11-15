@@ -17,16 +17,22 @@ class SecondView: UIView {
     }
     
     fileprivate func buildView(containerView:UIView){
-        let TB_Name = CustomTextField(placeholderText: "Prenom", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(33),superView:containerView)
         
-        let TB_Lastname = CustomTextField(placeholderText: "Nom de famille", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(90),superView:containerView)
+        let TB_Name = CustomTextField()
+        TB_Name.setUpTB(placeholderText: "Prenom", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(33),superView:containerView)
         
-        let TB_Birth = CustomTextField(placeholderText: "Date de naissance", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(147),superView:containerView)
+        let TB_Lastname = CustomTextField()
+        TB_Lastname.setUpTB(placeholderText: "Nom de famille", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(90),superView:containerView)
         
-        let TB_Password = CustomTextField(placeholderText: "Mot de passe", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(204),superView:containerView)
+        let TB_Birth = CustomTextField()
+        TB_Birth.setUpTB(placeholderText: "Date de naissance", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(147),superView:containerView)
+        
+        let TB_Password = CustomTextField()
+        TB_Password.setUpTB(placeholderText: "Mot de passe", containerView: self, xPos: containerView.rw(31) + containerView.frame.width, yPos: containerView.rh(204),superView:containerView)
         TB_Password.isSecureTextEntry = true
         
-        let TB_Confirm = CustomTextField(placeholderText: "Confirmer le mot de passe", containerView: self, xPos: rw(31) + containerView.frame.width, yPos: containerView.rh(261),superView:containerView)
+        let TB_Confirm = CustomTextField()
+        TB_Confirm.setUpTB(placeholderText: "Confirmer le mot de passe", containerView: self, xPos: rw(31) + containerView.frame.width, yPos: containerView.rh(261),superView:containerView)
         TB_Confirm.isSecureTextEntry = true
         
         
@@ -38,6 +44,10 @@ class SecondView: UIView {
         toPage3BUtton.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
         //toPage3BUtton.addTarget(self, action: #selector(toPage3), for: .touchUpInside)
         self.addSubview(toPage3BUtton)
+    }
+    
+    func fk(){
+        
     }
     
     func animateLeft(containerView:UIView){

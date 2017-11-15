@@ -107,11 +107,11 @@ class CommandeMainPage: UIViewController {
         doneButton.addTarget(self, action: #selector(seeOrder(sender:)), for: .touchUpInside)
     }
     
-    func seeOrder(sender:UIButton){
+    @objc func seeOrder(sender:UIButton){
         performSegue(withIdentifier: "toSeeCommande", sender: nil)
     }
     
-    func goToOrder(sender:UIButton){
+    @objc func goToOrder(sender:UIButton){
         
         listItemToPass = APIRequestCommande().getItemsList(id: sender.tag)
         

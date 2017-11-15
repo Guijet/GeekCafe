@@ -32,7 +32,7 @@ class APIRequestHistory{
 
         if let data = json["data"] as? [String:Any]{
             
-
+            //METTRE LES SUBITEMS PRICE DANS LE PRIX TOAL DE LITEM
             let items = data["items"] as! [String:Any]
             let dataItems = items["data"] as! [[String:Any]]
             if(dataItems.count > 0){

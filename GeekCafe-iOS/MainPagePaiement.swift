@@ -192,7 +192,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         })
     }
     
-    func deleteCardAnimation(sender:UIButton){
+    @objc func deleteCardAnimation(sender:UIButton){
         if(!isOpen(view: sender.superview!)){
             openButtonDelete(superView: sender.superview!,sender: sender)
         }
@@ -202,7 +202,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
     }
     
-    func deleteCard(sender:UIButton){
+    @objc func deleteCard(sender:UIButton){
         load.buildViewAndStartAnimate(view: self.view)
         DispatchQueue.global(qos:.background).async {
             if(APIRequestPaiement().deleteCard(card_token: Global.global.userInfo.cards[0].id_card)){
@@ -377,7 +377,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         })
     }
     
-    func animateBottomClose(){
+    @objc func animateBottomClose(){
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
             self.containerViewCard.center.y += self.rh(350)
@@ -387,11 +387,11 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         })
     }
     
-    func addCardPressed(){
+    @objc func addCardPressed(){
         animateBottomOpen()
     }
     
-    func addCard(){
+    @objc func addCard(){
         print("perform selector for add card")
     }
     
@@ -431,7 +431,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Expiration){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! == 2){
                 if (isBackSpace != -92) {
                     TB_Expiration.text?.append("/")
@@ -445,7 +445,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CVC){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! > 2){
                 if (isBackSpace != -92) {
                     return false
@@ -454,7 +454,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CardNumber){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if (isBackSpace != -92) {
                 if(lenght == 4 || lenght == 9 || lenght == 14){
                     textField.text?.append(" ")
@@ -474,7 +474,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func splitCardNumberWithSpace(number:String)->String{
         var index:Int = 0
         var splitNumber:String = ""
-        for x in number.characters{
+        for x in number{
             splitNumber.append(x)
             if(index == 3){
                 splitNumber.append(" ")
@@ -496,7 +496,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     //CARD IO
     //
     //
-    func showCardIOView(sender:UIButton){
+    @objc func showCardIOView(sender:UIButton){
         endEditing()
         self.navigationController?.navigationBar.isHidden = true
         contentViewIO.frame = view.frame
@@ -519,7 +519,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
     }
     
-    func removeViewIO(){
+    @objc func removeViewIO(){
         TB_CardNumber.becomeFirstResponder()
         self.navigationController?.navigationBar.isHidden = false
         contentViewIO.removeFromSuperview()

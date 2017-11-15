@@ -18,8 +18,9 @@ class InfoHistory: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         arrayItems = APIRequestHistory().getItemFromOrderID(id: idToPass)
-        automaticallyAdjustsScrollViewInsets = false
+        scrollView.contentInsetAdjustmentBehavior = .automatic
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setNavigationTitle()
         setUpScrollView()
@@ -37,7 +38,7 @@ class InfoHistory: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Info Commande"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -67,6 +68,9 @@ class InfoHistory: UIViewController {
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
+                
+                
+                
                 price.text = "$\(x.price.floatValue.twoDecimal)"
                 containerView.addSubview(price)
 
@@ -122,7 +126,7 @@ class InfoHistory: UIViewController {
         buttonFacture.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         buttonFacture.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
         buttonFacture.addTarget(self, action: #selector(seeBill), for: .touchUpInside)
-        bottomView.addSubview(buttonFacture)
+        //bottomView.addSubview(buttonFacture)
         
         let totalPrice = UILabel()
         totalPrice.frame = CGRect(x: rw(192), y: rh(16), width: rw(145), height: rh(32))
@@ -137,7 +141,7 @@ class InfoHistory: UIViewController {
         priceAndTaxe.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         priceAndTaxe.font = UIFont(name: "Lato-Light", size: rw(12))
         priceAndTaxe.textAlignment = .right
-        priceAndTaxe.text = "$2.49 + $1.01"
+        priceAndTaxe.text = "$\(Utility().getTPS(price: historyToPass.amount.floatValue).twoDecimal) + $\(Utility().getTVQ(price: historyToPass.amount.floatValue).twoDecimal)"
         priceAndTaxe.sizeToFit()
         bottomView.addSubview(priceAndTaxe)
         
@@ -154,7 +158,11 @@ class InfoHistory: UIViewController {
         designTaxe.center.x = priceAndTaxe.frame.midX
     }
     
-    func seeBill(){
+    func getPriceWithSubItems(){
+        
+    }
+    
+    @objc func seeBill(){
         print("See Bill Pressed")
     }
 

@@ -104,7 +104,7 @@ class PromotionMainPage: UIViewController {
         }
     }
     
-    func promoTapped(sender:UIButton){
+    @objc func promoTapped(sender:UIButton){
         createCopyView()
         let promoCode = getPromoCodeByID(id: sender.tag)
         UIPasteboard.general.string = promoCode
@@ -134,7 +134,7 @@ class PromotionMainPage: UIViewController {
         Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(dismissCopyView), userInfo: nil, repeats: false)
     }
     
-    func dismissCopyView(){
+    @objc func dismissCopyView(){
         
         UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations: {
             self.popUpView.alpha = 0

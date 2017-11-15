@@ -78,7 +78,7 @@ class FlavourFondue: UIViewController {
     }
     
     func fillScrollView(){
-        var newX:CGFloat = rw(33)
+        //var newX:CGFloat = rw(33)
 //        if(arraySubitems.count > 0){
 //            for x in arraySubitems{
 //                
@@ -111,7 +111,7 @@ class FlavourFondue: UIViewController {
 //        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
     }
     
-    func nextPressed(){
+    @objc func nextPressed(){
         performSegue(withIdentifier: "toSubitemsFondue", sender: nil)
     }
 
