@@ -53,7 +53,16 @@ class APIRequestProfile{
         else{
             return ""
         }
-        
-        
+    }
+    
+    func uploadImage(b64img:String)->Bool{
+        var isSuccess:Bool = false
+        let json = Utility().getJson(url: "\(Global.global.ip!)upload", method: "POST",body: "image=\(b64img)",needToken: true)
+        if let success = json["success"] as? Bool{
+            if(success){
+                isSuccess = true
+            }
+        }
+        return isSuccess
     }
 }

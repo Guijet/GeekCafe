@@ -86,6 +86,7 @@
 		46A8F7941F5722700085181F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A8F7921F5722700085181F /* LaunchScreen.storyboard */; };
 		46A8F79F1F5722700085181F /* GeekCafe_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F79E1F5722700085181F /* GeekCafe_iOSTests.swift */; };
 		46A8F7AA1F5722700085181F /* GeekCafe_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A8F7A91F5722700085181F /* GeekCafe_iOSUITests.swift */; };
+		46ABFB511FBCDF6900482F0C /* APIRequestAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ABFB501FBCDF6900482F0C /* APIRequestAbonnement.swift */; };
 		46C7CCFB1F86BF5800C7961B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46C7CCFA1F86BF5800C7961B /* Profile.storyboard */; };
 		46C7CCFD1F86BF9600C7961B /* APIRequestProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7CCFC1F86BF9600C7961B /* APIRequestProfile.swift */; };
 		46C7CCFF1F86BFA300C7961B /* AssetsProfile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46C7CCFE1F86BFA300C7961B /* AssetsProfile.xcassets */; };
@@ -229,6 +230,7 @@
 		46A8F7A51F5722700085181F /* GeekCafe-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GeekCafe-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A8F7A91F5722700085181F /* GeekCafe_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeekCafe_iOSUITests.swift; sourceTree = "<group>"; };
 		46A8F7AB1F5722700085181F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46ABFB501FBCDF6900482F0C /* APIRequestAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestAbonnement.swift; sourceTree = "<group>"; };
 		46C7CCFA1F86BF5800C7961B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		46C7CCFC1F86BF9600C7961B /* APIRequestProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestProfile.swift; sourceTree = "<group>"; };
 		46C7CCFE1F86BFA300C7961B /* AssetsProfile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AssetsProfile.xcassets; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 		4687851C1F7194200009C292 /* Request Files */ = {
 			isa = PBXGroup;
 			children = (
+				46ABFB501FBCDF6900482F0C /* APIRequestAbonnement.swift */,
 			);
 			name = "Request Files";
 			sourceTree = "<group>";
@@ -1120,6 +1123,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					46A8F7991F5722700085181F = {
@@ -1319,6 +1325,7 @@
 				468785431F71B90C0009C292 /* InfoHistory.swift in Sources */,
 				460207C21FA1010300446E7A /* loadingIndicator.swift in Sources */,
 				4687853F1F7195BA0009C292 /* PromotionMainPage.swift in Sources */,
+				46ABFB511FBCDF6900482F0C /* APIRequestAbonnement.swift in Sources */,
 				467BC11F1F82E2B200C300AF /* ChooseSizeFondue.swift in Sources */,
 				46FDA4E31F84016D00B6A07B /* PriceItem.swift in Sources */,
 				46C7CCFD1F86BF9600C7961B /* APIRequestProfile.swift in Sources */,
