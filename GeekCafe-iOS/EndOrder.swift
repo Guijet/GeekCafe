@@ -68,7 +68,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                price.text = "\(x.price.floatValue.twoDecimal)"
+                price.text = "\(x.price.floatValue.twoDecimal) $"
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
@@ -180,16 +180,18 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         Utility().createHR(x: 0, y: 0, width: view.frame.width, view: bottomInnerView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
         
+        
+
         let labelComptoir = UILabel()
         labelComptoir.isUserInteractionEnabled = true
         labelComptoir.createLabel(frame: CGRect(x:rw(205),y:rh(101),width:rw(120),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer au comptoir")
-        bottomInnerView.addSubview(labelComptoir)
+        
         
         let buttonImageInStore = UIButton()
         buttonImageInStore.frame = CGRect(x: rw(245), y: rh(25), width: rw(64), height: rw(64))
         buttonImageInStore.setImage(UIImage(named:"pay_in_store"), for: .normal)
         buttonImageInStore.addTarget(self, action: #selector(payInStore), for: .touchUpInside)
-        bottomInnerView.addSubview(buttonImageInStore)
+        
         
         let tapPayInApp = UITapGestureRecognizer(target: self, action: #selector(payInApp))
         
@@ -197,13 +199,25 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         labelPayInApp.isUserInteractionEnabled = true
         labelPayInApp.addGestureRecognizer(tapPayInApp)
         labelPayInApp.createLabel(frame: CGRect(x:rw(29.5),y:rh(101),width:rw(120),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(15), textAignment: .center, text: "Payer dans l'app")
-        bottomInnerView.addSubview(labelPayInApp)
+        
         
         let buttonImageInApp = UIButton()
         buttonImageInApp.frame = CGRect(x: rw(57), y: rh(16), width: rw(74), height: rw(74))
         buttonImageInApp.setImage(UIImage(named:"pay_in_app"), for: .normal)
         buttonImageInApp.addTarget(self, action: #selector(payInApp), for: .touchUpInside)
-        bottomInnerView.addSubview(buttonImageInApp)
+        
+        if(Global.global.userInfo.cards.count > 0){
+            bottomInnerView.addSubview(labelComptoir)
+            bottomInnerView.addSubview(buttonImageInStore)
+            bottomInnerView.addSubview(labelPayInApp)
+            bottomInnerView.addSubview(buttonImageInApp)
+        }
+        else{
+            labelComptoir.frame.origin.x = (view.frame.midX - (labelComptoir.frame.width/2))
+            buttonImageInStore.frame.origin.x = (view.frame.midX - (buttonImageInStore.frame.width/2))
+            bottomInnerView.addSubview(labelComptoir)
+            bottomInnerView.addSubview(buttonImageInStore)
+        }
         
         
     }
@@ -237,14 +251,21 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         LBL_CartePaiement.numberOfLines = 2
         LBL_CartePaiement.lineBreakMode = .byTruncatingHead
         containerMainView.addSubview(LBL_CartePaiement)
+
+        if(Global.global.userInfo.cards.count > 0){
+
+            let LBL_Provider = UILabel()
+            LBL_Provider.createLabel(frame: CGRect(x:rw(99),y:rh(8.5),width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "\(Global.global.userInfo.cards[0].brand)")
+            containerMainView.addSubview(LBL_Provider)
         
-        let LBL_Provider = UILabel()
-        LBL_Provider.createLabel(frame: CGRect(x:rw(99),y:rh(8.5),width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "American Express")
-        containerMainView.addSubview(LBL_Provider)
-        
-        let LBL_CardNumber = UILabel()
-        LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• 5449)")
-        containerMainView.addSubview(LBL_CardNumber)
+            let LBL_CardNumber = UILabel()
+            LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• \(Global.global.userInfo.cards[0].last4)")
+            containerMainView.addSubview(LBL_CardNumber)
+        }
+        else{
+            //PAS DE CARTE
+        }
+
         
         let tapAddPromo = UITapGestureRecognizer(target: self, action: #selector(toEnterPromoCode))
         
@@ -377,7 +398,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     @objc func payInStore(){
-        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1)){
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1, counter_id: 1)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
         else{
@@ -392,13 +413,17 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     @objc func payPressed(sender:UIButton){
         //REQUEST TO ORDER
-        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1)){
-            performSegue(withIdentifier: "toConfirmation", sender: nil)
+        if(Global.global.userInfo.cards.count > 0){
+            if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1)){
+                performSegue(withIdentifier: "toConfirmation", sender: nil)
+            }
+            else{
+                performSegue(withIdentifier: "toFailedOrder", sender: nil)
+            }
         }
         else{
-            performSegue(withIdentifier: "toFailedOrder", sender: nil)
+            Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
         }
-        
     }
     
     @objc func addMore(){

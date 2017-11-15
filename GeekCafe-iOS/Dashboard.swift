@@ -235,11 +235,49 @@ class Dashboard:UIViewController{
     }
     
     @objc func commanderPressed(sender:UIButton){
-        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
-        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
-        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-            UIApplication.shared.keyWindow?.rootViewController = main
-        }, completion: nil)
+        
+        if(Global.global.userInfo.cards.count > 0){
+            
+            DispatchQueue.global().async {
+                
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }
+            }
+        }
+        else{
+            Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                
+                
+                DispatchQueue.global().async {
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
+            }, action2: {
+    
+                DispatchQueue.global().async {
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
+                
+            }, style: UIAlertControllerStyle.alert)
+        }
     }
     
     @objc func abonnementPressed(sender:UIButton){

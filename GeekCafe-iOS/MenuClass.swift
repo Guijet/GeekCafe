@@ -235,21 +235,61 @@ class MenuClass{
         }
         
         if(sender.tag == 2){
-            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+            
+            if(Global.global.userInfo.cards.count > 0){
+                if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                    closeMenu()
+                    return
+                }
                 closeMenu()
-                return
-            }
-            closeMenu()
-            DispatchQueue.global().async {
-                while self.isOpen{usleep(500)}
-                DispatchQueue.main.async {
-                    let storyboard = UIStoryboard(name: "Commande", bundle: nil)
-                    let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
-                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                        UIApplication.shared.keyWindow?.rootViewController = main
-                    }, completion: nil)
+                DispatchQueue.global().async {
+                    while self.isOpen{usleep(500)}
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
                 }
             }
+            else{
+                Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }, action2: {
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                
+                }, style: UIAlertControllerStyle.alert)
+            }
+            
         }
         if(sender.tag == 3){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "HistoriqueMainPage"{
@@ -356,6 +396,8 @@ class MenuClass{
             }
         }
     }
+    
+    
     
     //
     //Close tap gesture on view

@@ -100,7 +100,7 @@ class APIRequestCommande{
     //GET JSON DATE WITH DICTIONNARY OF ORDER
     //
     //
-    func buildJsonOrder(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int)->Data{
+    func buildJsonOrder(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->Data{
         
         var items = [[String:Any]]()
         if(arrayItems.count > 0){
@@ -117,7 +117,7 @@ class APIRequestCommande{
             }
         }
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: ["card_pay":card_pay,"branch_id":branch_id,"items":items] as [String : Any], options: .prettyPrinted)
+        let jsonData = try? JSONSerialization.data(withJSONObject: ["card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
         return jsonData!
     }
     
@@ -127,7 +127,7 @@ class APIRequestCommande{
     //ORDER
     //
     //
-    func getOrderResult(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int)->[String:Any]{
+    func getOrderResult(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->[String:Any]{
         
         var finish = false
         var result: [String: Any]!
@@ -139,7 +139,7 @@ class APIRequestCommande{
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("Bearer \(Global.global.userInfo.token)", forHTTPHeaderField: "Authorization")
             
-            request.httpBody = self.buildJsonOrder(arrayItems: arrayItems,card_pay: card_pay,branch_id: branch_id)
+            request.httpBody = self.buildJsonOrder(arrayItems: arrayItems,card_pay: card_pay,branch_id: branch_id, counter_id: counter_id)
         
             
             let config = URLSessionConfiguration.default
@@ -147,6 +147,9 @@ class APIRequestCommande{
             let session = URLSession(configuration: config)
             
             let task = session.dataTask(with: request) { data, response, error in
+                
+                let string1 = String(data: data!, encoding: String.Encoding.utf8)
+                print(string1!)
                 
                 guard let data = data, error == nil else {                                                 // check for fundamental networking error
                     print("error=\(String(describing: error))")
@@ -185,10 +188,10 @@ class APIRequestCommande{
         return result
     }
     
-    func order(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int)->Bool{
+    func order(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->Bool{
         var worked:Bool = false
         
-        let result = getOrderResult(arrayItems: arrayItems, card_pay: card_pay, branch_id: branch_id)
+        let result = getOrderResult(arrayItems: arrayItems, card_pay: card_pay, branch_id: branch_id, counter_id: counter_id)
         if let _ = result["status"] as? String{
             worked = true
         }
