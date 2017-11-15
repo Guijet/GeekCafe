@@ -148,16 +148,20 @@ class MainPageProfile: UIViewController {
     
     @objc func buttonPressed(sender:UIButton){
         if(sender.tag == 2){
-            //To modify pofile
+            performSegue(withIdentifier: "toModifyProfile", sender: nil)
         }
         else if(sender.tag == 3){
-            //TO evaluez app
+            performSegue(withIdentifier: "toRatings", sender: nil)
         }
         else if(sender.tag == 4){
-            //To termes et condition
+            performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
         }
         else if(sender.tag == 5){
-            //To Paiements
+            let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+            let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                UIApplication.shared.keyWindow?.rootViewController = main
+            }, completion: nil)
         }
     }
     

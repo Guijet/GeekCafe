@@ -16,13 +16,13 @@ class CustomTextField:UITextField,UITextFieldDelegate{
         super.init(frame: frame)
     }
     
-    func setUpTB(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
+    func setUpTB(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView,text:String = ""){
         //super.init(frame: CGRect.zero)
-        buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos,superView:superView)
+        buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos,superView:superView,text:text)
     }
     
-    fileprivate func buildViews(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView){
-        
+    fileprivate func buildViews(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView,text:String){
+       
         //Instantiate textfield base
         self.frame = CGRect(x: xPos, y: yPos, width: superView.rw(272), height: superView.rh(32))
         self.delegate = self
@@ -30,6 +30,7 @@ class CustomTextField:UITextField,UITextFieldDelegate{
         self.autocapitalizationType = .none
         self.font = UIFont(name:"Lato-Bold",size:superView.rw(16))
         self.textAlignment = .left
+        self.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         self.accessibilityIdentifier = "CTB"
         containerView.addSubview(self)
         
@@ -47,6 +48,13 @@ class CustomTextField:UITextField,UITextFieldDelegate{
         separator.accessibilityIdentifier = "CTB"
         separator.backgroundColor = Utility().hexStringToUIColor(hex: "#DCDCDC")
         containerView.addSubview(separator)
+        
+        if(text != ""){
+            placeholderLabel.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+            placeholderLabel.frame.origin = CGPoint(x:self.frame.minX,y:self.frame.minY - 12)
+            self.text = text
+        }
+        
     }
    
     fileprivate func animateLabel(){

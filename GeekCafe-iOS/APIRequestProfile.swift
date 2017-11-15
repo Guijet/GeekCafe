@@ -33,8 +33,8 @@ class APIRequestProfile{
         }
     }
     
-    func modifyUser(first_name:String = "",last_name:String = "",image_id:Int = 0)->Bool{
-        let json = Utility().getJson(url: "\(Global.global.ip!)user", method: "PUT", body: "first_name=\(first_name)&last_name=\(last_name)&image_id=\(image_id)", needToken: true)
+    func modifyUser(first_name:String = "",last_name:String = "")->Bool{
+        let json = Utility().getJson(url: "\(Global.global.ip!)user", method: "PUT", body: "first_name=\(first_name)&last_name=\(last_name)", needToken: true)
         
         if let _ = json["status"] as? String{
             return true
@@ -42,5 +42,18 @@ class APIRequestProfile{
         else{
             return false
         }
+    }
+    
+    func modifyProfileImage(imageID:Int)->String{
+        let json = Utility().getJson(url: "\(Global.global.ip!)user", method: "PUT", body: "image_id=\(imageID)", needToken: true)
+        
+        if let data = json["data"] as? [String:Any]{
+            return data["profile_image"] as! String
+        }
+        else{
+            return ""
+        }
+        
+        
     }
 }
