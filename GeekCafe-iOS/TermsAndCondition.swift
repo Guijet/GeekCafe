@@ -8,11 +8,13 @@
 
 import UIKit
 
-class TermsAndCondition: UIViewController {
-
+class TermsAndCondition: UIViewController,UIWebViewDelegate {
+    
+    var webView:UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
+        setUpWebView()
         // Do any additional setup after loading the view.
     }
 
@@ -26,6 +28,16 @@ class TermsAndCondition: UIViewController {
     func setNavigationTitle(){
         self.title = "Terms and condition"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+    }
+    
+    func setUpWebView(){
+        webView = UIWebView(frame: self.view.frame)
+        webView.delegate = self
+        view.addSubview(webView)
+        if let url = URL(string: "http://apple.com") {
+            let request = URLRequest(url: url)
+            webView.loadRequest(request)
+        }
     }
 
 }

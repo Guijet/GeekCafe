@@ -8,11 +8,13 @@
 
 import UIKit
 
-class RateMyApp: UIViewController {
+class RateMyApp: UIViewController,UIWebViewDelegate{
 
+    var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
+        setUpWebView()
         // Do any additional setup after loading the view.
     }
 
@@ -27,5 +29,16 @@ class RateMyApp: UIViewController {
         self.title = "Rating"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
+    
+    func setUpWebView(){
+        webView = UIWebView(frame: self.view.frame)
+        webView.delegate = self
+        view.addSubview(webView)
+        if let url = URL(string: "http://apple.com") {
+            let request = URLRequest(url: url)
+            webView.loadRequest(request)
+        }
+    }
+
 
 }

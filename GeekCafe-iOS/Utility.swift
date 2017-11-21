@@ -469,6 +469,7 @@
             }
             else if(method == "PUT"){
                 let putString = body
+                request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                 request.httpBody = putString.data(using: .utf8)
             }
             else if(method == "DELETE"){
@@ -487,13 +488,16 @@
             
             let task = session.dataTask(with: request) { data, response, error in
                 
-                let responseText: String = String(data: data!, encoding: String.Encoding.utf8)!
-                print(responseText)
+                
                 guard let data = data, error == nil else {                                                 // check for fundamental networking error
                     print("error=\(String(describing: error))")
+                    result = ["nil":"nil"]
                     finish = true
                     return
                 }
+                
+                let responseText: String = String(data: data, encoding: String.Encoding.utf8)!
+                print(responseText)
                 
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                     print("statusCode should be 200, buxt is \(httpStatus.statusCode)")

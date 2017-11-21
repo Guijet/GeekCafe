@@ -13,6 +13,7 @@ class MainPageProfile: UIViewController {
     let menu = MenuClass()
     let containerView = UIView()
     let scrollView = UIScrollView()
+    let profileImage = UIImageView()
     let backgroundImage = UIImageView()
     let switchNotif = UISwitch()
     let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
@@ -51,7 +52,7 @@ class MainPageProfile: UIViewController {
     }
     
     func setUpTopView(containerView:UIView){
-        let profileImage = UIImageView()
+        
         profileImage.frame = CGRect(x: rw(133), y: rh(36), width: rw(111), height: rw(111))
         profileImage.layer.cornerRadius = rw(111)/2
         profileImage.getOptimizeImageAsync(url: Global.global.userInfo.image_url)
@@ -60,6 +61,7 @@ class MainPageProfile: UIViewController {
         
         let name = UILabel()
         name.createLabel(frame: CGRect(x:rw(50),y:profileImage.frame.maxY + rh(10),width:view.frame.width - rw(100),height:rh(30)), textColor: Utility().hexStringToUIColor(hex:"#161616"), fontName: "Lato-Regular", fontSize: rw(25), textAignment: .center, text: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+        name.adjustsFontSizeToFitWidth = true
         containerView.addSubview(name)
         
         let subscription = UILabel()

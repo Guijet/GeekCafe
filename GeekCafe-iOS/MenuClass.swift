@@ -128,7 +128,9 @@ class MenuClass{
         menuItemsContainer.addSubview(deconnexionImage)
     }
     
-    
+    func updateImageProfile(){
+        profileImage.image = Utility().getOptimizeImage(url: Global.global.userInfo.image_url)
+    }
     
     func setUpFakeNavBar(view:UIView,titleTop:String){
         
