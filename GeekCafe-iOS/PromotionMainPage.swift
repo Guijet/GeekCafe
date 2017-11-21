@@ -8,12 +8,17 @@
 
 import UIKit
 
-class PromotionMainPage: UIViewController {
+class PromotionMainPage: UIViewController,UIScrollViewDelegate {
 
     //Menu and container
     let menu = MenuClass()
     let containerView = UIView()
+    var MetaPromotions:PromotionList!
     var arrayPromotions = [Promotion]()
+    
+    var isNext:Bool!
+    var pageNumber = 1
+    var nextString:String = ""
     
     //Pages element
     let backgroundImage = UIImageView()
@@ -22,10 +27,12 @@ class PromotionMainPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MetaPromotions =  APIRequestPromotion().getPromotions(page: "\(pageNumber)")
+        arrayPromotions = MetaPromotions.promotions
+        isNext = MetaPromotions.meta.isNext
+        nextString = MetaPromotions.meta.nextString
         
-        //Fake info array
-        fillFakeInformation()
-        
+        scrollViewPromotion.delegate = self
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -55,16 +62,6 @@ class PromotionMainPage: UIViewController {
         containerView.addSubview(scrollViewPromotion)
     }
     
-    func fillFakeInformation(){
-        arrayPromotions.append(Promotion(item: "café", discount: 50, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 25, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 10, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 20, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 70, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 65, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 30, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-    }
-    
     func fillScrollView(){
         if(arrayPromotions.count > 0){
             var newY:CGFloat = rw(8)
@@ -80,7 +77,7 @@ class PromotionMainPage: UIViewController {
                 let amount = UILabel()
                 amount.frame = CGRect(x: rw(31), y: rh(40), width: rw(156), height: rh(80))
                 amount.textColor = Utility().hexStringToUIColor(hex: "#6CA642")
-                amount.text = "\(String(x.discount))%"
+                amount.text = "\(String(describing: x.reduction))"
                 amount.textAlignment = .left
                 amount.font = UIFont(name: "Lato-Bold", size: rw(70))
                 backgroundCard.addSubview(amount)
@@ -88,20 +85,50 @@ class PromotionMainPage: UIViewController {
                 let labelItems = UILabel()
                 labelItems.frame = CGRect(x: rw(31), y: amount.frame.maxY, width: rw(156), height: rh(11))
                 labelItems.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
-                labelItems.text = "sur le \(x.item)"
+                labelItems.text = "sur le \(x.itemName)"
                 labelItems.textAlignment = .left
                 labelItems.font = UIFont(name: "Lato-Light", size: rw(14))
                 backgroundCard.addSubview(labelItems)
                 
                 let image = UIImageView()
                 image.frame = CGRect(x: rw(190), y: rh(14.5), width: rw(150), height: rw(150))
-                image.image = x.image
+                image.getOptimizeImageAsync(url: x.image_url)
                 backgroundCard.addSubview(image)
                 
                 newY += rh(209)
             }
             scrollViewPromotion.contentSize = CGSize(width: 1.0, height: newY)
         }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == scrollViewPromotion{
+            if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height{
+                if(isNext){
+                    pageNumber += 1
+                    getMorePromotions(pageNumber: pageNumber, stringRequest: nextString)
+                }
+                else{return}
+            }
+        }
+    }
+    
+    func getMorePromotions(pageNumber:Int,stringRequest:String){
+        let newMetaPagination = APIRequestPromotion().getPromotions(page: "\(pageNumber)", stringRequest: stringRequest)
+        let newPromoArray = newMetaPagination.promotions
+        nextString = newMetaPagination.meta.nextString
+        isNext = newMetaPagination.meta.isNext
+        for x in newPromoArray{
+            arrayPromotions.append(x)
+        }
+        reloadScrollView()
+    }
+    
+    func reloadScrollView(){
+        for x in scrollViewPromotion.subviews{
+            x.removeFromSuperview()
+        }
+        fillScrollView()
     }
     
     @objc func promoTapped(sender:UIButton){

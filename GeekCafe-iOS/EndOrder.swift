@@ -259,7 +259,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             containerMainView.addSubview(LBL_Provider)
         
             let LBL_CardNumber = UILabel()
-            LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• \(Global.global.userInfo.cards[0].last4)")
+            LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• \(Global.global.userInfo.cards[0].last4))")
             containerMainView.addSubview(LBL_CardNumber)
         }
         else{

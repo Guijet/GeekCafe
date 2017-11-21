@@ -101,7 +101,7 @@ class CartCommmande: UIViewController {
         closeButton.addTarget(self, action: #selector(closeCart), for: .touchUpInside)
         
         let priceLabel = UILabel()
-        priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: getTotalPrice())
+        priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: "\(getTotalPrice())$")
         bottomView.addSubview(priceLabel)
     }
     

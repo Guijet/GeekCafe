@@ -11,6 +11,8 @@ import UIKit
 class RateMyApp: UIViewController,UIWebViewDelegate{
 
     var webView: UIWebView!
+    let loadingView = loadingIndicator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
@@ -21,9 +23,8 @@ class RateMyApp: UIViewController,UIWebViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.isTranslucent = false
-        self.extendedLayoutIncludesOpaqueBars = true
+
     }
-    
     //Title and title color
     func setNavigationTitle(){
         self.title = "Rating"
@@ -34,9 +35,15 @@ class RateMyApp: UIViewController,UIWebViewDelegate{
         webView = UIWebView(frame: self.view.frame)
         webView.delegate = self
         view.addSubview(webView)
-        if let url = URL(string: "http://apple.com") {
-            let request = URLRequest(url: url)
-            webView.loadRequest(request)
+        loadingView.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos:.background).async {
+            if let url = URL(string: "http://apple.com") {
+                let request = URLRequest(url: url)
+                DispatchQueue.main.async {
+                    self.webView.loadRequest(request)
+                    self.loadingView.stopAnimatingAndRemove(view: self.view)
+                }
+            }
         }
     }
 
