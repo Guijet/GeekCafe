@@ -23,37 +23,37 @@ class BackgroundView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpElements(containerView:UIView){
-        setUpTopImage(containerView:containerView)
-        setUpTopLabels(containerView: containerView)
-        buildCard(containerView: containerView)
+    func setUpElements(containerView:UIView,frameImageTop:CGRect, frameFirstLabel:CGRect,frameCard:CGRect,text1:String,text2:String){
+        setUpTopImage(containerView:containerView, frame: frameImageTop)
+        setUpTopLabels(containerView: containerView,frameFirstLabel:frameFirstLabel, text1: text1,text2:text2)
+        buildCard(containerView: containerView, frameCard: frameCard)
     }
     
     func resizeCard(containerView:UIView,newHeight:CGFloat,newY:CGFloat){
         AnimationsLogin().resizeCard(containerView: containerView, cardView: bgCard, newHeight: newHeight, newYpos: newY)
     }
     
-    fileprivate func setUpTopImage(containerView:UIView){
+    fileprivate func setUpTopImage(containerView:UIView,frame:CGRect){
         let logo = UIImageView()
-        logo.frame = CGRect(x: containerView.rw(135), y: containerView.rh(46), width: containerView.rw(111), height: containerView.rh(106))
+        logo.frame = frame
         logo.contentMode = .scaleAspectFit
-        logo.image = UIImage(named:"logoLogin")
+        logo.image = UIImage(named:"Topimage")
         self.addSubview(logo)
     }
     
-    fileprivate func setUpTopLabels(containerView:UIView){
+    fileprivate func setUpTopLabels(containerView:UIView,frameFirstLabel:CGRect,text1:String,text2:String){
         
-        LBL_Title.createLabel(frame: CGRect(x:containerView.rw(55),y:containerView.rh(197),width:containerView.rw(266),height:containerView.rh(27)), textColor: Utility().hexStringToUIColor(hex: "#E9E9E9"), fontName: "Lato-Bold", fontSize: containerView.rw(35), textAignment: .center, text: "Bienvenue")
+        LBL_Title.createLabel(frame: frameFirstLabel, textColor: Utility().hexStringToUIColor(hex: "#E9E9E9"), fontName: "Lato-Bold", fontSize: containerView.rw(35), textAignment: .center, text: text1)
         self.addSubview(LBL_Title)
         
         
-        LBL_Subtitle.createLabel(frame: CGRect(x:containerView.rw(55),y:LBL_Title.frame.maxY,width:containerView.rw(266),height:containerView.rh(43)), textColor: Utility().hexStringToUIColor(hex: "#E9E9E9"), fontName: "Lato-Regular", fontSize: containerView.rw(12), textAignment: .center, text: "Connectez-nous pour continuer.")
+        LBL_Subtitle.createLabel(frame: CGRect(x:containerView.rw(55),y:LBL_Title.frame.maxY,width:containerView.rw(266),height:containerView.rh(43)), textColor: Utility().hexStringToUIColor(hex: "#E9E9E9"), fontName: "Lato-Regular", fontSize: containerView.rw(12), textAignment: .center, text: text2)
         self.addSubview(LBL_Subtitle)
     }
     
-    fileprivate func buildCard(containerView:UIView){
+    fileprivate func buildCard(containerView:UIView,frameCard:CGRect){
         
-        bgCard.frame = CGRect(x: containerView.rw(21), y: containerView.rh(320), width: containerView.rw(334), height: containerView.rh(352))
+        bgCard.frame = frameCard
         bgCard.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         bgCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 5, shadowColor: UIColor.black, shadowOpacity: 0.5, spread: 0)
         self.addSubview(bgCard)

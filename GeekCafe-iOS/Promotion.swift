@@ -25,14 +25,7 @@ struct Promotion{
     var nextPage:String
 }
 
-struct MetaPagination{
-    init(nextString:String,isNext:Bool){
-        self.isNext = isNext
-        self.nextString = nextString
-    }
-    var nextString:String
-    var isNext:Bool
-}
+
 
 struct PromotionList{
     init(promotions:[Promotion],meta:MetaPagination){

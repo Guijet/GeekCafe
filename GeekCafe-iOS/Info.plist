@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library access to change your GeekCafe profile image </string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -49,6 +47,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera will be used for profile picture and we offer the chance to scan your card instead of entering informations manually</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo Library access to change your GeekCafe profile image </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Hairline.ttf</string>
@@ -64,7 +64,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Login-SignUp</string>
+	<string>LoginV2</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

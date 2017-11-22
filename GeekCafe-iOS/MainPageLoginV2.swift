@@ -17,10 +17,6 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     //Views to animate and build with custom class
     let backgroundView = BackgroundView()
     let firstView = FirstView()
-    let secondView = SecondView()
-    
-    //Page Index for animations
-    var pageIndex:Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +55,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     
     func buildBackground(){
         backgroundView.frame = self.view.frame
-        backgroundView.setUpElements(containerView: self.view)
+        backgroundView.setUpElements(containerView: self.view, frameImageTop: CGRect(x: rw(132), y: rh(80), width: rw(111), height: rh(106)), frameFirstLabel: CGRect(x:rw(55),y:rh(197),width:rw(266),height:rh(27)), frameCard: CGRect(x: rw(21), y: rh(320), width: rw(334), height: rh(352)), text1: "Bienvenue",text2:"Connectez-nous pour continuer.")
         self.view.addSubview(backgroundView)
     }
     
@@ -71,12 +67,6 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         view.addSubview(firstView)
     }
     
-    func buildSecondView(){
-        secondView.frame = CGRect(x: rw(21), y: rh(275), width: rw(334), height: rh(392))
-        secondView.setUpViews(containerView: self.view)
-        secondView.addTargetNextBTN(target: self, selector: #selector(toPage3), event: .touchUpInside)
-        view.addSubview(secondView)
-    }
     
     //
     //
@@ -132,20 +122,10 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     //
     //Create account pressed 
     @objc func inscrirePressed(){
-        buildSecondView()
-        firstView.animateOut(containerView:self.view)
-        backgroundView.resizeCard(containerView:self.view,newHeight:rh(402),newY:rh(275))
-        secondView.animateLeft(containerView: self.view)
-        //Get page index for back and go to next page
-        pageIndex += 1
+        performSegue(withIdentifier: "toSignUpV2_1", sender: nil)
     }
     
     func loginPressed(){
         print("Login pressed")
     }
-
-    @objc func toPage3(){
-        //ALLER A LA PAGE 3 COMME FAIT AVEC LA 2
-    }
-
 }

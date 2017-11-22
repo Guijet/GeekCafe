@@ -301,7 +301,7 @@
     func getCleanDate(date:String)->String{
         //2017-10-25 00:50:33.000000
         let index = date.index(date.startIndex, offsetBy: 10)
-        return String(date[index...])
+        return String(date[...index])
     }
     
     func getDayOfWeek(date: String) -> String{

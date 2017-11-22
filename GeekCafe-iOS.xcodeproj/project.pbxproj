@@ -41,6 +41,10 @@
 		46344BDE1F7BDC1500A85389 /* DoneCommandRed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */; };
 		46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */; };
 		4639D7431F851C65008DAFF3 /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4639D7421F851C65008DAFF3 /* LoadingAnimation.swift */; };
+		463D04F51FC5CB44009DB9CB /* SignUpV2_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463D04F41FC5CB44009DB9CB /* SignUpV2_1.swift */; };
+		463D04F71FC5CFB1009DB9CB /* SignUpV2_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463D04F61FC5CFB1009DB9CB /* SignUpV2_2.swift */; };
+		463D04F91FC5DCEC009DB9CB /* ChooseCardLoginV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463D04F81FC5DCEC009DB9CB /* ChooseCardLoginV2.swift */; };
+		463D04FB1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463D04FA1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift */; };
 		463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4F81F5F318700706DF1 /* UtilityLogin.swift */; };
 		463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463FF4FA1F5F404200706DF1 /* SignUp2.swift */; };
 		464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012661F75C62800E271B2 /* ListAbonnement.swift */; };
@@ -74,6 +78,7 @@
 		468785431F71B90C0009C292 /* InfoHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785421F71B90C0009C292 /* InfoHistory.swift */; };
 		468785451F71CF5C0009C292 /* Promotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785441F71CF5C0009C292 /* Promotion.swift */; };
 		468785471F72AEEE0009C292 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785461F72AEEE0009C292 /* Item.swift */; };
+		4689B8051FC4F9210046F211 /* HistoryPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4689B8041FC4F9210046F211 /* HistoryPagination.swift */; };
 		468C710D1F9BC53E007141B3 /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C710C1F9BC53E007141B3 /* CustomTextfield.swift */; };
 		468C710F1F9BE4B2007141B3 /* AnimationsLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C710E1F9BE4B2007141B3 /* AnimationsLogin.swift */; };
 		468C71181F9E30C7007141B3 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C71171F9E30C7007141B3 /* SecondView.swift */; };
@@ -178,6 +183,10 @@
 		46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandRed.swift; sourceTree = "<group>"; };
 		46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneCommandGreen.swift; sourceTree = "<group>"; };
 		4639D7421F851C65008DAFF3 /* LoadingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimation.swift; sourceTree = "<group>"; };
+		463D04F41FC5CB44009DB9CB /* SignUpV2_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpV2_1.swift; sourceTree = "<group>"; };
+		463D04F61FC5CFB1009DB9CB /* SignUpV2_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpV2_2.swift; sourceTree = "<group>"; };
+		463D04F81FC5DCEC009DB9CB /* ChooseCardLoginV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCardLoginV2.swift; sourceTree = "<group>"; };
+		463D04FA1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCardLoginV2.swift; sourceTree = "<group>"; };
 		463FF4F81F5F318700706DF1 /* UtilityLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityLogin.swift; sourceTree = "<group>"; };
 		463FF4FA1F5F404200706DF1 /* SignUp2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp2.swift; sourceTree = "<group>"; };
 		464012661F75C62800E271B2 /* ListAbonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAbonnement.swift; sourceTree = "<group>"; };
@@ -212,6 +221,7 @@
 		468785441F71CF5C0009C292 /* Promotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promotion.swift; sourceTree = "<group>"; };
 		468785461F72AEEE0009C292 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4687854C1F72D8A60009C292 /* GeekCafe-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "GeekCafe-iOS.entitlements"; sourceTree = "<group>"; };
+		4689B8041FC4F9210046F211 /* HistoryPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPagination.swift; sourceTree = "<group>"; };
 		468C710C1F9BC53E007141B3 /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		468C710E1F9BE4B2007141B3 /* AnimationsLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsLogin.swift; sourceTree = "<group>"; };
 		468C71171F9E30C7007141B3 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
@@ -322,6 +332,10 @@
 			isa = PBXGroup;
 			children = (
 				46047E6B1F93F98E0000246C /* MainPageLoginV2.swift */,
+				463D04F41FC5CB44009DB9CB /* SignUpV2_1.swift */,
+				463D04F61FC5CFB1009DB9CB /* SignUpV2_2.swift */,
+				463D04F81FC5DCEC009DB9CB /* ChooseCardLoginV2.swift */,
+				463D04FA1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift */,
 			);
 			name = "Login Page";
 			sourceTree = "<group>";
@@ -1013,6 +1027,8 @@
 		46FDA4DE1F83F67700B6A07B /* Good */ = {
 			isa = PBXGroup;
 			children = (
+				4689B8041FC4F9210046F211 /* HistoryPagination.swift */,
+				468785401F71A6F30009C292 /* HistoryList.swift */,
 				468785441F71CF5C0009C292 /* Promotion.swift */,
 				462CF6EF1F60514B00326426 /* User.swift */,
 				460F7B8F1F83EE530043B7E8 /* userCard.swift */,
@@ -1021,7 +1037,6 @@
 				46FDA4DF1F84008E00B6A07B /* Subitem.swift */,
 				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
 				46FDA4E41F84062500B6A07B /* ItemList.swift */,
-				468785401F71A6F30009C292 /* HistoryList.swift */,
 				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
 				460B121D1F912D1600A79A62 /* Commande.swift */,
 				464E98491FB9FB7F008783A4 /* Branch.swift */,
@@ -1308,7 +1323,9 @@
 				468C711A1F9E312F007141B3 /* FirstView.swift in Sources */,
 				46DA4AA41FA001C100AE9DC4 /* APIRequestHistory.swift in Sources */,
 				46047E6C1F93F98E0000246C /* MainPageLoginV2.swift in Sources */,
+				463D04F91FC5DCEC009DB9CB /* ChooseCardLoginV2.swift in Sources */,
 				461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */,
+				463D04F71FC5CFB1009DB9CB /* SignUpV2_2.swift in Sources */,
 				46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
 				46FDA4DB1F83F06A00B6A07B /* ItemType.swift in Sources */,
@@ -1316,8 +1333,10 @@
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
 				460B121E1F912D1600A79A62 /* Commande.swift in Sources */,
 				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
+				4689B8051FC4F9210046F211 /* HistoryPagination.swift in Sources */,
 				460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
+				463D04FB1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift in Sources */,
 				460644C21F579A6500BD08E5 /* navController.swift in Sources */,
 				46C7CD011F86BFB200C7961B /* MainPageProfile.swift in Sources */,
 				461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */,
@@ -1348,6 +1367,7 @@
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,
 				460207BE1FA0F45000446E7A /* APIRequestPaiement.swift in Sources */,
 				467BC11D1F82E27500C300AF /* ChooseSizeCrepe.swift in Sources */,
+				463D04F51FC5CB44009DB9CB /* SignUpV2_1.swift in Sources */,
 				460207BC1FA0F24600446E7A /* APIRequestPromotion.swift in Sources */,
 				461D362C1FBCADBE004C2F54 /* ModifyProfile.swift in Sources */,
 				4639D7431F851C65008DAFF3 /* LoadingAnimation.swift in Sources */,

@@ -300,6 +300,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
     func autoLogin(token:String){
         if(APIRequestLogin().verifyToken(token: token)){
             if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
                 let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                 let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
                 UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {

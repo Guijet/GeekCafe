@@ -10,20 +10,42 @@ import UIKit
 
 class APIRequestHistory{
     
-    func getHisory()->[HistoryList]{
+    func getHisory(page:String,stringRequest:String = "")->HistoryListMeta{
         var arrHistory = [HistoryList]()
-        var json = Utility().getJson(url: "\(Global.global.ip!)user/history", method: "GET",needToken:true)
+        var nextPage:String!
+        var isNext:Bool = false
+        var json:[String:Any]!
+        if(stringRequest == ""){
+            json = Utility().getJson(url: "\(Global.global.ip!)user/history?page=\(page)", method: "GET",needToken:true)
+        }
+        else{
+            json = Utility().getJson(url: "\(stringRequest)", method: "GET",needToken:true)
+        }
+        if let meta = json["meta"] as? [String:Any]{
+            if let pagination = meta["pagination"] as? [String:Any]{
+                if let links = pagination["links"] as? [String:Any]{
+                    if let next = links["next"] as? String{
+                        nextPage = next
+                        isNext = true
+                        
+                    }else{
+                        nextPage = ""
+                    }
+                }
+                if let _ = pagination["links"] as? [[String:Any]]{
+                    nextPage = ""
+                }
+            }
+            
+        }
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
                     arrHistory.append(HistoryList(date: (x["created_at"] as! [String:Any])["date"] as! String, country: "Canada", city: "Boisbriand", amount: x["amount"] as! NSNumber, id: x["id"] as! Int))
                 }
             }
-            return arrHistory
         }
-        else{
-            return arrHistory
-        }
+        return HistoryListMeta(Historic: arrHistory, Meta: MetaPagination(nextString: nextPage, isNext: isNext))
     }
 
     func getItemFromOrderID(id:Int)->[itemInfo]{

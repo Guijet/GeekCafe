@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoriqueList: UIViewController {
+class HistoriqueList: UIViewController,UIScrollViewDelegate{
 
     //Menu and container
     let menu = MenuClass()
@@ -17,16 +17,24 @@ class HistoriqueList: UIViewController {
     //Historique
     let scrollView = UIScrollView()
     var arrayHistory = [HistoryList]()
+    var HistoryListMeta:HistoryListMeta!
     var idToPass:Int!
     var historyToPass:HistoryList!
+    
+    var isNext:Bool!
+    var pageNumber:Int = 1
+    var nextString:String!
     
     
     override func viewDidLoad() {
         //Fill fake info
         //Set up menu and container
         super.viewDidLoad()
-        print(Global.global.userInfo.token)
-        arrayHistory = APIRequestHistory().getHisory()
+        scrollView.delegate = self
+        HistoryListMeta = APIRequestHistory().getHisory(page: "\(pageNumber)")
+        arrayHistory = HistoryListMeta.Historic
+        isNext = HistoryListMeta.Meta.isNext
+        nextString = HistoryListMeta.Meta.nextString
         menu.setUpMenu(view: self.view)
         setUpContainerView()
         menu.setUpFakeNavBar(view: containerView, titleTop: "Historique")
@@ -108,6 +116,38 @@ class HistoriqueList: UIViewController {
             labelNoHistory.numberOfLines = 2
             scrollView.addSubview(labelNoHistory)
         }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == scrollView{
+            if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height{
+                if(isNext){
+                    pageNumber += 1
+                    getMoreHistory(pageNumber: pageNumber, stringRequest: nextString)
+                }
+                else{return}
+            }
+        }
+    }
+    
+    
+    func getMoreHistory(pageNumber: Int, stringRequest: String){
+        HistoryListMeta = APIRequestHistory().getHisory(page: "\(pageNumber)",stringRequest: stringRequest)
+        isNext = HistoryListMeta.Meta.isNext
+        nextString = HistoryListMeta.Meta.nextString
+        
+        let newArray = HistoryListMeta.Historic
+        for x in newArray{
+            arrayHistory.append(x)
+        }
+        reloadScrollView()
+    }
+    
+    func reloadScrollView(){
+        for x in scrollView.subviews{
+            x.removeFromSuperview()
+        }
+        fillScrollView()
     }
     
     

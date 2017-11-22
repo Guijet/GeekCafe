@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yBA-2L-5gZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yBA-2L-5gZ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,10 +36,82 @@
                         <viewLayoutGuide key="safeArea" id="Zne-oa-5ze"/>
                     </view>
                     <navigationItem key="navigationItem" id="zlY-gW-ce6"/>
+                    <connections>
+                        <segue destination="eFH-th-RzK" kind="show" identifier="toSignUpV2_1" id="NMB-ib-YlR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TYB-v4-kEL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1558" y="-194"/>
+        </scene>
+        <!--Sign Upv21-->
+        <scene sceneID="28f-OA-Rrn">
+            <objects>
+                <viewController id="eFH-th-RzK" customClass="SignUpv2_1" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vto-7i-Mjd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="3yv-sS-6Et"/>
+                    </view>
+                    <connections>
+                        <segue destination="H89-t6-9aq" kind="show" identifier="toSignUpV2_2" id="Wm9-e7-ndu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o8S-bK-6xr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2425" y="-194"/>
+        </scene>
+        <!--Sign UpV22-->
+        <scene sceneID="It1-ir-ErP">
+            <objects>
+                <viewController id="H89-t6-9aq" customClass="SignUpV2_2" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sfZ-xQ-Tlg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="JfY-33-Vmv"/>
+                    </view>
+                    <connections>
+                        <segue destination="gSA-dy-jrZ" kind="show" identifier="toSignUpV2_3" id="klU-4Z-GTr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6XY-vu-D9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3298" y="-194"/>
+        </scene>
+        <!--Choose Card LoginV2-->
+        <scene sceneID="ZnU-Qm-TGB">
+            <objects>
+                <viewController id="gSA-dy-jrZ" customClass="ChooseCardLoginV2" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yFz-wO-wRI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="dpP-nl-V56"/>
+                    </view>
+                    <connections>
+                        <segue destination="WAR-vj-dHH" kind="show" identifier="toSignUpV2_4" id="Z94-UH-cLc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8xQ-cO-XdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4174" y="-195"/>
+        </scene>
+        <!--Confirm Card LoginV2-->
+        <scene sceneID="V2k-8t-j5h">
+            <objects>
+                <viewController id="WAR-vj-dHH" customClass="ConfirmCardLoginV2" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="knn-6I-N02">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="XNg-Rf-hKN"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V5e-tn-Fen" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5023" y="-196"/>
         </scene>
     </scenes>
 </document>
