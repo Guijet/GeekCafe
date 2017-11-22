@@ -256,16 +256,10 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
                     
                     if(APIRequestLogin().createAcount(first_name: self.name, last_name: self.lastname, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
                         if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
-                            DispatchQueue.main.async {
-                                self.load.stopAnimatingAndRemove(view: self.view)
-                            }
                             Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
                             self.performSegue(withIdentifier: "ConfirmCardLoginV2", sender: nil)
                         }
                         else{
-                            DispatchQueue.main.async {
-                                self.load.stopAnimatingAndRemove(view: self.view)
-                            }
                             Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
                         }
                     }
@@ -352,18 +346,12 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
     }
     
     @objc func nextPressed(sender:UIButton){
-        
-        load.buildViewAndStartAnimate(view: self.view)
-        DispatchQueue.global(qos: .background).async {
-            if(!(self.TB_CardNumber.text?.isEmpty)! && !(self.TB_Expiration.text?.isEmpty)! && !(self.TB_CVC.text?.isEmpty)! && !(self.TB_CardHolderName.text?.isEmpty)!){
-                self.getCardToken(cardNumber: self.TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: self.TB_CVC.text!, expiryMonth: self.splitExpiration(expiration: self.TB_Expiration.text!)[0], expiryYear: self.splitExpiration(expiration: self.TB_Expiration.text!)[1])
-            }
-            else{
-                Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
-            }
-            
+        if(TB_CVC.text != "" && TB_CardNumber.text != "" && TB_Expiration.text != "" && TB_CardHolderName.text != ""){
+            self.getCardToken(cardNumber: self.TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: self.TB_CVC.text!, expiryMonth: self.splitExpiration(expiration: self.TB_Expiration.text!)[0], expiryYear: self.splitExpiration(expiration: self.TB_Expiration.text!)[1])
         }
-        
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
+        }
     }
     
     @objc func nextNoCard(sender:UIButton){

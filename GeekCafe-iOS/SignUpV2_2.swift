@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
 
     var name:String!
     var lastname:String!
@@ -17,12 +17,14 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     var password:String!
     var image:UIImage!
     
+    let pickerView = UIPickerView()
     let TB_Email = CustomTextField()
     let TB_Phone = CustomTextField()
     let TB_Sexe = CustomTextField()
     
     var arrayTB = [CustomTextField]()
     let arrayPlaceholder = ["Courriel","Téléphone","Genre"]
+    let arraySexe = ["Homme","Femme","Autre"]
     
     let backgroundView = BackgroundView()
     let imagePicker = UIImagePickerController()
@@ -30,12 +32,20 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         fillarrayTB()
+        setUpPickerViewAndDatePicker()
         imagePicker.delegate = self
         basicsSetUp()
         buildBackground()
         addButtonModifyImage()
         setUpTextFields()
         setUpButtonNext()
+    }
+    
+    func setUpPickerViewAndDatePicker(){
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.white
+        arrayTB[2].inputView = pickerView
     }
     
     func fillarrayTB(){
@@ -67,7 +77,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         var newY = rh(308)
         var index:Int  = 0
         for x in arrayTB{
-            x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view)
+            x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view, heightToGo: rh(216))
             if(index == 3 || index == 4){
                 x.isSecureTextEntry = true
             }
@@ -96,7 +106,19 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     }
     
     @objc func nextPressed(){
-        performSegue(withIdentifier: "toSignUpV2_3", sender: nil)
+        if(TB_Sexe.text != "" && TB_Phone.text != "" && TB_Email.text != ""){
+            //VERIFIER PHONE ET EMAIL
+            if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){
+                performSegue(withIdentifier: "toSignUpV2_3", sender: nil)
+            }
+            else{
+                Utility().alert(message: "Le email entrer est déjà utiliser.", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
+        }
+        
     }
 
     @objc func endEditing(){
@@ -159,6 +181,29 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     
     @objc func changeImage(){
         Utility().alertWithChoice(message: "", title: "", control: self, actionTitle1: "Prendre une photo", actionTitle2: "Choisir une photo existante", action1: takePicture, action2: loadPicture, style: .actionSheet)
+    }
+    
+    //
+    //
+    //
+    //PICKER VIEW FOR SEXE DELEGATE
+    //
+    //
+    //
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return arraySexe[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return arraySexe.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        arrayTB[2].text = arraySexe[row]
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

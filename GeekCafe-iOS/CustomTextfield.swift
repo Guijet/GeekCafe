@@ -11,13 +11,17 @@ class CustomTextField:UITextField,UITextFieldDelegate{
     
     let placeholderLabel = UILabel()
     let separator = UIView()
+    var heightToMove:CGFloat = 0
+    var isKeyboardActive:Bool = false
+    var superView:UIView = UIView()
     
     override init(frame:CGRect){
         super.init(frame: frame)
     }
     
-    func setUpTB(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView,text:String = ""){
-        //super.init(frame: CGRect.zero)
+    func setUpTB(placeholderText:String,containerView:UIView,xPos:CGFloat,yPos:CGFloat,superView:UIView,heightToGo:CGFloat,text:String = ""){
+        self.heightToMove = heightToGo
+        self.superView = superView
         buildViews(placeholderText: placeholderText, containerView: containerView, xPos: xPos, yPos: yPos,superView:superView,text:text)
     }
     
@@ -78,13 +82,44 @@ class CustomTextField:UITextField,UITextFieldDelegate{
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if(!isKeyboardActive){
+            animateUp()
+            isKeyboardActive = true
+        }
         animateLabel()
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if(isKeyboardActive){
+            animateDown()
+            isKeyboardActive = false
+        }
         if(self.text == ""){
             resetLabelInPlace()
         }
+    }
+    
+    func animateUp(){
+        self.superView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.superView.subviews{
+                x.center.y -= self.heightToMove
+            }
+        }, completion: { _ in
+            self.superView.isUserInteractionEnabled = true
+        })
+        
+    }
+    
+    func animateDown(){
+        self.superView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.superView.subviews{
+                x.center.y += self.heightToMove
+            }
+        }, completion: { _ in
+            self.superView.isUserInteractionEnabled = true
+        })
     }
     
     func getAllItems()->[UIView]{

@@ -439,8 +439,8 @@ class MenuClass{
             UserDefaults.standard.removeObject(forKey: "Token")
             UserDefaults.standard.removeObject(forKey: "FB_Token")
             
-            let storyboard = UIStoryboard(name: "Login-SignUp", bundle: nil)
-            let main = storyboard.instantiateViewController(withIdentifier: "MainLogin")
+            let storyboard = UIStoryboard(name: "LoginV2", bundle: nil)
+            let main = storyboard.instantiateViewController(withIdentifier: "MainPageLoginV2")
             UIApplication.shared.keyWindow?.rootViewController = main
         }, noAction: nil, titleYes: "Continuer", titleNo: "Annuler", style: .alert)
     }

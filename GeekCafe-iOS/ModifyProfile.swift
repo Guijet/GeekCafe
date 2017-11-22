@@ -183,11 +183,11 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.layer.zPosition = -1
         containerView.backgroundColor = UIColor.white
         
-        TB_Email.setUpTB(placeholderText: "Current Email", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view,text:Global.global.userInfo.email)
+        TB_Email.setUpTB(placeholderText: "Current Email", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.email)
         
-        TB_ConfirmEmail.setUpTB(placeholderText: "New Email", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view)
+        TB_ConfirmEmail.setUpTB(placeholderText: "New Email", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
         
-        TB_ChangeEmaiPass.setUpTB(placeholderText: "Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view)
+        TB_ChangeEmaiPass.setUpTB(placeholderText: "Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
         TB_ChangeEmaiPass.isSecureTextEntry = true
         
         view.addSubview(containerView)
@@ -200,13 +200,13 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.layer.zPosition = -1
         containerView.backgroundColor = UIColor.white
         
-        TB_OldPassword.setUpTB(placeholderText: "Old Password", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view)
+        TB_OldPassword.setUpTB(placeholderText: "Old Password", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216))
         TB_OldPassword.isSecureTextEntry = true
         
-        TB_Password.setUpTB(placeholderText: "New Password", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view)
+        TB_Password.setUpTB(placeholderText: "New Password", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
         TB_Password.isSecureTextEntry = true
         
-        TB_ConfirmPass.setUpTB(placeholderText: "Confirm New Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view)
+        TB_ConfirmPass.setUpTB(placeholderText: "Confirm New Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
         TB_ConfirmPass.isSecureTextEntry = true
         
         view.addSubview(containerView)
@@ -220,11 +220,11 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.backgroundColor = UIColor.white
         
         
-        TB_Nom.setUpTB(placeholderText: "Firstname", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view,text:Global.global.userInfo.firstname)
+        TB_Nom.setUpTB(placeholderText: "Firstname", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.firstname)
         
-        TB_NomFamille.setUpTB(placeholderText: "Lastname", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view,text: Global.global.userInfo.lastname)
+        TB_NomFamille.setUpTB(placeholderText: "Lastname", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.lastname)
         
-        TB_Phone.setUpTB(placeholderText: "Phone number", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view,text: Global.global.userInfo.phone)
+        TB_Phone.setUpTB(placeholderText: "Phone number", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.phone)
         
         view.addSubview(containerView)
         return containerView

@@ -12,7 +12,7 @@
         <!--Navigation View Controller-->
         <scene sceneID="PbV-Vc-fef">
             <objects>
-                <navigationController id="yBA-2L-5gZ" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainPageLoginV2" id="yBA-2L-5gZ" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vVZ-UX-sIK">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -91,7 +91,7 @@
                         <viewLayoutGuide key="safeArea" id="dpP-nl-V56"/>
                     </view>
                     <connections>
-                        <segue destination="WAR-vj-dHH" kind="show" identifier="toSignUpV2_4" id="Z94-UH-cLc"/>
+                        <segue destination="WAR-vj-dHH" kind="show" identifier="ConfirmCardLoginV2" id="Z94-UH-cLc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8xQ-cO-XdS" userLabel="First Responder" sceneMemberID="firstResponder"/>

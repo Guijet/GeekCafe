@@ -24,7 +24,15 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         buildBackground()
         buildFirstView()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        UserDefaults.standard.synchronize()
+        if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
+            autoLoginFB(access_token: tokenTB)
+        }
+        else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
+            autoLogin(token: token)
+        }
+    }
     //
     //
     //PAGE BASICS
@@ -56,14 +64,16 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     func buildBackground(){
         backgroundView.frame = self.view.frame
         backgroundView.setUpElements(containerView: self.view, frameImageTop: CGRect(x: rw(132), y: rh(80), width: rw(111), height: rh(106)), frameFirstLabel: CGRect(x:rw(55),y:rh(197),width:rw(266),height:rh(27)), frameCard: CGRect(x: rw(21), y: rh(320), width: rw(334), height: rh(352)), text1: "Bienvenue",text2:"Connectez-nous pour continuer.")
+        
         self.view.addSubview(backgroundView)
     }
     
     func buildFirstView(){
         fbButton.delegate = self
         firstView.frame = CGRect(x: rw(21), y: rh(320), width: rw(334), height: rh(347))
-        firstView.setUpAllElements(containerView: self.view,fbButton:fbButton)
+        firstView.setUpAllElements(superView: self.view, containerView: self.view,fbButton:fbButton)
         firstView.addTargetCreateAccount(target:self,action:#selector(inscrirePressed),control:.touchUpInside)
+        firstView.addTargetLogin(target: self, action: #selector(connectPressed), control: .touchUpInside)
         view.addSubview(firstView)
     }
     
@@ -125,7 +135,61 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         performSegue(withIdentifier: "toSignUpV2_1", sender: nil)
     }
     
-    func loginPressed(){
-        print("Login pressed")
+    //
+    //
+    //AUTO LOGIN
+    //
+    //
+    func autoLogin(token:String){
+        if(APIRequestLogin().verifyToken(token: token)){
+            if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
+            else{
+                Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
+            }
+        }
+    }
+    
+    func autoLoginFB(access_token:String){
+        if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
+            if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+                
+            }
+        }
+    }
+    
+    @objc func connectPressed(){
+        if(firstView.getEmailText() != "" && firstView.getPasswordText() != ""){
+            if(APIRequestLogin().login(password: firstView.getPasswordText(), email: firstView.getEmailText())){
+                if(APIRequestLogin().viewUser()){
+                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }
+                else{
+                    Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
+                }
+            }
+            else{
+                Utility().alert(message: "Nom d'utilisateur ou mot de passe invalide", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
     }
 }

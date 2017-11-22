@@ -15,21 +15,23 @@ class FirstView: UIView {
     fileprivate let ForgetPassword = UIButton()
     fileprivate let inscrireBTN = UIButton()
     fileprivate let loginBTN = UIButton()
+    let TB_Pass = CustomTextField()
+    let TB_Email = CustomTextField()
     
-    func setUpAllElements(containerView:UIView,fbButton:FBSDKLoginButton){
-        setElements(containerView: containerView)
+    func setUpAllElements(superView:UIView,containerView:UIView,fbButton:FBSDKLoginButton){
+        setElements(containerView: containerView,superView:superView)
         setUpButtons(containerView: containerView)
         setUpLabel(containerView:containerView)
         placeFBButton(containerView: containerView, fbButton: fbButton)
     }
     
-    fileprivate func setElements(containerView:UIView){
-        let TB_Pass = CustomTextField()
-        TB_Pass.setUpTB(placeholderText: "Password", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(38),superView:containerView)
+    fileprivate func setElements(containerView:UIView,superView:UIView){
+        
+        TB_Pass.setUpTB(placeholderText: "Password", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(95),superView:containerView, heightToGo: superView.rh(248))
         TB_Pass.isSecureTextEntry = true
         
-        let TB_Email = CustomTextField()
-        TB_Email.setUpTB(placeholderText: "Email", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(95),superView:containerView)
+        
+        TB_Email.setUpTB(placeholderText: "Email", containerView: self, xPos: containerView.rw(31), yPos: containerView.rh(38),superView:containerView, heightToGo: superView.rh(248))
         
     }
     
@@ -91,6 +93,14 @@ class FirstView: UIView {
     
     func animateOut(containerView:UIView){
         AnimationsLogin().animateItemsLeft(containerView: containerView, itemToMove: self)
+    }
+    
+    func getEmailText()->String{
+        return TB_Email.text!
+    }
+    
+    func getPasswordText()->String{
+        return TB_Pass.text!
     }
 
 }

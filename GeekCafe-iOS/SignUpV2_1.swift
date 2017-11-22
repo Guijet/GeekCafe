@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class SignUpv2_1:UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     let backgroundView = BackgroundView()
     let imagePicker = UIImagePickerController()
@@ -21,18 +21,37 @@ class SignUpv2_1:UIViewController,UIImagePickerControllerDelegate,UINavigationCo
     var TB_ConfirmPassword = CustomTextField()
     var profileImage = UIImage()
     
+    var isKeyboardActive:Bool = false
+    
     var arrayTB = [CustomTextField]()
     let arrayPlaceholder = ["Prénom","Nom de famille","Date de naissance","Mot de passe","Confirmer le mot de passe"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fillarrayTB()
+        arrayTB[2].addTarget(self, action: #selector(DP(_:)), for: .editingDidBegin)
         imagePicker.delegate = self
         basicsSetUp()
         buildBackground()
         addButtonModifyImage()
         setUpTextFields()
         setUpButtonNext()
+    }
+    
+    @IBAction func DP(_ sender: UITextField) {
+        
+        let datePickerView = UIDatePicker()
+        datePickerView.backgroundColor = .white
+        datePickerView.datePickerMode = .date
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+    }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        TB_Birth.text = dateFormatter.string(from: sender.date)
+        
     }
     
     func fillarrayTB(){
@@ -64,7 +83,8 @@ class SignUpv2_1:UIViewController,UIImagePickerControllerDelegate,UINavigationCo
         var newY = rh(308)
         var index:Int  = 0
         for x in arrayTB{
-            x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view)
+            
+            x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view, heightToGo: rh(216))
             if(index == 3 || index == 4){
                 x.isSecureTextEntry = true
             }
@@ -87,7 +107,17 @@ class SignUpv2_1:UIViewController,UIImagePickerControllerDelegate,UINavigationCo
     }
     
     @objc func nextPressed(){
-        performSegue(withIdentifier: "toSignUpV2_2", sender: nil)
+        if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Birth.text != "" && TB_Password.text != "" && TB_ConfirmPassword.text != ""){
+            if(TB_ConfirmPassword.text == TB_Password.text){
+                performSegue(withIdentifier: "toSignUpV2_2", sender: nil)
+            }
+            else{
+                Utility().alert(message: "Les mots de passe ne correspond pas.", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
     }
     
     @objc func endEditing(){
@@ -158,7 +188,6 @@ class SignUpv2_1:UIViewController,UIImagePickerControllerDelegate,UINavigationCo
     @objc func changeImage(){
         Utility().alertWithChoice(message: "", title: "", control: self, actionTitle1: "Prendre une photo", actionTitle2: "Choisir une photo existante", action1: takePicture, action2: loadPicture, style: .actionSheet)
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toSignUpV2_2"){
             (segue.destination as! SignUpV2_2).name = TB_Prenom.text

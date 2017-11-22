@@ -69,23 +69,6 @@ class ConfirmCardLoginV2: UIViewController {
         cardNumber.makeShadow(x: 0, y: 1, blur: 3, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#2D2D2D"), shadowOpacity: 1, spread: 0)
         view.addSubview(cardNumber)
         
-        //        validFrom.frame = CGRect(x: rw(53), y: rh(327.5), width: rw(17), height: rh(15))
-        //        validFrom.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        //        validFrom.font = UIFont(name: "Lato-Light", size: rw(5))
-        //        validFrom.textAlignment = .left
-        //        validFrom.numberOfLines = 2
-        //        validFrom.lineBreakMode = .byTruncatingHead
-        //        validFrom.text = "VALID\nFROM".uppercased()
-        //        validFrom.makeShadow(x: 0, y: 1, blur: 3, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#2D2D2D"), shadowOpacity: 1, spread: 0)
-        //        view.addSubview(validFrom)
-        //
-        //        fromDate.frame = CGRect(x: rw(73), y: rh(330), width: rw(40), height: rh(10))
-        //        fromDate.text = "01/17"
-        //        fromDate.font = UIFont(name: "Lato-Light", size: rw(10))
-        //        fromDate.textAlignment = .left
-        //        fromDate.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        //        fromDate.makeShadow(x: 0, y: 1, blur: 3, cornerRadius: 0, shadowColor: Utility().hexStringToUIColor(hex: "#2D2D2D"), shadowOpacity: 1, spread: 0)
-        //        view.addSubview(fromDate)
         
         untilEnd.frame = CGRect(x: rw(53), y: rh(327.5), width: rw(17), height: rh(15))
         untilEnd.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
