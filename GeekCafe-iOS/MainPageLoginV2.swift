@@ -13,6 +13,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     
     //Facebook button
     let fbButton = FBSDKLoginButton()
+    let loading = loadingIndicator()
     
     //Views to animate and build with custom class
     let backgroundView = BackgroundView()
@@ -141,51 +142,71 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     //
     //
     func autoLogin(token:String){
-        if(APIRequestLogin().verifyToken(token: token)){
-            if(APIRequestLogin().viewUser()){
-                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
-                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                    UIApplication.shared.keyWindow?.rootViewController = main
-                }, completion: nil)
-            }
-            else{
-                Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
+        self.loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos:.background).async {
+            if(APIRequestLogin().verifyToken(token: token)){
+                if(APIRequestLogin().viewUser()){
+                    Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                    DispatchQueue.main.async {
+                        self.loading.stopAnimatingAndRemove(view: self.view)
+                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
             }
         }
     }
     
     func autoLoginFB(access_token:String){
-        if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
-            if(APIRequestLogin().viewUser()){
-                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
-                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                    UIApplication.shared.keyWindow?.rootViewController = main
-                }, completion: nil)
-                
+        self.loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos:.background).async {
+            if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
+                if(APIRequestLogin().viewUser()){
+                    Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                    DispatchQueue.main.async {
+                        self.loading.stopAnimatingAndRemove(view: self.view)
+                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
             }
         }
     }
     
     @objc func connectPressed(){
+        self.loading.buildViewAndStartAnimate(view: self.view)
         if(firstView.getEmailText() != "" && firstView.getPasswordText() != ""){
-            if(APIRequestLogin().login(password: firstView.getPasswordText(), email: firstView.getEmailText())){
-                if(APIRequestLogin().viewUser()){
-                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-                    let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                        UIApplication.shared.keyWindow?.rootViewController = main
-                    }, completion: nil)
+            DispatchQueue.global(qos:.background).async {
+                if(APIRequestLogin().login(password: self.firstView.getPasswordText(), email: self.firstView.getEmailText())){
+                    if(APIRequestLogin().viewUser()){
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
+                        }
+                    }
                 }
                 else{
-                    Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
+                    DispatchQueue.main.async {
+                        self.loading.stopAnimatingAndRemove(view: self.view)
+                        Utility().alert(message: "Nom d'utilisateur ou mot de passe invalide", title: "Message", control: self)
+                    }
                 }
-            }
-            else{
-                Utility().alert(message: "Nom d'utilisateur ou mot de passe invalide", title: "Message", control: self)
             }
         }
         else{

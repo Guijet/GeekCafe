@@ -108,11 +108,16 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     
     @objc func nextPressed(){
         if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Birth.text != "" && TB_Password.text != "" && TB_ConfirmPassword.text != ""){
-            if(TB_ConfirmPassword.text == TB_Password.text){
-                performSegue(withIdentifier: "toSignUpV2_2", sender: nil)
+            if(TB_Password.text.count >= 7){
+                if(TB_ConfirmPassword.text == TB_Password.text){
+                    performSegue(withIdentifier: "toSignUpV2_2", sender: nil)
+                }
+                else{
+                    Utility().alert(message: "Les mots de passe ne correspond pas.", title: "Message", control: self)
+                }
             }
             else{
-                Utility().alert(message: "Les mots de passe ne correspond pas.", title: "Message", control: self)
+                Utility().alert(message: "Votre mot de passe doit contenir au minimum 7 caratères.", title: "Message", control: self)
             }
         }
         else{
