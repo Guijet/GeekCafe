@@ -237,6 +237,7 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             if(APIRequestProfile().uploadProfileImage(base64: APIRequestProfile().imageToBase64(image: pickedImage))){
+                print(Global.global.userInfo.image_url)
                 profileImage.image = Utility().getOptimizeImage(url: Global.global.userInfo.image_url)
                 (Utility().previousView(control: self) as! MainPageProfile).menu.updateImageProfile()
                 (Utility().previousView(control: self) as! MainPageProfile).profileImage.image = Utility().getOptimizeImage(url: Global.global.userInfo.image_url)

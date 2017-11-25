@@ -72,7 +72,7 @@ class APIRequestProfile{
         }
     }
     
-    func uploadProfileImage(base64:String,isLogin:Bool = false)->Bool{
+    func uploadProfileImage(base64:String)->Bool{
         var isUploaded:Bool = false
         var finish = false
         var base64 = base64
@@ -107,15 +107,12 @@ class APIRequestProfile{
                     let parsedData = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:Any]
                     if let success = parsedData["success"] as? Int{
                         if success == 1{
-                            if(isLogin){
-                                if(self.modifyProfileImage(imageID: parsedData["image_id"] as! String)){
-                                    isUploaded = true
-                                }
-                            }
-                            else{
-                                Global.global.userInfo.image_url = parsedData["image_id"] as! String
+                          
+                            if(self.modifyProfileImage(imageID: parsedData["image_id"] as! String))
+                            {
                                 isUploaded = true
                             }
+                            
                         }
                     }
                     finish = true
