@@ -12,8 +12,9 @@ import FBSDKLoginKit
 class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     
     //Facebook button
-    let fbButton = FBSDKLoginButton()
+    //let fbButton = FBSDKLoginButton()
     let loading = loadingIndicator()
+    let labelFB = UILabel()
     
     //Views to animate and build with custom class
     let backgroundView = BackgroundView()
@@ -70,19 +71,36 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     }
     
     func buildFirstView(){
-        fbButton.delegate = self
+        //fbButton.delegate = self
         firstView.frame = CGRect(x: rw(21), y: rh(320), width: rw(334), height: rh(347))
-        firstView.setUpAllElements(superView: self.view, containerView: self.view,fbButton:fbButton)
+        firstView.setUpAllElements(superView: self.view, containerView: self.view)
         firstView.addTargetCreateAccount(target:self,action:#selector(inscrirePressed),control:.touchUpInside)
         firstView.addTargetLogin(target: self, action: #selector(connectPressed), control: .touchUpInside)
         view.addSubview(firstView)
+        
+        let customFBButton = UIButton()
+        customFBButton.frame = CGRect(x: rw(37), y: rh(604), width: rw(301), height: rh(48))
+        customFBButton.backgroundColor = Utility().hexStringToUIColor(hex: "#3C6499")
+        customFBButton.addTarget(self, action: #selector(loginFacebookAction), for: .touchUpInside)
+        
+        let fbIMage = UIImageView()
+        fbIMage.frame = CGRect(x: rw(31), y: rh(14), width: rw(23), height: rw(23))
+        fbIMage.image = UIImage(named:"fb_ButtonIMG")
+        fbIMage.contentMode = .scaleAspectFit
+        customFBButton.addSubview(fbIMage)
+        
+        Utility().createVerticalHR(x: rw(72), y: rh(10), height: rh(30), view: customFBButton, color: UIColor.white)
+        
+        labelFB.createLabel(frame: CGRect(x:rw(72),y:rh(16),width:rw(225),height:rh(16)), textColor: UIColor.white, fontName: "Lato-Bold", fontSize: rw(13), textAignment: .center, text: "Connexion avec Facebook")
+        customFBButton.addSubview(labelFB)
+        view.addSubview(customFBButton)
     }
     
     
     //
     //
     //FACEBOOK DELEGATE FUNCTION OR LOGIN BUTTON
-    func fetchProfile(){
+    @objc func fetchProfile(){
         let parameters: [String: Any] = ["fields": "email,first_name,last_name,birthday"]
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: { (connection, result, error) -> Void in
             if ((error) != nil)
@@ -92,6 +110,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
             else{
                 if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
                     if(APIRequestLogin().viewUser()){
+                        Global.global.isFbUser = true
                         let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                         let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
                         UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
@@ -102,6 +121,20 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
             }
         })
     }
+    
+    @IBAction func loginFacebookAction(sender: AnyObject) {
+        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["email"], from: self) { (result, error) -> Void in
+            if (error == nil){
+                let fbloginresult : FBSDKLoginManagerLoginResult = result!
+                if(fbloginresult.grantedPermissions.contains("email"))
+                {
+                    self.fetchProfile()
+                }
+            }
+        }
+    }
+    
     
     //
     //FB Did logout with fb button
@@ -165,6 +198,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         DispatchQueue.global(qos:.background).async {
             if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
                 if(APIRequestLogin().viewUser()){
+                    Global.global.isFbUser = true
                     Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
                     DispatchQueue.main.async {
                         self.loading.stopAnimatingAndRemove(view: self.view)

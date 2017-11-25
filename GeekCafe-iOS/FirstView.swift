@@ -18,11 +18,11 @@ class FirstView: UIView {
     let TB_Pass = CustomTextField()
     let TB_Email = CustomTextField()
     
-    func setUpAllElements(superView:UIView,containerView:UIView,fbButton:FBSDKLoginButton){
+    func setUpAllElements(superView:UIView,containerView:UIView){
         setElements(containerView: containerView,superView:superView)
         setUpButtons(containerView: containerView)
         setUpLabel(containerView:containerView)
-        placeFBButton(containerView: containerView, fbButton: fbButton)
+        //placeFBButton(containerView: containerView, fbButton: fbButton)
     }
     
     fileprivate func setElements(containerView:UIView,superView:UIView){
@@ -42,11 +42,11 @@ class FirstView: UIView {
         ForgetPassword.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         ForgetPassword.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         //ForgetPassword.addTarget(self, action: #selector(MainPageLoginV2.forgotPassPressed), for: .touchUpInside)
-        self.addSubview(ForgetPassword)
+        //self.addSubview(ForgetPassword)
         
         
         
-        inscrireBTN.frame = CGRect(x: containerView.rw(34), y: containerView.rh(176), width: containerView.rw(133), height: containerView.rh(48))
+        inscrireBTN.frame = CGRect(x: containerView.rw(27), y: containerView.rh(176), width: containerView.rw(133), height: containerView.rh(48))
         inscrireBTN.backgroundColor = UIColor.white
         inscrireBTN.setTitle("S'inscrire", for: .normal)
         inscrireBTN.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
@@ -56,7 +56,7 @@ class FirstView: UIView {
         self.addSubview(inscrireBTN)
         
         
-        loginBTN.createCreateButton(title: "Se connecter", frame: CGRect(x:containerView.rw(184),y:containerView.rh(176),width:containerView.rw(133),height:containerView.rh(53)), fontSize: rw(16), containerView: self)
+        loginBTN.createCreateButton(title: "Se connecter", frame: CGRect(x:containerView.rw(177),y:containerView.rh(176),width:containerView.rw(133),height:containerView.rh(53)), fontSize: rw(16), containerView: self)
         loginBTN.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
         //loginBTN.addTarget(self, action: #selector(MainPageLoginV2.loginPressed), for: .touchUpInside)
         
@@ -65,7 +65,7 @@ class FirstView: UIView {
     fileprivate func setUpLabel(containerView:UIView){
         let ouLBL = UILabel()
         ouLBL.accessibilityIdentifier = "Animatable"
-        ouLBL.frame = CGRect(x: 0, y: containerView.rh(252), width: containerView.rw(336), height: containerView.rh(19))
+        ouLBL.frame = CGRect(x: 0, y: containerView.rh(249), width: containerView.rw(336), height: containerView.rh(19))
         ouLBL.text = "- OU -"
         ouLBL.textAlignment = .center
         ouLBL.font = UIFont(name: "Lato-Bold", size:rw(16))
@@ -73,11 +73,11 @@ class FirstView: UIView {
         self.addSubview(ouLBL)
     }
     
-    fileprivate func placeFBButton(containerView:UIView,fbButton:FBSDKLoginButton){
-        fbButton.frame = CGRect(x: containerView.rw(16), y: containerView.rh(284), width:containerView.rw(301), height: containerView.rh(48))
-        self.addSubview(fbButton)
-    }
-    
+//    fileprivate func placeFBButton(containerView:UIView,fbButton:FBSDKLoginButton){
+//        fbButton.frame = CGRect(x: containerView.rw(16), y: containerView.rh(284), width:containerView.rw(301), height: containerView.rh(48))
+//        self.addSubview(fbButton)
+//    }
+//    
     
     func addTargetForgetPass(target:Any,action:Selector,control:UIControlEvents){
         ForgetPassword.addTarget(target, action: action, for: control)

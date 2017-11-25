@@ -32,6 +32,7 @@ struct User{
     var image_url:String
     var token:String
     var cards:[userCard]
+    
 
 }
 

@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import FBSDKLoginKit
 
 class MenuClass{
     
@@ -435,14 +436,23 @@ class MenuClass{
     //
     @objc fileprivate func logOutPressed(){
         Utility().alertYesNo(message: "Ëtes-vous certain de vouloir vous déconnecter?", title: "Message", control: viewToAnimate.parentViewController!, yesAction: {
-            
             UserDefaults.standard.removeObject(forKey: "Token")
             UserDefaults.standard.removeObject(forKey: "FB_Token")
-            
+            if(Global.global.isFbUser){
+                FBSDKLoginManager().logOut()
+            }
+            self.clearGlobals()
             let storyboard = UIStoryboard(name: "LoginV2", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "MainPageLoginV2")
             UIApplication.shared.keyWindow?.rootViewController = main
         }, noAction: nil, titleYes: "Continuer", titleNo: "Annuler", style: .alert)
+    }
+    
+    func clearGlobals(){
+        Global.global.fbResult = ""
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
+        Global.global.itemsOrder = [itemOrder]()
+        Global.global.isFbUser = false
     }
     
     private func animateCloseItems(view:UIView){

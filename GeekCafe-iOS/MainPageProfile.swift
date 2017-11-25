@@ -16,11 +16,16 @@ class MainPageProfile: UIViewController {
     let profileImage = UIImageView()
     let backgroundImage = UIImageView()
     let switchNotif = UISwitch()
-    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
+    var titleOptions = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if(Global.global.isFbUser){
+            titleOptions = ["Push Notifications","Évaluez notre application","Termes et conditions","Paiements"]
+        }
+        else{
+            titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
+        }
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -149,22 +154,40 @@ class MainPageProfile: UIViewController {
     }
     
     @objc func buttonPressed(sender:UIButton){
-        if(sender.tag == 2){
-            performSegue(withIdentifier: "toModifyProfile", sender: nil)
+        if(!Global.global.isFbUser){
+            if(sender.tag == 2){
+                performSegue(withIdentifier: "toModifyProfile", sender: nil)
+            }
+            else if(sender.tag == 3){
+                performSegue(withIdentifier: "toRatings", sender: nil)
+            }
+            else if(sender.tag == 4){
+                performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
+            }
+            else if(sender.tag == 5){
+                let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
         }
-        else if(sender.tag == 3){
-            performSegue(withIdentifier: "toRatings", sender: nil)
+        else if(Global.global.isFbUser){
+            if(sender.tag == 2){
+                performSegue(withIdentifier: "toRatings", sender: nil)
+            }
+            else if(sender.tag == 3){
+                performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
+            }
+            else if(sender.tag == 4){
+                let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
         }
-        else if(sender.tag == 4){
-            performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
-        }
-        else if(sender.tag == 5){
-            let storyboard = UIStoryboard(name: "Credits", bundle: nil)
-            let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
-            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                UIApplication.shared.keyWindow?.rootViewController = main
-            }, completion: nil)
-        }
+        
     }
     
 }
