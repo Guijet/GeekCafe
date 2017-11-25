@@ -26,6 +26,7 @@
 		460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPagePaiement.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
+		460F02831FC9FBF3007EFF93 /* GradialColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F02821FC9FBF3007EFF93 /* GradialColors.swift */; };
 		460F7B901F83EE530043B7E8 /* userCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7B8F1F83EE530043B7E8 /* userCard.swift */; };
 		461232A91F782F0D00D04E30 /* PatisserieMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232A81F782F0D00D04E30 /* PatisserieMain.swift */; };
 		461232AB1F782F1A00D04E30 /* BrevageMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461232AA1F782F1A00D04E30 /* BrevageMain.swift */; };
@@ -167,6 +168,7 @@
 		460B122A1F93F51100A79A62 /* MainPagePaiement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPagePaiement.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
+		460F02821FC9FBF3007EFF93 /* GradialColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradialColors.swift; sourceTree = "<group>"; };
 		460F7B8F1F83EE530043B7E8 /* userCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userCard.swift; sourceTree = "<group>"; };
 		461232A81F782F0D00D04E30 /* PatisserieMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatisserieMain.swift; sourceTree = "<group>"; };
 		461232AA1F782F1A00D04E30 /* BrevageMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrevageMain.swift; sourceTree = "<group>"; };
@@ -991,6 +993,7 @@
 				46A8F7901F5722700085181F /* Assets.xcassets */,
 				468C710C1F9BC53E007141B3 /* CustomTextfield.swift */,
 				460207C11FA1010300446E7A /* loadingIndicator.swift */,
+				460F02821FC9FBF3007EFF93 /* GradialColors.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -1317,6 +1320,7 @@
 				463D04F71FC5CFB1009DB9CB /* SignUpV2_2.swift in Sources */,
 				46344BE01F7BE18D00A85389 /* DoneCommandGreen.swift in Sources */,
 				463FF4FB1F5F404200706DF1 /* SignUp2.swift in Sources */,
+				460F02831FC9FBF3007EFF93 /* GradialColors.swift in Sources */,
 				46FDA4DB1F83F06A00B6A07B /* ItemType.swift in Sources */,
 				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,

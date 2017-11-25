@@ -41,9 +41,15 @@ class AbonnementMainPage: UIViewController {
     func setUpTopCard(){
         let greenCard = UIView()
         greenCard.frame = CGRect(x: rw(8), y: rh(92), width: rw(360), height: rh(179))
-        greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0)
+        //greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0)
         greenCard.layer.cornerRadius = rw(8)
         containerView.addSubview(greenCard)
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = greenCard.bounds
+        gradient.cornerRadius = 8
+        gradient.colors = [Utility().hexStringToUIColor(hex: "15EA6D").cgColor, Utility().hexStringToUIColor(hex: "#16E9A6").cgColor]
+        greenCard.layer.insertSublayer(gradient, at: 0)
         
         let logoBackGroundCard = UIImageView()
         logoBackGroundCard.frame = CGRect(x: rw(257), y: rh(107), width: rw(111), height: rh(163))
@@ -85,7 +91,7 @@ class AbonnementMainPage: UIViewController {
         
         let imageleft = UIImageView()
         imageleft.frame = CGRect(x: rw(56), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-        imageleft.image = UIImage(named: "cup_green")
+        imageleft.image = UIImage(named: "gifdtgreen")
         containerView.addSubview(imageleft)
         
         let imageCenter = UIImageView()

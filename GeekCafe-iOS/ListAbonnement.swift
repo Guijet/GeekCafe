@@ -57,9 +57,10 @@ class ListAbonnement: UIViewController {
 
     
     func fillScrollView(){
-        var alpha:CGFloat = 1
+       
         var newY = rh(28)
         var newYwhiteBut:CGFloat = rh(196)
+        
         if(arrAbonnements.count > 0){
             for x in arrAbonnements{
                 
@@ -67,13 +68,19 @@ class ListAbonnement: UIViewController {
                 container.frame = CGRect(x: rw(8), y: newY, width: rw(360), height: rh(179))
                 container.backgroundColor = UIColor.clear
                 scrollView.addSubview(container)
-                
+             
                 let greenCard = UIButton()
                 greenCard.frame = CGRect(x: 0, y: 0, width: rw(360), height: rh(179))
-                greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0).withAlphaComponent(alpha)
+                //greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0).withAlphaComponent(alpha)
                 greenCard.tag = x.id
                 greenCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
                 greenCard.addTarget(self, action: #selector(performAnimationFlip(sender:)), for: .touchUpInside)
+                
+                let gradient = CAGradientLayer()
+                gradient.frame = greenCard.bounds
+                gradient.cornerRadius = 8
+                gradient.colors = [Utility().hexStringToUIColor(hex: "15EA6D").cgColor, Utility().hexStringToUIColor(hex: "#16E9A6").cgColor]
+                greenCard.layer.insertSublayer(gradient, at: 0)
                 
                 let abonnementButtonWhite = UIButton()
                 abonnementButtonWhite.frame = CGRect(x: 0, y: greenCard.frame.height - rh(65), width: rw(360), height: rh(65))
@@ -106,8 +113,6 @@ class ListAbonnement: UIViewController {
                 
                 newY += rh(206)
                 newYwhiteBut += (184)
-                alpha -= 0.20
-    
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
@@ -127,6 +132,7 @@ class ListAbonnement: UIViewController {
                 x.removeFromSuperview()
             }
             
+            //DESCRIPTION
             let textView = UILabel()
             textView.frame = CGRect(x: rw(16), y: rh(12), width: rw(330), height: rh(70))
             textView.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
@@ -138,45 +144,66 @@ class ListAbonnement: UIViewController {
             textView.addCharactersSpacing(spacing: -0.85, text: textView.text!)
             sender.addSubview(textView)
             
-            let imageleft = UIImageView()
-            imageleft.frame = CGRect(x: rw(56), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageleft.image = UIImage(named: "cup_white")
-            sender.addSubview(imageleft)
+            //PERKS
+            let image1 = UIImageView()
+            image1.frame = CGRect(x: rw(36), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image1.image = UIImage(named: "gift")
+            sender.addSubview(image1)
             
-            let imageCenter = UIImageView()
-            imageCenter.frame = CGRect(x: rw(170), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageCenter.image = UIImage(named: "tag_white")
-            sender.addSubview(imageCenter)
+            //% RABAIS
+            let image2 = UIImageView()
+            image2.frame = CGRect(x: rw(119), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image2.image = UIImage(named: "tag_white")
+            sender.addSubview(image2)
             
-            let imageRight = UIImageView()
-            imageRight.frame = CGRect(x: rw(284), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageRight.image = UIImage(named: "coin_white")
-            sender.addSubview(imageRight)
+            //RATIO POINTS
+            let image3 = UIImageView()
+            image3.frame = CGRect(x: rw(207), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image3.image = UIImage(named: "coin_white")
+            sender.addSubview(image3)
             
+            //PRICE
+            let image4 = UIImageView()
+            image4.frame = CGRect(x: rw(296), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image4.image = UIImage(named: "dollarsign")
+            sender.addSubview(image4)
+            
+            //PERKS
             let label1 = UILabel()
-            label1.frame = CGRect(x: rw(21), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label1.frame = CGRect(x: rw(6), y: image2.frame.maxY + rh(4), width: rw(90), height: rh(40))
             label1.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label1.font = UIFont(name: "Lato-Light", size: rw(16))
             label1.textAlignment = .center
-            label1.text = "1 café par mois"
+            label1.text = "1 café \npar mois"
+            label1.numberOfLines = 2
             sender.addSubview(label1)
             
+            //% RABAIS
             let label2 = UILabel()
-            label2.frame = CGRect(x: rw(133), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label2.frame = CGRect(x: rw(95), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(19))
             label2.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label2.font = UIFont(name: "Lato-Light", size: rw(16))
             label2.textAlignment = .center
             label2.text = "3%"
             sender.addSubview(label2)
             
-            
+            //RATIO POINTS
             let label3 = UILabel()
-            label3.frame = CGRect(x: rw(247), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label3.frame = CGRect(x: rw(184), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(19))
             label3.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label3.font = UIFont(name: "Lato-Light", size: rw(16))
             label3.textAlignment = .center
             label3.text = "1.2x"
             sender.addSubview(label3)
+            
+            //PRICE
+            let label4 = UILabel()
+            label4.frame = CGRect(x: rw(273), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(19))
+            label4.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
+            label4.font = UIFont(name: "Lato-Light", size: rw(16))
+            label4.textAlignment = .center
+            label4.text = "5$/mois"
+            sender.addSubview(label4)
             
             sender.superview?.frame.size.height += rh(50)
             

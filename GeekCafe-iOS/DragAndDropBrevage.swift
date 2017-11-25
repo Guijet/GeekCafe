@@ -22,6 +22,7 @@ class DragAndDropBrevage: UIViewController{
     var priceItem:NSNumber!
     var priceId:NSNumber!
     var nbChoix:Int!
+    var initialPrice:Float = 0
     var subitemsIds = [NSNumber]()
     
     override func viewDidLoad() {
@@ -34,6 +35,7 @@ class DragAndDropBrevage: UIViewController{
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+        initialPrice = LBL_Price.text!.floatValue
     }
     
     func setUpTopPart(){
@@ -132,6 +134,9 @@ class DragAndDropBrevage: UIViewController{
         updateBadge(imageViewSubitem:sender.view!)
         subitemsIds.append(imageTag as NSNumber)
         updatePriceSubitems(subItemId: imageTag)
+        if(subitemsIds.count > 0){
+            setCancelButton()
+        }
     }
     
     func updateBadge(imageViewSubitem:UIView){
@@ -175,6 +180,32 @@ class DragAndDropBrevage: UIViewController{
         }
     }
     
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(resetSubItems))
+        self.navigationItem.rightBarButtonItem = cancel
+        self.navigationItem.setHidesBackButton(true, animated: false)
+    }
+    
+    @objc func resetSubItems(){
+        for x in bottomScrollView.subviews{
+            for y in x.subviews{
+                if let badge = y as? UIView{
+                    if(badge.accessibilityIdentifier == "Badge"){
+                        badge.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        removeBarCancelButton()
+        priceItem = initialPrice as NSNumber
+        subitemsIds.removeAll()
+        LBL_Price.text = initialPrice.twoDecimal
+    }
+    
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+    }
+    
     func isSetBadge(imageView:UIView)->Bool{
         if(imageView.subviews.count > 0){
             return true
@@ -185,6 +216,7 @@ class DragAndDropBrevage: UIViewController{
     }
     
     func updatePriceSubitems(subItemId:Int){
+        
         if(infoItem.subitems.count > 0){
             for x in infoItem.subitems{
                 if(x.id == subItemId){

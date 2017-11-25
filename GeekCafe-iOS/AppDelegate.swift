@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         GMSServices.provideAPIKey("AIzaSyAB_DuRMN3fh1tUlNIsw405-hQghA4lqRw")
         Global.global.ip = "http://api.geekcafe.dev/api/"
         Global.global.fbResult = ""
-        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", id_subscription: 0,points: 0, cards: [userCard]())
         Global.global.itemsOrder = [itemOrder]()
         Global.global.isFbUser = false
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

@@ -450,7 +450,7 @@ class MenuClass{
     
     func clearGlobals(){
         Global.global.fbResult = ""
-        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", cards: [userCard]())
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", id_subscription: 0,points: 0, cards: [userCard]())
         Global.global.itemsOrder = [itemOrder]()
         Global.global.isFbUser = false
     }

@@ -23,7 +23,8 @@ class CommandeMainPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Reseting the array of order
+        Global.global.itemsOrder.removeAll()
         //Menu set up
         menu.setUpMenu(view: self.view)
         setUpContainerView()

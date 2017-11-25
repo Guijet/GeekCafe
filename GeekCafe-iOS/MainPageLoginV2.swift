@@ -19,6 +19,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     //Views to animate and build with custom class
     let backgroundView = BackgroundView()
     let firstView = FirstView()
+    var isFromFB:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +27,16 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         buildBackground()
         buildFirstView()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        UserDefaults.standard.synchronize()
-        if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
-            autoLoginFB(access_token: tokenTB)
-        }
-        else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
-            autoLogin(token: token)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if(!isFromFB){
+            UserDefaults.standard.synchronize()
+            if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
+                autoLoginFB(access_token: tokenTB)
+            }
+            else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
+                autoLogin(token: token)
+            }
         }
     }
     //
@@ -123,6 +127,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     }
     
     @IBAction func loginFacebookAction(sender: AnyObject) {
+        isFromFB = true
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         fbLoginManager.logIn(withReadPermissions: ["email"], from: self) { (result, error) -> Void in
             if (error == nil){

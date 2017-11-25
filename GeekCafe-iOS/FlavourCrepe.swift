@@ -21,6 +21,8 @@ class FlavourCrepe: UIViewController {
     var nbChoix:Int!
     var nbSelectionChoix:Int = 0
     var subitemsIds = [NSNumber]()
+    var initialPrice:Float = 0
+    var isSetCancel:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,7 @@ class FlavourCrepe: UIViewController {
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+        initialPrice = price.floatValue
     }
     
     func setUpTopPart(){
@@ -134,6 +137,12 @@ class FlavourCrepe: UIViewController {
         else{
             Utility().alert(message: "Vous avez déja choisi vos \(nbChoix!) choix!", title: "Message", control: self)
         }
+        
+        if(subitemsIds.count > 0){
+            if(!isSetCancel){
+                setCancelButton()
+            }
+        }
     }
     
     func updateBadge(imageViewSubitem:UIView){
@@ -175,6 +184,35 @@ class FlavourCrepe: UIViewController {
                 }
             }
         }
+    }
+
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(resetSubItems))
+        self.navigationItem.rightBarButtonItem = cancel
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        isSetCancel = true
+    }
+    
+    @objc func resetSubItems(){
+        for x in bottomScrollView.subviews{
+            for y in x.subviews{
+                if let badge = y as? UIView{
+                    if(badge.accessibilityIdentifier == "Badge"){
+                        badge.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        removeBarCancelButton()
+        price = initialPrice as NSNumber
+        subitemsIds.removeAll()
+        nbSelectionChoix = 0
+        LBL_Price.text = initialPrice.twoDecimal
+    }
+    
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+        isSetCancel = false
     }
     
     func isSetBadge(imageView:UIView)->Bool{

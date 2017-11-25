@@ -46,7 +46,7 @@ class APIRequestLogin{
             
             let token = Global.global.userInfo.token
             
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, cards: [userCard]())
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, id_subscription: 0,points: 0, cards: [userCard]())
             worked = true
         }
         return worked
@@ -62,7 +62,7 @@ class APIRequestLogin{
             let data = json["data"] as! [String:Any]
             let id = data["id"] as! Int
             let image_url = data["profile_image"] as! String
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token,cards:[userCard]())
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, id_subscription: 0,points: 0,cards:[userCard]())
             
             
             worked = true
@@ -191,7 +191,7 @@ class APIRequestLogin{
                 image_user = ""
             }
             worked = true
-            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, cards: [userCard]())
+            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, id_subscription: 0,points: 0, cards: [userCard]())
         }
         return worked
     }
