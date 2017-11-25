@@ -39,6 +39,7 @@ class ConfirmCardLoginV2: UIViewController {
     var phone:String!
     var sexe:String!
     var image:UIImage!
+    var isImageSet:Bool!
     
     
     override func viewDidLoad() {

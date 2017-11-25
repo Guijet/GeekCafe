@@ -33,6 +33,17 @@ class BackgroundView: UIView {
         AnimationsLogin().resizeCard(containerView: containerView, cardView: bgCard, newHeight: newHeight, newYpos: newY)
     }
     
+    func addProfilePicture(image:UIImage,containerView:UIView){
+        let profileImage = UIImageView()
+        profileImage.frame = CGRect(x: containerView.rw(135), y: containerView.rh(46), width: containerView.rw(106), height: containerView.rw(106))
+        profileImage.image = image
+        profileImage.layer.masksToBounds = true
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.borderWidth = 4
+        profileImage.layer.cornerRadius = rw(106)/2
+        containerView.addSubview(profileImage)
+    }
+    
     fileprivate func setUpTopImage(containerView:UIView,frame:CGRect){
         let logo = UIImageView()
         logo.frame = frame
@@ -57,6 +68,5 @@ class BackgroundView: UIView {
         bgCard.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         bgCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 5, shadowColor: UIColor.black, shadowOpacity: 0.5, spread: 0)
         self.addSubview(bgCard)
-        
     }
 }

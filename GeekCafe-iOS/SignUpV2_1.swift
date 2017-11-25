@@ -13,6 +13,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     
     let backgroundView = BackgroundView()
     let imagePicker = UIImagePickerController()
+    let buttonCamera = UIButton()
     
     var TB_Prenom = CustomTextField()
     var TB_Nom = CustomTextField()
@@ -20,6 +21,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     var TB_Password = CustomTextField()
     var TB_ConfirmPassword = CustomTextField()
     var profileImage = UIImage()
+    var isImageSet:Bool = false
     
     var isKeyboardActive:Bool = false
     
@@ -69,7 +71,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     }
     
     func addButtonModifyImage(){
-        let buttonCamera = UIButton()
+        
         buttonCamera.frame = CGRect(x: rw(212), y: rh(118), width: rw(34), height: rw(34))
         buttonCamera.backgroundColor = UIColor.white
         buttonCamera.makeShadow(x: 0, y: 1, blur: 3, cornerRadius: rw(34)/2, shadowColor: UIColor.black, shadowOpacity: 0.5, spread: 0)
@@ -136,12 +138,21 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
         self.view.addSubview(backgroundView)
     }
     
+    
+    func setUpImageProfile(){
+        if(isImageSet){
+            backgroundView.addProfilePicture(image: profileImage,containerView:self.view)
+            buttonCamera.layer.zPosition = 1
+        }
+    }
     ///*****************
     //Camera Delegate
     //*****************
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImage = pickedImage
+            isImageSet = true
+            setUpImageProfile()
         }
         dismiss(animated: true) {
             //DISMISS
@@ -200,6 +211,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
             (segue.destination as! SignUpV2_2).birthdate = TB_Birth.text
             (segue.destination as! SignUpV2_2).password = TB_Password.text
             (segue.destination as! SignUpV2_2).image = self.profileImage
+            (segue.destination as! SignUpV2_2).isImageSet = self.isImageSet
         }
     }
 }

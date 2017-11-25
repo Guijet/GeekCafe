@@ -81,7 +81,6 @@
 		4689B8051FC4F9210046F211 /* HistoryPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4689B8041FC4F9210046F211 /* HistoryPagination.swift */; };
 		468C710D1F9BC53E007141B3 /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C710C1F9BC53E007141B3 /* CustomTextfield.swift */; };
 		468C710F1F9BE4B2007141B3 /* AnimationsLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C710E1F9BE4B2007141B3 /* AnimationsLogin.swift */; };
-		468C71181F9E30C7007141B3 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C71171F9E30C7007141B3 /* SecondView.swift */; };
 		468C711A1F9E312F007141B3 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C71191F9E312F007141B3 /* FirstView.swift */; };
 		468C711C1F9E41C0007141B3 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468C711B1F9E41C0007141B3 /* BackgroundView.swift */; };
 		4694CE461F796B6900953D75 /* EndOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4694CE451F796B6900953D75 /* EndOrder.swift */; };
@@ -224,7 +223,6 @@
 		4689B8041FC4F9210046F211 /* HistoryPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPagination.swift; sourceTree = "<group>"; };
 		468C710C1F9BC53E007141B3 /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		468C710E1F9BE4B2007141B3 /* AnimationsLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsLogin.swift; sourceTree = "<group>"; };
-		468C71171F9E30C7007141B3 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
 		468C71191F9E312F007141B3 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		468C711B1F9E41C0007141B3 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		4694CE451F796B6900953D75 /* EndOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndOrder.swift; sourceTree = "<group>"; };
@@ -321,8 +319,7 @@
 			children = (
 				46047E681F93F8F90000246C /* Assets LoginV2 */,
 				46047E671F93F8F20000246C /* Storyboard */,
-				46047E661F93F8C00000246C /* API Request Files */,
-				468C71101F9D1BBD007141B3 /* Login Classes */,
+				468C71101F9D1BBD007141B3 /* Login Views Classes */,
 				46047E651F93F8B50000246C /* Login Page */,
 			);
 			name = Login_V2;
@@ -338,13 +335,6 @@
 				463D04FA1FC5DCFB009DB9CB /* ConfirmCardLoginV2.swift */,
 			);
 			name = "Login Page";
-			sourceTree = "<group>";
-		};
-		46047E661F93F8C00000246C /* API Request Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "API Request Files";
 			sourceTree = "<group>";
 		};
 		46047E671F93F8F20000246C /* Storyboard */ = {
@@ -814,15 +804,14 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
-		468C71101F9D1BBD007141B3 /* Login Classes */ = {
+		468C71101F9D1BBD007141B3 /* Login Views Classes */ = {
 			isa = PBXGroup;
 			children = (
 				468C710E1F9BE4B2007141B3 /* AnimationsLogin.swift */,
-				468C71171F9E30C7007141B3 /* SecondView.swift */,
 				468C71191F9E312F007141B3 /* FirstView.swift */,
 				468C711B1F9E41C0007141B3 /* BackgroundView.swift */,
 			);
-			name = "Login Classes";
+			name = "Login Views Classes";
 			sourceTree = "<group>";
 		};
 		46A8F77D1F5722700085181F = {
@@ -1361,7 +1350,6 @@
 				461D362E1FBCB409004C2F54 /* RateMyApp.swift in Sources */,
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
 				466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */,
-				468C71181F9E30C7007141B3 /* SecondView.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
 				467BC1251F82E4D700C300AF /* SubitemsFondue.swift in Sources */,
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,

@@ -16,11 +16,13 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     var birthdate:String!
     var password:String!
     var image:UIImage!
+    var isImageSet:Bool!
     
     let pickerView = UIPickerView()
     let TB_Email = CustomTextField()
     let TB_Phone = CustomTextField()
     let TB_Sexe = CustomTextField()
+    let buttonCamera = UIButton()
     
     var arrayTB = [CustomTextField]()
     let arrayPlaceholder = ["Courriel","Téléphone","Genre"]
@@ -39,6 +41,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         addButtonModifyImage()
         setUpTextFields()
         setUpButtonNext()
+        setUpImageProfile()
     }
     
     func setUpPickerViewAndDatePicker(){
@@ -62,8 +65,15 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         self.view.addGestureRecognizer(tapGesture)
     }
     
+    func setUpImageProfile(){
+        if(isImageSet){
+            backgroundView.addProfilePicture(image: image,containerView:self.view)
+            buttonCamera.layer.zPosition = 1
+        }
+    }
+    
     func addButtonModifyImage(){
-        let buttonCamera = UIButton()
+        
         buttonCamera.frame = CGRect(x: rw(212), y: rh(118), width: rw(34), height: rw(34))
         buttonCamera.backgroundColor = UIColor.white
         buttonCamera.makeShadow(x: 0, y: 1, blur: 3, cornerRadius: rw(34)/2, shadowColor: UIColor.black, shadowOpacity: 0.5, spread: 0)
@@ -131,6 +141,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image = pickedImage
+            isImageSet = true
         }
         dismiss(animated: true) {
             //DISMISS
@@ -216,6 +227,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
             (segue.destination as! ChooseCardLoginV2).email = TB_Email.text
             (segue.destination as! ChooseCardLoginV2).phone = TB_Phone.text
             (segue.destination as! ChooseCardLoginV2).sexe = TB_Sexe.text
+            (segue.destination as! ChooseCardLoginV2).isImageSet = self.isImageSet
         }
     }
     

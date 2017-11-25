@@ -214,6 +214,7 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     }
     
     @objc func connectPressed(){
+        self.endEditing()
         self.loading.buildViewAndStartAnimate(view: self.view)
         if(firstView.getEmailText() != "" && firstView.getPasswordText() != ""){
             DispatchQueue.global(qos:.background).async {

@@ -25,6 +25,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
     let nextButton = UIButton()
     var cardToken:String!
     
+    
     let load = loadingIndicator()
     
     var isKeyBoardActive:Bool = false
@@ -38,6 +39,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
     var phone:String!
     var sexe:String!
     var image:UIImage!
+    var isImageSet:Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -368,6 +370,14 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
         self.loading.buildViewAndStartAnimate(view: self.view)
         DispatchQueue.global(qos:.background).async {
             if(APIRequestLogin().createAcount(first_name: self.name, last_name: self.lastname, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
+                if(self.isImageSet){
+                    if(APIRequestProfile().uploadProfileImage(base64: APIRequestProfile().imageToBase64(image: self.image))){
+                        print("Update image successfully")
+                    }
+                    else{
+                        print("Error while uploading image")
+                    }
+                }
                 DispatchQueue.main.async {
                     self.loading.stopAnimatingAndRemove(view: self.view)
                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
@@ -399,6 +409,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
             (segue.destination as! ConfirmCardLoginV2).email = self.email
             (segue.destination as! ConfirmCardLoginV2).sexe = self.sexe
             (segue.destination as! ConfirmCardLoginV2).image = self.image
+            (segue.destination as! ConfirmCardLoginV2).isImageSet = self.isImageSet
         }
     }
 }
