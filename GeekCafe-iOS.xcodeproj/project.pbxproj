@@ -504,8 +504,20 @@
 		460F7B8E1F83EDE60043B7E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				46FDA4E11F8400FB00B6A07B /* TODO */,
-				46FDA4DE1F83F67700B6A07B /* Good */,
+				464012681F76E37D00E271B2 /* Abonnement.swift */,
+				4689B8041FC4F9210046F211 /* HistoryPagination.swift */,
+				468785401F71A6F30009C292 /* HistoryList.swift */,
+				468785441F71CF5C0009C292 /* Promotion.swift */,
+				462CF6EF1F60514B00326426 /* User.swift */,
+				460F7B8F1F83EE530043B7E8 /* userCard.swift */,
+				46FDA4DA1F83F06A00B6A07B /* ItemType.swift */,
+				468785461F72AEEE0009C292 /* Item.swift */,
+				46FDA4DF1F84008E00B6A07B /* Subitem.swift */,
+				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
+				46FDA4E41F84062500B6A07B /* ItemList.swift */,
+				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
+				460B121D1F912D1600A79A62 /* Commande.swift */,
+				464E98491FB9FB7F008783A4 /* Branch.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -948,7 +960,6 @@
 				46D25C8D1F69BDE00033A634 /* Utility */,
 				46D25C8E1F69BDE70033A634 /* Storyboard */,
 				46D25C8F1F69BDF00033A634 /* UI Swift Files */,
-				46D25C901F69BE000033A634 /* API Request Files */,
 			);
 			name = Dashboard;
 			sourceTree = "<group>";
@@ -976,13 +987,6 @@
 				46D25C981F69CC610033A634 /* Dashboard.swift */,
 			);
 			name = "UI Swift Files";
-			sourceTree = "<group>";
-		};
-		46D25C901F69BE000033A634 /* API Request Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "API Request Files";
 			sourceTree = "<group>";
 		};
 		46D25C911F69BE100033A634 /* Utility */ = {
@@ -1014,34 +1018,6 @@
 				46A8F7951F5722700085181F /* Info.plist */,
 			);
 			name = InfoPlist_AppDelegate;
-			sourceTree = "<group>";
-		};
-		46FDA4DE1F83F67700B6A07B /* Good */ = {
-			isa = PBXGroup;
-			children = (
-				4689B8041FC4F9210046F211 /* HistoryPagination.swift */,
-				468785401F71A6F30009C292 /* HistoryList.swift */,
-				468785441F71CF5C0009C292 /* Promotion.swift */,
-				462CF6EF1F60514B00326426 /* User.swift */,
-				460F7B8F1F83EE530043B7E8 /* userCard.swift */,
-				46FDA4DA1F83F06A00B6A07B /* ItemType.swift */,
-				468785461F72AEEE0009C292 /* Item.swift */,
-				46FDA4DF1F84008E00B6A07B /* Subitem.swift */,
-				46FDA4E21F84016D00B6A07B /* PriceItem.swift */,
-				46FDA4E41F84062500B6A07B /* ItemList.swift */,
-				46DA4AA51FA0255600AE9DC4 /* HistoryItemsInfo.swift */,
-				460B121D1F912D1600A79A62 /* Commande.swift */,
-				464E98491FB9FB7F008783A4 /* Branch.swift */,
-			);
-			name = Good;
-			sourceTree = "<group>";
-		};
-		46FDA4E11F8400FB00B6A07B /* TODO */ = {
-			isa = PBXGroup;
-			children = (
-				464012681F76E37D00E271B2 /* Abonnement.swift */,
-			);
-			name = TODO;
 			sourceTree = "<group>";
 		};
 		D56559EF11E624A126F43246 /* Frameworks */ = {

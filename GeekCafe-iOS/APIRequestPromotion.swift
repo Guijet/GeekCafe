@@ -41,12 +41,17 @@ class APIRequestPromotion{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
-                    var reductionT:NSNumber!
-                    if let reduction = x["reduction"] as? NSNumber{
-                        reductionT = reduction
+                    var reductionT:String!
+                    if let reduction = x["reduction"] as? String{
+                        if(reduction.contains("%")){
+                            reductionT = "\(reduction)"
+                        }
+                        else{
+                            reductionT = "\(reduction.floatValue.twoDecimal)$"
+                        }
                     }
                     else{
-                        reductionT = 0 as NSNumber
+                        reductionT = "nil"
                     }
                     let item = x["item"] as! [String:Any]
                     let dataItem = item["data"] as! [String:Any]

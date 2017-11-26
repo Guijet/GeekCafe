@@ -75,15 +75,16 @@ class PromotionMainPage: UIViewController,UIScrollViewDelegate {
                 scrollViewPromotion.addSubview(backgroundCard)
                 
                 let amount = UILabel()
-                amount.frame = CGRect(x: rw(31), y: rh(40), width: rw(156), height: rh(80))
+                amount.frame = CGRect(x: rw(10), y: rh(40), width: rw(156), height: rh(80))
                 amount.textColor = Utility().hexStringToUIColor(hex: "#6CA642")
                 amount.text = "\(String(describing: x.reduction))"
                 amount.textAlignment = .left
                 amount.font = UIFont(name: "Lato-Bold", size: rw(70))
+                amount.adjustsFontSizeToFitWidth = true
                 backgroundCard.addSubview(amount)
                 
                 let labelItems = UILabel()
-                labelItems.frame = CGRect(x: rw(31), y: amount.frame.maxY, width: rw(156), height: rh(11))
+                labelItems.frame = CGRect(x: rw(10), y: amount.frame.maxY, width: rw(156), height: rh(11))
                 labelItems.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 labelItems.text = "sur le \(x.itemName)"
                 labelItems.textAlignment = .left

@@ -9,7 +9,7 @@
 import UIKit
 
 struct Promotion{
-    init(id:Int,reduction:NSNumber,image_url:String,code:String,itemName:String,nextPage:String){
+    init(id:Int,reduction:String,image_url:String,code:String,itemName:String,nextPage:String){
         self.id = id
         self.code = code
         self.image_url = image_url
@@ -18,7 +18,7 @@ struct Promotion{
         self.nextPage = nextPage
     }
     var id:Int
-    var reduction:NSNumber
+    var reduction:String
     var image_url:String
     var code:String
     var itemName:String

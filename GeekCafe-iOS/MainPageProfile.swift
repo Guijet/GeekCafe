@@ -70,7 +70,7 @@ class MainPageProfile: UIViewController {
         containerView.addSubview(name)
         
         let subscription = UILabel()
-        subscription.createLabel(frame: CGRect(x:rw(50),y:name.frame.maxY,width:view.frame.width - rw(100),height:rh(22)), textColor: Utility().hexStringToUIColor(hex:"#6CA642"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "Coffee Addicted Pro")
+        subscription.createLabel(frame: CGRect(x:rw(50),y:name.frame.maxY,width:view.frame.width - rw(100),height:rh(22)), textColor: Utility().hexStringToUIColor(hex:"#6CA642"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "\(Global.global.userInfo.abonnement.title)")
         containerView.addSubview(subscription)
     
         let buttonChangeSub = UIButton()
@@ -82,11 +82,11 @@ class MainPageProfile: UIViewController {
         containerView.addSubview(buttonChangeSub)
         
         let LBL_CreditD = UILabel()
-        LBL_CreditD.createLabel(frame: CGRect(x:view.frame.width - rw(50),y:buttonChangeSub.frame.maxY + rh(16),width:rw(40),height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(10), textAignment: .left, text: "Crédit")
+        LBL_CreditD.createLabel(frame: CGRect(x:view.frame.width - rw(50),y:buttonChangeSub.frame.maxY + rh(14),width:rw(40),height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "Points")
         containerView.addSubview(LBL_CreditD)
         
         let LBL_Money = UILabel()
-        LBL_Money.createLabel(frame: CGRect(x:(LBL_CreditD.frame.minX - (view.frame.width/2)) - rw(5),y:LBL_CreditD.frame.minY - rh(4),width:view.frame.width/2,height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .right, text: "10.00$")
+        LBL_Money.createLabel(frame: CGRect(x:(LBL_CreditD.frame.minX - (view.frame.width/2)) - rw(5),y:LBL_CreditD.frame.minY - rh(4),width:view.frame.width/2,height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "\(Global.global.userInfo.points)")
         containerView.addSubview(LBL_Money)
         
     }
@@ -150,7 +150,11 @@ class MainPageProfile: UIViewController {
     }
     
     @objc func changeSub(){
-        
+        let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, completion: nil)
     }
     
     @objc func buttonPressed(sender:UIButton){

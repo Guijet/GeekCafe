@@ -82,17 +82,17 @@ class MenuClass{
         menuItemsContainer.addSubview(name)
         
         status.frame = CGRect(x: rw(56,view), y: rw(121,view), width: (view.frame.width - profileImage.frame.maxY) - rw(15,view), height: rw(12,view))
-        status.text = "Coffee Addicted Pro"
+        status.text = "\(Global.global.userInfo.abonnement.title)"
         status.textColor = Utility().hexStringToUIColor(hex: "#6CA643")
         status.textAlignment = .left
         status.font = UIFont(name: "Lato-Regular", size: rw(10,view))
         menuItemsContainer.addSubview(status)
         
-        LBL_Money.createLabel(frame: CGRect(x:status.frame.minX,y:status.frame.maxY + rh(3,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(9,view), textAignment: .left, text: "10.00$")
+        LBL_Money.createLabel(frame: CGRect(x:status.frame.minX,y:status.frame.maxY + rh(3,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(11,view), textAignment: .left, text: "\(Global.global.userInfo.points)")
         LBL_Money.sizeToFit()
         menuItemsContainer.addSubview(LBL_Money)
         
-        LBL_CreditD.createLabel(frame: CGRect(x:LBL_Money.frame.maxX + rw(3,view),y:status.frame.maxY + rh(4,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Light", fontSize: rw(7,view), textAignment: .left, text: "crédit disponible")
+        LBL_CreditD.createLabel(frame: CGRect(x:LBL_Money.frame.maxX + rw(3,view),y:status.frame.maxY + rh(5,view),width:rw(100, view),height:rh(11,view)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Light", fontSize: rw(9,view), textAignment: .left, text: "Points")
         menuItemsContainer.addSubview(LBL_CreditD)
         
         var newY = rw(204, view)
@@ -450,7 +450,7 @@ class MenuClass{
     
     func clearGlobals(){
         Global.global.fbResult = ""
-        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", id_subscription: 0,points: 0, cards: [userCard]())
+        Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", abonnement: Abonnement(id:0,title:"",description:"",perk:"",point_reward:0,discount:0,price:0 as NSNumber),points: 0, cards: [userCard]())
         Global.global.itemsOrder = [itemOrder]()
         Global.global.isFbUser = false
     }

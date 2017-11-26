@@ -13,9 +13,17 @@ class AbonnementMainPage: UIViewController {
     let menu = MenuClass()
     let containerView = UIView()
     let backgroundImage = UIImageView()
+    var currentAbonnement:Abonnement!
+    
+    let titleMember = UILabel()
+    let textView = UILabel()
+    let label1 = UILabel()
+    let label2 = UILabel()
+    let label3 = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentAbonnement = Global.global.userInfo.abonnement
         //MENU SET UP
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -30,6 +38,7 @@ class AbonnementMainPage: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        updateInfo()
     }
     
     func setUpContainerView(){
@@ -56,12 +65,12 @@ class AbonnementMainPage: UIViewController {
         logoBackGroundCard.image = UIImage(named: "geekAboonmentCard")
         containerView.addSubview(logoBackGroundCard)
         
-        let titleMember = UILabel()
+        
         titleMember.frame = CGRect(x: rw(28), y: rh(162), width: rw(184), height: rh(22))
         titleMember.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         titleMember.font = UIFont(name: "Lato-Regular", size: rw(18))
         titleMember.textAlignment = .left
-        titleMember.text = "Membre premium"
+        titleMember.text = currentAbonnement.title
         containerView.addSubview(titleMember)
         
         let imageBrandText = UIImageView()
@@ -78,12 +87,12 @@ class AbonnementMainPage: UIViewController {
         containerView.addSubview(viewBot)
         
         
-        let textView = UILabel()
+        
         textView.frame = CGRect(x: rw(24), y: rh(280), width: view.frame.width - rw(48), height: rh(70))
         textView.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         textView.font = UIFont(name: "Lato-Light", size: rw(16))
         textView.textAlignment = .left
-        textView.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+        textView.text = currentAbonnement.description
         textView.numberOfLines = 3
         textView.lineBreakMode = .byTruncatingHead
         textView.addCharactersSpacing(spacing: -0.85, text: textView.text!)
@@ -104,29 +113,29 @@ class AbonnementMainPage: UIViewController {
         imageRight.image = UIImage(named: "coin_green")
         containerView.addSubview(imageRight)
         
-        let label1 = UILabel()
+        
         label1.frame = CGRect(x: rw(21), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
         label1.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         label1.font = UIFont(name: "Lato-Light", size: rw(16))
         label1.textAlignment = .center
-        label1.text = "1 café par mois"
+        label1.text = currentAbonnement.perk
         containerView.addSubview(label1)
         
-        let label2 = UILabel()
+        
         label2.frame = CGRect(x: rw(133), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
         label2.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         label2.font = UIFont(name: "Lato-Light", size: rw(16))
         label2.textAlignment = .center
-        label2.text = "3%"
+        label2.text = "\(currentAbonnement.discount)%"
         containerView.addSubview(label2)
         
 
-        let label3 = UILabel()
+ 
         label3.frame = CGRect(x: rw(247), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
         label3.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         label3.font = UIFont(name: "Lato-Light", size: rw(16))
         label3.textAlignment = .center
-        label3.text = "1.2x"
+        label3.text = "\(currentAbonnement.point_reward)x"
         containerView.addSubview(label3)
         
     }
@@ -145,6 +154,16 @@ class AbonnementMainPage: UIViewController {
     
     @objc func changeAbonnementPressed(sender:UIButton){
         performSegue(withIdentifier: "toListAbonnement", sender: nil)
+    }
+    
+    func updateInfo(){
+
+        currentAbonnement = Global.global.userInfo.abonnement
+        titleMember.text = currentAbonnement.title
+        textView.text = currentAbonnement.description
+        label1.text = currentAbonnement.perk
+        label2.text = "\(currentAbonnement.discount)%"
+        label3.text = "\(currentAbonnement.point_reward)x"
     }
 
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 struct User{
-    init(firstname:String,lastname:String,email:String,sexe:String,birthdate:String,phone:String,id:Int,image_url:String,token:String,id_subscription:Int,points:Int,cards:[userCard]){
+    init(firstname:String,lastname:String,email:String,sexe:String,birthdate:String,phone:String,id:Int,image_url:String,token:String,abonnement:Abonnement,points:Int,cards:[userCard]){
         self.firstname = firstname
         self.lastname = lastname
         self.birthdate = birthdate
@@ -19,7 +19,7 @@ struct User{
         self.id = id
         self.image_url = image_url
         self.token = token
-        self.id_subscription = id_subscription
+        self.abonnement = abonnement
         self.points = points
         self.cards = cards
         
@@ -33,7 +33,7 @@ struct User{
     var phone:String
     var image_url:String
     var token:String
-    var id_subscription:Int
+    var abonnement:Abonnement
     var points:Int
     var cards:[userCard]
     

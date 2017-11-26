@@ -43,10 +43,11 @@ class APIRequestLogin{
             let image_id = user["profile_image"] as! String
             let image_url = image_id
             
+            let abonnement = user["subscription"] as! [String:Any]
             
             let token = Global.global.userInfo.token
             
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, id_subscription: 0,points: 0, cards: [userCard]())
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: user["points"] as! Int, cards: [userCard]())
             worked = true
         }
         return worked
@@ -62,7 +63,8 @@ class APIRequestLogin{
             let data = json["data"] as! [String:Any]
             let id = data["id"] as! Int
             let image_url = data["profile_image"] as! String
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, id_subscription: 0,points: 0,cards:[userCard]())
+            let abonnement = data["subscription"] as! [String:Any]
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: data["points"] as! Int,cards:[userCard]())
             
             
             worked = true
@@ -190,8 +192,10 @@ class APIRequestLogin{
             else{
                 image_user = ""
             }
+            let abonnement = data["subscription"] as! [String:Any]
+            
             worked = true
-            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, id_subscription: 0,points: 0, cards: [userCard]())
+            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: data["points"] as! Int, cards: [userCard]())
         }
         return worked
     }

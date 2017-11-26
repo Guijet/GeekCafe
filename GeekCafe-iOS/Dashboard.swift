@@ -144,8 +144,9 @@ class Dashboard:UIViewController{
         arrowImage3.image = #imageLiteral(resourceName: "right_arrow")
         thirdButton.addSubview(arrowImage3)
         
-        tapOnCard.addTarget(self, action: #selector(animateForPoints(sender:)))
-        tapOnCardClose.addTarget(self, action: #selector(animateCloseCard(sender:)))
+        //REMOVE FOR NOW WE JUSTE HAVE POINTS
+//        tapOnCard.addTarget(self, action: #selector(animateForPoints(sender:)))
+//        tapOnCardClose.addTarget(self, action: #selector(animateCloseCard(sender:)))
         
         greenCard.isUserInteractionEnabled = true
         greenCard.addGestureRecognizer(tapOnCard)
@@ -162,8 +163,8 @@ class Dashboard:UIViewController{
         greenCard.addSubview(labelAccumuler)
         
         labelNbPoints.frame = CGRect(x: rw(223), y: rh(3), width: rw(70), height: greenCard.frame.height - rh(6))
-        labelNbPoints.text = "106"
-        labelNbPoints.textAlignment = .left
+        labelNbPoints.text = "\(Global.global.userInfo.points)"
+        labelNbPoints.textAlignment = .right
         labelNbPoints.textColor = .white
         labelNbPoints.font = UIFont(name: "Lato-Regular", size: rw(40))
         greenCard.addSubview(labelNbPoints)
