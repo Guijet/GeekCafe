@@ -17,7 +17,31 @@ class APIRequestMap{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
-                    branches.append(Branch(id: x["id"] as! Int, coordinates: CLLocationCoordinate2D(latitude: CLLocationDegrees(getLatFromCoords(coords: x["coordinates"] as! String)), longitude: CLLocationDegrees(getLongFromCoords(coords: x["coordinates"] as! String))), location: x["location"] as! String))
+                    //ID
+                    var id:Int!
+                    if let idN = x["id"] as? Int{
+                        id = idN
+                    }
+                    if let idS = x["id"] as? String{
+                        id = Int(idS)
+                    }
+                    var location:String!
+                    if let locationS = x["location"] as? String{
+                        location = locationS
+                    }
+                    else{
+                        location = "Location introuvable."
+                    }
+                    
+                    var coords:String!
+                    if let coordsS = x["coordinates"] as? String{
+                        coords = coordsS
+                    }
+                    else{
+                        coords = "0,0"
+                    }
+                    let a = Branch(id: id, coordinates: CLLocationCoordinate2D(latitude: CLLocationDegrees(getLatFromCoords(coords: coords)), longitude: CLLocationDegrees(getLongFromCoords(coords: coords))), location: location)
+                    branches.append(a)
                 }
             }
         }

@@ -47,11 +47,12 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
         buildBackground()
         buildTopCard()
         setUpButton()
+        addGesture()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        TB_CardNumber.becomeFirstResponder()
+    func addGesture(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        self.view.addGestureRecognizer(tapGesture)
     }
     
     //Background image
@@ -73,13 +74,6 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
         labelCardNumber.text = "CARD NUMBER".uppercased()
         view.addSubview(labelCardNumber)
         
-//        let cameraButton = UIButton()
-//        cameraButton.frame = CGRect(x: rw(130), y: rh(105), width: rw(25), height: rw(25))
-//        cameraButton.setImage(UIImage(named:"CameraButton"), for: .normal)
-//        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 3, bottom: 4, right: 3)
-//        cameraButton.addTarget(self, action: #selector(showCardIOView(sender:)), for: .touchUpInside)
-//        view.addSubview(cameraButton)
-//
         TB_CardNumber.delegate = self
         TB_CardNumber.autocorrectionType = .no
         TB_CardNumber.keyboardType = .numberPad
@@ -291,7 +285,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
     
     
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     

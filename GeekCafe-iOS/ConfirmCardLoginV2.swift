@@ -48,9 +48,10 @@ class ConfirmCardLoginV2: UIViewController {
         setUpCardImage()
         setUptext()
         setUpButton()
-        loadUserInformation()
+
     }
     
+   
     
     //Set up image of green card
     func setUpCardImage(){
@@ -122,10 +123,6 @@ class ConfirmCardLoginV2: UIViewController {
     func setUpButton(){
         nextButton.createCreateButton(title: "Terminer", frame: CGRect(x: rw(87), y: rh(553), width: rw(202), height: rh(50)),fontSize:rw(20),containerView:self.view)
         nextButton.addTarget(self, action: #selector(nextPressed(sender:)), for: .touchUpInside)
-    }
-    
-    func loadUserInformation(){
-        //Faire le loading des information de la carte
     }
     
     //TODO ANIMATE THE ROOW VIEW CONTROLLER WHEN CHANGING STORYBOARD

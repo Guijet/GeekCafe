@@ -26,30 +26,148 @@ class APIRequestLogin{
     func viewUser()->Bool{
         var worked:Bool = false
         var json = Utility().getJson(url: "\(Global.global.ip!)user", method: "GET",needToken: true)
+        var image_url:String!
         if let user = json["data"] as? [String:Any]{
+            
+            var id:Int!
+            if let idN = user["id"] as? Int{
+                id = idN
+            }
+            if let idS = user["id"] as? Int{
+                id = idS
+            }
+            var first_name:String!
+            if let first_nameS = user["first_name"] as? String{
+                first_name = first_nameS
+            }
+            else{
+                first_name = "unknown"
+            }
+            var last_name:String!
+            if let last_nameS = user["last_name"] as? String{
+                last_name = last_nameS
+            }
+            else{
+                last_name = "unknown"
+            }
+            var gender:String!
+            if let genderS = user["gender"] as? String{
+                gender = genderS
+            }
+            else{
+                gender = "unknown"
+            }
+            var email:String!
+            if let emailS = user["email"] as? String{
+                email = emailS
+            }
+            else{
+                email = "unknown"
+            }
             var phoneUser:String!
-            let id = user["id"] as! Int
-            let first_name = user["first_name"] as! String
-            let last_name = user["last_name"] as! String
-            let gender = user["gender"] as! String
-            let email = user["email"] as! String
             if let phone = user["phone"] as? String{
                 phoneUser = phone
             }
             else{
                 phoneUser = ""
             }
-            let birth_date = user["birth_date"] as! String
-            let image_id = user["profile_image"] as! String
-            let image_url = image_id
-            
-            let abonnement = user["subscription"] as! [String:Any]
-            
+            var birth_date:String!
+            if let birth_dateS = user["birth_date"] as? String{
+                birth_date = birth_dateS
+            }
+            else{
+                birth_date = "unknown"
+            }
+            var image_id:String!
+            if let image_idS = user["profile_image"] as? String{
+                image_id = image_idS
+            }
+            else{
+                image_id = ""
+            }
+            image_url = image_id
             let token = Global.global.userInfo.token
             
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: Int(truncating: user["points"] as! NSNumber), cards: [userCard]())
+            var points:Int!
+            if let point = user["points"] as? NSNumber{
+                points = point.intValue
+            }
+            else if let pointS = user["points"] as? String{
+                if pointS.range(of: ".") != nil {
+                    let i = Int(pointS.components(separatedBy: ".").first!)
+                    points = i
+                }
+                else{
+                    points = Int(pointS)
+                }
+            }
+            else{
+                points = 0
+            }
+            
+            var idAbonnement:Int!
+            var points_rewards:NSNumber!
+            var discount:NSNumber!
+            var price:NSNumber!
+            var title:String!
+            var description:String!
+            var perk:String!
+            if let abonnement = user["subscription"] as? [String:Any]{
+                if let perkS = abonnement["perk"] as? String{
+                    perk = perkS
+                }
+                else{
+                    perk = "Unknown"
+                }
+                if let descriptionS = abonnement["description"] as? String{
+                    description = descriptionS
+                }
+                else{
+                    description = "Unknown"
+                }
+                if let titleS = abonnement["title"] as? String{
+                    title = titleS
+                }
+                else{
+                    title = "unknown"
+                }
+                
+                if let rewards = abonnement["point_reward"] as? NSNumber{
+                    points_rewards = rewards
+                }
+                if let rewardsS = abonnement["point_reward"] as? String{
+                    points_rewards = NumberFormatter().number(from: rewardsS)
+                }
+                
+                
+                if let discountN = abonnement["discount"] as? NSNumber{
+                    discount = discountN
+                }
+                if let discountS = abonnement["discount"] as? String{
+                    discount = NumberFormatter().number(from: discountS)
+                }
+                
+                
+                if let priceN = abonnement["price"] as? NSNumber{
+                    price = priceN
+                }
+                if let priceS = abonnement["price"] as? String{
+                    price = NumberFormatter().number(from: priceS)
+                }
+                
+                
+                if let idN = abonnement["id"] as? Int{
+                    idAbonnement = idN
+                }
+                if let idS = abonnement["id"] as? String{
+                    idAbonnement = Int(idS)
+                }
+                Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:idAbonnement,title:title,description:description,perk:perk,point_reward:points_rewards,discount:discount,price:price),points: points, cards: [userCard]())
+                
+            }
             worked = true
         }
+
         return worked
     }
     
@@ -60,13 +178,98 @@ class APIRequestLogin{
 
         if let token = json["token"] as? String{
             saveToken(token: token)
-            let data = json["data"] as! [String:Any]
-            let id = data["id"] as! Int
-            let image_url = data["profile_image"] as! String
-            let abonnement = data["subscription"] as! [String:Any]
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: data["points"] as! Int,cards:[userCard]())
-            
-            
+            if let data = json["data"] as? [String:Any]{
+                var id:Int!
+                if let idN = data["id"] as? Int{
+                    id = idN
+                }
+                else if let idS = data["id"] as? String{
+                    id = Int(idS)
+                }
+                
+                var image_url:String!
+                if let image_urlS = data["profile_image"] as? String{
+                    image_url = image_urlS
+                }
+                else{
+                    image_url = "unknown"
+                }
+                var points:Int!
+                if let point = data["points"] as? NSNumber{
+                    points = point.intValue
+                }
+                else if let pointS = data["points"] as? String{
+                    if pointS.range(of: ".") != nil {
+                        let i = Int(pointS.components(separatedBy: ".").first!)
+                        points = i
+                    }
+                    else{
+                        points = Int(pointS)
+                    }
+                }
+                else{
+                    points = 0
+                }
+                var idAbonnement:Int!
+                var points_rewards:NSNumber!
+                var discount:NSNumber!
+                var price:NSNumber!
+                var title:String!
+                var description:String!
+                var perk:String!
+                if let abonnement = data["subscription"] as? [String:Any]{
+                    if let perkS = abonnement["perk"] as? String{
+                        perk = perkS
+                    }
+                    else{
+                        perk = "Unknown"
+                    }
+                    if let descriptionS = abonnement["description"] as? String{
+                        description = descriptionS
+                    }
+                    else{
+                        description = "Unknown"
+                    }
+                    if let titleS = abonnement["title"] as? String{
+                        title = titleS
+                    }
+                    else{
+                        title = "unknown"
+                    }
+                    
+                    if let rewards = abonnement["point_reward"] as? NSNumber{
+                        points_rewards = rewards
+                    }
+                    if let rewardsS = abonnement["point_reward"] as? String{
+                        points_rewards = NumberFormatter().number(from: rewardsS)
+                    }
+                    
+                    
+                    if let discountN = abonnement["discount"] as? NSNumber{
+                        discount = discountN
+                    }
+                    if let discountS = abonnement["discount"] as? String{
+                        discount = NumberFormatter().number(from: discountS)
+                    }
+                    
+                    
+                    if let priceN = abonnement["price"] as? NSNumber{
+                        price = priceN
+                    }
+                    if let priceS = abonnement["price"] as? String{
+                        price = NumberFormatter().number(from: priceS)
+                    }
+                    
+                    
+                    if let idN = abonnement["id"] as? Int{
+                        idAbonnement = idN
+                    }
+                    if let idS = abonnement["id"] as? String{
+                        idAbonnement = Int(idS)
+                    }
+                }
+                Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phone, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:idAbonnement,title:title,description:description,perk:perk,point_reward:points_rewards,discount:discount,price:price),points: points,cards:[userCard]())
+            }
             worked = true
         }
         return worked
@@ -97,7 +300,42 @@ class APIRequestLogin{
         if let cards = json["cards"] as? [[String:Any]]{
             if(cards.count > 0){
                 for x in 0...cards.count - 1{
-                    let a = userCard(last4: cards[x]["last4"] as! String, expMonth: String(cards[x]["exp_month"] as! Int), expYear: String(cards[x]["exp_year"] as! Int), brand: cards[x]["brand"] as! String, name: cardHolderName, id_card: cards[x]["id"] as! String)
+                    var last4:String!
+                    if let last4S = cards[x]["last4"] as? String{
+                        last4 = last4S
+                    }
+                    else{
+                        last4 = ""
+                    }
+                    var expMonth:Int!
+                    if let expMonthN = cards[x]["exp_month"] as? Int{
+                        expMonth = expMonthN
+                    }
+                    else{
+                        expMonth = 0
+                    }
+                    var expYear:Int!
+                    if let expYearN = cards[x]["exp_year"] as? Int{
+                        expYear = expYearN
+                    }
+                    else{
+                        expYear = 0
+                    }
+                    var brand:String!
+                    if let brandS = cards[x]["brand"] as? String{
+                        brand = brandS
+                    }
+                    else{
+                        brand = "Unknown"
+                    }
+                    var idCard:String!
+                    if let idCardS = cards[x]["id"] as? String{
+                        idCard = idCardS
+                    }
+                    else{
+                        idCard = ""
+                    }
+                    let a = userCard(last4: last4, expMonth: String(expMonth), expYear: String(expYear), brand: brand, name: cardHolderName, id_card: idCard)
                     arrayCards.append(a)
                 }
             }
@@ -192,10 +430,84 @@ class APIRequestLogin{
             else{
                 image_user = ""
             }
-            let abonnement = data["subscription"] as! [String:Any]
+            
+            var points:Int!
+            if let point = data["points"] as? NSNumber{
+                points = point.intValue
+            }
+            else if let pointS = data["points"] as? String{
+                if pointS.range(of: ".") != nil {
+                    let i = Int(pointS.components(separatedBy: ".").first!)
+                    points = i
+                }
+                else{
+                    points = Int(pointS)
+                }
+            }
+            else{
+                points = 0
+            }
+            var idAbonnement:Int!
+            var points_rewards:NSNumber!
+            var discount:NSNumber!
+            var price:NSNumber!
+            var title:String!
+            var description:String!
+            var perk:String!
+            if let abonnement = data["subscription"] as? [String:Any]{
+                if let perkS = abonnement["perk"] as? String{
+                    perk = perkS
+                }
+                else{
+                    perk = "Unknown"
+                }
+                if let descriptionS = abonnement["description"] as? String{
+                    description = descriptionS
+                }
+                else{
+                    description = "Unknown"
+                }
+                if let titleS = abonnement["title"] as? String{
+                    title = titleS
+                }
+                else{
+                    title = "unknown"
+                }
+                
+                if let rewards = abonnement["point_reward"] as? NSNumber{
+                    points_rewards = rewards
+                }
+                if let rewardsS = abonnement["point_reward"] as? String{
+                    points_rewards = NumberFormatter().number(from: rewardsS)
+                }
+                
+                
+                if let discountN = abonnement["discount"] as? NSNumber{
+                    discount = discountN
+                }
+                if let discountS = abonnement["discount"] as? String{
+                    discount = NumberFormatter().number(from: discountS)
+                }
+                
+                
+                if let priceN = abonnement["price"] as? NSNumber{
+                    price = priceN
+                }
+                if let priceS = abonnement["price"] as? String{
+                    price = NumberFormatter().number(from: priceS)
+                }
+                
+                
+                if let idN = abonnement["id"] as? Int{
+                    idAbonnement = idN
+                }
+                if let idS = abonnement["id"] as? String{
+                    idAbonnement = Int(idS)
+                }
+            }
             
             worked = true
-            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: data["points"] as! Int, cards: [userCard]())
+            Global.global.userInfo = User(firstname: firstname_user, lastname: lastname_user, email: email_user, sexe: gender_user, birthdate: birthdate_user, phone: phone_user, id: idUser, image_url: image_user, token: token_user, abonnement: Abonnement(id:idAbonnement,title:title,description:description,perk:perk,point_reward:points_rewards,discount:discount,price:price),points:points, cards: [userCard]())
         }
         return worked
     }

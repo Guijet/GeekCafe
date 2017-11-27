@@ -17,8 +17,29 @@ class APIRequestCommande{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in 0...data.count - 1{
+                    var id:Int!
+                    if let idN = data[x]["id"] as? Int{
+                        id = idN
+                    }
+                    if let idS = data[x]["id"] as? String{
+                        id = Int(idS)
+                    }
+                    var name:String!
+                    if let nameS = data[x]["name"] as? String{
+                        name = nameS
+                    }
+                    else{
+                        name = "#unknown"
+                    }
                     
-                    arrItemTypes.append(ItemType(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: data[x]["image"] as! String))
+                    var image:String!
+                    if let imageS = data[x]["image"] as? String{
+                        image = imageS
+                    }
+                    else{
+                        image = ""
+                    }
+                    arrItemTypes.append(ItemType(id: id, name: name, image: image))
                 }
             }
         }
@@ -33,7 +54,28 @@ class APIRequestCommande{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in 0...data.count - 1{
-                    itemsList.append(ItemList(id: data[x]["id"] as! Int, name: data[x]["name"] as! String, image: data[x]["image"] as! String))
+                    var id:Int!
+                    if let idN = data[x]["id"] as? Int{
+                        id = idN
+                    }
+                    if let idS = data[x]["id"] as? String{
+                        id = Int(idS)
+                    }
+                    var name:String!
+                    if let nameS = data[x]["name"] as? String{
+                        name = nameS
+                    }
+                    else{
+                        name = "#unknown"
+                    }
+                    var image:String!
+                    if let imageS = data[x]["image"] as? String{
+                        image = imageS
+                    }
+                    else{
+                        image = ""
+                    }
+                    itemsList.append(ItemList(id: id, name: name, image: image))
                 }
             }
         }
@@ -48,44 +90,127 @@ class APIRequestCommande{
         if let data = json["data"] as? [String:Any]{
         
             //BASIC INFO
-            let id = data["id"] as! Int
-            let name = data["name"] as! String
-            let description = data["description"] as! String
-            let type = data["type"] as! String
-            let image = data["image"] as! String
+            var id:Int!
+            if let idN = data["id"] as? Int{
+                id = idN
+            }
+            if let idS = data["id"] as? String{
+                id = Int(idS)
+            }
+            var name:String!
+            if let nameS = data["name"] as? String{
+                name = nameS
+            }
+            else{
+                name = "#unknown"
+            }
+            var description:String!
+            if let descriptionS = data["description"] as? String{
+                description = descriptionS
+            }
+            else{
+                description = "Unable to load description"
+            }
+            var type:String!
+            if let typeS = data["type"] as? String{
+                type = typeS
+            }
+            else{
+                type = "Unable to load type"
+            }
+            var image:String!
+            if let imageS = data["image"] as? String{
+                image = imageS
+            }
+            else{
+                image = ""
+            }
+            
+            //Array Price
             var arrPrices = [PriceItem]()
             var arrSubItems = [Subitem]()
-            //Array Price
-            
-            
             //Getting prices
-            let prices = data["prices"] as! [String:Any]
-            let dataPrices = prices["data"] as! [[String:Any]]
-            if(dataPrices.count > 0){
-                for x in 0...dataPrices.count - 1{
-                    var size:String = ""
-                    if let newSize = dataPrices[x]["size"] as? String{
-                        size = newSize
+            if let prices = data["prices"] as? [String:Any]{
+                if let dataPrices = prices["data"] as? [[String:Any]]{
+                    if(dataPrices.count > 0){
+                        for x in 0...dataPrices.count - 1{
+                            var size:String = ""
+                            if let newSize = dataPrices[x]["size"] as? String{
+                                size = newSize
+                            }
+                            var idPrice:Int!
+                            if let idPriceN = dataPrices[x]["id"] as? Int{
+                                idPrice = idPriceN
+                            }
+                            if let idPriceS = dataPrices[x]["id"] as? String{
+                                idPrice = Int(idPriceS)
+                            }
+                            var price:NSNumber!
+                            if let priceN = dataPrices[x]["price"] as? NSNumber{
+                                price = priceN
+                            }
+                            if let priceS = dataPrices[x]["price"] as? String{
+                                price = NumberFormatter().number(from:priceS)
+                            }
+                            
+                            arrPrices.append(PriceItem(id: idPrice, price: price, size: size))
+                        }
                     }
-                    arrPrices.append(PriceItem(id: dataPrices[x]["id"] as! Int, price: dataPrices[x]["price"] as! NSNumber, size: size))
                 }
             }
+            
+            
             
             //Gettingg subitems
-            let subitems = data["subitems"] as! [String:Any]
-            let subitemsData = subitems["data"] as! [[String:Any]]
-            if(subitemsData.count > 0){
-                for y in 0...subitemsData.count - 1{
-                    var price:NSNumber!
-                    if let newPrice = subitemsData[y]["price"] as? NSNumber{
-                        price = newPrice
+            if let subitems = data["subitems"] as? [String:Any]{
+                if let subitemsData = subitems["data"] as? [[String:Any]]{
+                    if(subitemsData.count > 0){
+                        for y in 0...subitemsData.count - 1{
+                            var price:NSNumber!
+                            if let newPrice = subitemsData[y]["price"] as? NSNumber{
+                                price = newPrice
+                            }
+                            else if let newPrice = subitemsData[y]["price"] as? String{
+                                price = NumberFormatter().number(from: newPrice)
+                            }
+                            else{
+                                price = 0
+                            }
+                            var idSubItem:Int!
+                            if let idSubitemsN = subitemsData[y]["id"] as? Int{
+                                idSubItem = idSubitemsN
+                            }
+                            if let idSubitemsS = subitemsData[y]["id"] as? String{
+                                idSubItem = Int(idSubitemsS)
+                            }
+                            var name:String!
+                            if let nameS = subitemsData[y]["name"] as? String{
+                                name = nameS
+                            }
+                            else{
+                                name = "unknown name"
+                            }
+                            var image:String!
+                            if let imageS = subitemsData[y]["image"] as? String{
+                                image = imageS
+                            }
+                            else{
+                                image = ""
+                            }
+                            var isTopping:Bool!
+                            if let isToppingB = subitemsData[y]["is_topping"] as? Bool{
+                                isTopping = isToppingB
+                            }
+                            else{
+                                isTopping = false
+                            }
+                            arrSubItems.append(Subitem(id: idSubItem, name: name, price: price, image: image, isTopping: isTopping))
+                        }
                     }
-                    else{
-                        price = 0
-                    }
-                    arrSubItems.append(Subitem(id: subitemsData[y]["id"] as! Int, name: subitemsData[y]["name"] as! String, price: price, image: subitemsData[y]["image"] as! String, isTopping: subitemsData[y]["is_topping"] as! Bool))
                 }
             }
+            
+            
             
             item = Item(id: id, description: description, type: type, image: image,name: name, prices: arrPrices, subitems: arrSubItems)
             

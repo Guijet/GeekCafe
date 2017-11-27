@@ -41,7 +41,34 @@ class APIRequestHistory{
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
-                    arrHistory.append(HistoryList(date: (x["created_at"] as! [String:Any])["date"] as! String, country: "Canada", city: "Boisbriand", amount: x["amount"] as! NSNumber, id: x["id"] as! Int))
+                    var createdAt:String!
+                    if let info = x["created_at"] as? [String:Any]{
+                        if let createdAtS = info["date"] as? String{
+                            createdAt = createdAtS
+                        }
+                        else{
+                            createdAt = "Unknown"
+                        }
+                    }
+                    else{
+                        createdAt = "Unknown"
+                    }
+                    var amount:NSNumber!
+                    if let amountN = x["amount"] as? NSNumber{
+                        amount = amountN
+                    }
+                    if let amountS = x["amount"] as? String{
+                        amount = NumberFormatter().number(from: amountS)
+                    }
+                    var idHisory:Int!
+                    if let idHistoryN = x["id"] as? Int{
+                        idHisory = idHistoryN
+                    }
+                    if let idHistoryS = x["id"] as? String{
+                        idHisory = Int(idHistoryS)
+                    }
+                    //TODO: TAKE CITY AND COUNTR FROM RESTAURANT THAT I ORDERED
+                    arrHistory.append(HistoryList(date:createdAt, country: "Canada", city: "Boisbriand", amount: amount, id: idHisory))
                 }
             }
         }
@@ -54,14 +81,48 @@ class APIRequestHistory{
 
         if let data = json["data"] as? [String:Any]{
             
-            //METTRE LES SUBITEMS PRICE DANS LE PRIX TOAL DE LITEM
-            let items = data["items"] as! [String:Any]
-            let dataItems = items["data"] as! [[String:Any]]
-            if(dataItems.count > 0){
-                for x in dataItems{
-                    itemsinlist.append(itemInfo(price: x["price"] as! NSNumber, image_url: x["image"] as! String, name: x["name"] as! String, type: x["type"] as! String))
+            if let items = data["items"] as? [String:Any]{
+                if let dataItems = items["data"] as? [[String:Any]]{
+                    if(dataItems.count > 0){
+                        for x in dataItems{
+                            var price:NSNumber!
+                            if let priceN = x["price"] as? NSNumber{
+                                price = priceN
+                            }
+                            if let priceS = x["price"] as? String{
+                                price = NumberFormatter().number(from: priceS)
+                            }
+                            
+                            var image:String!
+                            if let imageS = x["image"] as? String{
+                                image = imageS
+                            }
+                            else{
+                                image = "unknown image"
+                            }
+                            
+                            var name:String!
+                            if let nameS = x["name"] as? String{
+                                name = nameS
+                            }
+                            else{
+                                name = "unknown image"
+                            }
+                            
+                            var type:String!
+                            if let typeS = x["type"] as? String{
+                                type = typeS
+                            }
+                            else{
+                                type = "unknown image"
+                            }
+                            itemsinlist.append(itemInfo(price: price, image_url: image, name: name, type: type))
+                        }
+                    }
                 }
             }
+            
+            
 
         }
         return itemsinlist

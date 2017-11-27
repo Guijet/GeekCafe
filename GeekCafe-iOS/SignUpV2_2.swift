@@ -88,9 +88,13 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         var index:Int  = 0
         for x in arrayTB{
             x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view, heightToGo: rh(216))
-            if(index == 3 || index == 4){
-                x.isSecureTextEntry = true
+            if(index == 0){
+                x.keyboardType = .emailAddress
             }
+            if(index == 1){
+                x.keyboardType = .numberPad
+            }
+            
             view.addSubview(x)
             index += 1
             newY += rh(57)
@@ -118,11 +122,21 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     @objc func nextPressed(){
         if(TB_Sexe.text != "" && TB_Phone.text != "" && TB_Email.text != ""){
             //VERIFIER PHONE ET EMAIL
-            if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){
-                performSegue(withIdentifier: "toSignUpV2_3", sender: nil)
+            if(TB_Phone.text!.count == 10){
+                if(isValidEmail(email: TB_Email.text!)){
+                    if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){
+                        performSegue(withIdentifier: "toSignUpV2_3", sender: nil)
+                    }
+                    else{
+                        Utility().alert(message: "Le email entrer est déjà utiliser.", title: "Message", control: self)
+                    }
+                }
+                else{
+                    Utility().alert(message: "Format de courriel invalide.", title: "Message", control: self)
+                }
             }
             else{
-                Utility().alert(message: "Le email entrer est déjà utiliser.", title: "Message", control: self)
+                Utility().alert(message: "Vous devez entrez un numéro de téléphone valide.", title: "Message", control: self)
             }
         }
         else{
@@ -215,6 +229,12 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         arrayTB[2].text = arraySexe[row]
+    }
+    
+    func isValidEmail(email:String)->Bool{
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

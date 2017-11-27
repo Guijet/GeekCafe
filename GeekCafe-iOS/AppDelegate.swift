@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         // Override point for customization after application launch.
         Stripe.setDefaultPublishableKey("pk_test_8tGMOp2AUxHPPKunjW6PnZwk")
         GMSServices.provideAPIKey("AIzaSyAB_DuRMN3fh1tUlNIsw405-hQghA4lqRw")
-        Global.global.ip = "http://api.geekcafe.dev/"
+        Global.global.ip = "http://api.guijethostingtools.com/"
         Global.global.fbResult = ""
         Global.global.userInfo = User(firstname: "", lastname: "", email: "", sexe: "", birthdate: "", phone: "", id: 0, image_url: "", token: "", abonnement: Abonnement(id:0,title:"",description:"",perk:"",point_reward:0,discount:0,price:0 as NSNumber),points: 0, cards: [userCard]())
         Global.global.itemsOrder = [itemOrder]()
@@ -58,7 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         for i in 0..<deviceToken.count {
             token = token + String(format: "%02.2hhx", arguments: [deviceToken[i]])
         }
-        print(token)
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
