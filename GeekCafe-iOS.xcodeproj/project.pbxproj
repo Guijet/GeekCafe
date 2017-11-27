@@ -52,6 +52,7 @@
 		464012691F76E37D00E271B2 /* Abonnement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464012681F76E37D00E271B2 /* Abonnement.swift */; };
 		464E98481FB9FB59008783A4 /* APIRequestMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464E98471FB9FB59008783A4 /* APIRequestMap.swift */; };
 		464E984A1FB9FB7F008783A4 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464E98491FB9FB7F008783A4 /* Branch.swift */; };
+		465BBB941FCB795E0074D6BB /* ChooseTopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465BBB931FCB795E0074D6BB /* ChooseTopping.swift */; };
 		4664F1F41F79300F00908778 /* ChoosePatisserie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4664F1F31F79300F00908778 /* ChoosePatisserie.swift */; };
 		466EE1F61F82668400014B68 /* ChooseBrevageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */; };
 		466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */; };
@@ -59,7 +60,7 @@
 		467BC11F1F82E2B200C300AF /* ChooseSizeFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC11E1F82E2B200C300AF /* ChooseSizeFondue.swift */; };
 		467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1201F82E4BD00C300AF /* FlavourFondue.swift */; };
 		467BC1251F82E4D700C300AF /* SubitemsFondue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1241F82E4D700C300AF /* SubitemsFondue.swift */; };
-		467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */; };
+		467BC1291F82E7EF00C300AF /* ChooseSubitems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467BC1281F82E7EF00C300AF /* ChooseSubitems.swift */; };
 		4687850F1F7186740009C292 /* Historique.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4687850E1F7186740009C292 /* Historique.storyboard */; };
 		468785111F7186BA0009C292 /* HistoriqueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468785101F7186BA0009C292 /* HistoriqueList.swift */; };
 		468785131F7186C70009C292 /* Historique.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 468785121F7186C70009C292 /* Historique.xcassets */; };
@@ -194,6 +195,7 @@
 		464012681F76E37D00E271B2 /* Abonnement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Abonnement.swift; sourceTree = "<group>"; };
 		464E98471FB9FB59008783A4 /* APIRequestMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestMap.swift; sourceTree = "<group>"; };
 		464E98491FB9FB7F008783A4 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
+		465BBB931FCB795E0074D6BB /* ChooseTopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTopping.swift; sourceTree = "<group>"; };
 		4664F1F31F79300F00908778 /* ChoosePatisserie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePatisserie.swift; sourceTree = "<group>"; };
 		466EE1F51F82668400014B68 /* ChooseBrevageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBrevageSize.swift; sourceTree = "<group>"; };
 		466EE1F71F8279C700014B68 /* DragAndDropBrevage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropBrevage.swift; sourceTree = "<group>"; };
@@ -201,7 +203,7 @@
 		467BC11E1F82E2B200C300AF /* ChooseSizeFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSizeFondue.swift; sourceTree = "<group>"; };
 		467BC1201F82E4BD00C300AF /* FlavourFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavourFondue.swift; sourceTree = "<group>"; };
 		467BC1241F82E4D700C300AF /* SubitemsFondue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubitemsFondue.swift; sourceTree = "<group>"; };
-		467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavourCrepe.swift; sourceTree = "<group>"; };
+		467BC1281F82E7EF00C300AF /* ChooseSubitems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSubitems.swift; sourceTree = "<group>"; };
 		4687850E1F7186740009C292 /* Historique.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Historique.storyboard; sourceTree = "<group>"; };
 		468785101F7186BA0009C292 /* HistoriqueList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoriqueList.swift; sourceTree = "<group>"; };
 		468785121F7186C70009C292 /* Historique.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Historique.xcassets; sourceTree = "<group>"; };
@@ -545,7 +547,8 @@
 			isa = PBXGroup;
 			children = (
 				467BC11C1F82E27500C300AF /* ChooseSizeCrepe.swift */,
-				467BC1281F82E7EF00C300AF /* FlavourCrepe.swift */,
+				465BBB931FCB795E0074D6BB /* ChooseTopping.swift */,
+				467BC1281F82E7EF00C300AF /* ChooseSubitems.swift */,
 			);
 			name = "Crêpe";
 			sourceTree = "<group>";
@@ -1301,7 +1304,7 @@
 				460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */,
 				464012671F75C62800E271B2 /* ListAbonnement.swift in Sources */,
 				460B121E1F912D1600A79A62 /* Commande.swift in Sources */,
-				467BC1291F82E7EF00C300AF /* FlavourCrepe.swift in Sources */,
+				467BC1291F82E7EF00C300AF /* ChooseSubitems.swift in Sources */,
 				4689B8051FC4F9210046F211 /* HistoryPagination.swift in Sources */,
 				460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */,
 				46D25C991F69CC610033A634 /* Dashboard.swift in Sources */,
@@ -1331,6 +1334,7 @@
 				460644961F57410D00BD08E5 /* Utility.swift in Sources */,
 				466EE1F81F8279C700014B68 /* DragAndDropBrevage.swift in Sources */,
 				46D1DB8B1F5F8C240008D3F7 /* SignUp5.swift in Sources */,
+				465BBB941FCB795E0074D6BB /* ChooseTopping.swift in Sources */,
 				467BC1251F82E4D700C300AF /* SubitemsFondue.swift in Sources */,
 				460644C01F57801700BD08E5 /* SignUp1.swift in Sources */,
 				460207BE1FA0F45000446E7A /* APIRequestPaiement.swift in Sources */,

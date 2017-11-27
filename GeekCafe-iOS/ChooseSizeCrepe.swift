@@ -29,13 +29,19 @@ class ChooseSizeCrepe: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        infoItem = APIRequestCommande().getItemInfo(item_id: listItemToPass[0].id)
-        setNavigationTitle()
-        backgroundImage.setUpBackgroundImage(containerView: self.view)
-        self.extendedLayoutIncludesOpaqueBars = true
-        setUpTopPart()
-        setDashedLines()
-        setButtonAdd()
+        DispatchQueue.global(qos:.background).async {
+            self.infoItem = APIRequestCommande().getItemInfo(item_id: self.listItemToPass[0].id)
+            DispatchQueue.main.async {
+                self.setNavigationTitle()
+                self.backgroundImage.setUpBackgroundImage(containerView: self.view)
+                self.extendedLayoutIncludesOpaqueBars = true
+                self.setUpTopPart()
+                self.setDashedLines()
+                self.setButtonAdd()
+            }
+        }
+        
+        
         
     }
     
@@ -83,7 +89,7 @@ class ChooseSizeCrepe: UIViewController {
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
         
-        price = infoItem.prices[1].price
+        self.price = infoItem.prices[1].price
         priceId = infoItem.prices[1].id as NSNumber
         
         let BTN_HeaderRight = UIButton()
@@ -200,16 +206,16 @@ class ChooseSizeCrepe: UIViewController {
     }
     
     @objc func buttonAddPressed(){
-        self.price = NSString(string:LBL_Price.text!).floatValue as NSNumber
-        performSegue(withIdentifier: "toFlavourCrepe", sender: nil)
+        //self.price = NSString(string:LBL_Price.text!).floatValue as NSNumber
+        performSegue(withIdentifier: "toCrepeTopping", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toFlavourCrepe"){
-            (segue.destination as! FlavourCrepe).infoItem = self.infoItem
-            (segue.destination as! FlavourCrepe).price = self.price
-            (segue.destination as! FlavourCrepe).priceId = self.priceId
-            (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
+        if(segue.identifier == "toCrepeTopping"){
+            (segue.destination as! ChooseTopping).infoItem = self.infoItem
+            (segue.destination as! ChooseTopping).price = self.price
+            (segue.destination as! ChooseTopping).priceId = self.priceId
+            (segue.destination as! ChooseTopping).nbChoix = self.nbChoix
         }
     }
 

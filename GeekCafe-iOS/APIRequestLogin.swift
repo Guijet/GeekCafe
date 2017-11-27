@@ -47,7 +47,7 @@ class APIRequestLogin{
             
             let token = Global.global.userInfo.token
             
-            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: user["points"] as! Int, cards: [userCard]())
+            Global.global.userInfo = User(firstname: first_name, lastname: last_name, email: email, sexe: gender, birthdate: birth_date, phone: phoneUser, id: id, image_url: image_url, token: token, abonnement: Abonnement(id:abonnement["id"] as! Int,title:abonnement["title"] as! String,description:abonnement["description"] as! String,perk:abonnement["perk"] as! String,point_reward:abonnement["point_reward"] as! NSNumber,discount:abonnement["discount"] as! NSNumber,price:abonnement["price"] as! NSNumber),points: Int(truncating: user["points"] as! NSNumber), cards: [userCard]())
             worked = true
         }
         return worked

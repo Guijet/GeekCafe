@@ -1,29 +1,29 @@
-
 //
-//  FlavourFondue.swift
+//  ChooseTopping.swift
 //  GeekCafe-iOS
 //
-//  Created by Guillaume Jette on 2017-10-02.
+//  Created by Guillaume Jette on 2017-11-26.
 //  Copyright © 2017 Guillaume Jette. All rights reserved.
 //
 
 import UIKit
 
-class FlavourFondue: UIViewController {
-
+class ChooseTopping:UIViewController{
+    
     let backgroundImage = UIImageView()
-    let bolImage = UIImageView()
+    let crepeImage = UIImageView()
     let bottomScrollView = UIScrollView()
-
+    let LBL_Price = UILabel()
+    
     var infoItem:Item!
     var price:NSNumber!
     var priceId:NSNumber!
-    var nbChoix = 5
+    var nbChoix:Int!
+    var initialPrice:Float = 0
     var toppingID:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Crêpe"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
@@ -31,12 +31,11 @@ class FlavourFondue: UIViewController {
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+        initialPrice = price.floatValue
     }
     
     func setUpTopPart(){
-        
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:price.floatValue.twoDecimal)
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: price.floatValue.twoDecimal)
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -51,10 +50,10 @@ class FlavourFondue: UIViewController {
     
     func setUpImageCoffee(){
         
-        bolImage.frame = CGRect(x: rw(69), y: rh(215), width: rw(238), height: rh(211))
-        bolImage.image = UIImage(named:"bolFondue")
-        bolImage.contentMode = .scaleAspectFit
-        self.view.addSubview(bolImage)
+        crepeImage.frame = CGRect(x: rw(41), y: rh(172), width: rw(294), height: rh(281))
+        crepeImage.image = UIImage(named:"bigCrepe")
+        crepeImage.contentMode = .scaleAspectFit
+        self.view.addSubview(crepeImage)
     }
     
     func setUpBottom(){
@@ -120,33 +119,29 @@ class FlavourFondue: UIViewController {
         }
     }
 
-
-    
     @objc func nextPressed(){
         if(toppingID != 0){
-            performSegue(withIdentifier:"toSubitemsFondue",sender: nil)
+            performSegue(withIdentifier:"toFlavourCrepe",sender: nil)
         }
         else{
             Utility().alertYesNo(message: "Vous n'avez pas choisi de garniture voulez-vous continuer sans?", title: "Message", control: self, yesAction: {
-                self.performSegue(withIdentifier: "toSubitemsFondue", sender: nil)
+                self.performSegue(withIdentifier: "toFlavourCrepe", sender: nil)
             }, noAction: nil, titleYes: "Oui", titleNo: "Non", style: .alert)
         }
         
     }
-
     @objc func tapSubitem(sender:UITapGestureRecognizer){
         toppingID = sender.view!.tag
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toSubitemsFondue"){
-            (segue.destination as! SubitemsFondue).infoItem = self.infoItem
-            (segue.destination as! SubitemsFondue).price = self.price
-            (segue.destination as! SubitemsFondue).priceId = self.priceId
-            (segue.destination as! SubitemsFondue).nbChoix = self.nbChoix
-            (segue.destination as! SubitemsFondue).toppingID = self.toppingID
-            
+        if(segue.identifier == "toFlavourCrepe"){
+            (segue.destination as! FlavourCrepe).infoItem = self.infoItem
+            (segue.destination as! FlavourCrepe).price = self.price
+            (segue.destination as! FlavourCrepe).priceId = self.priceId
+            (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
+            (segue.destination as! FlavourCrepe).toppingID = self.toppingID
         }
     }
+
 
 }

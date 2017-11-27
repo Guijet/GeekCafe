@@ -257,6 +257,10 @@ class MenuClass{
                 }
             }
             else{
+                if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                    self.closeMenu()
+                    return
+                }
                 Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
                     if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
                         self.closeMenu()

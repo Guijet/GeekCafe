@@ -83,7 +83,7 @@ class APIRequestCommande{
                     else{
                         price = 0
                     }
-                    arrSubItems.append(Subitem(id: subitemsData[y]["id"] as! Int, name: subitemsData[y]["name"] as! String, price: price, image: subitemsData[y]["image"] as! String))
+                    arrSubItems.append(Subitem(id: subitemsData[y]["id"] as! Int, name: subitemsData[y]["name"] as! String, price: price, image: subitemsData[y]["image"] as! String, isTopping: subitemsData[y]["is_topping"] as! Bool))
                 }
             }
             
@@ -111,7 +111,9 @@ class APIRequestCommande{
                         arrSub.append(["id":y.intValue])
                     }
                 }
-
+                if(x.toppingId != 0){
+                    arrSub.append(["id":x.toppingId])
+                }
                 let a = ["price_id":x.price_id,"subitems":arrSub] as [String : Any]
                 items.append(a)
             }

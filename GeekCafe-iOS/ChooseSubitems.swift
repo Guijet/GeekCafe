@@ -23,6 +23,7 @@ class FlavourCrepe: UIViewController {
     var subitemsIds = [NSNumber]()
     var initialPrice:Float = 0
     var isSetCancel:Bool = false
+    var toppingID:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,31 +90,34 @@ class FlavourCrepe: UIViewController {
         var newX:CGFloat = rw(33)
         if(infoItem.subitems.count > 0){
             for x in infoItem.subitems{
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
-                let image = UIImageView()
-                image.isUserInteractionEnabled = true
-                image.addGestureRecognizer(tapGesture)
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
-                image.layer.masksToBounds = false
-                image.contentMode = .scaleAspectFit
-                image.layer.cornerRadius = rw(25)
-                image.getOptimizeImageAsync(url: x.image)
-                image.tag = x.id
-                bottomScrollView.addSubview(image)
+                if(!x.isTopping){
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
+                    let image = UIImageView()
+                    image.isUserInteractionEnabled = true
+                    image.addGestureRecognizer(tapGesture)
+                    image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
+                    image.layer.masksToBounds = false
+                    image.contentMode = .scaleAspectFit
+                    image.layer.cornerRadius = rw(25)
+                    image.getOptimizeImageAsync(url: x.image)
+                    image.tag = x.id
+                    bottomScrollView.addSubview(image)
+                    
+                    let titleItem = UILabel()
+                    titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                    titleItem.numberOfLines = 2
+                    titleItem.lineBreakMode = .byTruncatingTail
+                    bottomScrollView.addSubview(titleItem)
                 
-                let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
-                titleItem.numberOfLines = 2
-                titleItem.lineBreakMode = .byTruncatingTail
-                bottomScrollView.addSubview(titleItem)
+                    if(x.price != 0){
+                        let additionnalPrice = UILabel()
+                        additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
+                        bottomScrollView.addSubview(additionnalPrice)
+                    }
                 
-                if(x.price != 0){
-                    let additionnalPrice = UILabel()
-                    additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
-                    bottomScrollView.addSubview(additionnalPrice)
+                    newX += rw(98)
                 }
                 
-                newX += rw(98)
             }
             bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
             
@@ -121,7 +125,14 @@ class FlavourCrepe: UIViewController {
     }
 
     func getItemsForOrder()->itemOrder{
-        let item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price)
+        var item:itemOrder!
+        if(toppingID != 0){
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,toppingId:toppingID)
+        }
+        else{
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price)
+        }
+        
         return item
     }
     
@@ -189,7 +200,6 @@ class FlavourCrepe: UIViewController {
     func setCancelButton(){
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(resetSubItems))
         self.navigationItem.rightBarButtonItem = cancel
-        self.navigationItem.setHidesBackButton(true, animated: false)
         isSetCancel = true
     }
     
