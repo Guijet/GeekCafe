@@ -1515,7 +1515,7 @@
 				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1533,7 +1533,7 @@
 				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";

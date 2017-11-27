@@ -16,11 +16,17 @@ class InfoHistory: UIViewController {
     var historyToPass:HistoryList!
     let backgroundImage = UIImageView()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         arrayItems = APIRequestHistory().getItemFromOrderID(id: idToPass)
-        scrollView.contentInsetAdjustmentBehavior = .automatic
+        
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .automatic
+        } else {
+        
+        }
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setNavigationTitle()
         setUpScrollView()

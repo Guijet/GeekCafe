@@ -30,6 +30,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     
     let backgroundView = BackgroundView()
     let imagePicker = UIImagePickerController()
+    var isFirstTimeLoading:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,10 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         setUpTextFields()
         setUpButtonNext()
         setUpImageProfile()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     
     func setUpPickerViewAndDatePicker(){
@@ -66,9 +71,21 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     }
     
     func setUpImageProfile(){
-        if(isImageSet){
+        if(!isImageSet){
             backgroundView.addProfilePicture(image: image,containerView:self.view)
             buttonCamera.layer.zPosition = 1
+            isImageSet = true
+        }
+        else{
+            if(isFirstTimeLoading){
+                backgroundView.addProfilePicture(image: image,containerView:self.view)
+                buttonCamera.layer.zPosition = 1
+                isImageSet = true
+                isFirstTimeLoading = false
+            }
+            else{
+                backgroundView.changeImageTop(image: self.image)
+            }
         }
     }
     
@@ -155,7 +172,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image = pickedImage
-            isImageSet = true
+            setUpImageProfile()
         }
         dismiss(animated: true) {
             //DISMISS

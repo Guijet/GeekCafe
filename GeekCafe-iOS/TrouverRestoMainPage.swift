@@ -147,6 +147,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //Focus on all markers
     //
     func focusMapToShowAllMarkers() {
+        //TODO: ERROR FOUND NIL
         let myLocation: CLLocationCoordinate2D = self.markers.first!.position
         var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
         for marker in self.markers {

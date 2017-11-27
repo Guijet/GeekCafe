@@ -39,6 +39,9 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
         setUpTextFields()
         setUpButtonNext()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
     
     @IBAction func DP(_ sender: UITextField) {
         
@@ -140,9 +143,13 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     
     
     func setUpImageProfile(){
-        if(isImageSet){
+        if(!isImageSet){
             backgroundView.addProfilePicture(image: profileImage,containerView:self.view)
             buttonCamera.layer.zPosition = 1
+            isImageSet = true
+        }
+        else{
+            backgroundView.changeImageTop(image: profileImage)
         }
     }
     ///*****************
@@ -151,7 +158,6 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImage = pickedImage
-            isImageSet = true
             setUpImageProfile()
         }
         dismiss(animated: true) {

@@ -13,6 +13,7 @@ class BackgroundView: UIView {
     fileprivate let LBL_Title = UILabel()
     fileprivate let LBL_Subtitle = UILabel()
     fileprivate let bgCard = UIView()
+    fileprivate let profileImage = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +35,7 @@ class BackgroundView: UIView {
     }
     
     func addProfilePicture(image:UIImage,containerView:UIView){
-        let profileImage = UIImageView()
+        
         profileImage.frame = CGRect(x: containerView.rw(135), y: containerView.rh(46), width: containerView.rw(106), height: containerView.rw(106))
         profileImage.image = image
         profileImage.layer.masksToBounds = true
@@ -42,6 +43,10 @@ class BackgroundView: UIView {
         profileImage.layer.borderWidth = 4
         profileImage.layer.cornerRadius = rw(106)/2
         containerView.addSubview(profileImage)
+    }
+    
+    func changeImageTop(image:UIImage){
+        profileImage.image = image
     }
     
     fileprivate func setUpTopImage(containerView:UIView,frame:CGRect){
