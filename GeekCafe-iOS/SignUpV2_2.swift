@@ -49,6 +49,13 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         self.navigationController?.navigationBar.tintColor = UIColor.white
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if(TB_Email.getIsKeyboardActive() || TB_Phone.getIsKeyboardActive() || TB_Sexe.getIsKeyboardActive()){
+            endEditing()
+        }
+    }
+    
+
     func setUpPickerViewAndDatePicker(){
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -74,13 +81,12 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         if(!isImageSet){
             backgroundView.addProfilePicture(image: image,containerView:self.view)
             buttonCamera.layer.zPosition = 1
-            isImageSet = true
+
         }
         else{
             if(isFirstTimeLoading){
                 backgroundView.addProfilePicture(image: image,containerView:self.view)
                 buttonCamera.layer.zPosition = 1
-                isImageSet = true
                 isFirstTimeLoading = false
             }
             else{
@@ -111,6 +117,9 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
             if(index == 1){
                 x.keyboardType = .numberPad
             }
+            if(index == 2){
+                x.addCustomToolBar(target: self, selector: #selector(endEditing))
+            }
             
             view.addSubview(x)
             index += 1
@@ -137,6 +146,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
     }
     
     @objc func nextPressed(){
+        endEditing()
         if(TB_Sexe.text != "" && TB_Phone.text != "" && TB_Email.text != ""){
             //VERIFIER PHONE ET EMAIL
             if(TB_Phone.text!.count == 10){
@@ -173,6 +183,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             image = pickedImage
             setUpImageProfile()
+            isImageSet = true
         }
         dismiss(animated: true) {
             //DISMISS

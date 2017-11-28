@@ -91,10 +91,6 @@ class FirstView: UIView {
         inscrireBTN.addTarget(target, action: action, for: control)
     }
     
-    func animateOut(containerView:UIView){
-        AnimationsLogin().animateItemsLeft(containerView: containerView, itemToMove: self)
-    }
-    
     func getEmailText()->String{
         return TB_Email.text!
     }

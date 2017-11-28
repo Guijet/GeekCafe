@@ -35,13 +35,13 @@ class DragAndDropBrevage: UIViewController{
         setUpTopPart()
         setUpBottom()
         fillScrollView()
-        initialPrice = LBL_Price.text!.floatValue
+        initialPrice = priceItem.floatValue
     }
     
     func setUpTopPart(){
         
         
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "\(priceItem.floatValue.twoDecimal)")
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$\(priceItem.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -183,7 +183,6 @@ class DragAndDropBrevage: UIViewController{
     func setCancelButton(){
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(resetSubItems))
         self.navigationItem.rightBarButtonItem = cancel
-        self.navigationItem.setHidesBackButton(true, animated: false)
     }
     
     @objc func resetSubItems(){
@@ -199,7 +198,7 @@ class DragAndDropBrevage: UIViewController{
         removeBarCancelButton()
         priceItem = initialPrice as NSNumber
         subitemsIds.removeAll()
-        LBL_Price.text = initialPrice.twoDecimal
+        LBL_Price.text = "$\(initialPrice.twoDecimal)"
     }
     
     func removeBarCancelButton(){
@@ -223,7 +222,7 @@ class DragAndDropBrevage: UIViewController{
                     let totalPrice = priceItem.floatValue + x.price.floatValue
                     priceItem = totalPrice as NSNumber
                     
-                    LBL_Price.text = "\(priceItem.floatValue.twoDecimal)"
+                    LBL_Price.text = "$\(priceItem.floatValue.twoDecimal)"
                 }
             }
         }

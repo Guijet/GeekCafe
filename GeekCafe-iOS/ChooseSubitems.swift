@@ -217,7 +217,7 @@ class FlavourCrepe: UIViewController {
         price = initialPrice as NSNumber
         subitemsIds.removeAll()
         nbSelectionChoix = 0
-        LBL_Price.text = initialPrice.twoDecimal
+        LBL_Price.text = "$\(initialPrice.twoDecimal)"
     }
     
     func removeBarCancelButton(){
@@ -241,7 +241,7 @@ class FlavourCrepe: UIViewController {
                     let totalPrice = price.floatValue + x.price.floatValue
                     price = totalPrice as NSNumber
                     
-                    LBL_Price.text = "\(price.floatValue.twoDecimal)"
+                    LBL_Price.text = "$\(price.floatValue.twoDecimal)"
                 }
             }
         }

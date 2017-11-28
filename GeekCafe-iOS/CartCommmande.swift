@@ -87,6 +87,13 @@ class CartCommmande: UIViewController {
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
+        else{
+            let labelNoHistory = UILabel()
+            labelNoHistory.numberOfLines = 2
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Vous avez présentement \naucun item dans votre commandes.")
+            labelNoHistory.numberOfLines = 2
+            scrollView.addSubview(labelNoHistory)
+        }
     }
     
     func setBottomView(){
@@ -97,8 +104,8 @@ class CartCommmande: UIViewController {
         view.addSubview(bottomView)
         
         let closeButton = UIButton()
-        closeButton.createCreateButton(title: "Fermer", frame: CGRect(x: rw(21), y: rh(12), width: rw(129), height: rh(40)), fontSize: rw(20), containerView: bottomView)
-        closeButton.addTarget(self, action: #selector(closeCart), for: .touchUpInside)
+        closeButton.createCreateButton(title: "Payer", frame: CGRect(x: rw(21), y: rh(12), width: rw(129), height: rh(40)), fontSize: rw(20), containerView: bottomView)
+        closeButton.addTarget(self, action: #selector(toPay), for: .touchUpInside)
         
         let priceLabel = UILabel()
         priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: "\(getTotalPrice())$")
@@ -115,8 +122,8 @@ class CartCommmande: UIViewController {
         return totalPrice.twoDecimal
     }
     
-    @objc func closeCart(){
-        _ = self.navigationController?.popViewController(animated: true)
+    @objc func toPay(){
+        performSegue(withIdentifier: "toEndOrderFromCart", sender: nil)
     }
     
 }

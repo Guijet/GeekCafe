@@ -22,9 +22,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     var TB_ConfirmPassword = CustomTextField()
     var profileImage = UIImage()
     var isImageSet:Bool = false
-    
-    var isKeyboardActive:Bool = false
-    
+
     var arrayTB = [CustomTextField]()
     let arrayPlaceholder = ["Prénom","Nom de famille","Date de naissance","Mot de passe","Confirmer le mot de passe"]
     
@@ -41,6 +39,12 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.tintColor = UIColor.white
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if(TB_Nom.getIsKeyboardActive() || TB_Birth.getIsKeyboardActive() || TB_Prenom.getIsKeyboardActive() || TB_Password.getIsKeyboardActive() || TB_ConfirmPassword.getIsKeyboardActive()){
+            endEditing()
+        }
     }
     
     @IBAction func DP(_ sender: UITextField) {
@@ -90,6 +94,9 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
         for x in arrayTB{
             
             x.setUpTB(placeholderText: arrayPlaceholder[index], containerView: self.view, xPos: rw(51), yPos: newY,superView:self.view, heightToGo: rh(216))
+            if(index == 2){
+                x.addCustomToolBar(target: self, selector: #selector(endEditing))
+            }
             if(index == 3 || index == 4){
                 x.isSecureTextEntry = true
             }
@@ -112,6 +119,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
     }
     
     @objc func nextPressed(){
+        endEditing()
         if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Birth.text != "" && TB_Password.text != "" && TB_ConfirmPassword.text != ""){
             if(TB_Password.text!.count >= 7){
                 if(TB_ConfirmPassword.text == TB_Password.text){
@@ -146,7 +154,6 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
         if(!isImageSet){
             backgroundView.addProfilePicture(image: profileImage,containerView:self.view)
             buttonCamera.layer.zPosition = 1
-            isImageSet = true
         }
         else{
             backgroundView.changeImageTop(image: profileImage)
@@ -159,6 +166,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImage = pickedImage
             setUpImageProfile()
+            isImageSet = true
         }
         dismiss(animated: true) {
             //DISMISS

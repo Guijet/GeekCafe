@@ -42,6 +42,7 @@ class CommandeMainPage: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationItem.setHidesBackButton(false, animated:false)
     }
 
     func setUpContainerView(){

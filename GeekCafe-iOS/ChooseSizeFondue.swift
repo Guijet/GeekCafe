@@ -57,7 +57,7 @@ class ChooseSizeFondue: UIViewController {
     
     func setUpTopPart(){
         
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: String(format: "$%.2f", infoItem.prices[1].price.floatValue))
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:  "$\(infoItem.prices[1].price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let BTN_HeaderLeft = UIButton()
@@ -133,7 +133,7 @@ class ChooseSizeFondue: UIViewController {
     
     @objc func buttonTopPressed(sender:UIButton){
         priceId = sender.tag as NSNumber
-        LBL_Price.text = getPriceByID(id_price: sender.tag).floatValue.twoDecimal
+        LBL_Price.text = "$\(getPriceByID(id_price: sender.tag).floatValue.twoDecimal)"
         
         resetButtonStateTop()
         resetDashedViews()

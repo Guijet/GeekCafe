@@ -31,7 +31,6 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         self.menu.setUpMenu(view: self.view)
-
         self.setUpContainerView()
         self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Trouver un restaurant")
         DispatchQueue.global().async {

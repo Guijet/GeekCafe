@@ -382,16 +382,17 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         buildAddCardView()
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
-            self.containerViewCard.center.y -= self.rh(370)
+            self.containerViewCard.center.y -= self.rh(600)
         },completion: { _ in
             self.view.isUserInteractionEnabled = true
+            self.TB_CardNumber.becomeFirstResponder()
         })
     }
     
     @objc func animateBottomClose(){
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
-            self.containerViewCard.center.y += self.rh(370)
+            self.containerViewCard.center.y += self.rh(600)
         },completion: { _ in
             self.view.isUserInteractionEnabled = true
             self.containerViewCard.removeFromSuperview()

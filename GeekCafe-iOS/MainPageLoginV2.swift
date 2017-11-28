@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 
-class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
+class MainPageLoginV2: UIViewController{
     
     //Facebook button
     //let fbButton = FBSDKLoginButton()
@@ -37,6 +37,12 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
             else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
                 autoLogin(token: token)
             }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if(firstView.TB_Email.getIsKeyboardActive() || firstView.TB_Pass.getIsKeyboardActive()){
+            endEditing()
         }
     }
     //
@@ -113,16 +119,37 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
                 Utility().alert(message: "Error: \(String(describing: error))", title: "Erreur", control: self)
             }
             else{
-                if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
-                    if(APIRequestLogin().viewUser()){
-                        Global.global.isFbUser = true
-                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                            UIApplication.shared.keyWindow?.rootViewController = main
-                        }, completion: nil)
+                self.loading.buildViewAndStartAnimate(view: self.view)
+                DispatchQueue.global(qos:.background).async {
+                    if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
+                        if(APIRequestLogin().viewUser()){
+                            Global.global.isFbUser = true
+                            Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                            DispatchQueue.main.async {
+                                self.loading.stopAnimatingAndRemove(view: self.view)
+                                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                    UIApplication.shared.keyWindow?.rootViewController = main
+                                }, completion: nil)
+                            }
+                            
+                        }
+                        else{
+                            DispatchQueue.main.async {
+                                self.loading.stopAnimatingAndRemove(view: self.view)
+                                Utility().alert(message: "Erreur lors de la connexion à votre compte, réassayer plus tard.", title: "Message", control: self)
+                            }
+                        }
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            Utility().alert(message: "Erreur lors de la connexion à votre compte, réassayer plus tard.", title: "Message", control: self)
+                        }
                     }
                 }
+                
             }
         })
     }
@@ -133,35 +160,22 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
         fbLoginManager.logIn(withReadPermissions: ["email"], from: self) { (result, error) -> Void in
             if (error == nil){
                 let fbloginresult : FBSDKLoginManagerLoginResult = result!
-                if(fbloginresult.grantedPermissions.contains("email"))
-                {
-                    self.fetchProfile()
+                if(fbloginresult.grantedPermissions != nil){
+                    if(fbloginresult.grantedPermissions.contains("email"))
+                    {
+                        self.fetchProfile()
+                    }
+                    else{
+                        return
+                    }
+                }
+                else{
+                    return
                 }
             }
         }
     }
     
-    
-    //
-    //FB Did logout with fb button
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("Logged Out")
-    }
-    
-   
-    //
-    //FB did login with fb button
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if error != nil{
-            print(error)
-            return
-        }
-        if result.isCancelled{
-            print("Cancelled")
-        }else{
-            fetchProfile()
-        }
-    }
     
     //
     //Forgot passsword pressed
@@ -232,9 +246,9 @@ class MainPageLoginV2: UIViewController,FBSDKLoginButtonDelegate{
     }
     
     @objc func connectPressed(){
-        self.endEditing()
-        self.loading.buildViewAndStartAnimate(view: self.view)
+        endEditing()
         if(firstView.getEmailText() != "" && firstView.getPasswordText() != ""){
+            self.loading.buildViewAndStartAnimate(view: self.view)
             DispatchQueue.global(qos:.background).async {
                 if(APIRequestLogin().login(password: self.firstView.getPasswordText(), email: self.firstView.getEmailText())){
                     if(APIRequestLogin().viewUser()){

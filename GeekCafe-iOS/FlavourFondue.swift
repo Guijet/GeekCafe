@@ -36,7 +36,7 @@ class FlavourFondue: UIViewController {
     func setUpTopPart(){
         
         let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:price.floatValue.twoDecimal)
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:"$\(price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()

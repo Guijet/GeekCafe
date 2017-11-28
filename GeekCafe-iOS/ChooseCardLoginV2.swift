@@ -252,8 +252,15 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
                 try stripCard.validateReturningError()
                 STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
                     if error == nil {
-                        
                         if(APIRequestLogin().createAcount(first_name: self.name, last_name: self.lastname, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
+                            if(self.isImageSet){
+                                if(APIRequestProfile().uploadProfileImage(base64: APIRequestProfile().imageToBase64(image: self.image))){
+                                    print("Update image successfully")
+                                }
+                                else{
+                                    print("Error while uploading image")
+                                }
+                            }
                             if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
                                 DispatchQueue.main.async {
                                     self.load.stopAnimatingAndRemove(view: self.view)
@@ -381,6 +388,12 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
                     }, completion: nil)
                 }
             }
+            else{
+                DispatchQueue.main.async {
+                    self.loading.stopAnimatingAndRemove(view: self.view)
+                    Utility().alert(message: "Erreur lors de la création de compte.", title: "Message", control: self)
+                }
+            }
         }
         
         
@@ -394,7 +407,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toCardInfo"){
-//            //User info
+            //User info
             (segue.destination as! ConfirmCardLoginV2).nameS = self.name
             (segue.destination as! ConfirmCardLoginV2).lastname = self.lastname
             (segue.destination as! ConfirmCardLoginV2).birthdate = self.birthdate

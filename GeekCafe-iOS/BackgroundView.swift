@@ -30,9 +30,7 @@ class BackgroundView: UIView {
         buildCard(containerView: containerView, frameCard: frameCard)
     }
     
-    func resizeCard(containerView:UIView,newHeight:CGFloat,newY:CGFloat){
-        AnimationsLogin().resizeCard(containerView: containerView, cardView: bgCard, newHeight: newHeight, newYpos: newY)
-    }
+
     
     func addProfilePicture(image:UIImage,containerView:UIView){
         

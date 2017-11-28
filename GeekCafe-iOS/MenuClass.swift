@@ -219,7 +219,198 @@ class MenuClass{
     //When an items is selected
     @objc fileprivate func menuSelected(sender:UIButton){
     
-        if(sender.tag == 1){
+        if(UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage" && sender.tag != 2){
+            Utility().alertYesNo(message: "Voulez vous vraiment quitter votre commande. Vous n'aller pas pouvoir conserver les items dans votre panier.", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, yesAction: {
+                if(sender.tag == 1){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "DashMain"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                    
+                else if(sender.tag == 2){
+                    
+                    if(Global.global.userInfo.cards.count > 0){
+                        if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                            self.closeMenu()
+                            return
+                        }
+                        self.closeMenu()
+                        DispatchQueue.global().async {
+                            while self.isOpen{usleep(500)}
+                            DispatchQueue.main.async {
+                                let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                                let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                    UIApplication.shared.keyWindow?.rootViewController = main
+                                }, completion: nil)
+                            }
+                        }
+                    }
+                    else{
+                        if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                            self.closeMenu()
+                            return
+                        }
+                        Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
+                                self.closeMenu()
+                                return
+                            }
+                            self.closeMenu()
+                            DispatchQueue.global().async {
+                                while self.isOpen{usleep(500)}
+                                DispatchQueue.main.async {
+                                    let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                                    let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                        UIApplication.shared.keyWindow?.rootViewController = main
+                                    }, completion: nil)
+                                }
+                            }
+                        }, action2: {
+                            if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
+                                self.closeMenu()
+                                return
+                            }
+                            self.closeMenu()
+                            DispatchQueue.global().async {
+                                while self.isOpen{usleep(500)}
+                                DispatchQueue.main.async {
+                                    let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                                    let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                        UIApplication.shared.keyWindow?.rootViewController = main
+                                    }, completion: nil)
+                                }
+                            }
+                            
+                        }, style: UIAlertControllerStyle.alert)
+                    }
+                    
+                }
+                else if(sender.tag == 3){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "HistoriqueMainPage"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Historique", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "HistoriqueMainPage")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                else if(sender.tag == 4){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "AbonnementMain"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                else if(sender.tag == 5){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "FindRestoMainPage"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "TrouverRestau", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "FindRestoMainPage")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                else if(sender.tag == 6){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "PromotionMainPage"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                    
+                else if(sender.tag == 7){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+                    
+                else if(sender.tag == 8){
+                    if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "ProfileMainPage"{
+                        self.closeMenu()
+                        return
+                    }
+                    self.closeMenu()
+                    DispatchQueue.global().async {
+                        while self.isOpen{usleep(500)}
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+                            let main = storyboard.instantiateViewController(withIdentifier: "ProfileMainPage")
+                            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                                UIApplication.shared.keyWindow?.rootViewController = main
+                            }, completion: nil)
+                        }
+                    }
+                }
+            
+            }, noAction: {
+                self.closeMenu()
+                return
+            }, titleYes: "Oui", titleNo: "Non", style: .alert)
+        }
+        else if(sender.tag == 1){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "DashMain"{
                 closeMenu()
                 return
@@ -237,7 +428,7 @@ class MenuClass{
             }
         }
         
-        if(sender.tag == 2){
+        else if(sender.tag == 2){
             
             if(Global.global.userInfo.cards.count > 0){
                 if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
@@ -298,7 +489,7 @@ class MenuClass{
             }
             
         }
-        if(sender.tag == 3){
+        else if(sender.tag == 3){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "HistoriqueMainPage"{
                 closeMenu()
                 return
@@ -315,7 +506,7 @@ class MenuClass{
                 }
             }
         }
-        if(sender.tag == 4){
+        else if(sender.tag == 4){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "AbonnementMain"{
                 closeMenu()
                 return
@@ -332,7 +523,7 @@ class MenuClass{
                 }
             }
         }
-        if(sender.tag == 5){
+        else if(sender.tag == 5){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "FindRestoMainPage"{
                 closeMenu()
                 return
@@ -349,7 +540,7 @@ class MenuClass{
                 }
             }
         }
-        if(sender.tag == 6){
+        else if(sender.tag == 6){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "PromotionMainPage"{
                 closeMenu()
                 return
@@ -367,7 +558,7 @@ class MenuClass{
             }
         }
         
-        if(sender.tag == 7){
+        else if(sender.tag == 7){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "MainCredit"{
                 closeMenu()
                 return
@@ -385,7 +576,7 @@ class MenuClass{
             }
         }
         
-        if(sender.tag == 8){
+        else if(sender.tag == 8){
             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "ProfileMainPage"{
                 closeMenu()
                 return

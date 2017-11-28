@@ -225,7 +225,7 @@ class APIRequestCommande{
     //GET JSON DATE WITH DICTIONNARY OF ORDER
     //
     //
-    func buildJsonOrder(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->Data{
+    func buildJsonOrder(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int,points:Int)->Data{
         
         var items = [[String:Any]]()
         if(arrayItems.count > 0){
@@ -244,7 +244,7 @@ class APIRequestCommande{
             }
         }
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: ["card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
+        let jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
         return jsonData!
     }
     
@@ -254,7 +254,7 @@ class APIRequestCommande{
     //ORDER
     //
     //
-    func getOrderResult(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->[String:Any]{
+    func getOrderResult(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int,points:Int)->[String:Any]{
         
         var finish = false
         var result: [String: Any]!
@@ -266,7 +266,7 @@ class APIRequestCommande{
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("Bearer \(Global.global.userInfo.token)", forHTTPHeaderField: "Authorization")
             
-            request.httpBody = self.buildJsonOrder(arrayItems: arrayItems,card_pay: card_pay,branch_id: branch_id, counter_id: counter_id)
+            request.httpBody = self.buildJsonOrder(arrayItems: arrayItems,card_pay: card_pay,branch_id: branch_id, counter_id: counter_id, points: points)
         
             
             let config = URLSessionConfiguration.default
@@ -315,10 +315,10 @@ class APIRequestCommande{
         return result
     }
     
-    func order(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int)->Bool{
+    func order(arrayItems:[itemOrder],card_pay:Bool,branch_id:Int,counter_id:Int,points:Int)->Bool{
         var worked:Bool = false
         
-        let result = getOrderResult(arrayItems: arrayItems, card_pay: card_pay, branch_id: branch_id, counter_id: counter_id)
+        let result = getOrderResult(arrayItems: arrayItems, card_pay: card_pay, branch_id: branch_id, counter_id: counter_id, points: points)
         if let _ = result["status"] as? String{
             worked = true
         }

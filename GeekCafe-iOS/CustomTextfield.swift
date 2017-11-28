@@ -62,22 +62,22 @@ class CustomTextField:UITextField,UITextFieldDelegate{
     }
    
     fileprivate func animateLabel(){
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+    
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveLinear, animations: {
             self.placeholderLabel.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
             self.placeholderLabel.frame.origin = CGPoint(x:self.frame.minX,y:self.frame.minY - 12)
         } ,completion:{ _ in
-            print("DONE")
+    
         })
     }
     
     func resetLabelInPlace(){
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveLinear, animations: {
             self.placeholderLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.placeholderLabel.frame.origin = CGPoint(x:self.frame.minX,y:self.frame.minY + 12)
         } ,completion:{ _ in
-            print("DONE")
+
         })
     }
     
@@ -120,6 +120,22 @@ class CustomTextField:UITextField,UITextFieldDelegate{
         }, completion: { _ in
             self.superView.isUserInteractionEnabled = true
         })
+    }
+    
+    func addCustomToolBar(target:UIViewController,selector:Selector){
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.tintColor = Utility().hexStringToUIColor(hex: "#666666")
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: target, action: selector)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        self.inputAccessoryView = toolBar
+    }
+    
+    func getIsKeyboardActive()->Bool{
+        return isKeyboardActive
     }
     
     func getAllItems()->[UIView]{

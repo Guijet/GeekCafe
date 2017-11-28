@@ -11,7 +11,7 @@ import UIKit
 class EndOrder: UIViewController,UITextFieldDelegate{
 
     let backgroundImage = UIImageView()
-    let scrollView = UIScrollView()
+    let scrollView  = UIScrollView()
     var arrayItems = [itemOrder]()
     let bottomView = UIView()
     
@@ -22,18 +22,22 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     let promoContainer = UIView()
     let promoTitle = UILabel()
     let TB_Promo = UITextField()
+    let TB_Points = UITextField()
     let HR = UIView()
     let X_Button = UIButton()
     let BTN_Apply = UIButton()
+    let BTN_ApplyPoints = UIButton()
     var arrAlphaAnimation:[UIView] = [UIView]()
+    var isPointsUsed:Bool = false
+    var numberOfPointsUsed:Int = 0
     
     //Keyboards
     var isKeyboardActive:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Commande"
+        self.navigationItem.setHidesBackButton(true, animated:false)
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
         fillScrollView()
@@ -41,9 +45,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     func setUpScrollView(){
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: ((view.frame.height) - rh(75)))
+        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(543))
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.layer.masksToBounds = false
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
     }
@@ -133,8 +136,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             self.bottomView.frame.size.height = height
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveLinear, animations: {
                 self.bottomView.frame.origin.y = self.view.frame.height - height
+                self.scrollView.frame.size.height = self.view.frame.height - self.bottomView.frame.height
             }, completion: {  _ in
-                self.scrollView.frame.size.height = ((self.view.frame.height) - self.bottomView.frame.height)
                 self.view.isUserInteractionEnabled = true
             })
         })
@@ -244,7 +247,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         Utility().createHR(x: 0, y: 0, width: view.frame.width, view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
         Utility().createHR(x: rw(14), y: rh(53), width: rw(361), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
         Utility().createHR(x: rw(14), y: rh(141), width: rw(361), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
-        Utility().createVerticalHR(x: rw(265), y: rh(6.5), height: rh(41), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        
         
         let LBL_CartePaiement = UILabel()
         LBL_CartePaiement.createLabel(frame: CGRect(x:rw(14),y:rh(10.5),width:rw(76),height:rh(32)), textColor: Utility().hexStringToUIColor(hex: "#ABABAD"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "CARTE DE PAIEMENT".uppercased())
@@ -255,11 +258,11 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         if(Global.global.userInfo.cards.count > 0){
 
             let LBL_Provider = UILabel()
-            LBL_Provider.createLabel(frame: CGRect(x:rw(99),y:rh(8.5),width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "\(Global.global.userInfo.cards[0].brand)")
+            LBL_Provider.createLabel(frame: CGRect(x:rw(99),y:rh(8.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "\(Global.global.userInfo.cards[0].brand)")
             containerMainView.addSubview(LBL_Provider)
         
             let LBL_CardNumber = UILabel()
-            LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(160),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• \(Global.global.userInfo.cards[0].last4))")
+            LBL_CardNumber.createLabel(frame: CGRect(x:rw(99),y:LBL_Provider.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "(•••• \(Global.global.userInfo.cards[0].last4))")
             containerMainView.addSubview(LBL_CardNumber)
         }
         else{
@@ -271,11 +274,27 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         let LBL_AddPromo = UILabel()
         LBL_AddPromo.isUserInteractionEnabled = true
-        LBL_AddPromo.createLabel(frame: CGRect(x:rw(285),y:rh(10.5),width:rw(76),height:rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: "APPLIQUEZ PROMOTION".uppercased())
+        LBL_AddPromo.createLabel(frame: CGRect(x:rw(297),y:rh(10.5),width:rw(76),height:rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(10), textAignment: .center, text: "APPLIQUEZ PROMOTION".uppercased())
         LBL_AddPromo.numberOfLines = 2
         LBL_AddPromo.lineBreakMode = .byTruncatingHead
         LBL_AddPromo.addGestureRecognizer(tapAddPromo)
         containerMainView.addSubview(LBL_AddPromo)
+        
+        Utility().createVerticalHR(x: rw(297), y: rh(6.5), height: rh(41), view: containerMainView, color: Utility().hexStringToUIColor(hex: "#DEDEDE"))
+        
+        
+        
+        if(Global.global.userInfo.points > 0){
+            let tapPoints = UITapGestureRecognizer(target: self, action: #selector(usePoints))
+            let LBL_AddPoints = UILabel()
+            LBL_AddPoints.isUserInteractionEnabled = true
+            LBL_AddPoints.createLabel(frame: CGRect(x:rw(220),y:rh(10.5),width:rw(76),height:rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(10), textAignment: .center, text: "UTILISER DES POINTS".uppercased())
+            LBL_AddPoints.numberOfLines = 2
+            LBL_AddPoints.lineBreakMode = .byTruncatingHead
+            LBL_AddPoints.addGestureRecognizer(tapPoints)
+            containerMainView.addSubview(LBL_AddPoints)
+        }
+        
         
         //Design labels
         let dSubTotal = UILabel()
@@ -398,7 +417,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     @objc func payInStore(){
-        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1, counter_id: 1)){
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1, counter_id: 1,points:numberOfPointsUsed)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
         else{
@@ -414,7 +433,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     @objc func payPressed(sender:UIButton){
         //REQUEST TO ORDER
         if(Global.global.userInfo.cards.count > 0){
-            if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1)){
+            if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed)){
                 performSegue(withIdentifier: "toConfirmation", sender: nil)
             }
             else{
@@ -549,7 +568,87 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     @objc func endEditing(){
         self.promoContainer.endEditing(true)
     }
-    
+
+    @objc func usePoints(){
+        buildPointsView()
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+            for x in self.arrAlphaAnimation{
+                x.alpha = 1
+            }
+        }, completion:{ _ in
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+
+    func buildPointsView(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        arrAlphaAnimation = [promoContainer,promoTitle,TB_Points,HR,X_Button,BTN_ApplyPoints]
+        
+        promoContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height + 64)
+        promoContainer.addGestureRecognizer(tapGesture)
+        promoContainer.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        promoContainer.alpha = 0
+        
+        
+        promoTitle.createLabel(frame: CGRect(x:0,y:rh(181),width:view.frame.width,height:rh(70)), textColor: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Light", fontSize: rw(25), textAignment: .center, text: "Vous avez présentement \(Global.global.userInfo.points) points. \nCombien voulez vous en utiliser?")
+        promoTitle.numberOfLines = 2
+        promoTitle.lineBreakMode = .byTruncatingTail
+        promoTitle.alpha = 0
+        promoContainer.addSubview(promoTitle)
+        
+        TB_Points.delegate = self
+        TB_Points.autocorrectionType = .no
+        TB_Points.keyboardType = .numberPad
+        TB_Points.frame = CGRect(x: rw(25), y: rh(280), width: rw(315), height: rh(48))
+        TB_Points.placeholder = "Entrez ici"
+        TB_Points.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Hairline", fontSize: rw(40.0))
+        TB_Points.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
+        TB_Points.font = UIFont(name: "Lato-Hairline", size: rw(48))
+        TB_Points.textAlignment = .left
+        TB_Points.alpha = 0
+        promoContainer.addSubview(TB_Points)
+        
+        HR.frame = CGRect(x: rw(25), y: TB_Points.frame.maxY + rh(6), width: rw(315), height: 1)
+        HR.backgroundColor = Utility().hexStringToUIColor(hex: "#979797")
+        HR.alpha = 0
+        promoContainer.addSubview(HR)
+        
+        X_Button.frame = CGRect(x: rw(310), y: rh(25), width: rw(40), height: rw(40))
+        X_Button.setImage(UIImage(named:"letter-x"), for: .normal)
+        X_Button.addTarget(self, action: #selector(xPressed), for: .touchUpInside)
+        X_Button.layer.zPosition = 1
+        X_Button.imageEdgeInsets = UIEdgeInsets(top: rw(6.5), left: rw(6.5), bottom: rw(6.5), right: rw(6.5))
+        X_Button.alpha = 0
+        promoContainer.addSubview(X_Button)
+        
+        //y to 592
+        BTN_ApplyPoints.createCreateButton(title: "Appliquer", frame: CGRect(x:rw(88),y:rh(330) + 64,width:rw(202),height:rh(50)), fontSize: rw(20), containerView: promoContainer)
+        BTN_ApplyPoints.addTarget(self, action: #selector(pointsAdded), for: .touchUpInside)
+        
+        UIApplication.shared.keyWindow?.addSubview(promoContainer)
+    }
+
+    @objc func pointsAdded(){
+        self.promoContainer.removeFromSuperview()
+        if(TB_Points.text != ""){
+            if(Int(TB_Points.text!)! <= Global.global.userInfo.points){
+                Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
+                isPointsUsed = true
+                numberOfPointsUsed = Int(TB_Points.text!)!
+                TB_Points.text = ""
+            }
+            else{
+                Utility().alert(message: "Vous n'avez pas assez de points.", title: "Message", control: self)
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez entrer une valeur de points", title: "Message", control: self)
+        }
+
+        
+    }
+        
     func fillArrayPrices()->[NSNumber]{
         var arrayPrices:[NSNumber] = [NSNumber]()
         

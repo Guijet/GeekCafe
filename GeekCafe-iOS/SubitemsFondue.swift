@@ -36,10 +36,11 @@ class SubitemsFondue: UIViewController {
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+        initialPrice = price.floatValue
     }
     
     func setUpTopPart(){
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: price.floatValue.twoDecimal)
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$\(price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -215,7 +216,7 @@ class SubitemsFondue: UIViewController {
         price = initialPrice as NSNumber
         subitemsIds.removeAll()
         nbSelectionChoix = 0
-        LBL_Price.text = initialPrice.twoDecimal
+        LBL_Price.text = "$\(initialPrice.twoDecimal)"
     }
     
     func removeBarCancelButton(){
@@ -239,7 +240,7 @@ class SubitemsFondue: UIViewController {
                     let totalPrice = price.floatValue + x.price.floatValue
                     price = totalPrice as NSNumber
                     
-                    LBL_Price.text = "\(price.floatValue.twoDecimal)"
+                    LBL_Price.text = "$\(price.floatValue.twoDecimal)"
                 }
             }
         }
