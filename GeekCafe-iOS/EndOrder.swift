@@ -42,6 +42,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         setUpScrollView()
         fillScrollView()
         setBottomView()
+        verifyPrice()
     }
     
     func setUpScrollView(){
@@ -657,5 +658,12 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
         
         return arrayPrices
+    }
+    
+
+    //VERIFY PRICES
+    func verifyPrice(){
+        let json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: numberOfPointsUsed)
+        print(json)
     }
 }
