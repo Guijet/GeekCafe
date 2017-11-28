@@ -35,14 +35,14 @@ class CommandeMainPage: UIViewController {
         backgroundGeek.setUpBackgroundImage(containerView: self.containerView)
         setUpScrollView()
         fillScrollView()
-        createButton()
+        
     }
-    
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationItem.setHidesBackButton(false, animated:false)
+        if(Global.global.itemsOrder.count > 0){
+            createButton()
+        }
     }
 
     func setUpContainerView(){

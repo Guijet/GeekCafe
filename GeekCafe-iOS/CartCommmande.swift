@@ -8,13 +8,18 @@
 
 import UIKit
 
-class CartCommmande: UIViewController {
+class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
 
+    private var rightButtonDelete = UIButton()
+    private var isOpenLeft:Bool = false
+    private var isOpenRight:Bool = false
     let backgroundImage = UIImageView()
     let scrollView = UIScrollView()
     var arrayItems = [itemOrder]()
     var arrayItem = [Item]()
     var checkPrices:TotalPrice!
+    var tagSelectedSwipe = -1
+    var lastElementY : CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +27,7 @@ class CartCommmande: UIViewController {
         setNavigationTitle()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
+        setUpBScrollableButtons()
         fillScrollView()
         setBottomView()
     }
@@ -47,17 +53,42 @@ class CartCommmande: UIViewController {
         view.addSubview(scrollView)
     }
     
+
+    // Instantiate the delete button when swipe
+    private func setUpBScrollableButtons(){
+        rightButtonDelete.backgroundColor = UIColor.clear
+        rightButtonDelete.isHidden = true
+        rightButtonDelete.setImage(UIImage(named:"removeButton"), for: .normal)
+        rightButtonDelete.imageEdgeInsets = UIEdgeInsets(top: 22, left: 20, bottom: 22, right: 20)
+        rightButtonDelete.addTarget(self, action: #selector(deleteRow), for: .touchUpInside)
+        rightButtonDelete.layer.zPosition = 0
+        rightButtonDelete.tag = -1
+    }
+
     func fillScrollView(){
         var newY:CGFloat = rh(5)
         var index = 0
         if(Global.global.itemsOrder.count > 0){
+            scrollView.addSubview(rightButtonDelete)
             for x in Global.global.itemsOrder{
                 
+                let leftSwipe = UISwipeGestureRecognizer(target: self, action:#selector(swipe(sender:)))
+                leftSwipe.delegate = self
+                leftSwipe.direction = .left;
+                
+            
+                let rightSwipe = UISwipeGestureRecognizer(target: self, action:#selector(swipe(sender:)))
+                rightSwipe.delegate = self
+                rightSwipe.direction = .right;
+                
+
                 let containerView = UIView()
                 containerView.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: 72)
                 containerView.backgroundColor = UIColor.clear
                 containerView.tag = index
                 scrollView.addSubview(containerView)
+                containerView.addGestureRecognizer(leftSwipe)
+                containerView.addGestureRecognizer(rightSwipe)
                 
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
@@ -163,7 +194,115 @@ class CartCommmande: UIViewController {
         return totalPrice
     }
     
+    @objc private func swipe(sender:AnyObject)
+    {
+        let swipeGesture:UISwipeGestureRecognizer = sender as! UISwipeGestureRecognizer
+        if(tagSelectedSwipe != -1 && tagSelectedSwipe != swipeGesture.view!.tag) { return }
+        if(swipeGesture.direction == .left)
+        {
+            if(!isOpenLeft && !isOpenRight){
+                moveAllLeft(contentView: swipeGesture.view!)
+                isOpenRight = true
+            }
+            else if(isOpenLeft){
+                moveAllLeft(contentView: swipeGesture.view!)
+                isOpenRight = false
+                isOpenLeft = false
+            }
+        }
+        else if(swipeGesture.direction == .right)
+        {
+            if(isOpenRight){
+                moveAllRight(contentView: swipeGesture.view!)
+                isOpenRight = false
+                isOpenLeft = false
+                
+            }
+        }
+    }
+
+    private func moveAllLeft(contentView : UIView){
+        let widthScreen = UIScreen.main.bounds.width
+        rightButtonDelete.frame = CGRect(x: widthScreen, y: contentView.frame.minY, width: 70, height:  contentView.frame.height)
+        self.rightButtonDelete.isHidden = false
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            contentView.center.x -= 70
+            
+            self.rightButtonDelete.center.x -= 70
+        }, completion: nil)
+        tagSelectedSwipe = contentView.tag
+        
+    }
     
+    private func moveAllRight(contentView : UIView){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            for x in contentView.subviews{
+                x.center.x += 70
+            }
+            
+            self.rightButtonDelete.center.x += 70
+        }, completion: { _ in
+            self.rightButtonDelete.isHidden = true
+        })
+        tagSelectedSwipe = -1
+    }
+    
+    @objc func deleteRow(){
+        let view = getView(withTag: tagSelectedSwipe)
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            view.center.x -= self.view.frame.width
+            self.rightButtonDelete.center.x -= self.view.frame.width
+        }, completion: { _ in
+            self.rightButtonDelete.isHidden = true
+            view.removeFromSuperview()
+        })
+        moveUpAllViewAfter(tag: tagSelectedSwipe)
+        Global.global.itemsOrder.remove(at: tagSelectedSwipe)
+        tagSelectedSwipe = -1
+        if(Global.global.itemsOrder.count <= 0){
+
+        }
+    }
+
+    func getView(withTag: Int) -> UIView {
+        for x in self.scrollView.subviews {
+            if(x.tag == withTag) {
+                return x
+            }
+        }
+        return UIView()
+    }
+    
+    func moveUpAllViewAfter(tag: Int) {
+        var allViewToAnimate = [UIView]()
+        for x in self.scrollView.subviews {
+            if(x.tag > tag) {
+                allViewToAnimate.append(x)
+                x.tag -= 1
+            }
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            for x in allViewToAnimate{
+                x.center.y -= allViewToAnimate[0].frame.height
+            }
+        }, completion: { _ in
+            self.rightButtonDelete.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            var bigger: CGFloat = 0
+            for x in self.scrollView.subviews {
+                if(x.frame.maxY > bigger && !(x is UIImageView)) {
+                    bigger = x.frame.maxY
+                    print(x.classForCoder)
+                }
+            }
+            
+            self.scrollView.contentSize = CGSize(width: 0, height: bigger + 10 + 64)
+        })
+        isOpenLeft = false
+        isOpenRight = false
+        
+    }
     
     @objc func toPay(){
         performSegue(withIdentifier: "toEndOrderFromCart", sender: nil)
