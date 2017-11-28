@@ -14,9 +14,11 @@ class CartCommmande: UIViewController {
     let scrollView = UIScrollView()
     var arrayItems = [itemOrder]()
     var arrayItem = [Item]()
+    var checkPrices:TotalPrice!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkPrices = verifyPrice()
         setNavigationTitle()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
@@ -47,12 +49,14 @@ class CartCommmande: UIViewController {
     
     func fillScrollView(){
         var newY:CGFloat = rh(5)
+        var index = 0
         if(Global.global.itemsOrder.count > 0){
             for x in Global.global.itemsOrder{
                 
                 let containerView = UIView()
                 containerView.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: 72)
                 containerView.backgroundColor = UIColor.clear
+                containerView.tag = index
                 scrollView.addSubview(containerView)
                 
                 let imageItem = UIImageView()
@@ -84,6 +88,7 @@ class CartCommmande: UIViewController {
                 type.text = "\(x.name)"
                 containerView.addSubview(type)
                 newY += (72 + rh(10))
+                index += 1
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
@@ -108,19 +113,57 @@ class CartCommmande: UIViewController {
         closeButton.addTarget(self, action: #selector(toPay), for: .touchUpInside)
         
         let priceLabel = UILabel()
-        priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: "\(getTotalPrice())$")
+        priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: "\(checkPrices.subtotal.floatValue.twoDecimal)$")
         bottomView.addSubview(priceLabel)
     }
+
+    //HERE
+    //VERIFY PRICES
+    func verifyPrice()->TotalPrice{
+        var totalPrice:TotalPrice!
+        var error:Bool!
+        var errorMessage:String = ""
+        var total:NSNumber!
+        var subtotal:NSNumber!
+        var priceSaved:NSNumber!
     
-    func getTotalPrice()->String{
-        var totalPrice:Float = 0
-        if(Global.global.itemsOrder.count > 0){
-            for x in Global.global.itemsOrder{
-                totalPrice += x.price.floatValue
-            }
+        let json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: 0)
+        if let errorS = json["error"] as? String{
+            error = true
+            errorMessage = errorS
         }
-        return totalPrice.twoDecimal
+        else{
+            error = false
+        }
+        if let order = json["order"] as? [String:Any]{
+            if let reducedAmountN = order["reduced"] as? NSNumber{
+                priceSaved = reducedAmountN
+            }
+            else{
+                priceSaved = 0
+            }
+            if let subtotalN = order["subtotal"] as? NSNumber{
+                subtotal = subtotalN
+            }
+            else{
+                subtotal = 0
+            }
+            if let totalN = order["total"] as? NSNumber{
+                total = totalN
+            }
+            else{
+                total = 0
+            }
+            
+            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved)
+        }
+        else{
+            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage)
+        }
+        return totalPrice
     }
+    
+    
     
     @objc func toPay(){
         performSegue(withIdentifier: "toEndOrderFromCart", sender: nil)

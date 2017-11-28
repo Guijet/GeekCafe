@@ -658,6 +658,11 @@ class MenuClass{
             view.isUserInteractionEnabled = true
         })
     }
+    
+    func updatePointsValue(){
+        LBL_Money.text = "\(Global.global.userInfo.points)"
+    }
+    
 
     //
     //RATIO UI FUNCTION FOR VIEW PASSED

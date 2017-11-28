@@ -8,45 +8,80 @@
 
 import UIKit
 
+struct TotalPrice{
+    init(error:Bool,subtotal:NSNumber,total:NSNumber,priceSaved:NSNumber,message:String = ""){
+        self.error = error
+        self.subtotal = subtotal
+        self.total = total
+        self.priceSaved = priceSaved
+        self.message = message
+    }
+    var error:Bool
+    var subtotal:NSNumber
+    var total:NSNumber
+    var priceSaved:NSNumber
+    var message:String
+}
+
 class EndOrder: UIViewController,UITextFieldDelegate{
 
-    let backgroundImage = UIImageView()
-    let scrollView  = UIScrollView()
-    var arrayItems = [itemOrder]()
-    let bottomView = UIView()
+    fileprivate let backgroundImage = UIImageView()
+    fileprivate let scrollView  = UIScrollView()
+    fileprivate var arrayItems = [itemOrder]()
+    fileprivate let bottomView = UIView()
+    
     
     //BOOL IF USER HAS ENOUGH CREDIT
-    var isCredit:Bool = false
-    
+    fileprivate var isCredit:Bool = false
+     
     //Promo view elements
-    let promoContainer = UIView()
-    let promoTitle = UILabel()
-    let TB_Promo = UITextField()
-    let TB_Points = UITextField()
-    let HR = UIView()
-    let X_Button = UIButton()
-    let BTN_Apply = UIButton()
-    let BTN_ApplyPoints = UIButton()
-    var arrAlphaAnimation:[UIView] = [UIView]()
-    var isPointsUsed:Bool = false
-    var numberOfPointsUsed:Int = 0
+    fileprivate let promoContainer = UIView()
+    fileprivate let promoTitle = UILabel()
+    fileprivate let TB_Promo = UITextField()
+    fileprivate let TB_Points = UITextField()
+    fileprivate let HR = UIView()
+    fileprivate let X_Button = UIButton()
+    fileprivate let BTN_Apply = UIButton()
+    fileprivate let BTN_ApplyPoints = UIButton()
+    fileprivate var arrAlphaAnimation:[UIView] = [UIView]()
+    fileprivate var isPointsUsed:Bool = false
+    fileprivate var isPromoUsed:Bool = false
+    fileprivate var promoCode:String = ""
+    fileprivate var numberOfPointsUsed:Int = 0
+    fileprivate var checkPrices:TotalPrice!
+    fileprivate let loading = loadingIndicator()
+
+    let SubTotal = UILabel()
+    let Taxes = UILabel()
+    let Total = UILabel()
+    let SavedTotal = UILabel()
     
     //Keyboards
-    var isKeyboardActive:Bool = false
+    fileprivate var isKeyboardActive:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Commande"
         self.navigationItem.setHidesBackButton(true, animated:false)
-        backgroundImage.setUpBackgroundImage(containerView: self.view)
-        setUpScrollView()
-        fillScrollView()
-        setBottomView()
-        verifyPrice()
+        self.loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos:.background).async {
+            self.checkPrices = self.verifyPrice()
+            DispatchQueue.main.async {
+                self.backgroundImage.setUpBackgroundImage(containerView: self.view)
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.setBottomView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
-    
+    //
+    //
+    //SET UPS FOR SCROLLVIEW WITH ITEMS FROM ORDER
+    //
+    //
     func setUpScrollView(){
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(543))
+        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(607))
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
@@ -103,7 +138,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //
     func setBottomView(){
         
-        bottomView.frame = CGRect(x: 0, y: rh(538), width: view.frame.width, height: rh(75))
+        bottomView.frame = CGRect(x: 0, y: rh(602), width: view.frame.width, height: rh(75))
         bottomView.backgroundColor = UIColor.white
         bottomView.makeShadow(x: 0, y: 2, blur: 4, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.40, spread: 5)
         view.addSubview(bottomView)
@@ -124,7 +159,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
     //
     //
-    //BOTTOM VIEWS SET UP
+    //ANIMATIONS FUNCTION
+    //IN: FUNCTION TO BUILD VIEWS, NEW HEIGHT OF THE VIEW
     //
     //
     func resetBottomView(function:@escaping ()->(),height:CGFloat){
@@ -145,6 +181,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     
+
     func resetBuildBaseBottomView(){
         
         let closeButton = UIButton()
@@ -299,30 +336,35 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         //Design labels
         let dSubTotal = UILabel()
-        dSubTotal.createLabel(frame: CGRect(x:rw(99),y:rh(66.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Total")
+        dSubTotal.createLabel(frame: CGRect(x:rw(99),y:rh(55),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Total")
         containerMainView.addSubview(dSubTotal)
         
         let dTaxes = UILabel()
         dTaxes.createLabel(frame: CGRect(x:rw(99),y:dSubTotal.frame.maxY,width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Sales taxes")
         containerMainView.addSubview(dTaxes)
         
+        let dAmountSave = UILabel()
+        dAmountSave.createLabel(frame: CGRect(x:rw(99),y:dTaxes.frame.maxY,width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414").withAlphaComponent(0.4), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Promotions")
+        containerMainView.addSubview(dAmountSave)
+        
         let dTotal = UILabel()
-        dTotal.createLabel(frame: CGRect(x:rw(99),y:rh(111.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Payment")
+        dTotal.createLabel(frame: CGRect(x:rw(99),y:rh(116.5),width:rw(56),height:rh(17)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Payment")
         containerMainView.addSubview(dTotal)
         
-        let subTotalF:NSNumber = Prices().getTotalBeforeTaxes(arrayPrices:fillArrayPrices())
-        let SubTotal = UILabel()
-        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(66.5),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(subTotalF.floatValue.twoDecimal) $")
+        
+        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(55),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(checkPrices.total.floatValue.twoDecimal) $")
         containerMainView.addSubview(SubTotal)
         
-        let taxesF:NSNumber = Prices().getTaxes(price: subTotalF.floatValue)
-        let Taxes = UILabel()
-        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(taxesF.floatValue.twoDecimal) $")
+        let taxesF:Float = Prices().getTaxesWIthPrice(price: checkPrices.total.floatValue, saved: checkPrices.priceSaved.floatValue)
+        
+        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(taxesF.twoDecimal) $")
         containerMainView.addSubview(Taxes)
         
-        let total = Prices().getTotalWithTaxes(taxes: taxesF.floatValue, price: subTotalF.floatValue)
-        let Total = UILabel()
-        Total.createLabel(frame: CGRect(x:rw(264),y:rh(110),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(total.floatValue.twoDecimal) $")
+        SavedTotal.createLabel(frame: CGRect(x:rw(264),y:Taxes.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "- \(checkPrices.priceSaved.floatValue.twoDecimal) $")
+        containerMainView.addSubview(SavedTotal)
+        
+        let total = Prices().getTotalWithTaxes(subTotal: checkPrices.total.floatValue, taxes: taxesF, saved: checkPrices.priceSaved.floatValue)
+        Total.createLabel(frame: CGRect(x:rw(264),y:rh(115),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(total.twoDecimal) $")
         containerMainView.addSubview(Total)
         
         let BTN_Pay = UIButton()
@@ -373,7 +415,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         let BTN_PayWithCredit = UIButton()
         BTN_PayWithCredit.createCreateButton(title: "Payer avec mes crédits", frame: CGRect(x:rw(25),y:rh(89),width:rw(219),height:rh(50)), fontSize: rw(20), containerView: bottomInnerView)
-        BTN_PayWithCredit.addTarget(self, action: #selector(payWithPoints), for: .touchUpInside)
+        //BTN_PayWithCredit.addTarget(self, action: #selector(payWithPoints), for: .touchUpInside)
         
         let BTN_NonMerci = UIButton()
         BTN_NonMerci.frame = CGRect(x: rw(263), y: rh(94), width: rw(80), height: rh(40))
@@ -426,29 +468,9 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
     }
     
-    @objc func payWithPoints(){
-        //TODO
-        //PAYER AVEC LES POINTS
-    }
+
     
-    @objc func payPressed(sender:UIButton){
-        //REQUEST TO ORDER
-        if(Global.global.userInfo.cards.count > 0){
-            if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed)){
-                performSegue(withIdentifier: "toConfirmation", sender: nil)
-            }
-            else{
-                performSegue(withIdentifier: "toFailedOrder", sender: nil)
-            }
-        }
-        else{
-            Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
-        }
-    }
     
-    @objc func addMore(){
-        self.navigationController?.popToRootViewController(animated: true)
-    }
     
     //
     //
@@ -463,6 +485,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         promoContainer.addGestureRecognizer(tapGesture)
         promoContainer.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         promoContainer.alpha = 0
+    
         
         
         promoTitle.createLabel(frame: CGRect(x:0,y:rh(196),width:view.frame.width,height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Light", fontSize: rw(25), textAignment: .center, text: "Inscrire votre code promo")
@@ -471,7 +494,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         TB_Promo.delegate = self
         TB_Promo.autocorrectionType = .no
-        TB_Promo.frame = CGRect(x: rw(25), y: rh(267), width: rw(315), height: rh(48))
+        TB_Promo.frame = CGRect(x: rw(25), y: rh(280), width: rw(315), height: rh(48))
         TB_Promo.placeholder = "Entrez ici"
         TB_Promo.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Hairline", fontSize: rw(40.0))
         TB_Promo.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
@@ -495,11 +518,16 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         
         //y to 592
         BTN_Apply.createCreateButton(title: "Appliquer", frame: CGRect(x:rw(88),y:rh(592) + 64,width:rw(202),height:rh(50)), fontSize: rw(20), containerView: promoContainer)
+        BTN_Apply.addTarget(self, action: #selector(usePromoCode), for: .touchUpInside)
         
         UIApplication.shared.keyWindow?.addSubview(promoContainer)
     }
     
-    
+    //
+    //
+    //CLOSING VIEW FOR PROMOTION OR POINTS
+    //
+    //
     @objc func xPressed(){
         self.endEditing()
         self.view.isUserInteractionEnabled = false
@@ -509,10 +537,17 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             }
         }, completion: { _ in
             self.promoContainer.removeFromSuperview()
+            self.arrAlphaAnimation.removeAll()
             self.view.isUserInteractionEnabled = true
         })
     }
     
+
+    //
+    //
+    //ANIMATES PROMOVIEW
+    //
+    //
     @objc func toEnterPromoCode(){
         buildPromoView()
         self.view.isUserInteractionEnabled = false
@@ -532,13 +567,14 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if(!isKeyboardActive){
-            moveUp()
+            //moveUp()
             isKeyboardActive = true
         }
     }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if(isKeyboardActive){
-            moveDown()
+            //moveDown()
             isKeyboardActive = false
         }
     }
@@ -570,6 +606,10 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         self.promoContainer.endEditing(true)
     }
 
+
+
+
+
     @objc func usePoints(){
         buildPointsView()
         self.view.isUserInteractionEnabled = false
@@ -582,6 +622,12 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         })
     }
 
+
+    //
+    //
+    //BUILD VIEW FOR ADD POINTS
+    //
+    //
     func buildPointsView(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endEditing))
         arrAlphaAnimation = [promoContainer,promoTitle,TB_Points,HR,X_Button,BTN_ApplyPoints]
@@ -592,7 +638,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         promoContainer.alpha = 0
         
         
-        promoTitle.createLabel(frame: CGRect(x:0,y:rh(181),width:view.frame.width,height:rh(70)), textColor: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Light", fontSize: rw(25), textAignment: .center, text: "Vous avez présentement \(Global.global.userInfo.points) points. \nCombien voulez vous en utiliser?")
+        promoTitle.createLabel(frame: CGRect(x:0,y:rh(181),width:view.frame.width,height:rh(70)), textColor: Utility().hexStringToUIColor(hex: "#FFFFFF"), fontName: "Lato-Light", fontSize: rw(23), textAignment: .center, text: "Vous avez présentement \(Global.global.userInfo.points) points. \nCombien voulez vous en utiliser?")
         promoTitle.numberOfLines = 2
         promoTitle.lineBreakMode = .byTruncatingTail
         promoTitle.alpha = 0
@@ -630,13 +676,21 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         UIApplication.shared.keyWindow?.addSubview(promoContainer)
     }
 
+    //TODO:ADD CHECK PRICE
     @objc func pointsAdded(){
-        self.promoContainer.removeFromSuperview()
+        xPressed()
         if(TB_Points.text != ""){
             if(Int(TB_Points.text!)! <= Global.global.userInfo.points){
-                Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
-                isPointsUsed = true
                 numberOfPointsUsed = Int(TB_Points.text!)!
+                self.checkPrices = verifyPrice()
+                if(!self.checkPrices.error){
+                    isPointsUsed = true
+                    updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
+                    Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
+                }
+                else{
+                    Utility().alert(message: checkPrices.message, title: "Error", control: self)
+                }
                 TB_Points.text = ""
             }
             else{
@@ -648,6 +702,33 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
 
         
+    }
+    
+    @objc func usePromoCode(){
+        xPressed()
+        if(TB_Promo.text != ""){
+            self.checkPrices = verifyPrice(promoCode: TB_Promo.text!)
+            if(!self.checkPrices.error){
+                isPromoUsed = true
+                promoCode = TB_Promo.text!
+                updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
+                Utility().alert(message: "Rabais appliquer avec succès sur votre commande", title: "Message", control: self)
+            }
+            else{
+                Utility().alert(message: self.checkPrices.message, title: "Message", control: self)
+            }
+            TB_Promo.text = ""
+        }
+        else{
+            Utility().alert(message: "Vous devez entrer un code de promotions", title: "Error", control: self)
+        }
+    }
+    
+    func updatePrice(price:NSNumber,savedAmount:NSNumber){
+        SubTotal.text = "\(price.floatValue.twoDecimal) $"
+        Taxes.text = "\(Prices().getTaxesWIthPrice(price: price.floatValue, saved: savedAmount.floatValue).twoDecimal) $"
+        SavedTotal.text = "- \(savedAmount.floatValue.twoDecimal) $"
+        Total.text = "\(Prices().getTotalWithTaxes(subTotal: price.floatValue, taxes: Prices().getTaxesWIthPrice(price: price.floatValue, saved: savedAmount.floatValue), saved: savedAmount.floatValue).twoDecimal) $"
     }
         
     func fillArrayPrices()->[NSNumber]{
@@ -661,9 +742,91 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
 
+    @objc func payPressed(sender:UIButton){
+        //REQUEST TO ORDER
+        if(Global.global.userInfo.cards.count > 0){
+            if(!isPromoUsed){
+                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed)){
+
+                    performSegue(withIdentifier: "toConfirmation", sender: nil)
+                }
+                else{
+                    performSegue(withIdentifier: "toFailedOrder", sender: nil)
+                    
+                }
+            }
+            else{
+                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed,promoCode:promoCode)){
+                    performSegue(withIdentifier: "toConfirmation", sender: nil)
+                }
+                else{
+                    performSegue(withIdentifier: "toFailedOrder", sender: nil)
+                }
+            }
+        }
+        else{
+            Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
+        }
+    }
+    func updatPointsFirstViewController(){
+        let rootViewController = self.navigationController?.viewControllers.first
+        (rootViewController as! CommandeMainPage).menu.updatePointsValue()
+    }
+    
+    @objc func addMore(){
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+
+    //HERE
     //VERIFY PRICES
-    func verifyPrice(){
-        let json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: numberOfPointsUsed)
-        print(json)
+    func verifyPrice(promoCode:String = "")->TotalPrice{
+        var json:[String:Any]!
+        var totalPrice:TotalPrice!
+        var error:Bool!
+        var errorMessage:String = ""
+        var total:NSNumber!
+        var subtotal:NSNumber!
+        var priceSaved:NSNumber!
+        
+        if(promoCode == ""){
+            json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: numberOfPointsUsed)
+        }
+        else{
+            json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: numberOfPointsUsed,promoCode:promoCode)
+        }
+        
+        if let errorS = json["error"] as? String{
+            error = true
+            errorMessage = errorS
+        }
+        else{
+            error = false
+        }
+        if let order = json["order"] as? [String:Any]{
+            if let reducedAmountN = order["reduced"] as? NSNumber{
+                priceSaved = reducedAmountN
+            }
+            else{
+                priceSaved = 0
+            }
+            if let subtotalN = order["subtotal"] as? NSNumber{
+                subtotal = subtotalN
+            }
+            else{
+                subtotal = 0
+            }
+            if let totalN = order["total"] as? NSNumber{
+                total = totalN
+            }
+            else{
+                total = 0
+            }
+            
+            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved)
+        }
+        else{
+            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage)
+        }
+        return totalPrice
     }
 }

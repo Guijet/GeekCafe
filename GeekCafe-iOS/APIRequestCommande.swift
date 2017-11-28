@@ -248,7 +248,7 @@ class APIRequestCommande{
             jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
         }
         else{
-            jsonData = try? JSONSerialization.data(withJSONObject: ["pomotion_id":promoCode,"points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
         }
         return jsonData!
     }
@@ -276,7 +276,7 @@ class APIRequestCommande{
             jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
         else{
-            jsonData = try? JSONSerialization.data(withJSONObject: ["pomotion_id":promoCode,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
         return jsonData!
     }
@@ -430,10 +430,14 @@ class APIRequestCommande{
         }
         
         if let _ = result["status"] as? String{
+            if let point_balance = result["point_balance"] as? NSNumber{
+                Global.global.userInfo.points = Int(floor(point_balance.doubleValue))
+            }
             worked = true
         }
         return worked
     }
+    
     
    
 }
