@@ -23,6 +23,7 @@ class FlavourFondue: UIViewController {
     var toppingImage = UIImageView()
     var isImageSet:Bool = false
     var isSetCancel:Bool = false
+    var arrayImage:[UIImage] = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +141,7 @@ class FlavourFondue: UIViewController {
             toppingImage.frame = bolImage.frame
             toppingImage.image = (sender.view! as! UIImageView).image
             toppingImage.contentMode = .scaleAspectFit
+            //arrayImage.append((sender.view! as! UIImageView).image!)
             self.view.addSubview(toppingImage)
             setCancelButton()
             isImageSet = true
@@ -152,6 +154,8 @@ class FlavourFondue: UIViewController {
     
     func changeImageTopping(sender:UIImageView){
         toppingImage.image = sender.image
+        arrayImage.append(sender.image!)
+        arrayImage.removeLast()
     }
     
     func setCancelButton(){
@@ -170,6 +174,7 @@ class FlavourFondue: UIViewController {
         toppingImage.removeFromSuperview()
         removeBarCancelButton()
         isImageSet = false
+        arrayImage.removeLast()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -179,6 +184,10 @@ class FlavourFondue: UIViewController {
             (segue.destination as! SubitemsFondue).priceId = self.priceId
             (segue.destination as! SubitemsFondue).nbChoix = self.nbChoix
             (segue.destination as! SubitemsFondue).toppingID = self.toppingID
+            (segue.destination as! SubitemsFondue).arrayImage = self.arrayImage
+            if(toppingID != 0){
+                (segue.destination as! SubitemsFondue).toppingImage = self.toppingImage.image
+            }
             
         }
     }

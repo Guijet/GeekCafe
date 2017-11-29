@@ -25,6 +25,9 @@ class FlavourCrepe: UIViewController {
     var isSetCancel:Bool = false
     var toppingImage:UIImage!
     var toppingID:Int!
+    var arrayImage:[UIImage]!
+    var staticArrayImage:[UIImage] = [UIImage]()
+    var arrayBigImage:[UIImage] = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +115,19 @@ class FlavourCrepe: UIViewController {
                     image.getOptimizeImageAsync(url: x.image)
                     image.tag = x.id
                     bottomScrollView.addSubview(image)
-                    
+                       
+//                    if(x.bigImage != ""){
+//                        var image:UIImage = UIImage()
+//                        if let url = URL(string:x.bigImage){
+//                            let data = try? Data(contentsOf: url)
+//                            image = UIImage(data: data!)!
+//                        }
+//                        arrayBigImage.append(image)
+//                    }
+//                    else{
+//                        arrayBigImage.append(UIImage())
+//                    }
+              
                     let titleItem = UILabel()
                     titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                     titleItem.numberOfLines = 2
@@ -134,13 +149,28 @@ class FlavourCrepe: UIViewController {
         }
     }
 
+    func getBigImageFromArray(id:Int)->UIImage{
+        var image:UIImage = UIImage()
+        for x in infoItem.subitems{
+            if(x.id == id){
+                if let url = URL(string:x.bigImage){
+                    let data = try? Data(contentsOf: url)
+                    image = UIImage(data: data!)!
+                }
+                arrayBigImage.append(image)
+                break
+            }
+        }
+        return image
+    }
     func getItemsForOrder()->itemOrder{
+        appendAllImage()
         var item:itemOrder!
         if(toppingID != 0){
-            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,toppingId:toppingID)
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,toppingId:toppingID,arrayImage:arrayImage)
         }
         else{
-            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price)
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,arrayImage:arrayImage)
         }
         
         return item
@@ -150,7 +180,8 @@ class FlavourCrepe: UIViewController {
     @objc func tapSubitem(sender:UITapGestureRecognizer){
         if(nbSelectionChoix < nbChoix){
             let imageTag = sender.view!.tag
-            addImage(imageSubitem: (sender.view as! UIImageView).image!)
+            //addImage(imageSubitem: (sender.view as! UIImageView).image!)
+            addImage2(id:sender.view!.tag)
             updateBadge(imageViewSubitem:sender.view!)
             subitemsIds.append(imageTag as NSNumber)
             updatePriceSubitems(subItemId: imageTag)
@@ -262,8 +293,20 @@ class FlavourCrepe: UIViewController {
         let imageS = UIImageView()
         imageS.accessibilityIdentifier = "imageSub"
         imageS.frame = crepeImage.frame
+        staticArrayImage.append(imageSubitem)
         imageS.contentMode = .scaleAspectFit
         imageS.image = imageSubitem
+        self.view.addSubview(imageS)
+    }
+    
+    func addImage2(id:Int){
+        let image = getBigImageFromArray(id: id)
+        let imageS = UIImageView()
+        imageS.accessibilityIdentifier = "imageSub"
+        imageS.frame = crepeImage.frame
+        staticArrayImage.append(image)
+        imageS.contentMode = .scaleAspectFit
+        imageS.image = image
         self.view.addSubview(imageS)
     }
     func removeAllImageSubItems(){
@@ -274,9 +317,19 @@ class FlavourCrepe: UIViewController {
                 }
             }
         }
+        staticArrayImage.removeAll()
+    }
+
+    func appendAllImage(){
+        for x in staticArrayImage{
+            arrayImage.append(x)
+        }
     }
     @objc func nextPressed(){
+       
         Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromCrepe", sender: nil)
     }
+
+    
 }

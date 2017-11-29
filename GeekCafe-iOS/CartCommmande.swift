@@ -92,11 +92,22 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
                 containerView.addGestureRecognizer(leftSwipe)
                 containerView.addGestureRecognizer(rightSwipe)
                 
-                let imageItem = UIImageView()
-                imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
-                imageItem.getOptimizeImageAsync(url: x.image)
-                imageItem.contentMode = .scaleAspectFit
-                containerView.addSubview(imageItem)
+                if(x.arrayImage.count > 0){
+                    for y in x.arrayImage{
+                        let imageItem = UIImageView()
+                        imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
+                        imageItem.contentMode = .scaleAspectFit
+                        imageItem.image = y
+                        containerView.addSubview(imageItem)
+                    }
+                }
+                else{
+                    let imageItem = UIImageView()
+                    imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
+                    imageItem.contentMode = .scaleAspectFit
+                    imageItem.getOptimizeImageAsync(url: x.image)
+                    containerView.addSubview(imageItem)
+                }
                 
                 let price = UILabel()
                 price.frame = CGRect(x: rw(260), y: (containerView.frame.height/2) - rh(10), width: rw(100), height: rh(20))
@@ -107,7 +118,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
-                flavour.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2) - rh(18)), width: price.frame.minX - rh(85), height: rh(18))
+                flavour.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2) - rh(10)), width: price.frame.minX - rh(85), height: rh(20))
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
@@ -120,7 +131,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
                 type.font = UIFont(name: "Lato-Regular", size: rw(13))
                 type.textAlignment = .left
                 type.text = "\(x.name)"
-                containerView.addSubview(type)
+                //containerView.addSubview(type)
                 newY += (72 + rh(10))
                 index += 1
             }
@@ -275,7 +286,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
             setLabelNoItems()
         }
         checkPrices = verifyPrice()
-        priceLabel.text = checkPrices.total.floatValue.twoDecimal
+        priceLabel.text = "\(checkPrices.total.floatValue.twoDecimal)$"
         
     }
     func setLabelNoItems(){

@@ -9,16 +9,18 @@
 import UIKit
 
 struct Subitem{
-    init(id:Int,name:String,price:NSNumber,image:String,isTopping:Bool){
+    init(id:Int,name:String,price:NSNumber,image:String,isTopping:Bool,bigImage:String = ""){
         self.id = id
         self.name = name
         self.price = price
         self.image = image
         self.isTopping = isTopping
+        self.bigImage = bigImage
     }
     var id:Int
     var name:String
     var price:NSNumber
     var image:String
+    var bigImage:String
     var isTopping:Bool
 }

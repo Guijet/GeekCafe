@@ -21,12 +21,15 @@ class SubitemsFondue: UIViewController {
     var priceId:NSNumber!
     var nbChoix:Int!
     var toppingID:Int!
+    var arrayBigImage = [UIImage]()
+    var staticArrayImage = [UIImage]()
 
     var nbSelectionChoix:Int = 0
     var subitemsIds = [NSNumber]()
     var initialPrice:Float = 0
     var isSetCancel:Bool = false
-    
+    var toppingImage:UIImage!
+    var arrayImage:[UIImage] = [UIImage]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Fondue"
@@ -37,6 +40,7 @@ class SubitemsFondue: UIViewController {
         setUpBottom()
         fillScrollView()
         initialPrice = price.floatValue
+        arrayImage.append(UIImage(named:"TableFondue")!)
     }
     
     func setUpTopPart(){
@@ -124,12 +128,13 @@ class SubitemsFondue: UIViewController {
         }
     }
     func getItemsForOrder()->itemOrder{
+        appendAllImage()
         var item:itemOrder!
         if(toppingID != 0){
-            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,toppingId:toppingID)
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,toppingId:toppingID,arrayImage:arrayImage)
         }
         else{
-            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price)
+            item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price:price,arrayImage:arrayImage)
         }
         
         return item
@@ -139,7 +144,8 @@ class SubitemsFondue: UIViewController {
     @objc func tapSubitem(sender:UITapGestureRecognizer){
         if(nbSelectionChoix < nbChoix){
             let imageTag = sender.view!.tag
-            addImage(imageSubitem: (sender.view as! UIImageView).image!)
+            //addImage(imageSubitem: (sender.view as! UIImageView).image!)
+            addImage2(id:sender.view!.tag)
             updateBadge(imageViewSubitem:sender.view!)
             subitemsIds.append(imageTag as NSNumber)
             updatePriceSubitems(subItemId: imageTag)
@@ -256,6 +262,33 @@ class SubitemsFondue: UIViewController {
         imageS.image = imageSubitem
         self.view.addSubview(imageS)
     }
+
+    func getBigImageFromArray(id:Int)->UIImage{
+        var image:UIImage = UIImage()
+        for x in infoItem.subitems{
+            if(x.id == id){
+                if let url = URL(string:x.bigImage){
+                    let data = try? Data(contentsOf: url)
+                    image = UIImage(data: data!)!
+                }
+                arrayBigImage.append(image)
+                break
+            }
+        }
+        return image
+    }
+
+    func addImage2(id:Int){
+        let image = getBigImageFromArray(id: id)
+        let imageS = UIImageView()
+        imageS.accessibilityIdentifier = "imageSub"
+        imageS.frame = bolImage.frame
+        staticArrayImage.append(image)
+        imageS.contentMode = .scaleAspectFit
+        imageS.image = image
+        self.view.addSubview(imageS)
+    }
+
     func removeAllImageSubItems(){
         for x in self.view.subviews{
             if(x.accessibilityIdentifier == "imageSub"){
@@ -263,6 +296,13 @@ class SubitemsFondue: UIViewController {
                     imageToRemove.removeFromSuperview()
                 }
             }
+        }
+        staticArrayImage.removeAll()
+    }
+    
+    func appendAllImage(){
+        for x in staticArrayImage{
+            arrayImage.append(x)
         }
     }
     @objc func nextPressed(){

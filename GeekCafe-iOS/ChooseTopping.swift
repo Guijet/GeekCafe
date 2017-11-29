@@ -24,6 +24,7 @@ class ChooseTopping:UIViewController{
     var toppingID:Int = 0
     var isImageSet:Bool = false
     var isSetCancel:Bool = false
+    var arrayImage:[UIImage] = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,8 @@ class ChooseTopping:UIViewController{
         setUpTopPart()
         setUpBottom()
         fillScrollView()
-
         initialPrice = price.floatValue
+        arrayImage.append(UIImage(named:"bigCrepe")!)
     }
     
 
@@ -59,6 +60,7 @@ class ChooseTopping:UIViewController{
         crepeImage.image = UIImage(named:"bigCrepe")
         crepeImage.contentMode = .scaleAspectFit
         self.view.addSubview(crepeImage)
+        
     }
     
     
@@ -104,6 +106,7 @@ class ChooseTopping:UIViewController{
                     image.tag = x.id
                     bottomScrollView.addSubview(image)
                     
+
                     let titleItem = UILabel()
                     titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                     titleItem.numberOfLines = 2
@@ -144,6 +147,7 @@ class ChooseTopping:UIViewController{
             toppingImage.image = (sender.view! as! UIImageView).image
             toppingImage.contentMode = .scaleAspectFit
             self.view.addSubview(toppingImage)
+            arrayImage.append((sender.view! as! UIImageView).image!)
             setCancelButton()
             isImageSet = true
         }
@@ -157,6 +161,8 @@ class ChooseTopping:UIViewController{
 
     func changeImageTopping(sender:UIImageView){
         toppingImage.image = sender.image
+        arrayImage.removeLast()
+        arrayImage.append(sender.image!)
     }
 
     func setCancelButton(){
@@ -171,6 +177,7 @@ class ChooseTopping:UIViewController{
     }
 
     @objc func removeImage(){
+        arrayImage.removeLast()
         toppingID = 0
         toppingImage.removeFromSuperview()
         removeBarCancelButton()
@@ -184,6 +191,7 @@ class ChooseTopping:UIViewController{
             (segue.destination as! FlavourCrepe).priceId = self.priceId
             (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
             (segue.destination as! FlavourCrepe).toppingID = self.toppingID
+            (segue.destination as! FlavourCrepe).arrayImage = self.arrayImage
             if(toppingID != 0){
                 (segue.destination as! FlavourCrepe).toppingImage = self.toppingImage.image
             }

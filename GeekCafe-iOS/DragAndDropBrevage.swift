@@ -97,8 +97,8 @@ class DragAndDropBrevage: UIViewController{
                 image.isUserInteractionEnabled = true
                 image.addGestureRecognizer(tapGestureImage)
                 image.frame = CGRect(x: newX, y: rh(10), width: rw(50), height: rw(50))
-                //image.layer.masksToBounds = true
-                //image.layer.cornerRadius = rw(25)
+                image.layer.masksToBounds = true
+                image.layer.cornerRadius = rw(25)
                 image.getOptimizeImageAsync(url: x.image)
                 image.tag = x.id
                 bottomScrollView.addSubview(image)

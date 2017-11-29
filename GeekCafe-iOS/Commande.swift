@@ -22,7 +22,7 @@ struct Order{
 }
 
 struct itemOrder{
-    init(price_id:NSNumber,subItemIds:[NSNumber],image:String,name:String,type:String,price:NSNumber,toppingId:Int = 0){
+    init(price_id:NSNumber,subItemIds:[NSNumber],image:String,name:String,type:String,price:NSNumber,toppingId:Int = 0,arrayImage:[UIImage] = []){
         self.price_id = price_id
         self.subItemIds = subItemIds
         self.image = image
@@ -30,6 +30,7 @@ struct itemOrder{
         self.type = type
         self.price = price
         self.toppingId = toppingId
+        self.arrayImage = arrayImage
     }
     var price_id:NSNumber
     var subItemIds:[NSNumber]
@@ -38,5 +39,6 @@ struct itemOrder{
     var type:String
     var price:NSNumber
     var toppingId:Int
+    var arrayImage:[UIImage]
     
 }

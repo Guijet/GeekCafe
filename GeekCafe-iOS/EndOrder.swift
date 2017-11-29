@@ -99,11 +99,24 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 containerView.backgroundColor = UIColor.clear
                 scrollView.addSubview(containerView)
                 
-                let imageItem = UIImageView()
-                imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
-                imageItem.contentMode = .scaleAspectFit
-                imageItem.getOptimizeImageAsync(url: x.image)
-                containerView.addSubview(imageItem)
+                if(x.arrayImage.count > 0){
+                    for y in x.arrayImage{
+                        let imageItem = UIImageView()
+                        imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
+                        imageItem.contentMode = .scaleAspectFit
+                        imageItem.image = y
+                        containerView.addSubview(imageItem)
+                    }
+                }
+                else{
+                    let imageItem = UIImageView()
+                    imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
+                    imageItem.contentMode = .scaleAspectFit
+                    imageItem.getOptimizeImageAsync(url: x.image)
+                    containerView.addSubview(imageItem)
+                }
+                
+                
                 
                 let price = UILabel()
                 price.frame = CGRect(x: rw(260), y: (containerView.frame.height/2) - rh(10), width: rw(100), height: rh(20))
@@ -114,7 +127,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 containerView.addSubview(price)
                 
                 let flavour = UILabel()
-                flavour.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2) - rh(18)), width: price.frame.minX - rh(85), height: rh(18))
+                flavour.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2) - rh(10)), width: price.frame.minX - rh(85), height: rh(20))
                 flavour.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 flavour.font = UIFont(name: "Lato-Regular", size: rw(15))
                 flavour.textAlignment = .left
@@ -122,12 +135,13 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 containerView.addSubview(flavour)
                 
                 let type = UILabel()
-                type.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2)), width: price.frame.minX - rh(85), height: rh(10))
+                type.frame = CGRect(x: rw(85), y: ((containerView.frame.height/2)+rh(3)), width: price.frame.minX - rh(85), height: rh(20))
                 type.textColor = Utility().hexStringToUIColor(hex: "#D6D6D6")
                 type.font = UIFont(name: "Lato-Regular", size: rw(13))
                 type.textAlignment = .left
                 type.text = x.type
-                containerView.addSubview(type)
+                //containerView.addSubview(type)
+                
                 newY += (72 + rh(10))
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
@@ -461,7 +475,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     @objc func payInStore(){
-        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 1, counter_id: 1,points:numberOfPointsUsed)){
+        if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 6, counter_id: 1,points:numberOfPointsUsed)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
         else{
@@ -752,7 +766,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         //REQUEST TO ORDER
         if(Global.global.userInfo.cards.count > 0){
             if(!isPromoUsed){
-                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed)){
+                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: numberOfPointsUsed)){
 
                     performSegue(withIdentifier: "toConfirmation", sender: nil)
                 }
@@ -762,7 +776,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 }
             }
             else{
-                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 1, counter_id: 1, points: numberOfPointsUsed,promoCode:promoCode)){
+                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: numberOfPointsUsed,promoCode:promoCode)){
                     performSegue(withIdentifier: "toConfirmation", sender: nil)
                 }
                 else{

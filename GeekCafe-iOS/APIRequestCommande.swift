@@ -200,6 +200,13 @@ class APIRequestCommande{
                             else{
                                 image = ""
                             }
+                            var bigImage:String!
+                            if let bigImageS = subitemsData[y]["big_image"] as? String{
+                                bigImage = bigImageS
+                            }
+                            else{
+                                bigImage = ""
+                            }
                             var isTopping:Bool!
                             if let isToppingB = subitemsData[y]["is_topping"] as? Bool{
                                 isTopping = isToppingB
@@ -207,7 +214,7 @@ class APIRequestCommande{
                             else{
                                 isTopping = false
                             }
-                            arrSubItems.append(Subitem(id: idSubItem, name: name, price: price, image: image, isTopping: isTopping))
+                            arrSubItems.append(Subitem(id: idSubItem, name: name, price: price, image: image, isTopping: isTopping,bigImage:bigImage))
                         }
                     }
                 }
