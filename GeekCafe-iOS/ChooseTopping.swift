@@ -184,6 +184,9 @@ class ChooseTopping:UIViewController{
             (segue.destination as! FlavourCrepe).priceId = self.priceId
             (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
             (segue.destination as! FlavourCrepe).toppingID = self.toppingID
+            if(toppingID != 0){
+                (segue.destination as! FlavourCrepe).toppingImage = self.toppingImage.image
+            }
         }
     }
 

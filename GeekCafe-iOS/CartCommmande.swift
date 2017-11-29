@@ -95,6 +95,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
                 imageItem.getOptimizeImageAsync(url: x.image)
+                imageItem.contentMode = .scaleAspectFit
                 containerView.addSubview(imageItem)
                 
                 let price = UILabel()

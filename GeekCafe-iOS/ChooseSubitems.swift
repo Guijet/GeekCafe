@@ -23,6 +23,7 @@ class FlavourCrepe: UIViewController {
     var subitemsIds = [NSNumber]()
     var initialPrice:Float = 0
     var isSetCancel:Bool = false
+    var toppingImage:UIImage!
     var toppingID:Int!
     
     override func viewDidLoad() {
@@ -36,6 +37,7 @@ class FlavourCrepe: UIViewController {
         fillScrollView()
         initialPrice = price.floatValue
     }
+    
     
     func setUpTopPart(){
         
@@ -59,6 +61,14 @@ class FlavourCrepe: UIViewController {
         crepeImage.image = UIImage(named:"bigCrepe")
         crepeImage.contentMode = .scaleAspectFit
         self.view.addSubview(crepeImage)
+
+        if(toppingID != 0){
+            let imageTopping = UIImageView()
+            imageTopping.frame = crepeImage.frame
+            imageTopping.image = toppingImage
+            imageTopping.contentMode = .scaleAspectFit
+            self.view.addSubview(imageTopping)
+        }
     }
     
     func setUpBottom(){

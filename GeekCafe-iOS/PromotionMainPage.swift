@@ -34,8 +34,8 @@ class PromotionMainPage: UIViewController {
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
-        backgroundView.setUpBackgroundImage(containerView: self.view)
         menu.setUpFakeNavBar(view: containerView, titleTop: "Promotions")
+        backgroundView.setUpBackgroundImage(containerView: self.containerView)
         
         //Page set up
         //backgroundImage.setUpBackgroundImage(containerView: containerView)
