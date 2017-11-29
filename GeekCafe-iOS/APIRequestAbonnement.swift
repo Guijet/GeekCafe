@@ -55,14 +55,14 @@ class APIRequestAbonnement{
                         title = "unknown title"
                     }
                     var description:String!
-                    if let descriptionS = x["title"] as? String{
+                    if let descriptionS = x["description"] as? String{
                         description = descriptionS
                     }
                     else{
                         description = "unknown description"
                     }
                     var perk:String!
-                    if let perkS = x["title"] as? String{
+                    if let perkS = x["perk"] as? String{
                         perk = perkS
                     }
                     else{

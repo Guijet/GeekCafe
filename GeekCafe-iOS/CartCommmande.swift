@@ -157,6 +157,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
         var total:NSNumber!
         var subtotal:NSNumber!
         var priceSaved:NSNumber!
+        var taxes:NSNumber!
     
         let json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: 0)
         if let errorS = json["error"] as? String{
@@ -185,11 +186,17 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
             else{
                 total = 0
             }
+            if let taxesN = order["taxes"] as? NSNumber{
+                taxes = taxesN
+            }
+            else{
+                taxes = 0
+            }
             
-            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved)
+            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved, taxes: taxes)
         }
         else{
-            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage)
+            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage, taxes: taxes)
         }
         return totalPrice
     }

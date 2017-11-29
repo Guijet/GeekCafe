@@ -9,10 +9,11 @@
 import UIKit
 
 struct TotalPrice{
-    init(error:Bool,subtotal:NSNumber,total:NSNumber,priceSaved:NSNumber,message:String = ""){
+    init(error:Bool,subtotal:NSNumber,total:NSNumber,priceSaved:NSNumber,message:String = "",taxes:NSNumber){
         self.error = error
         self.subtotal = subtotal
         self.total = total
+        self.taxes = taxes
         self.priceSaved = priceSaved
         self.message = message
     }
@@ -20,6 +21,7 @@ struct TotalPrice{
     var subtotal:NSNumber
     var total:NSNumber
     var priceSaved:NSNumber
+    var taxes:NSNumber
     var message:String
 }
 
@@ -352,19 +354,17 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         containerMainView.addSubview(dTotal)
         
         
-        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(55),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(checkPrices.total.floatValue.twoDecimal) $")
+        SubTotal.createLabel(frame: CGRect(x:rw(264),y:rh(55),width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text:"\(checkPrices.subtotal.floatValue.twoDecimal) $")
         containerMainView.addSubview(SubTotal)
         
-        let taxesF:Float = Prices().getTaxesWIthPrice(price: checkPrices.total.floatValue, saved: checkPrices.priceSaved.floatValue)
         
-        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(taxesF.twoDecimal) $")
+        Taxes.createLabel(frame: CGRect(x:rw(264),y:SubTotal.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "\(checkPrices.taxes.floatValue.twoDecimal) $")
         containerMainView.addSubview(Taxes)
         
         SavedTotal.createLabel(frame: CGRect(x:rw(264),y:Taxes.frame.maxY,width:rw(100),height:rh(16)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .right, text: "- \(checkPrices.priceSaved.floatValue.twoDecimal) $")
         containerMainView.addSubview(SavedTotal)
         
-        let total = Prices().getTotalWithTaxes(subTotal: checkPrices.total.floatValue, taxes: taxesF, saved: checkPrices.priceSaved.floatValue)
-        Total.createLabel(frame: CGRect(x:rw(264),y:rh(115),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(total.twoDecimal) $")
+        Total.createLabel(frame: CGRect(x:rw(264),y:rh(115),width:rw(100),height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "#141414"), fontName: "Lato-Regular", fontSize: rw(17), textAignment: .right, text: "\(checkPrices.total.floatValue.twoDecimal) $")
         containerMainView.addSubview(Total)
         
         let BTN_Pay = UIButton()
@@ -690,7 +690,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 }
                 if(!self.checkPrices.error){
                     isPointsUsed = true
-                    updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
+                    updatePrice()
                     Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
                 }
                 else{
@@ -716,7 +716,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             self.checkPrices = verifyPrice(promoCode: TB_Promo.text!)
             if(!self.checkPrices.error){
                 isPromoUsed = true
-                updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
+                updatePrice()
                 Utility().alert(message: "Rabais appliquer avec succès sur votre commande", title: "Message", control: self)
             }
             else{
@@ -729,11 +729,11 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         }
     }
     
-    func updatePrice(price:NSNumber,savedAmount:NSNumber){
-        SubTotal.text = "\(price.floatValue.twoDecimal) $"
-        Taxes.text = "\(Prices().getTaxesWIthPrice(price: price.floatValue, saved: savedAmount.floatValue).twoDecimal) $"
-        SavedTotal.text = "- \(savedAmount.floatValue.twoDecimal) $"
-        Total.text = "\(Prices().getTotalWithTaxes(subTotal: price.floatValue, taxes: Prices().getTaxesWIthPrice(price: price.floatValue, saved: savedAmount.floatValue), saved: savedAmount.floatValue).twoDecimal) $"
+    func updatePrice(){
+        SubTotal.text = "\(checkPrices.subtotal.floatValue.twoDecimal) $"
+        Taxes.text = "\(checkPrices.taxes.floatValue.twoDecimal) $"
+        SavedTotal.text = "- \(checkPrices.priceSaved.floatValue.twoDecimal) $"
+        Total.text = "\(checkPrices.total.floatValue.twoDecimal) $"
     }
         
     func fillArrayPrices()->[NSNumber]{
@@ -792,6 +792,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         var errorMessage:String = ""
         var total:NSNumber!
         var subtotal:NSNumber!
+        var taxes:NSNumber!
         var priceSaved:NSNumber!
         
         if(promoCode == ""){
@@ -827,11 +828,16 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             else{
                 total = 0
             }
-            
-            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved)
+            if let taxesN = order["taxes"] as? NSNumber{
+                taxes = taxesN
+            }
+            else{
+                taxes = 0
+            }
+            totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved, taxes: taxes)
         }
         else{
-            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage)
+            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage, taxes: taxes)
         }
         return totalPrice
     }

@@ -18,26 +18,7 @@ class APIRequestPromotion{
         else{
             json = Utility().getJson(url: "\(stringRequest)", method: "GET",needToken:true)
         }
-        
-        var nextPage:String!
-        var isNext:Bool = false
-        if let meta = json["meta"] as? [String:Any]{
-            if let pagination = meta["pagination"] as? [String:Any]{
-                if let links = pagination["links"] as? [String:Any]{
-                    if let next = links["next"] as? String{
-                        nextPage = next
-                        isNext = true
-                        
-                    }else{
-                        nextPage = ""
-                    }
-                }
-                if let _ = pagination["links"] as? [[String:Any]]{
-                    nextPage = ""
-                }
-            }
             
-        }
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
@@ -55,10 +36,10 @@ class APIRequestPromotion{
                     }
                     let item = x["item"] as! [String:Any]
                     let dataItem = item["data"] as! [String:Any]
-                    arrayPromotions.append(Promotion(id: x["id"] as! Int, reduction: reductionT, image_url: dataItem["image"] as! String, code: "\(x["id"] as! Int)", itemName: dataItem["name"] as! String, nextPage: nextPage))
+                    arrayPromotions.append(Promotion(id: x["id"] as! Int, reduction: reductionT, image_url: dataItem["image"] as! String, code: "\(x["id"] as! Int)", itemName: dataItem["name"] as! String))
                 }
             }
         }
-        return PromotionList(promotions: arrayPromotions,meta: MetaPagination(nextString: nextPage, isNext: isNext))
+        return PromotionList(promotions: arrayPromotions)
     }
 }

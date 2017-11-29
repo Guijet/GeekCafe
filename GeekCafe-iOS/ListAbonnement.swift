@@ -141,7 +141,7 @@ class ListAbonnement: UIViewController {
             
             //DESCRIPTION
             let textView = UILabel()
-            textView.frame = CGRect(x: rw(16), y: rh(12), width: rw(330), height: rh(70))
+            textView.frame = CGRect(x: rw(16), y: rh(5), width: rw(330), height: rh(70))
             textView.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             textView.font = UIFont(name: "Lato-Light", size: rw(16))
             textView.textAlignment = .left

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PromotionMainPage: UIViewController,UIScrollViewDelegate {
+class PromotionMainPage: UIViewController {
 
     //Menu and container
     let menu = MenuClass()
@@ -29,10 +29,8 @@ class PromotionMainPage: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
         MetaPromotions =  APIRequestPromotion().getPromotions(page: "\(pageNumber)")
         arrayPromotions = MetaPromotions.promotions
-        isNext = MetaPromotions.meta.isNext
-        nextString = MetaPromotions.meta.nextString
         
-        scrollViewPromotion.delegate = self
+
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -102,23 +100,11 @@ class PromotionMainPage: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == scrollViewPromotion{
-            if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height{
-                if(isNext){
-                    pageNumber += 1
-                    getMorePromotions(pageNumber: pageNumber, stringRequest: nextString)
-                }
-                else{return}
-            }
-        }
-    }
+    
     
     func getMorePromotions(pageNumber:Int,stringRequest:String){
         let newMetaPagination = APIRequestPromotion().getPromotions(page: "\(pageNumber)", stringRequest: stringRequest)
         let newPromoArray = newMetaPagination.promotions
-        nextString = newMetaPagination.meta.nextString
-        isNext = newMetaPagination.meta.isNext
         for x in newPromoArray{
             arrayPromotions.append(x)
         }
