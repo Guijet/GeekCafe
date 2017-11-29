@@ -67,7 +67,7 @@ class HistoriqueList: UIViewController,UIScrollViewDelegate{
         var newY:CGFloat = 0
         var index:Int = 0
         if(arrayHistory.count > 0){
-            for x in arrayHistory.reversed(){
+            for x in arrayHistory{
                 
                 let button = UIButton()
                 button.frame = CGRect(x: 0, y: newY, width: view.frame.width, height: rh(71))

@@ -78,7 +78,7 @@ class APIRequestHistory{
     func getItemFromOrderID(id:Int)->[itemInfo]{
         var itemsinlist = [itemInfo]()
         var json = Utility().getJson(url: "\(Global.global.ip!)order/\(id)", method: "GET",needToken:true)
-
+        var subItemsPrice:Float = 0
         if let data = json["data"] as? [String:Any]{
             
             if let items = data["items"] as? [String:Any]{
@@ -116,7 +116,22 @@ class APIRequestHistory{
                             else{
                                 type = "unknown image"
                             }
-                            itemsinlist.append(itemInfo(price: price, image_url: image, name: name, type: type))
+                            if let subitems = x["subitems"] as? [String:Any]{
+                                if let dataSubItems = subitems["data"] as? [[String:Any]]{
+                                    if(dataSubItems.count > 0){
+                                        for x in dataSubItems{
+                                            if let priceSubItemsN = x["price"] as? NSNumber{
+                                                subItemsPrice += priceSubItemsN.floatValue
+                                            }
+                                            else if let priceSubItemsS = x["price"] as? String{
+                                                subItemsPrice += NSString(string:priceSubItemsS).floatValue
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            itemsinlist.append(itemInfo(price: price, image_url: image, name: name, type: type, subItemsPrice: subItemsPrice as NSNumber))
                         }
                     }
                 }

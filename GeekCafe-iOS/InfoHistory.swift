@@ -15,6 +15,9 @@ class InfoHistory: UIViewController {
     var arrayItems = [itemInfo]()
     var historyToPass:HistoryList!
     let backgroundImage = UIImageView()
+    var priceAllItems:Float = 0
+    let bottomView = UIView()
+    let designTaxe = UILabel()
     
     
     override func viewDidLoad() {
@@ -32,6 +35,7 @@ class InfoHistory: UIViewController {
         setUpScrollView()
         fillScrollView()
         setUpBottomPart()
+        addLBLSaved()
     }
     
     //To make bar all white non translucent and appearing
@@ -74,10 +78,9 @@ class InfoHistory: UIViewController {
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                
-                
-                
-                price.text = "$\(x.price.floatValue.twoDecimal)"
+                let totalItemPrice:Float = (x.price.floatValue + x.subItemsPrice.floatValue)
+                price.text = "$\(totalItemPrice.twoDecimal)"
+                priceAllItems += totalItemPrice
                 containerView.addSubview(price)
 
                 let flavour = UILabel()
@@ -103,8 +106,10 @@ class InfoHistory: UIViewController {
         }
     }
     
+
+    
     func setUpBottomPart(){
-        let bottomView = UIView()
+        
         bottomView.frame = CGRect(x: 0, y: rh(554), width: view.frame.width, height: rh(113))
         bottomView.backgroundColor = Utility().hexStringToUIColor(hex: "#FBFBFB")
         bottomView.makeShadow(x: 0, y: 2, blur: 4, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.40, spread: 5)
@@ -131,7 +136,7 @@ class InfoHistory: UIViewController {
         buttonFacture.setTitle("Voir la facture >", for: .normal)
         buttonFacture.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         buttonFacture.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
-        buttonFacture.addTarget(self, action: #selector(seeBill), for: .touchUpInside)
+        //buttonFacture.addTarget(self, action: #selector(seeBill), for: .touchUpInside)
         //bottomView.addSubview(buttonFacture)
         
         let totalPrice = UILabel()
@@ -151,7 +156,7 @@ class InfoHistory: UIViewController {
         priceAndTaxe.sizeToFit()
         bottomView.addSubview(priceAndTaxe)
         
-        let designTaxe = UILabel()
+        
         designTaxe.frame = CGRect(x: rw(192), y: rh(65), width: rw(145), height: rh(10))
         designTaxe.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         designTaxe.font = UIFont(name: "Lato-Light", size: rw(12))
@@ -164,13 +169,25 @@ class InfoHistory: UIViewController {
         designTaxe.center.x = priceAndTaxe.frame.midX
     }
     
-    func getPriceWithSubItems(){
-        
+    func verifyIfSavedAmount()->Bool{
+        return priceAllItems > historyToPass.amount.floatValue
     }
     
-    @objc func seeBill(){
-        print("See Bill Pressed")
+    func addLBLSaved(){
+        if(verifyIfSavedAmount()){
+            let LBL_Saved = UILabel()
+            LBL_Saved.frame = CGRect(x: rw(273), y: rh(82), width: rw(69), height: rh(10))
+            LBL_Saved.textColor = Utility().hexStringToUIColor(hex: "#6CA642")
+            LBL_Saved.font = UIFont(name: "Lato-Regular", size: rw(12))
+            LBL_Saved.textAlignment = .right
+            let totalSaved:Float = priceAllItems - historyToPass.amount.floatValue
+            LBL_Saved.text = "- \(totalSaved.twoDecimal) $"
+            LBL_Saved.sizeToFit()
+            bottomView.addSubview(LBL_Saved)
+        }
     }
+    
+
 
 }
 

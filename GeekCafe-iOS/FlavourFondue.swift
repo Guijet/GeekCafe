@@ -20,6 +20,9 @@ class FlavourFondue: UIViewController {
     var priceId:NSNumber!
     var nbChoix = 5
     var toppingID:Int = 0
+    var toppingImage = UIImageView()
+    var isImageSet:Bool = false
+    var isSetCancel:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,15 +130,46 @@ class FlavourFondue: UIViewController {
             performSegue(withIdentifier:"toSubitemsFondue",sender: nil)
         }
         else{
-            Utility().alertYesNo(message: "Vous n'avez pas choisi de garniture voulez-vous continuer sans?", title: "Message", control: self, yesAction: {
-                self.performSegue(withIdentifier: "toSubitemsFondue", sender: nil)
-            }, noAction: nil, titleYes: "Oui", titleNo: "Non", style: .alert)
+            Utility().alert(message: "Vous devez choisir une garniture pour accompagner votre fondue!", title: "Message", control: self)
         }
         
     }
 
     @objc func tapSubitem(sender:UITapGestureRecognizer){
+        if(!isImageSet){
+            toppingImage.frame = bolImage.frame
+            toppingImage.image = (sender.view! as! UIImageView).image
+            toppingImage.contentMode = .scaleAspectFit
+            self.view.addSubview(toppingImage)
+            setCancelButton()
+            isImageSet = true
+        }
+        else{
+            changeImageTopping(sender: sender.view! as! UIImageView)
+        }
         toppingID = sender.view!.tag
+    }
+    
+    func changeImageTopping(sender:UIImageView){
+        toppingImage.image = sender.image
+    }
+    
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(removeImage))
+        self.navigationItem.rightBarButtonItem = cancel
+        isSetCancel = true
+    }
+    
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+        isSetCancel = false
+    }
+    
+    @objc func removeImage(){
+        toppingID = 0
+        toppingImage.removeFromSuperview()
+        removeBarCancelButton()
+        isImageSet = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -140,6 +140,7 @@ class FlavourCrepe: UIViewController {
     @objc func tapSubitem(sender:UITapGestureRecognizer){
         if(nbSelectionChoix < nbChoix){
             let imageTag = sender.view!.tag
+            addImage(imageSubitem: (sender.view as! UIImageView).image!)
             updateBadge(imageViewSubitem:sender.view!)
             subitemsIds.append(imageTag as NSNumber)
             updatePriceSubitems(subItemId: imageTag)
@@ -214,6 +215,7 @@ class FlavourCrepe: UIViewController {
             }
         }
         removeBarCancelButton()
+        removeAllImageSubItems()
         price = initialPrice as NSNumber
         subitemsIds.removeAll()
         nbSelectionChoix = 0
@@ -246,7 +248,23 @@ class FlavourCrepe: UIViewController {
             }
         }
     }
-    
+    func addImage(imageSubitem:UIImage){
+        let imageS = UIImageView()
+        imageS.accessibilityIdentifier = "imageSub"
+        imageS.frame = crepeImage.frame
+        imageS.contentMode = .scaleAspectFit
+        imageS.image = imageSubitem
+        self.view.addSubview(imageS)
+    }
+    func removeAllImageSubItems(){
+        for x in self.view.subviews{
+            if(x.accessibilityIdentifier == "imageSub"){
+                if let imageToRemove = x as? UIImageView{
+                    imageToRemove.removeFromSuperview()
+                }
+            }
+        }
+    }
     @objc func nextPressed(){
         Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromCrepe", sender: nil)

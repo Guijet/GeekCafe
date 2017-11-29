@@ -14,6 +14,7 @@ class ChooseTopping:UIViewController{
     let crepeImage = UIImageView()
     let bottomScrollView = UIScrollView()
     let LBL_Price = UILabel()
+    let toppingImage = UIImageView()
     
     var infoItem:Item!
     var price:NSNumber!
@@ -21,6 +22,8 @@ class ChooseTopping:UIViewController{
     var nbChoix:Int!
     var initialPrice:Float = 0
     var toppingID:Int = 0
+    var isImageSet:Bool = false
+    var isSetCancel:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +34,11 @@ class ChooseTopping:UIViewController{
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+
         initialPrice = price.floatValue
     }
     
+
     func setUpTopPart(){
         LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$\(price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
@@ -55,6 +60,7 @@ class ChooseTopping:UIViewController{
         crepeImage.contentMode = .scaleAspectFit
         self.view.addSubview(crepeImage)
     }
+    
     
     func setUpBottom(){
         
@@ -119,6 +125,7 @@ class ChooseTopping:UIViewController{
         }
     }
 
+
     @objc func nextPressed(){
         if(toppingID != 0){
             performSegue(withIdentifier:"toFlavourCrepe",sender: nil)
@@ -130,9 +137,46 @@ class ChooseTopping:UIViewController{
         }
         
     }
+
     @objc func tapSubitem(sender:UITapGestureRecognizer){
+        if(!isImageSet){
+            toppingImage.frame = crepeImage.frame
+            toppingImage.image = (sender.view! as! UIImageView).image
+            toppingImage.contentMode = .scaleAspectFit
+            self.view.addSubview(toppingImage)
+            setCancelButton()
+            isImageSet = true
+        }
+        else{
+            changeImageTopping(sender: sender.view! as! UIImageView)
+        }
+        
         toppingID = sender.view!.tag
     }
+
+
+    func changeImageTopping(sender:UIImageView){
+        toppingImage.image = sender.image
+    }
+
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(removeImage))
+        self.navigationItem.rightBarButtonItem = cancel
+        isSetCancel = true
+    }
+
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+        isSetCancel = false
+    }
+
+    @objc func removeImage(){
+        toppingID = 0
+        toppingImage.removeFromSuperview()
+        removeBarCancelButton()
+        isImageSet = false
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toFlavourCrepe"){
             (segue.destination as! FlavourCrepe).infoItem = self.infoItem

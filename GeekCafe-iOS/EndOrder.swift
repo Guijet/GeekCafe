@@ -682,7 +682,12 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         if(TB_Points.text != ""){
             if(Int(TB_Points.text!)! <= Global.global.userInfo.points){
                 numberOfPointsUsed = Int(TB_Points.text!)!
-                self.checkPrices = verifyPrice()
+                if(promoCode == ""){
+                    self.checkPrices = verifyPrice()
+                }
+                else{
+                    self.checkPrices = verifyPrice(promoCode:promoCode)
+                }
                 if(!self.checkPrices.error){
                     isPointsUsed = true
                     updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
@@ -707,10 +712,10 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     @objc func usePromoCode(){
         xPressed()
         if(TB_Promo.text != ""){
+            promoCode = TB_Promo.text!
             self.checkPrices = verifyPrice(promoCode: TB_Promo.text!)
             if(!self.checkPrices.error){
                 isPromoUsed = true
-                promoCode = TB_Promo.text!
                 updatePrice(price:self.checkPrices.subtotal, savedAmount: checkPrices.priceSaved)
                 Utility().alert(message: "Rabais appliquer avec succès sur votre commande", title: "Message", control: self)
             }
@@ -780,6 +785,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //HERE
     //VERIFY PRICES
     func verifyPrice(promoCode:String = "")->TotalPrice{
+        print(promoCode)
         var json:[String:Any]!
         var totalPrice:TotalPrice!
         var error:Bool!

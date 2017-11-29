@@ -138,6 +138,9 @@ class APIRequestCommande{
                             if let newSize = dataPrices[x]["size"] as? String{
                                 size = newSize
                             }
+                            else{
+                                size = ""
+                            }
                             var idPrice:Int!
                             if let idPriceN = dataPrices[x]["id"] as? Int{
                                 idPrice = idPriceN
@@ -276,8 +279,10 @@ class APIRequestCommande{
             jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
         else{
-            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":Int(promoCode)!,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
+        
+        
         return jsonData!
     }
     
@@ -357,7 +362,7 @@ class APIRequestCommande{
     func checkPriceOrder(arrayItems:[itemOrder],points:Int,promoCode:String = "")->[String:Any]{
         var finish = false
         var result: [String: Any]!
-        
+        print(promoCode)
         DispatchQueue.global(qos:.background).async {
             var request = URLRequest(url: URL(string: "\(Global.global.ip!)checkprice")!)
             request.httpMethod = "POST"
@@ -367,9 +372,13 @@ class APIRequestCommande{
             
             if(promoCode == ""){
                 request.httpBody = self.buildJsonOrderCheckPrice(arrayItems: arrayItems, points: points)
+                let string1 = String(data: self.buildJsonOrderCheckPrice(arrayItems: arrayItems, points: points,promoCode: promoCode), encoding: String.Encoding.utf8)
+                print(string1!)
             }
             else{
                 request.httpBody = self.buildJsonOrderCheckPrice(arrayItems: arrayItems, points: points,promoCode: promoCode)
+                let string1 = String(data: self.buildJsonOrderCheckPrice(arrayItems: arrayItems, points: points,promoCode: promoCode), encoding: String.Encoding.utf8)
+                print(string1!)
             }
             
             

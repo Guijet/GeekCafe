@@ -249,15 +249,15 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
     
     @objc func deleteRow(){
         let view = getView(withTag: tagSelectedSwipe)
-        
+        self.rightButtonDelete.isHidden = true
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
             view.center.x -= self.view.frame.width
             self.rightButtonDelete.center.x -= self.view.frame.width
         }, completion: { _ in
-            self.rightButtonDelete.isHidden = true
             view.removeFromSuperview()
         })
         moveUpAllViewAfter(tag: tagSelectedSwipe)
+        
         Global.global.itemsOrder.remove(at: tagSelectedSwipe)
         tagSelectedSwipe = -1
         if(Global.global.itemsOrder.count <= 0){
