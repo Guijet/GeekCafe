@@ -534,7 +534,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         promoContainer.addSubview(X_Button)
         
         //y to 592
-        BTN_Apply.createCreateButton(title: "Appliquer", frame: CGRect(x:rw(88),y:rh(592) + 64,width:rw(202),height:rh(50)), fontSize: rw(20), containerView: promoContainer)
+        BTN_Apply.createCreateButton(title: "Appliquer", frame: CGRect(x:rw(88),y:rh(330) + 64,width:rw(202),height:rh(50)), fontSize: rw(20), containerView: promoContainer)
         BTN_Apply.addTarget(self, action: #selector(usePromoCode), for: .touchUpInside)
         
         UIApplication.shared.keyWindow?.addSubview(promoContainer)

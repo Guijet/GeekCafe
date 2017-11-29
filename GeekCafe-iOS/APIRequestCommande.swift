@@ -286,7 +286,7 @@ class APIRequestCommande{
             jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
         else{
-            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":Int(promoCode)!,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"items":items] as [String : Any], options: .prettyPrinted)
         }
         
         
