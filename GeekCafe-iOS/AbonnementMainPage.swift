@@ -24,7 +24,7 @@ class AbonnementMainPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loading.buildViewAndStartAnimate(view: self.view)
+        loading.startWithKeyWindows()
         DispatchQueue.global().async {
             self.currentAbonnement = Global.global.userInfo.abonnement
             DispatchQueue.main.async {
@@ -35,7 +35,7 @@ class AbonnementMainPage: UIViewController {
                 self.setUpBottomView()
                 self.setUpTopCard()
                 self.setUpBottomButton()
-                self.loading.stopAnimatingAndRemove(view: self.view)
+                self.loading.removeFromKeyWindow()
             }
         }
     }

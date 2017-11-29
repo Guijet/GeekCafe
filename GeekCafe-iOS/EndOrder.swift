@@ -66,7 +66,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         super.viewDidLoad()
         self.title = "Commande"
         self.navigationItem.setHidesBackButton(true, animated:false)
-        self.loading.buildViewAndStartAnimate(view: self.view)
+        self.loading.startWithKeyWindows()
         DispatchQueue.global(qos:.background).async {
             self.checkPrices = self.verifyPrice()
             DispatchQueue.main.async {
@@ -74,7 +74,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 self.setUpScrollView()
                 self.fillScrollView()
                 self.setBottomView()
-                self.loading.stopAnimatingAndRemove(view: self.view)
+                self.loading.removeFromKeyWindow()
             }
         }
     }
@@ -695,55 +695,84 @@ class EndOrder: UIViewController,UITextFieldDelegate{
 
     //TODO:ADD CHECK PRICE
     @objc func pointsAdded(){
+        self.loading.startWithKeyWindows()
         xPressed()
         if(TB_Points.text != ""){
             if(Int(TB_Points.text!)! <= Global.global.userInfo.points){
                 numberOfPointsUsed = Int(TB_Points.text!)!
-                if(promoCode == ""){
-                    self.checkPrices = verifyPrice()
+                DispatchQueue.global().async{
+                    if(!self.isPromoUsed){
+                        self.checkPrices = self.verifyPrice()
+                    }
+                    else{
+                        self.checkPrices = self.verifyPrice(promoCode:self.promoCode)
+                    }
+                    if(!self.checkPrices.error){
+                        self.isPointsUsed = true
+                        DispatchQueue.main.async {
+                            self.updatePrice()
+                            self.loading.removeFromKeyWindow()
+                            Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
+                        }
+                        
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.loading.removeFromKeyWindow()
+                            Utility().alert(message: self.checkPrices.message, title: "Error", control: self)
+                        }
+                    }
                 }
-                else{
-                    self.checkPrices = verifyPrice(promoCode:promoCode)
-                }
-                if(!self.checkPrices.error){
-                    isPointsUsed = true
-                    updatePrice()
-                    Utility().alert(message: "Points ajouter avec succès à votre commande!", title: "Message", control: self)
-                }
-                else{
-                    Utility().alert(message: checkPrices.message, title: "Error", control: self)
-                }
+                
                 TB_Points.text = ""
             }
             else{
-                Utility().alert(message: "Vous n'avez pas assez de points.", title: "Message", control: self)
+                DispatchQueue.main.async{
+                    self.loading.removeFromKeyWindow()
+                    Utility().alert(message: "Vous n'avez pas assez de points.", title: "Message", control: self)
+                }
             }
         }
         else{
-            Utility().alert(message: "Vous devez entrer une valeur de points", title: "Message", control: self)
+            DispatchQueue.main.async{
+                self.loading.removeFromKeyWindow()
+                Utility().alert(message: "Vous devez entrer une valeur de points", title: "Message", control: self)
+            }
         }
 
         
     }
     
     @objc func usePromoCode(){
+        self.loading.startWithKeyWindows()
         xPressed()
         if(TB_Promo.text != ""){
-            promoCode = TB_Promo.text!
-            self.checkPrices = verifyPrice(promoCode: TB_Promo.text!)
-            if(!self.checkPrices.error){
-                isPromoUsed = true
-                updatePrice()
-                Utility().alert(message: "Rabais appliquer avec succès sur votre commande", title: "Message", control: self)
+            self.promoCode = self.TB_Promo.text!
+            DispatchQueue.global().async {
+                self.checkPrices = self.verifyPrice(promoCode: self.promoCode)
+                if(!self.checkPrices.error){
+                    self.isPromoUsed = true
+                    DispatchQueue.main.sync{
+                        self.updatePrice()
+                        self.loading.removeFromKeyWindow()
+                        Utility().alert(message: "Rabais appliquer avec succès sur votre commande", title: "Message", control: self)
+                    }
+                }
+                else{
+                    DispatchQueue.main.async{
+                        self.loading.removeFromKeyWindow()
+                        Utility().alert(message: self.checkPrices.message, title: "Message", control: self)
+                    }
+                }
             }
-            else{
-                Utility().alert(message: self.checkPrices.message, title: "Message", control: self)
-            }
-            TB_Promo.text = ""
         }
         else{
-            Utility().alert(message: "Vous devez entrer un code de promotions", title: "Error", control: self)
+             DispatchQueue.main.async{
+                self.loading.removeFromKeyWindow()
+                Utility().alert(message: "Vous devez entrer un code de promotions", title: "Error", control: self)
+            }
         }
+        self.TB_Promo.text = ""
     }
     
     func updatePrice(){
@@ -765,19 +794,19 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
 
     @objc func payPressed(sender:UIButton){
-        self.loading.buildViewAndStartAnimate(view:self.view)
+        self.loading.startWithKeyWindows()
         DispatchQueue.global().async {
             if(Global.global.userInfo.cards.count > 0){
                 if(!self.isPromoUsed){
                     if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: self.numberOfPointsUsed)){
                         DispatchQueue.main.async {
-                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.loading.removeFromKeyWindow()
                             self.performSegue(withIdentifier: "toConfirmation", sender: nil)
                         }
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.loading.removeFromKeyWindow()
                             self.performSegue(withIdentifier: "toFailedOrder", sender: nil)
                         }
                     }
@@ -785,13 +814,13 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 else{
                     if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: self.numberOfPointsUsed,promoCode:self.promoCode)){
                         DispatchQueue.main.async {
-                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.loading.removeFromKeyWindow()
                             self.performSegue(withIdentifier: "toConfirmation", sender: nil)
                         }
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.loading.removeFromKeyWindow()
                             self.performSegue(withIdentifier: "toFailedOrder", sender: nil)
                         }
                     }
@@ -799,7 +828,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             }
             else{
                 DispatchQueue.main.async {
-                    self.loading.stopAnimatingAndRemove(view: self.view)
+                    self.loading.removeFromKeyWindow()
                     Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
                 }
             }
@@ -817,13 +846,14 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //HERE
     //VERIFY PRICES
     func verifyPrice(promoCode:String = "")->TotalPrice{
+        
         var json:[String:Any]!
         var totalPrice:TotalPrice!
         var error:Bool!
         var errorMessage:String = ""
         var total:NSNumber!
         var subtotal:NSNumber!
-        var taxes:NSNumber!
+        var taxes:NSNumber = 0
         var priceSaved:NSNumber!
         
         if(promoCode == ""){
@@ -832,15 +862,16 @@ class EndOrder: UIViewController,UITextFieldDelegate{
         else{
             json = APIRequestCommande().checkPriceOrder(arrayItems: Global.global.itemsOrder,  points: numberOfPointsUsed,promoCode:promoCode)
         }
-        
         if let errorS = json["error"] as? String{
             error = true
             errorMessage = errorS
         }
-        else{
-            error = false
+        else if let errorsS = json["errors"] as? [[String:Any]]{
+            error = true
+            errorMessage = "La promotion entrée est invalide."
         }
-        if let order = json["order"] as? [String:Any]{
+        else if let order = json["order"] as? [String:Any]{
+            error = false
             if let reducedAmountN = order["reduced"] as? NSNumber{
                 priceSaved = reducedAmountN
             }
@@ -868,6 +899,8 @@ class EndOrder: UIViewController,UITextFieldDelegate{
             totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved, taxes: taxes)
         }
         else{
+            error = true
+            errorMessage = "La promotion utiliser est invalide."
             totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage, taxes: taxes)
         }
         return totalPrice

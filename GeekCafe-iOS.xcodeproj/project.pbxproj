@@ -451,6 +451,14 @@
 			name = "UI Swift Files";
 			sourceTree = "<group>";
 		};
+		460B314E1FCF27D100E19CB9 /* UtilityPrices */ = {
+			isa = PBXGroup;
+			children = (
+				461A89951FB368480008AA5C /* Prices.swift */,
+			);
+			name = UtilityPrices;
+			sourceTree = "<group>";
+		};
 		460D5BC81F702AEB00245F27 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,7 +586,6 @@
 				461232AE1F78310400D04E30 /* CartCommmande.swift */,
 				46344BDD1F7BDC1500A85389 /* DoneCommandRed.swift */,
 				46344BDF1F7BE18D00A85389 /* DoneCommandGreen.swift */,
-				461A89951FB368480008AA5C /* Prices.swift */,
 			);
 			name = ListeCommande;
 			sourceTree = "<group>";
@@ -665,6 +672,7 @@
 		468785161F7193D10009C292 /* UI Files */ = {
 			isa = PBXGroup;
 			children = (
+				460B314E1FCF27D100E19CB9 /* UtilityPrices */,
 				461232AC1F782F1F00D04E30 /* Main UI */,
 				461232A31F782ED000D04E30 /* Fondue */,
 				461232A21F782EC900D04E30 /* Crêpe */,

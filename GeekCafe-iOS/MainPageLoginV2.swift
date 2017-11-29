@@ -261,8 +261,9 @@ class MainPageLoginV2: UIViewController{
         endEditing()
         if(firstView.getEmailText() != "" && firstView.getPasswordText() != ""){
             self.loading.buildViewAndStartAnimate(view: self.view)
+            let password = self.firstView.getPasswordText()
             DispatchQueue.global(qos:.background).async {
-                if(APIRequestLogin().login(password: self.firstView.getPasswordText(), email: self.firstView.getEmailText())){
+                if(APIRequestLogin().login(password: password, email: self.firstView.getEmailText())){
                     if(APIRequestLogin().viewUser()){
                         DispatchQueue.main.async {
                             self.loading.stopAnimatingAndRemove(view: self.view)

@@ -19,7 +19,7 @@ class ListAbonnement: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loading.buildViewAndStartAnimate(view: self.view)
+        loading.startWithKeyWindows()
         DispatchQueue.global().async {
             self.arrAbonnements = APIRequestAbonnement().getAllAbonnement()
             DispatchQueue.main.async {
@@ -28,7 +28,7 @@ class ListAbonnement: UIViewController {
                 self.setNavigationTitle()
                 self.setUpScrollView()
                 self.fillScrollView()
-                self.loading.stopAnimatingAndRemove(view: self.view)
+                self.loading.removeFromKeyWindow()
             }
         }
         
@@ -315,8 +315,16 @@ class ListAbonnement: UIViewController {
 
     //Aderer a l'abonnement
     @objc func getAbonnement(sender:UIButton){
-        APIRequestAbonnement().modifyAbonnement(id_sub: sender.superview!.tag)
-        _ = self.navigationController?.popViewController(animated: true)
+        Utility().alertYesNo(message: "Voulez-vous adhérer à cette abonnement?",title: "Message",control: self,yesAction:{
+            self.loading.startWithKeyWindows()
+            DispatchQueue.global().async {
+                APIRequestAbonnement().modifyAbonnement(id_sub: sender.superview!.tag)
+                DispatchQueue.main.async{
+                    self.loading.removeFromKeyWindow()
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+            }
+        },noAction:nil,titleYes: "Oui",titleNo: "Cancel",style: .alert)
     }
 }
 
