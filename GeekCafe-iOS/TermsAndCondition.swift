@@ -27,7 +27,7 @@ class TermsAndCondition: UIViewController,UIWebViewDelegate {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Terms and condition"
+        self.title = "Termes et conditions"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     

@@ -20,6 +20,8 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
     var checkPrices:TotalPrice!
     var tagSelectedSwipe = -1
     var lastElementY : CGFloat = 0
+    let closeButton = UIButton()
+    let priceLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,11 +141,11 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
         bottomView.makeShadow(x: 0, y: 2, blur: 4, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.40, spread: 5)
         view.addSubview(bottomView)
         
-        let closeButton = UIButton()
+        
         closeButton.createCreateButton(title: "Payer", frame: CGRect(x: rw(21), y: rh(12), width: rw(129), height: rh(40)), fontSize: rw(20), containerView: bottomView)
         closeButton.addTarget(self, action: #selector(toPay), for: .touchUpInside)
         
-        let priceLabel = UILabel()
+        
         priceLabel.createLabel(frame: CGRect(x: view.frame.midX, y: rh(14), width: (view.frame.width/2) - rw(30), height: rh(32)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(26), textAignment: .right, text: "\(checkPrices.subtotal.floatValue.twoDecimal)$")
         bottomView.addSubview(priceLabel)
     }
@@ -196,7 +198,7 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
             totalPrice = TotalPrice(error: error, subtotal: subtotal, total: total, priceSaved: priceSaved, taxes: taxes)
         }
         else{
-            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage, taxes: taxes)
+            totalPrice = TotalPrice(error: error, subtotal: 0, total: 0, priceSaved: 0,message:errorMessage, taxes: 0)
         }
         return totalPrice
     }
@@ -268,8 +270,19 @@ class CartCommmande: UIViewController,UIGestureRecognizerDelegate {
         Global.global.itemsOrder.remove(at: tagSelectedSwipe)
         tagSelectedSwipe = -1
         if(Global.global.itemsOrder.count <= 0){
-
+            closeButton.isEnabled = false
+            setLabelNoItems()
         }
+        checkPrices = verifyPrice()
+        priceLabel.text = checkPrices.total.floatValue.twoDecimal
+        
+    }
+    func setLabelNoItems(){
+        let labelNoHistory = UILabel()
+        labelNoHistory.numberOfLines = 2
+        labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Vous avez présentement aucun item \ndans votre panier.")
+        labelNoHistory.numberOfLines = 2
+        scrollView.addSubview(labelNoHistory)
     }
 
     func getView(withTag: Int) -> UIView {

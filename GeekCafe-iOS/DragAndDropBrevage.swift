@@ -28,7 +28,7 @@ class DragAndDropBrevage: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Café"
+        self.title = "Cafés"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
         setUpImageCoffee()
@@ -50,7 +50,7 @@ class DragAndDropBrevage: UIViewController{
         view.addSubview(LBL_DTop1)
         
         let LBL_DTop2 = UILabel()
-        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(137),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez dans votre tasse ce que vous désirez")
+        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(137),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Choisissez ce que vous voulez dans votre café")
         view.addSubview(LBL_DTop2)
     }
     

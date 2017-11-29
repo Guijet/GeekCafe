@@ -228,7 +228,7 @@ class SignUpV2_2: UIViewController,UIImagePickerControllerDelegate,UINavigationC
             self.present(self.imagePicker, animated: true, completion: nil)
         }
         else if(photos == .denied){
-            Utility().alert(message: "Can not access photo library. You need to activate it in your settings", title: "Message", control: self)
+            Utility().alert(message: "Impossible d'accéder à la librairie de photos. Vous devez le changer dans vos paramètre de l'application", title: "Message", control: self)
         }
     }
     

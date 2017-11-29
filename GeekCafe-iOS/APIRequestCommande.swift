@@ -248,10 +248,10 @@ class APIRequestCommande{
         }
         let jsonData:Data!
         if (promoCode == ""){
-            jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["points":points,"card_pay":card_pay,"branch_id":branch_id,"items":items] as [String : Any], options: .prettyPrinted)
         }
         else{
-            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"card_pay":card_pay,"branch_id":branch_id,"counter_id":counter_id,"items":items] as [String : Any], options: .prettyPrinted)
+            jsonData = try? JSONSerialization.data(withJSONObject: ["promotion_id":promoCode,"points":points,"card_pay":card_pay,"branch_id":branch_id,"items":items] as [String : Any], options: .prettyPrinted)
         }
         return jsonData!
     }

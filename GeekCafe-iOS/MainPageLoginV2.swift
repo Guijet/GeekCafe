@@ -277,7 +277,7 @@ class MainPageLoginV2: UIViewController{
             }
         }
         else{
-            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
         }
     }
 }

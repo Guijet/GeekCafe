@@ -49,7 +49,7 @@ class ListAbonnement: UIViewController {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Liste Abonnements"
+        self.title = "Liste d'abonnements"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     

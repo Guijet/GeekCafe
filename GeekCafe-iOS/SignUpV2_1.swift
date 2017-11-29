@@ -134,7 +134,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
             }
         }
         else{
-            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
         }
     }
     
@@ -211,7 +211,7 @@ class SignUpv2_1:UIViewController,UITextFieldDelegate,UIImagePickerControllerDel
             self.present(self.imagePicker, animated: true, completion: nil)
         }
         else if(photos == .denied){
-            Utility().alert(message: "Can not access photo library. You need to activate it in your settings", title: "Message", control: self)
+            Utility().alert(message: "Impossible d'accéder la librairie. Vous devez l'autoriser dans vos paramètres de l'application.", title: "Message", control: self)
         }
     }
     

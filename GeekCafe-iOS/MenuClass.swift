@@ -264,7 +264,7 @@ class MenuClass{
                             self.closeMenu()
                             return
                         }
-                        Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                        Utility().alertWithChoice(message: "Vous avez présentement aucune méthode de paiement. Vous allez seulement pouvoir commander au comptoir. Voulez-vous continuer ?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continuer", actionTitle2: "Ajouter une méthode de paiement", action1: {
                             if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
                                 self.closeMenu()
                                 return
@@ -453,7 +453,7 @@ class MenuClass{
                     self.closeMenu()
                     return
                 }
-                Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                Utility().alertWithChoice(message: "Vous avez présentement aucune méthode de paiement. Vous allez seulement pouvoir commander au comptoir. Voulez-vous continuer ?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continuer", actionTitle2: "Ajouter une méthode de paiement", action1: {
                     if UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"{
                         self.closeMenu()
                         return

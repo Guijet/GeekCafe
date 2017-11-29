@@ -67,7 +67,13 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         buttonAddCard.frame = CGRect(x: 0, y: rh(601), width: view.frame.width, height: rh(66))
         buttonAddCard.backgroundColor = UIColor.white
         buttonAddCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
-        buttonAddCard.setTitle("Change payment method", for: .normal)
+        if(Global.global.userInfo.cards.count <= 0){
+            buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
+        }
+        else{
+            buttonAddCard.setTitle("Modifier ma méthode de paiement.", for: .normal)
+        }
+        
         if(Global.global.userInfo.cards.count <= 0){
             buttonAddCard.setTitle("Add payment method", for: .normal)
         }
@@ -244,7 +250,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
 
         let addButton = UIButton()
         addButton.frame = CGRect(x: rw(280), y: rh(7.5), width: rw(75), height: rh(35))
-        addButton.setTitle("Add Card", for: .normal)
+        addButton.setTitle("Ajouter Carte", for: .normal)
         addButton.setTitleColor(Utility().hexStringToUIColor(hex: "#16E9A6"), for: .normal)
         addButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
         addButton.addTarget(self, action: #selector(addOrChangeCard), for: .touchUpInside)
@@ -274,7 +280,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         labelCardNumber.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         labelCardNumber.font = UIFont(name: "Lato-Bold", size: rw(9))
         labelCardNumber.textAlignment = .left
-        labelCardNumber.text = "CARD NUMBER".uppercased()
+        labelCardNumber.text = "NUMÉRO CARTE".uppercased()
         topCard.addSubview(labelCardNumber)
         
         let cameraButton = UIButton()
@@ -303,7 +309,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         expirationDate.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         expirationDate.font = UIFont(name: "Lato-Bold", size: rw(9))
         expirationDate.textAlignment = .left
-        expirationDate.text = "EXPIRATION DATE".uppercased()
+        expirationDate.text = "DATE EXPIRATION".uppercased()
         topCard.addSubview(expirationDate)
         
         TB_Expiration.delegate = self
@@ -347,14 +353,14 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         labelCardHolder.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         labelCardHolder.font = UIFont(name: "Lato-Bold", size: rw(9))
         labelCardHolder.textAlignment = .left
-        labelCardHolder.text = "CARDHOLDER NAME".uppercased()
+        labelCardHolder.text = "NOM DÉTENTEUR".uppercased()
         topCard.addSubview(labelCardHolder)
         
         TB_CardHolderName.delegate = self
         TB_CardHolderName.autocorrectionType = .no
         TB_CardHolderName.frame = CGRect(x: rw(120), y: rh(129), width: rh(180), height: rh(17))
         TB_CardHolderName.textColor = Utility().hexStringToUIColor(hex: "#171616")
-        TB_CardHolderName.placeholder = "Card Holder Name"
+        TB_CardHolderName.placeholder = "Nom du détenteur de la carte"
         TB_CardHolderName.font = UIFont(name: "Lato-Regular", size: rw(14))
         TB_CardHolderName.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(12))
         TB_CardHolderName.textAlignment = .right
@@ -424,6 +430,12 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
                 self.emptyScrollView()
                 self.fillScrollView()
                 self.load.stopAnimatingAndRemove(view: self.view)
+                if(Global.global.userInfo.cards.count <= 0){
+                    self.buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
+                }
+                else{
+                    self.buttonAddCard.setTitle("Modifier ma méthode de paiement.", for: .normal)
+                }
             }
         }
     }
@@ -517,7 +529,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             }
         }
         else{
-            Utility().alert(message: "You need to fill all fields", title: "Message", control: self)
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
         }
         
     }
@@ -547,12 +559,12 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
                     }
                 }
                 else{
-                    Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
+                    Utility().alert(message: "Erreur lors de la communication avec Stripe", title: "Erreur", control: self)
                 }
             })
         }
-        catch let error as NSError{
-            print(error)
+        catch let _ as NSError{
+            Utility().alert(message: "Erreur lors de la communication avec Stripe", title: "Erreur", control: self)
         }
     }
     

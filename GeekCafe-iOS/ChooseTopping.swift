@@ -48,7 +48,7 @@ class ChooseTopping:UIViewController{
         view.addSubview(LBL_DTop1)
         
         let LBL_DTop2 = UILabel()
-        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(122),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez sur la crêpe le style de\n couvrement que vous désirez")
+        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(122),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Choisissez le style de votre crêpe.\n Quelle garniture désirez-vous ?")
         LBL_DTop2.numberOfLines = 2
         view.addSubview(LBL_DTop2)
     }

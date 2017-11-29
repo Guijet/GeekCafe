@@ -36,7 +36,7 @@ class DoneCommandGreen: UIViewController {
         view.addSubview(greenText)
         
         let toChronoButton = UIButton()
-        toChronoButton.createCreateButton(title: "Accepter", frame: CGRect(x:view.frame.midX - rw(100),y:rh(555),width:rw(200),height:rh(60)), fontSize: rw(22), containerView: self.view)
+        toChronoButton.createCreateButton(title: "Terminer", frame: CGRect(x:view.frame.midX - rw(100),y:rh(555),width:rw(200),height:rh(60)), fontSize: rw(22), containerView: self.view)
         toChronoButton.addTarget(self, action: #selector(toChrono), for: .touchUpInside)
     }
     

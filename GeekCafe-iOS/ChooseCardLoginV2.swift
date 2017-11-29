@@ -93,7 +93,7 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
         expirationDate.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         expirationDate.font = UIFont(name: "Lato-Bold", size: rw(9))
         expirationDate.textAlignment = .left
-        expirationDate.text = "EXPIRATION DATE".uppercased()
+        expirationDate.text = "DATE D'EXPIRATION".uppercased()
         view.addSubview(expirationDate)
         
         TB_Expiration.delegate = self
@@ -135,14 +135,14 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
         labelCardHolder.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         labelCardHolder.font = UIFont(name: "Lato-Bold", size: rw(9))
         labelCardHolder.textAlignment = .left
-        labelCardHolder.text = "CARDHOLDER NAME".uppercased()
+        labelCardHolder.text = "NOM DU DÉTENTEUR DE CARTE".uppercased()
         view.addSubview(labelCardHolder)
         
         TB_CardHolderName.delegate = self
         TB_CardHolderName.autocorrectionType = .no
         TB_CardHolderName.frame = CGRect(x: rw(153), y: rh(205), width: rh(180), height: rh(17))
         TB_CardHolderName.textColor = Utility().hexStringToUIColor(hex: "#171616")
-        TB_CardHolderName.placeholder = "Card Holder Name"
+        TB_CardHolderName.placeholder = "Nom du détenteur"
         TB_CardHolderName.font = UIFont(name: "Lato-Regular", size: rw(14))
         TB_CardHolderName.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(12))
         TB_CardHolderName.textAlignment = .right

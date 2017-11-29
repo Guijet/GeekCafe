@@ -114,7 +114,7 @@ class ConfirmCardLoginV2: UIViewController {
         textView.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         textView.font = UIFont(name: "Lato-Regular", size: rw(14))
         textView.backgroundColor = UIColor.clear
-        textView.text = "By clicking I agree, you agree that you have had an opportunity to review and are consenting without reservation to the following terms and conditions"
+        textView.text = "En cliquant vous acceptez, le fait de vérifier et accepter les termes et conditions de l'application du Geek Café. En continuant vous accepter le consentement de c'est termes et conditions"
         textView.sizeToFit()
         view.addSubview(textView)
     }

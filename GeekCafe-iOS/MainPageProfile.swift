@@ -21,10 +21,10 @@ class MainPageProfile: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if(Global.global.isFbUser){
-            titleOptions = ["Push Notifications","Évaluez notre application","Termes et conditions","Paiements"]
+            titleOptions = ["Notification Push","Évaluez notre application","Termes et conditions","Paiements"]
         }
         else{
-            titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
+            titleOptions = ["Notification Push","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
         }
         //Menu and container
         menu.setUpMenu(view: self.view)

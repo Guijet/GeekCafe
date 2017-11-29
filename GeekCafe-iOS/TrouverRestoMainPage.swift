@@ -27,9 +27,11 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     let mapView = GMSMapView()
     let regionRadius: CLLocationDistance = 1000
     let TB_Search = UITextField()
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loading.buildViewAndStartAnimate(view: self.view)
         self.menu.setUpMenu(view: self.view)
         self.setUpContainerView()
         self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Trouver un restaurant")
@@ -40,10 +42,8 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                 self.applyMapStyle()
                 self.setUpPinOnMap()
                 self.setUpBottom()
+                self.loading.stopAnimatingAndRemove(view: self.view)
             }
-        }
-        for x in arrayBranches{
-            print(x.coordinates)
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -173,7 +173,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
                 self.searchedWorked = false
-                print("Error", error ?? "")
+                Utility().alert(message: "Impossible de trouver la location avec ce code postal", title: "Error", control: self)
             }
             if let placemark = placemarks?.first {
                 self.searchedWorked = true
@@ -204,7 +204,6 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                     }
                 }
             }
-            //ZOOM SUR CETTE PIN
             focusMapOnSingleMarker(marker: closesPin)
             mapView.selectedMarker = closesPin
         }
@@ -223,10 +222,10 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
                 mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
             } else {
-                print("Unable to find style.json")
+                Utility().alert(message: "Impossible de trouver le style de la map", title: "Erreur", control: self)
             }
         } catch {
-            print("The style definition could not be loaded: \(error)")
+            Utility().alert(message: "Impossible de trouver le style de la map", title: "Erreur", control: self)
         }
     }
     
@@ -256,7 +255,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                 getCoordinates(adresse: textField.text!)
             }
             else{
-                Utility().alert(message: "This is not a valid postal code", title: "Message", control: self)
+                Utility().alert(message: "Format de code postal invalide.", title: "Erreur", control: self)
             }
         }
         textField.resignFirstResponder()

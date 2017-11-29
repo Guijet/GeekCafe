@@ -144,10 +144,6 @@ class Dashboard:UIViewController{
         arrowImage3.image = #imageLiteral(resourceName: "right_arrow")
         thirdButton.addSubview(arrowImage3)
         
-        //REMOVE FOR NOW WE JUSTE HAVE POINTS
-//        tapOnCard.addTarget(self, action: #selector(animateForPoints(sender:)))
-//        tapOnCardClose.addTarget(self, action: #selector(animateCloseCard(sender:)))
-        
         greenCard.isUserInteractionEnabled = true
         greenCard.addGestureRecognizer(tapOnCard)
         greenCard.frame = CGRect(x: rw(3), y: rh(586), width: rw(370), height: rh(70))
@@ -251,7 +247,7 @@ class Dashboard:UIViewController{
             }
         }
         else{
-            Utility().alertWithChoice(message: "You currently have no payment method. You will only be able to order at the counter. Would you like to continue?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+            Utility().alertWithChoice(message: "Vous avez présentement aucune méthode de paiement sauvegardé. Vous allez seulement pouvoir commander au comptoir. Voulez-vous continuer ?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
                 
                 
                 DispatchQueue.global().async {

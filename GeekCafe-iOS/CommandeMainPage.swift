@@ -16,6 +16,7 @@ class CommandeMainPage: UIViewController {
     let backgroundGeek = UIImageView()
     let scrollView = UIScrollView()
     var arrayItems = [ItemType]()
+    var isBoisson:Bool!
     
     //List items
     var listItemToPass:[ItemList]!
@@ -71,9 +72,13 @@ class CommandeMainPage: UIViewController {
             let secondX:CGFloat = rh(209)
             
             for x in arrayItems{
+                if(index == 6){break}
                 //Button Set up
                 let buttonItem = UIButton()
-                if((index % 2) == 1){
+                if(index == 5){
+                    buttonItem.frame = CGRect(x: rw(118), y: rh(373), width: rw(139), height: rw(139))
+                }
+                else if((index % 2) == 1){
                     buttonItem.frame = CGRect(x: firstX, y: newY, width: rw(139), height: rw(139))
                 }
                 else{
@@ -107,7 +112,7 @@ class CommandeMainPage: UIViewController {
     
     func createButton(){
         let doneButton = UIButton()
-        doneButton.createCreateButton(title: "Afficher ma commande", frame: CGRect(x: rw(73), y: rh(513), width: rw(230), height: rh(54)), fontSize: rw(20), containerView: scrollView)
+        doneButton.createCreateButton(title: "Afficher ma commande", frame: CGRect(x: rw(73), y: rh(604), width: rw(230), height: rh(54)), fontSize: rw(20), containerView: scrollView)
         doneButton.addTarget(self, action: #selector(seeOrder(sender:)), for: .touchUpInside)
     }
     
@@ -123,6 +128,7 @@ class CommandeMainPage: UIViewController {
             performSegue(withIdentifier: "toBreuvage", sender: nil)
         }
         else if(sender.accessibilityIdentifier == "Pâtisseries"){
+            isBoisson = false
             performSegue(withIdentifier: "toPatisserie", sender: nil)
         }
         else if(sender.accessibilityIdentifier == "Crêpes"){
@@ -130,6 +136,10 @@ class CommandeMainPage: UIViewController {
         }
         else if(sender.accessibilityIdentifier == "Fondues"){
             performSegue(withIdentifier: "toFondue", sender: nil)
+        }
+        else if(sender.accessibilityIdentifier == "Boissons"){
+            isBoisson = true
+            performSegue(withIdentifier: "toPatisserie", sender: nil)
         }
     }
     
@@ -139,6 +149,7 @@ class CommandeMainPage: UIViewController {
         }
         else if(segue.identifier == "toPatisserie"){
             (segue.destination as! PatisserieMain).listItemToPass = self.listItemToPass
+            (segue.destination as! PatisserieMain).isBoisson = self.isBoisson
         }
         else if(segue.identifier == "toCrepe"){
             (segue.destination as! ChooseSizeCrepe).listItemToPass = self.listItemToPass

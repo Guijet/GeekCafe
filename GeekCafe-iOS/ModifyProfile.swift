@@ -16,7 +16,7 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
     let saveButton = UIButton()
     let bottomView = UIView()
     var activeViewBot = UIView()
-    let choices = ["Modify Email","Modify Password","Modify Other informations"]
+    let choices = ["Modifier courriel","Modifier mot de passe","Modifier autres informations"]
     
     //Email
     let TB_Email = CustomTextField()
@@ -52,7 +52,7 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Modify Profile"
+        self.title = "Modifer Profil"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
@@ -117,7 +117,7 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
     func buildButtonSave(){
         saveButton.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: rh(67))
         saveButton.backgroundColor = UIColor.white
-        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitle("Sauvegarder", for: .normal)
         saveButton.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         saveButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(16))
         saveButton.addTarget(self, action: #selector(savedPressed), for: .touchUpInside)
@@ -183,11 +183,11 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.layer.zPosition = -1
         containerView.backgroundColor = UIColor.white
         
-        TB_Email.setUpTB(placeholderText: "Current Email", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.email)
+        TB_Email.setUpTB(placeholderText: "Courriel Actuel", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.email)
         
-        TB_ConfirmEmail.setUpTB(placeholderText: "New Email", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
+        TB_ConfirmEmail.setUpTB(placeholderText: "Nouveau Courriel", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
         
-        TB_ChangeEmaiPass.setUpTB(placeholderText: "Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
+        TB_ChangeEmaiPass.setUpTB(placeholderText: "Mot de passe", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
         TB_ChangeEmaiPass.isSecureTextEntry = true
         
         view.addSubview(containerView)
@@ -200,13 +200,13 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.layer.zPosition = -1
         containerView.backgroundColor = UIColor.white
         
-        TB_OldPassword.setUpTB(placeholderText: "Old Password", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216))
+        TB_OldPassword.setUpTB(placeholderText: "Ancien mot de passe", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216))
         TB_OldPassword.isSecureTextEntry = true
         
-        TB_Password.setUpTB(placeholderText: "New Password", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
+        TB_Password.setUpTB(placeholderText: "Nouveau mot de passe", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216))
         TB_Password.isSecureTextEntry = true
         
-        TB_ConfirmPass.setUpTB(placeholderText: "Confirm New Password", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
+        TB_ConfirmPass.setUpTB(placeholderText: "Confirmer le mot de passe", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216))
         TB_ConfirmPass.isSecureTextEntry = true
         
         view.addSubview(containerView)
@@ -220,11 +220,11 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
         containerView.backgroundColor = UIColor.white
         
         
-        TB_Nom.setUpTB(placeholderText: "Firstname", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.firstname)
+        TB_Nom.setUpTB(placeholderText: "Prénom", containerView: containerView, xPos: rw(52), yPos: rh(40), superView: self.view, heightToGo: rh(216),text:Global.global.userInfo.firstname)
         
-        TB_NomFamille.setUpTB(placeholderText: "Lastname", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.lastname)
+        TB_NomFamille.setUpTB(placeholderText: "Nom de famille", containerView: containerView, xPos: rw(52), yPos: rh(110), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.lastname)
         
-        TB_Phone.setUpTB(placeholderText: "Phone number", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.phone)
+        TB_Phone.setUpTB(placeholderText: "Numéro de téléphone", containerView: containerView, xPos: rw(52), yPos: rh(180), superView: self.view, heightToGo: rh(216),text: Global.global.userInfo.phone)
         
         view.addSubview(containerView)
         return containerView
@@ -287,7 +287,7 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
             self.present(self.imagePicker, animated: true, completion: nil)
         }
         else if(photos == .denied){
-            Utility().alert(message: "Can not access photo library. You need to activate it in your settings", title: "Message", control: self)
+            Utility().alert(message: "Impossible d'accéder à la librairie de photos. Veuillez activer l'accès dans les paramètre de l'application", title: "Message", control: self)
         }
     }
     
@@ -314,15 +314,15 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
                
                 if(APIRequestProfile().modifyEmail(newemail: TB_ConfirmEmail.text!, password: TB_ChangeEmaiPass.text!)){
                     animateButOut()
-                    Utility().alert(message: "Email changed successfully", title: "Message", control: self)
+                    Utility().alert(message: "Courriel modifié avec succès.", title: "Message", control: self)
                 }
                 else{
-                    Utility().alert(message: "Error while changing your email", title: "Error", control: self)
+                    Utility().alert(message: "Erreur lors du changement de courriel", title: "Error", control: self)
                 }
                 
             }
             else{
-                Utility().alert(message: "You need to fill all fields", title: "Message", control: self)
+                Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
             }
         }
         //MODIFY PASSWORD
@@ -331,19 +331,19 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
                 if(TB_Password.text! == TB_ConfirmPass.text!){
                     if(APIRequestProfile().modifyPassword(oldpassword: TB_OldPassword.text!, newpassword: TB_Password.text!)){
                         animateButOut()
-                        Utility().alert(message: "Password changed successfully", title: "Message", control: self)
+                        Utility().alert(message: "Mot de passe modifié avec succès", title: "Message", control: self)
                     }
                     else{
-                        Utility().alert(message: "Error while changing your password", title: "Error", control: self)
+                        Utility().alert(message: "Erreur lors du changement de mot de passe", title: "Error", control: self)
                     }
                 }
                 else{
-                    Utility().alert(message: "Password and confirmation does not match", title: "Message", control: self)
+                    Utility().alert(message: "Le mot de passe ne correspond pas avec la confirmation", title: "Message", control: self)
                 }
                 
             }
             else{
-                Utility().alert(message: "You need to fill all fields", title: "Message", control: self)
+                Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
             }
         }
          
@@ -352,20 +352,20 @@ class ModifyProfile:UIViewController,UIImagePickerControllerDelegate, UINavigati
             if(TB_NomFamille.text != "" && TB_Nom.text != "" && TB_Phone.text != ""){
                 if(APIRequestProfile().modifyUser(first_name: TB_Nom.text!, last_name: TB_NomFamille.text!,phone: TB_Phone.text!)){
                     animateButOut()
-                    Utility().alert(message: "Informations changed successfully", title: "Message", control: self)
+                    Utility().alert(message: "Informations modifié avec succès", title: "Message", control: self)
                 }
                 else{
-                    Utility().alert(message: "Error while changing your informations", title: "Error", control: self)
+                    Utility().alert(message: "Erreur lors de la modification du profil", title: "Error", control: self)
                 }
             }
             else{
-                Utility().alert(message: "You need to fill all fields", title: "Message", control: self)
+                Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
             }
         }
     }
     
     @objc func changeImage(){
-        Utility().alertWithChoice(message: "", title: "", control: self, actionTitle1: "Prendre une photo", actionTitle2: "Choisir une photo existante", action1: takePicture, action2: loadPicture, style: .actionSheet)
+        Utility().alertWithChoice(message: "", title: "", control: self, actionTitle1: "Prendre une photo", actionTitle2: "Choisir à partir de la librairie", action1: takePicture, action2: loadPicture, style: .actionSheet)
     }
     
     @objc func tappedCancel(){

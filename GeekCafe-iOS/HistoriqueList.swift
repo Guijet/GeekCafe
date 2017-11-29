@@ -112,7 +112,7 @@ class HistoriqueList: UIViewController,UIScrollViewDelegate{
         else{
             let labelNoHistory = UILabel()
             labelNoHistory.numberOfLines = 2
-            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Your history is currently empty.\n You will be able to see your pasts orders here.")
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Votre historique est présentement vide.\n Vous allez voir vos futurs commandes ici.")
             labelNoHistory.numberOfLines = 2
             scrollView.addSubview(labelNoHistory)
         }

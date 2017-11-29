@@ -101,6 +101,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
                 
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(6), width: rw(60), height: rw(60))
+                imageItem.contentMode = .scaleAspectFit
                 imageItem.getOptimizeImageAsync(url: x.image)
                 containerView.addSubview(imageItem)
                 

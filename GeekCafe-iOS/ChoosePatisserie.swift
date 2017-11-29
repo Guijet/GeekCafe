@@ -20,7 +20,7 @@ class ChoosePatisserie: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Muffin"
+        self.title = infoItem.type
         backgroudImage.setUpBackgroundImage(containerView: self.view)
         setUpContainer()
         setUpPrice()
@@ -44,6 +44,7 @@ class ChoosePatisserie: UIViewController{
     func setUpImage(){
         let imageItems = UIImageView()
         imageItems.frame = CGRect(x: (view.frame.width/2) - rw(95), y: rw(80.45), width: rw(190), height: rw(190))
+        imageItems.contentMode = .scaleAspectFit
         imageItems.getOptimizeImageAsync(url: infoItem.image)
         containerView.addSubview(imageItems)
         

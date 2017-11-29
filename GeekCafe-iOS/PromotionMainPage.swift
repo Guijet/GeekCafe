@@ -15,7 +15,7 @@ class PromotionMainPage: UIViewController {
     let containerView = UIView()
     var MetaPromotions:PromotionList!
     var arrayPromotions = [Promotion]()
-    
+    let backgroundView = UIImageView()
     var isNext:Bool!
     var pageNumber = 1
     var nextString:String = ""
@@ -34,6 +34,7 @@ class PromotionMainPage: UIViewController {
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
+        backgroundView.setUpBackgroundImage(containerView: self.view)
         menu.setUpFakeNavBar(view: containerView, titleTop: "Promotions")
         
         //Page set up
@@ -97,6 +98,13 @@ class PromotionMainPage: UIViewController {
                 newY += rh(209)
             }
             scrollViewPromotion.contentSize = CGSize(width: 1.0, height: newY)
+        }
+        else{
+            let labelNoHistory = UILabel()
+            labelNoHistory.numberOfLines = 2
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Aucune promotions disponible pour l'instant.\n Vous pouvez jeter un coup d'oeil plus tard")
+            labelNoHistory.numberOfLines = 2
+            scrollViewPromotion.addSubview(labelNoHistory)
         }
     }
     

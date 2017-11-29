@@ -27,7 +27,7 @@ class RateMyApp: UIViewController,UIWebViewDelegate{
     }
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Rating"
+        self.title = "Évaluez notre application"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
