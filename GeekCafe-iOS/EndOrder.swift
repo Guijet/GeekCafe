@@ -31,6 +31,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     fileprivate let scrollView  = UIScrollView()
     fileprivate var arrayItems = [itemOrder]()
     fileprivate let bottomView = UIView()
+    let loading = loadingIndicator()
     
     
     //BOOL IF USER HAS ENOUGH CREDIT
@@ -51,7 +52,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     fileprivate var promoCode:String = ""
     fileprivate var numberOfPointsUsed:Int = 0
     fileprivate var checkPrices:TotalPrice!
-    fileprivate let loading = loadingIndicator()
+
 
     let SubTotal = UILabel()
     let Taxes = UILabel()
@@ -475,6 +476,7 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     }
     
     @objc func payInStore(){
+        
         if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: false, branch_id: 6, counter_id: 1,points:numberOfPointsUsed)){
             performSegue(withIdentifier: "toConfirmation", sender: nil)
         }
@@ -763,29 +765,44 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     
 
     @objc func payPressed(sender:UIButton){
-        //REQUEST TO ORDER
-        if(Global.global.userInfo.cards.count > 0){
-            if(!isPromoUsed){
-                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: numberOfPointsUsed)){
-
-                    performSegue(withIdentifier: "toConfirmation", sender: nil)
+        self.loading.buildViewAndStartAnimate(view:self.view)
+        DispatchQueue.global().async {
+            if(Global.global.userInfo.cards.count > 0){
+                if(!self.isPromoUsed){
+                    if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: self.numberOfPointsUsed)){
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.performSegue(withIdentifier: "toConfirmation", sender: nil)
+                        }
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.performSegue(withIdentifier: "toFailedOrder", sender: nil)
+                        }
+                    }
                 }
                 else{
-                    performSegue(withIdentifier: "toFailedOrder", sender: nil)
-                    
+                    if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: self.numberOfPointsUsed,promoCode:self.promoCode)){
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.performSegue(withIdentifier: "toConfirmation", sender: nil)
+                        }
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.loading.stopAnimatingAndRemove(view: self.view)
+                            self.performSegue(withIdentifier: "toFailedOrder", sender: nil)
+                        }
+                    }
                 }
             }
             else{
-                if(APIRequestCommande().order(arrayItems: Global.global.itemsOrder, card_pay: true, branch_id: 6, counter_id: 1, points: numberOfPointsUsed,promoCode:promoCode)){
-                    performSegue(withIdentifier: "toConfirmation", sender: nil)
-                }
-                else{
-                    performSegue(withIdentifier: "toFailedOrder", sender: nil)
+                DispatchQueue.main.async {
+                    self.loading.stopAnimatingAndRemove(view: self.view)
+                    Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
                 }
             }
-        }
-        else{
-            Utility().alert(message: "You have not payment method set up", title: "Message", control: self)
         }
     }
     func updatPointsFirstViewController(){
@@ -800,7 +817,6 @@ class EndOrder: UIViewController,UITextFieldDelegate{
     //HERE
     //VERIFY PRICES
     func verifyPrice(promoCode:String = "")->TotalPrice{
-        print(promoCode)
         var json:[String:Any]!
         var totalPrice:TotalPrice!
         var error:Bool!

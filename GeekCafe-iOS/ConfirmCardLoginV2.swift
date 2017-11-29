@@ -40,10 +40,11 @@ class ConfirmCardLoginV2: UIViewController {
     var sexe:String!
     var image:UIImage!
     var isImageSet:Bool!
-    
+    let load = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.load.stopAnimatingAndRemove(view: self.view)
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpCardImage()
         setUptext()

@@ -150,7 +150,7 @@ class DragAndDropBrevage: UIViewController{
     
     func buildBadgeView(imageViewSubitem:UIView){
         let containerBadge = UIView()
-        containerBadge.frame = CGRect(x: rw(30), y: 0, width: rw(20), height: rw(20))
+        containerBadge.frame = CGRect(x: rw(25), y: rh(5), width: rw(20), height: rw(20))
         containerBadge.backgroundColor = Utility().hexStringToUIColor(hex: "#00DEAD")
         containerBadge.layer.cornerRadius = rw(10)
         containerBadge.accessibilityIdentifier = "Badge"

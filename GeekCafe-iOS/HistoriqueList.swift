@@ -24,23 +24,27 @@ class HistoriqueList: UIViewController,UIScrollViewDelegate{
     var isNext:Bool!
     var pageNumber:Int = 1
     var nextString:String!
+    let loading = loadingIndicator()
     
     
     override func viewDidLoad() {
-        //Fill fake info
-        //Set up menu and container
         super.viewDidLoad()
-        scrollView.delegate = self
-        HistoryListMeta = APIRequestHistory().getHisory(page: "\(pageNumber)")
-        arrayHistory = HistoryListMeta.Historic
-        isNext = HistoryListMeta.Meta.isNext
-        nextString = HistoryListMeta.Meta.nextString
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Historique")
-        //Page Setup
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.HistoryListMeta = APIRequestHistory().getHisory(page: "\(self.pageNumber)")
+            self.arrayHistory = self.HistoryListMeta.Historic
+            self.scrollView.delegate = self
+            self.isNext = self.HistoryListMeta.Meta.isNext
+            self.nextString = self.HistoryListMeta.Meta.nextString
+            DispatchQueue.main.async {
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Historique")
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
 
     //Hide real nav bar for menu

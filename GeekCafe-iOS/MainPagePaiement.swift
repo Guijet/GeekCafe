@@ -249,7 +249,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
 
         let addButton = UIButton()
-        addButton.frame = CGRect(x: rw(280), y: rh(7.5), width: rw(75), height: rh(35))
+        addButton.frame = CGRect(x: rw(245), y: rh(7.5), width: rw(100), height: rh(35))
         addButton.setTitle("Ajouter Carte", for: .normal)
         addButton.setTitleColor(Utility().hexStringToUIColor(hex: "#16E9A6"), for: .normal)
         addButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))

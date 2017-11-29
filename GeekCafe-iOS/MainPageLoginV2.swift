@@ -209,6 +209,18 @@ class MainPageLoginV2: UIViewController{
                         }, completion: nil)
                     }
                 }
+                else{
+                    DispatchQueue.main.async {
+                        self.loading.stopAnimatingAndRemove(view: self.view)
+                        Utility().alert(message: "Erreur lors de la connexion", title: "Message", control: self)
+                    }
+                }
+            }
+            else{
+                DispatchQueue.main.async {
+                    self.loading.stopAnimatingAndRemove(view: self.view)
+                    Utility().alert(message: "Erreur lors de la connexion", title: "Message", control: self)
+                }
             }
         }
     }

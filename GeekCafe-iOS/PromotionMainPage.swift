@@ -24,23 +24,25 @@ class PromotionMainPage: UIViewController {
     let backgroundImage = UIImageView()
     let scrollViewPromotion = UIScrollView()
     let popUpView = UIView()
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MetaPromotions =  APIRequestPromotion().getPromotions(page: "\(pageNumber)")
-        arrayPromotions = MetaPromotions.promotions
-        
-
-        //Menu and container
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Promotions")
-        backgroundView.setUpBackgroundImage(containerView: self.containerView)
-        
-        //Page set up
-        //backgroundImage.setUpBackgroundImage(containerView: containerView)
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.MetaPromotions =  APIRequestPromotion().getPromotions(page: "\(self.pageNumber)")
+            self.arrayPromotions = self.MetaPromotions.promotions
+            DispatchQueue.main.async {
+                //Menu and container
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Promotions")
+                self.backgroundView.setUpBackgroundImage(containerView: self.containerView)
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +95,7 @@ class PromotionMainPage: UIViewController {
                 let image = UIImageView()
                 image.frame = CGRect(x: rw(190), y: rh(14.5), width: rw(150), height: rw(150))
                 image.getOptimizeImageAsync(url: x.image_url)
+                image.contentMode = .scaleAspectFit
                 backgroundCard.addSubview(image)
                 
                 newY += rh(209)

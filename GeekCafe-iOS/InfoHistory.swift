@@ -18,24 +18,26 @@ class InfoHistory: UIViewController {
     var priceAllItems:Float = 0
     let bottomView = UIView()
     let designTaxe = UILabel()
-    
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        arrayItems = APIRequestHistory().getItemFromOrderID(id: idToPass)
-        
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .automatic
-        } else {
-        
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.arrayItems = APIRequestHistory().getItemFromOrderID(id: self.idToPass)
+            if #available(iOS 11.0, *) {
+                self.scrollView.contentInsetAdjustmentBehavior = .automatic
+            } else {}
+            DispatchQueue.main.async {
+                self.backgroundImage.setUpBackgroundImage(containerView: self.view)
+                self.setNavigationTitle()
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.setUpBottomPart()
+                self.addLBLSaved()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
         }
-        backgroundImage.setUpBackgroundImage(containerView: self.view)
-        setNavigationTitle()
-        setUpScrollView()
-        fillScrollView()
-        setUpBottomPart()
-        addLBLSaved()
     }
     
     //To make bar all white non translucent and appearing
@@ -71,6 +73,7 @@ class InfoHistory: UIViewController {
                 let imageItem = UIImageView()
                 imageItem.frame = CGRect(x: rw(15), y: rh(10), width: rw(60), height: rw(60))
                 imageItem.getOptimizeImageAsync(url: x.image_url)
+                imageItem.contentMode = .scaleAspectFit
                 containerView.addSubview(imageItem)
 
                 let price = UILabel()

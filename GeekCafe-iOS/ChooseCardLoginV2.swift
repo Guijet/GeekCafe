@@ -262,30 +262,36 @@ class ChooseCardLoginV2: UIViewController,UITextFieldDelegate,CardIOViewDelegate
                                 }
                             }
                             if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
+                                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
+                      
                                 DispatchQueue.main.async {
                                     self.load.stopAnimatingAndRemove(view: self.view)
+                                    self.performSegue(withIdentifier: "ConfirmCardLoginV2", sender: nil)
                                 }
-                                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
-                                self.performSegue(withIdentifier: "ConfirmCardLoginV2", sender: nil)
                             }
                             else{
                                 DispatchQueue.main.async {
                                     self.load.stopAnimatingAndRemove(view: self.view)
+                                    Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
                                 }
-                                Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
+                                
                             }
                         }
                     }
                     else{
                         DispatchQueue.main.async {
                             self.load.stopAnimatingAndRemove(view: self.view)
+                            Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
                         }
-                        Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
+                        
                     }
                 })
             }
             catch let error as NSError{
-                print(error)
+                DispatchQueue.main.async {
+                    self.load.stopAnimatingAndRemove(view: self.view)
+                    Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
+                }
             }
         }
     }

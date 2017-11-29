@@ -20,20 +20,24 @@ class AbonnementMainPage: UIViewController {
     let label1 = UILabel()
     let label2 = UILabel()
     let label3 = UILabel()
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentAbonnement = Global.global.userInfo.abonnement
-        //MENU SET UP
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Abonnements")
-        
-        //Page Set UP UI
-        backgroundImage.setUpBackgroundImage(containerView: containerView)
-        setUpBottomView()
-        setUpTopCard()
-        setUpBottomButton()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.currentAbonnement = Global.global.userInfo.abonnement
+            DispatchQueue.main.async {
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Abonnements")
+                self.backgroundImage.setUpBackgroundImage(containerView: self.containerView)
+                self.setUpBottomView()
+                self.setUpTopCard()
+                self.setUpBottomButton()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

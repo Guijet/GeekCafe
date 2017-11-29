@@ -13,18 +13,25 @@ class ListAbonnement: UIViewController {
     let scrollView = UIScrollView()
     let backgroundView = UIImageView()
     var arrAbonnements = [Abonnement]()
-    
+    let loading = loadingIndicator()
     //Detail View
     let viewContainerDetail = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        arrAbonnements = APIRequestAbonnement().getAllAbonnement()
-        removeCurrentSubFromlist()
-        backgroundView.setUpBackgroundImage(containerView: self.view)
-        setNavigationTitle()
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.arrAbonnements = APIRequestAbonnement().getAllAbonnement()
+            DispatchQueue.main.async {
+                self.removeCurrentSubFromlist()
+                self.backgroundView.setUpBackgroundImage(containerView: self.view)
+                self.setNavigationTitle()
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
+        
         
     }
     
