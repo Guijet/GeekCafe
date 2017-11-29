@@ -89,8 +89,10 @@ class CommandeMainPage: UIViewController {
                 
                 //Image in button
                 let imageItem = UIImageView()
-                imageItem.frame = CGRect(x: rw(25), y: rh(15), width: rw(90), height: rw(90))
-                imageItem.getOptimizeImageAsync(url: x.image)
+                
+                imageItem.frame = CGRect(x: rw(19.5), y: rh(5), width: rw(100), height: rw(100))
+                imageItem.getOptimizeImageAsync(url: x.image) 
+                imageItem.contentMode = .scaleAspectFit
                 buttonItem.addSubview(imageItem)
                 
                 let titleItem = UILabel()

@@ -13,7 +13,6 @@ class APIRequestMap{
     func getLocations()->[Branch]{
         var branches = [Branch]()
         let json = Utility().getJson(url: "\(Global.global.ip!)branches", method: "GET",needToken: true)
-        
         if let data = json["data"] as? [[String:Any]]{
             if(data.count > 0){
                 for x in data{
@@ -53,7 +52,7 @@ class APIRequestMap{
     }
     
     func getLongFromCoords(coords:String)->Float{
-        return coords.components(separatedBy: ",")[0].floatValue
+        return coords.components(separatedBy: ",")[1].floatValue
     }
 }
 

@@ -33,7 +33,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         self.menu.setUpMenu(view: self.view)
         self.setUpContainerView()
         self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Trouver un restaurant")
-        DispatchQueue.global().async {
+        DispatchQueue.global().sync {
             self.arrayBranches = APIRequestMap().getLocations()
             DispatchQueue.main.async {
                 self.setUpMap()
@@ -41,11 +41,10 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
                 self.setUpPinOnMap()
                 self.setUpBottom()
             }
-
-
         }
-        
-
+        for x in arrayBranches{
+            print(x.coordinates)
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         focusMapToShowAllMarkers()
@@ -102,16 +101,17 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //Fill array de markers with coordinates
     //
     func setUpPinOnMap(){
-        for x in arrayBranches{
-            let marker = GMSMarker()
-            marker.position = x.coordinates
-            marker.title = x.location
-            marker.icon = UIImage(named:"pin_little")
-            marker.map = self.mapView
-            marker.opacity = 1.0
-            markers.append(marker)
+        if(arrayBranches.count > 0){
+            for x in arrayBranches{
+                let marker = GMSMarker()
+                marker.position = x.coordinates
+                marker.title = x.location
+                marker.icon = UIImage(named:"pin_little")
+                marker.map = self.mapView
+                marker.opacity = 1.0
+                markers.append(marker)
+            }
         }
-        
     }
     
     //Custom Markers
@@ -147,13 +147,15 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //
     func focusMapToShowAllMarkers() {
         //TODO: ERROR FOUND NIL
-        let myLocation: CLLocationCoordinate2D = self.markers.first!.position
-        var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
-        for marker in self.markers {
-            bounds = bounds.includingCoordinate(marker.position)
+        if(arrayBranches.count > 0){
+            let myLocation: CLLocationCoordinate2D = self.markers.first!.position
+            var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
+            for marker in self.markers {
+                bounds = bounds.includingCoordinate(marker.position)
+            }
+            let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
+            self.mapView.animate(with:update)
         }
-        let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
-        self.mapView.animate(with:update)
     }
     
     //Focus on a single marker

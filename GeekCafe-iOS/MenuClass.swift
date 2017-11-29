@@ -149,6 +149,7 @@ class MenuClass{
         geekIcon.tintColor = Utility().hexStringToUIColor(hex: "#6CA743")
         geekIcon.setImage(#imageLiteral(resourceName: "menuLeftImage"),for:.normal)
         geekIcon.frame = CGRect(x: 18, y: fakeBar.frame.height/1.5 - 16, width: 22, height: 28)
+        geekIcon.addTarget(self, action: #selector(geekIconPressed), for: .touchUpInside)
         fakeBar.addSubview(geekIcon)
         
         
@@ -672,6 +673,30 @@ class MenuClass{
     }
     func rh(_ val: CGFloat, _ view:UIView) -> CGFloat {
         return val * (view.frame.height / 667)
+    }
+    
+    @objc func geekIconPressed(){
+        if (UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier != "DashMain"){
+            if(UIApplication.shared.keyWindow?.rootViewController?.restorationIdentifier == "CommmandeMainPage"){
+                Utility().alertYesNo(message: "Voulez vous vraiment quitter votre commande. Vous n'aller pas pouvoir conserver les items dans votre panier.", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, yesAction: {
+                    let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }, noAction: {
+                    return
+                }, titleYes: "Oui", titleNo: "Non", style: .alert)
+            }
+            else{
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
+        }
+        else{return}
     }
     
 }
