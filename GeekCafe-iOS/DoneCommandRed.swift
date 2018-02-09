@@ -12,6 +12,9 @@ class DoneCommandRed: UIViewController {
 
     let backgroundImage = UIImageView()
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.isHidden = true
+        //RESET COMMANDE ORDER
+        Global.global.itemsOrder.removeAll()
         super.viewDidLoad()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpPage()
@@ -33,7 +36,7 @@ class DoneCommandRed: UIViewController {
         view.addSubview(redText)
         
         let subText = UILabel()
-        subText.createLabel(frame: CGRect(x:0,y:redText.frame.maxY + rh(15),width:view.frame.width,height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "Votre paiement a été refusé")
+        subText.createLabel(frame: CGRect(x:0,y:redText.frame.maxY + rh(15),width:view.frame.width,height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "Votre paiement a été refusé.")
         view.addSubview(subText)
     }
 

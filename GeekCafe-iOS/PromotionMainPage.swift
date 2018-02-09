@@ -13,28 +13,36 @@ class PromotionMainPage: UIViewController {
     //Menu and container
     let menu = MenuClass()
     let containerView = UIView()
+    var MetaPromotions:PromotionList!
     var arrayPromotions = [Promotion]()
+    let backgroundView = UIImageView()
+    var isNext:Bool!
+    var pageNumber = 1
+    var nextString:String = ""
     
     //Pages element
     let backgroundImage = UIImageView()
     let scrollViewPromotion = UIScrollView()
     let popUpView = UIView()
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Fake info array
-        fillFakeInformation()
-        
-        //Menu and container
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Promotions")
-        
-        //Page set up
-        //backgroundImage.setUpBackgroundImage(containerView: containerView)
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.MetaPromotions =  APIRequestPromotion().getPromotions(page: "\(self.pageNumber)")
+            self.arrayPromotions = self.MetaPromotions.promotions
+            DispatchQueue.main.async {
+                //Menu and container
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Promotions")
+                self.backgroundView.setUpBackgroundImage(containerView: self.containerView)
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,16 +63,6 @@ class PromotionMainPage: UIViewController {
         containerView.addSubview(scrollViewPromotion)
     }
     
-    func fillFakeInformation(){
-        arrayPromotions.append(Promotion(item: "café", discount: 50, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 25, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 10, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 20, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 70, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 65, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-        arrayPromotions.append(Promotion(item: "café", discount: 30, image: UIImage(named:"test4")!, code: "12345678", id: 1))
-    }
-    
     func fillScrollView(){
         if(arrayPromotions.count > 0){
             var newY:CGFloat = rw(8)
@@ -78,33 +76,60 @@ class PromotionMainPage: UIViewController {
                 scrollViewPromotion.addSubview(backgroundCard)
                 
                 let amount = UILabel()
-                amount.frame = CGRect(x: rw(31), y: rh(40), width: rw(156), height: rh(80))
+                amount.frame = CGRect(x: rw(10), y: rh(40), width: rw(156), height: rh(80))
                 amount.textColor = Utility().hexStringToUIColor(hex: "#6CA642")
-                amount.text = "\(String(x.discount))%"
+                amount.text = "\(String(describing: x.reduction))"
                 amount.textAlignment = .left
                 amount.font = UIFont(name: "Lato-Bold", size: rw(70))
+                amount.adjustsFontSizeToFitWidth = true
                 backgroundCard.addSubview(amount)
                 
                 let labelItems = UILabel()
-                labelItems.frame = CGRect(x: rw(31), y: amount.frame.maxY, width: rw(156), height: rh(11))
+                labelItems.frame = CGRect(x: rw(10), y: amount.frame.maxY, width: rw(156), height: rh(11))
                 labelItems.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
-                labelItems.text = "sur le \(x.item)"
+                labelItems.text = "sur le \(x.itemName)"
                 labelItems.textAlignment = .left
                 labelItems.font = UIFont(name: "Lato-Light", size: rw(14))
                 backgroundCard.addSubview(labelItems)
                 
                 let image = UIImageView()
                 image.frame = CGRect(x: rw(190), y: rh(14.5), width: rw(150), height: rw(150))
-                image.image = x.image
+                image.getOptimizeImageAsync(url: x.image_url)
+                image.contentMode = .scaleAspectFit
                 backgroundCard.addSubview(image)
                 
                 newY += rh(209)
             }
             scrollViewPromotion.contentSize = CGSize(width: 1.0, height: newY)
         }
+        else{
+            let labelNoHistory = UILabel()
+            labelNoHistory.numberOfLines = 2
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Aucune promotions disponible pour l'instant.\n Vous pouvez jeter un coup d'oeil plus tard")
+            labelNoHistory.numberOfLines = 2
+            scrollViewPromotion.addSubview(labelNoHistory)
+        }
     }
     
-    func promoTapped(sender:UIButton){
+    
+    
+    func getMorePromotions(pageNumber:Int,stringRequest:String){
+        let newMetaPagination = APIRequestPromotion().getPromotions(page: "\(pageNumber)", stringRequest: stringRequest)
+        let newPromoArray = newMetaPagination.promotions
+        for x in newPromoArray{
+            arrayPromotions.append(x)
+        }
+        reloadScrollView()
+    }
+    
+    func reloadScrollView(){
+        for x in scrollViewPromotion.subviews{
+            x.removeFromSuperview()
+        }
+        fillScrollView()
+    }
+    
+    @objc func promoTapped(sender:UIButton){
         createCopyView()
         let promoCode = getPromoCodeByID(id: sender.tag)
         UIPasteboard.general.string = promoCode
@@ -134,7 +159,7 @@ class PromotionMainPage: UIViewController {
         Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(dismissCopyView), userInfo: nil, repeats: false)
     }
     
-    func dismissCopyView(){
+    @objc func dismissCopyView(){
         
         UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations: {
             self.popUpView.alpha = 0

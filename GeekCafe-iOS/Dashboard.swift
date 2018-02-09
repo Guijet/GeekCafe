@@ -14,14 +14,23 @@ class Dashboard:UIViewController{
     let labelNbPoints = UILabel()
     let menu = MenuClass()
     let containerView = UIView()
+    let greenCard = UIImageView()
+    let whiteButton = UIButton()
+    let tapOnCard = UITapGestureRecognizer()
+    let tapOnCardClose = UITapGestureRecognizer()
+    let load = loadingIndicator()
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        setUPTopCard()
-        menu.setUpFakeNavBar(view:containerView,titleTop:"Accueil")
-        setUpMidPart()
+        load.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.main.async {
+            self.menu.setUpMenu(view: self.view)
+            self.setUpContainerView()
+            self.setUPTopCard()
+            self.menu.setUpFakeNavBar(view:self.containerView,titleTop:"Accueil")
+            self.setUpMidPart()
+            self.load.stopAnimatingAndRemove(view: self.view)
+        }                
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,7 +144,8 @@ class Dashboard:UIViewController{
         arrowImage3.image = #imageLiteral(resourceName: "right_arrow")
         thirdButton.addSubview(arrowImage3)
         
-        let greenCard = UIImageView()
+        greenCard.isUserInteractionEnabled = true
+        greenCard.addGestureRecognizer(tapOnCard)
         greenCard.frame = CGRect(x: rw(3), y: rh(586), width: rw(370), height: rh(70))
         greenCard.image = UIImage(named: "greenCard_dash")
         containerView.addSubview(greenCard)
@@ -149,8 +159,8 @@ class Dashboard:UIViewController{
         greenCard.addSubview(labelAccumuler)
         
         labelNbPoints.frame = CGRect(x: rw(223), y: rh(3), width: rw(70), height: greenCard.frame.height - rh(6))
-        labelNbPoints.text = "106"
-        labelNbPoints.textAlignment = .left
+        labelNbPoints.text = "\(Global.global.userInfo.points)"
+        labelNbPoints.textAlignment = .right
         labelNbPoints.textColor = .white
         labelNbPoints.font = UIFont(name: "Lato-Regular", size: rw(40))
         greenCard.addSubview(labelNbPoints)
@@ -165,22 +175,122 @@ class Dashboard:UIViewController{
         
     }
     
-    func commanderPressed(sender:UIButton){
-        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
-        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
-        UIApplication.shared.keyWindow?.rootViewController = main
+    func buildCardWhite(){
+        
+        whiteButton.frame = CGRect(x: rw(7.5), y: rh(586), width: rw(360.5), height: rh(60))
+        whiteButton.backgroundColor = UIColor.white
+        whiteButton.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
+        whiteButton.addTarget(self, action: #selector(convertPointsToMone), for: .touchUpInside)
+        
+        let attrs1 = [NSAttributedStringKey.font : UIFont(name:"Lato-Light",size:rw(16))!, NSAttributedStringKey.foregroundColor : Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        let attrs2 = [NSAttributedStringKey.font : UIFont(name:"Lato-Light",size:rw(22))!, NSAttributedStringKey.foregroundColor : Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        let attributedString1 = NSMutableAttributedString(string:"Convertir en crédit ", attributes:attrs1)
+        let attributedString2 = NSMutableAttributedString(string:"$3.54", attributes:attrs2)
+        attributedString1.append(attributedString2)
+        
+        let LBL_Button = UILabel()
+        LBL_Button.frame = CGRect(x: 0, y: rh(28), width: whiteButton.frame.width, height: rh(25))
+        LBL_Button.textAlignment = .center
+        LBL_Button.attributedText = attributedString1
+        whiteButton.addSubview(LBL_Button)
+        
+        containerView.addSubview(whiteButton)
     }
     
-    func abonnementPressed(sender:UIButton){
+    @objc func animateForPoints(sender:UITapGestureRecognizer){
+        self.view.isUserInteractionEnabled = false
+        self.buildCardWhite()
+        self.whiteButton.layer.zPosition = -1
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            self.greenCard.center.y -= self.rh(41)
+            self.whiteButton.center.y += self.rh(4)
+            self.whiteButton.frame.size.height += self.rh(7)
+            
+        }, completion: { _ in
+            self.greenCard.removeGestureRecognizer(self.tapOnCard)
+            self.greenCard.addGestureRecognizer(self.tapOnCardClose)
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
+    @objc func animateCloseCard(sender:UITapGestureRecognizer){
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            self.greenCard.center.y += self.rh(41)
+            self.whiteButton.center.y -= self.rh(4)
+            self.whiteButton.frame.size.height -= self.rh(7)
+        }, completion: { _ in
+            self.whiteButton.removeFromSuperview()
+            self.greenCard.removeGestureRecognizer(self.tapOnCardClose)
+            self.greenCard.addGestureRecognizer(self.tapOnCard)
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
+    @objc func convertPointsToMone(){
+        print("Convert")
+    }
+    
+    @objc func commanderPressed(sender:UIButton){
+        
+        if(Global.global.userInfo.cards.count > 0){
+            
+            DispatchQueue.global().async {
+                
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                    let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
+                }
+            }
+        }
+        else{
+            Utility().alertWithChoice(message: "Vous avez présentement aucune méthode de paiement sauvegardé. Vous allez seulement pouvoir commander au comptoir. Voulez-vous continuer ?", title: "Message", control: (UIApplication.shared.keyWindow?.rootViewController!)!, actionTitle1: "Continue", actionTitle2: "Add payment method", action1: {
+                
+                
+                DispatchQueue.global().async {
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Commande", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "CommmandeMainPage")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
+            }, action2: {
+    
+                DispatchQueue.global().async {
+                    
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
+                
+            }, style: UIAlertControllerStyle.alert)
+        }
+    }
+    
+    @objc func abonnementPressed(sender:UIButton){
         let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
-        UIApplication.shared.keyWindow?.rootViewController = main
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, completion: nil)
     }
     
-    func promotionPressed(sender:UIButton){
+    @objc func promotionPressed(sender:UIButton){
         let storyboard = UIStoryboard(name: "Promotions", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "PromotionMainPage")
-        UIApplication.shared.keyWindow?.rootViewController = main
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, completion: nil)
     }
 }
 

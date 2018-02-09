@@ -26,6 +26,8 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let nextButton = UIButton()
     var cardToken:String!
     
+    let load = loadingIndicator()
+    
     var isKeyBoardActive:Bool = false
     
     //User info
@@ -36,13 +38,6 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     var phone:String!
     var email:String!
     var password:String!
-    
-    //Carte information
-    var last4:String!
-    var expYear:String!
-    var expMonth: String!
-    var brand: String!
-    var cardName:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,7 +181,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         removeViewIO()
     }
     
-    func showCardIOView(sender:UIButton){
+    @objc func showCardIOView(sender:UIButton){
         endEditing()
         self.navigationController?.navigationBar.isHidden = true
         contentViewIO.frame = view.frame
@@ -209,7 +204,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
     }
     
-    func removeViewIO(){
+    @objc func removeViewIO(){
         TB_CardNumber.becomeFirstResponder()
         self.navigationController?.navigationBar.isHidden = false
         contentViewIO.removeFromSuperview()
@@ -229,19 +224,27 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
             try stripCard.validateReturningError()
             STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
                 if error == nil {
-                    print(token!.tokenId)
+                    
                     if(APIRequestLogin().createAcount(first_name: self.firstName, last_name: self.lastName, gender: self.sexe, birth_date: self.birthdate, phone: self.phone, email: self.email, password: self.password)){
                         if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
-                            
+                            DispatchQueue.main.async {
+                                self.load.stopAnimatingAndRemove(view: self.view)
+                            }
                             Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: self.TB_CardHolderName.text!)
                             self.performSegue(withIdentifier: "toCardInfo", sender: nil)
                         }
                         else{
+                            DispatchQueue.main.async {
+                                self.load.stopAnimatingAndRemove(view: self.view)
+                            }
                             Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
                         }
                     }
                 }
                 else{
+                    DispatchQueue.main.async {
+                        self.load.stopAnimatingAndRemove(view: self.view)
+                    }
                     Utility().alert(message: "Erreur lors de la création de compte.", title: "Erreur", control: self)
                 }
             })
@@ -263,7 +266,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Expiration){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! == 2){
                 if (isBackSpace != -92) {
                     TB_Expiration.text?.append("/")
@@ -277,7 +280,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CVC){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! > 2){
                 if (isBackSpace != -92) {
                     return false
@@ -286,7 +289,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CardNumber){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if (isBackSpace != -92) {
                 if(lenght == 4 || lenght == 9 || lenght == 14){
                     textField.text?.append(" ")
@@ -306,7 +309,7 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func splitCardNumberWithSpace(number:String)->String{
         var index:Int = 0
         var splitNumber:String = ""
-        for x in number.characters{
+        for x in number{
             splitNumber.append(x)
             if(index == 3){
                 splitNumber.append(" ")
@@ -319,20 +322,28 @@ class SignUp4: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         return splitNumber
     }
     
-    func nextPressed(sender:UIButton){
-        if(!(TB_CardNumber.text?.isEmpty)! && !(TB_Expiration.text?.isEmpty)! && !(TB_CVC.text?.isEmpty)! && !(TB_CardHolderName.text?.isEmpty)!){
-            getCardToken(cardNumber: TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: TB_CVC.text!, expiryMonth: splitExpiration(expiration: TB_Expiration.text!)[0], expiryYear: splitExpiration(expiration: TB_Expiration.text!)[1])
+    @objc func nextPressed(sender:UIButton){
+        
+        load.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global(qos: .background).async {
+            if(!(self.TB_CardNumber.text?.isEmpty)! && !(self.TB_Expiration.text?.isEmpty)! && !(self.TB_CVC.text?.isEmpty)! && !(self.TB_CardHolderName.text?.isEmpty)!){
+                self.getCardToken(cardNumber: self.TB_CardNumber.text!.components(separatedBy: .whitespaces).joined(), cvv: self.TB_CVC.text!, expiryMonth: self.splitExpiration(expiration: self.TB_Expiration.text!)[0], expiryYear: self.splitExpiration(expiration: self.TB_Expiration.text!)[1])
+            }
+            else{
+                Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
+            }
+            
         }
-        else{
-            Utility().alert(message: "Vous devez remplir tout les champs.", title: "Message", control: self)
-        }
+        
     }
     
-    func nextNoCard(sender:UIButton){
+    @objc func nextNoCard(sender:UIButton){
         if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
             let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
             let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-            UIApplication.shared.keyWindow?.rootViewController = main
+            UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                UIApplication.shared.keyWindow?.rootViewController = main
+            }, completion: nil)
         }
     }
     

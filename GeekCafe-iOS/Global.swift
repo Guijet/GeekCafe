@@ -12,4 +12,7 @@ final class Global{
     static let global = Global()
     var ip:String!
     var userInfo:User!
+    var fbResult:String!
+    var itemsOrder:[itemOrder]!
+    var isFbUser:Bool!
 }

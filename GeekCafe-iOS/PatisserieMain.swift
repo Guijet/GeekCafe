@@ -8,30 +8,22 @@
 
 import UIKit
 
-struct patisserie{
-    init(id:Int,name:String,image:UIImage){
-        self.id = id
-        self.name = name
-        self.image = image
-    }
-    var id:Int
-    var name:String
-    var image:UIImage
-}
-
-class PatisserieMain: UIViewController {
+class PatisserieMain: UIViewController{
 
     let scrollView = UIScrollView()
     let backgroundImage = UIImageView()
-    var arrayPatisserie = [patisserie]()
+    
+    var listItemToPass:[ItemList]!
+    var infoItem:Item!
+    var isBoisson:Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
-        fillArrayPatisserie()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
         fillScrollView()
+        
     }
     
     //To make bar all white non translucent and appearing
@@ -43,8 +35,14 @@ class PatisserieMain: UIViewController {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Pâtisseries"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        if(isBoisson){
+            self.title = "Boisson"
+        }
+        else{
+            self.title = "Patîsserie"
+        }
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -63,8 +61,8 @@ class PatisserieMain: UIViewController {
         
         var newY:CGFloat = rh(15)
         
-        if(arrayPatisserie.count > 0){
-            for x in arrayPatisserie{
+        if(listItemToPass.count > 0){
+            for x in listItemToPass{
                 let containerButton = UIButton()
                 containerButton.backgroundColor = UIColor.clear
                 containerButton.tag = x.id
@@ -85,11 +83,14 @@ class PatisserieMain: UIViewController {
                 
                 let imagePatisserie = UIImageView()
                 imagePatisserie.frame = CGRect(x: ((containerButton.frame.width/2) - rw((70/2))), y: rh(9), width: rw(70), height: rh(82))
-                imagePatisserie.image = x.image
+                imagePatisserie.contentMode = .scaleAspectFit
+                imagePatisserie.getOptimizeImageAsync(url: x.image)
                 containerButton.addSubview(imagePatisserie)
                 
                 let titlePatisserie = UILabel()
-                titlePatisserie.createLabel(frame: CGRect(x: 0, y: imagePatisserie.frame.maxY + rh(7), width: containerButton.frame.width, height: rw(15)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: x.name)
+                titlePatisserie.createLabel(frame: CGRect(x: 0, y: imagePatisserie.frame.maxY + rh(7), width: containerButton.frame.width, height: rw(40)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: x.name)
+                titlePatisserie.numberOfLines = 2
+                titlePatisserie.lineBreakMode = .byWordWrapping
                 containerButton.addSubview(titlePatisserie)
                 
                 scrollView.addSubview(containerButton)
@@ -103,13 +104,14 @@ class PatisserieMain: UIViewController {
         }
     }
     
-    func patisseriePressed(sender:UIButton){
+    @objc func patisseriePressed(sender:UIButton){
+        infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
         performSegue(withIdentifier: "toChoosePatisserie", sender: nil)
     }
     
-    func fillArrayPatisserie(){
-        for x in 1...13{
-            arrayPatisserie.append(patisserie(id: x, name: "patisserie \(x)", image: UIImage(named:"muffinListimg")!))
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toChoosePatisserie"){
+            (segue.destination as! ChoosePatisserie).infoItem = self.infoItem
         }
     }
 

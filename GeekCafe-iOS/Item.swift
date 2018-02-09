@@ -9,14 +9,20 @@
 import UIKit
 
 struct Item{
-    init(image:UIImage,type:String,flavour:String,price:String){
-        self.image = image
+    init(id:Int,description:String,type:String,image:String,name:String,prices:[PriceItem],subitems:[Subitem]){
+        self.id = id
+        self.description = description
         self.type = type
-        self.flavour = flavour
-        self.price = price
+        self.name = name
+        self.image = image
+        self.prices = prices
+        self.subitems = subitems
     }
-    var image:UIImage
+    var id:Int
+    var description:String
     var type:String
-    var flavour:String
-    var price:String
+    var name:String
+    var image:String
+    var prices:[PriceItem]
+    var subitems:[Subitem]
 }

@@ -164,7 +164,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
         return true
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
@@ -204,7 +204,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
         datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
     }
     
-    func handleDatePicker(sender: UIDatePicker) {
+    @objc func handleDatePicker(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         TB_Birth.text = dateFormatter.string(from: sender.date)
@@ -214,7 +214,7 @@ class SignUp1: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPicke
     //
     //EVENT ON CLICK NEXT
     //
-    func nextPressed(sender:UIButton){
+    @objc func nextPressed(sender:UIButton){
         endEditing()
         if(TB_Nom.text != "" && TB_Prenom.text != "" && TB_Sexe.text != "" && TB_Birth.text != ""){
             firstName = TB_Nom.text!

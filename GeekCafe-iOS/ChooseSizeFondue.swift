@@ -10,6 +10,7 @@ import UIKit
 
 class ChooseSizeFondue: UIViewController {
 
+    let LBL_Price = UILabel()
     var arrayButtons = [UIButton]()
     let backgroundImage = UIImageView()
     
@@ -19,15 +20,26 @@ class ChooseSizeFondue: UIViewController {
     let middleViewDashed = UIView()
     let smallViewDashed = UIView()
     
+    var listItemToPass:[ItemList]!
+    var infoItem:Item!
+    var price:NSNumber!
+    var priceId:NSNumber!
+    var nbChoix = 5
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
-        setUpTopPart()
-        setDashedLines()
-        resetDashedViews()
-        setButtonAdd()
+        DispatchQueue.global(qos:.background).async {
+            self.infoItem = APIRequestCommande().getItemInfo(item_id: self.listItemToPass[0].id)
+            DispatchQueue.main.async {
+                self.setUpTopPart()
+                self.setDashedLines()
+                self.setButtonAdd()
+            }
+        }
     }
     
     //To make bar all white non translucent and appearing
@@ -40,49 +52,52 @@ class ChooseSizeFondue: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Fondue"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpTopPart(){
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:  "$\(infoItem.prices[1].price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let BTN_HeaderLeft = UIButton()
-        BTN_HeaderLeft.tag = 1
+        BTN_HeaderLeft.tag = infoItem.prices[0].id
         BTN_HeaderLeft.frame = CGRect(x: rw(62), y: rh(146), width: rw(72), height: rh(30))
         BTN_HeaderLeft.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
         BTN_HeaderLeft.layer.borderWidth = 1
         BTN_HeaderLeft.layer.cornerRadius = rw(14)
         BTN_HeaderLeft.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderLeft.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderLeft.setTitle("3 Choix", for: .normal)
+        BTN_HeaderLeft.setTitle(infoItem.prices[0].size, for: .normal)
         BTN_HeaderLeft.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderLeft.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderLeft)
         
         let BTN_HeaderCenter = UIButton()
-        BTN_HeaderCenter.tag = 2
+        BTN_HeaderCenter.tag = infoItem.prices[1].id
         BTN_HeaderCenter.frame = CGRect(x: rw(152), y: rh(146), width: rw(72), height: rh(30))
-        BTN_HeaderCenter.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
+        BTN_HeaderCenter.layer.borderColor = Utility().hexStringToUIColor(hex: "#16EA7C").cgColor
         BTN_HeaderCenter.layer.borderWidth = 1
         BTN_HeaderCenter.layer.cornerRadius = rw(14)
-        BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
+        BTN_HeaderCenter.backgroundColor = Utility().hexStringToUIColor(hex: "#16EA7C")
         BTN_HeaderCenter.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderCenter.setTitle("5 Choix", for: .normal)
-        BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
+        BTN_HeaderCenter.setTitle(infoItem.prices[1].size, for: .normal)
+        BTN_HeaderCenter.setTitleColor(Utility().hexStringToUIColor(hex: "#FFFFFF"), for: .normal)
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
         
+        self.price = infoItem.prices[1].price
+        priceId = infoItem.prices[1].id as NSNumber
+        
         let BTN_HeaderRight = UIButton()
-        BTN_HeaderRight.tag = 3
+        BTN_HeaderRight.tag = infoItem.prices[2].id
         BTN_HeaderRight.frame = CGRect(x: rw(242), y: rh(146), width: rw(72), height: rh(30))
         BTN_HeaderRight.layer.borderColor = Utility().hexStringToUIColor(hex: "#D6D6D6").cgColor
         BTN_HeaderRight.layer.borderWidth = 1
         BTN_HeaderRight.layer.cornerRadius = rw(14)
         BTN_HeaderRight.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
         BTN_HeaderRight.addTarget(self, action: #selector(buttonTopPressed(sender:)), for: .touchUpInside)
-        BTN_HeaderRight.setTitle("7 Choix", for: .normal)
+        BTN_HeaderRight.setTitle(infoItem.prices[2].size, for: .normal)
         BTN_HeaderRight.setTitleColor(Utility().hexStringToUIColor(hex: "#D6D6D6"), for: .normal)
         BTN_HeaderRight.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderRight)
@@ -99,7 +114,7 @@ class ChooseSizeFondue: UIViewController {
         
         
         middleViewDashed.frame = CGRect(x: rw(68), y: rw(214), width: rw(240), height: rw(240))
-        middleViewDashed.addDashedBorder(color: Utility().hexStringToUIColor(hex: "#D6D6D6"), lineWidth: 1, linePattern: [16,8.4])
+        middleViewDashed.addDashedBorder(color: Utility().hexStringToUIColor(hex: "#16E9A6"), lineWidth: 4, linePattern: [16,8.4])
         view.addSubview(middleViewDashed)
         
         
@@ -116,7 +131,10 @@ class ChooseSizeFondue: UIViewController {
         buttonAdd.addTarget(self, action: #selector(buttonAddPressed), for: .touchUpInside)
     }
     
-    func buttonTopPressed(sender:UIButton){
+    @objc func buttonTopPressed(sender:UIButton){
+        priceId = sender.tag as NSNumber
+        LBL_Price.text = "$\(getPriceByID(id_price: sender.tag).floatValue.twoDecimal)"
+        
         resetButtonStateTop()
         resetDashedViews()
         
@@ -155,19 +173,45 @@ class ChooseSizeFondue: UIViewController {
     }
     
     func getDashedViewToChanged(tag:Int)->UIView{
-        if(tag == 3){
+        if(tag == infoItem.prices[2].id){
+            nbChoix = 7
             return bigViewDashed
         }
-        else if(tag == 2){
+        else if(tag == infoItem.prices[1].id){
+            nbChoix = 5
             return middleViewDashed
         }
         else{
+            nbChoix = 3
             return smallViewDashed
         }
     }
     
-    func buttonAddPressed(){
+    func getPriceByID(id_price:Int)->NSNumber{
+        var priceT:NSNumber!
+        if(infoItem.prices.count > 0){
+            for x in infoItem.prices{
+                if(id_price == x.id){
+                    priceT = x.price as NSNumber
+                    price = x.price as NSNumber
+                    break
+                }
+            }
+        }
+        return priceT
+        
+    }
+    
+    @objc func buttonAddPressed(){
         performSegue(withIdentifier: "toFlavourFondue", sender: nil)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toFlavourFondue"){
+            (segue.destination as! FlavourFondue).infoItem = self.infoItem
+            (segue.destination as! FlavourFondue).price = self.price
+            (segue.destination as! FlavourFondue).priceId = self.priceId
+            (segue.destination as! FlavourFondue).nbChoix = self.nbChoix
+        }
+    }
 }

@@ -13,25 +13,38 @@ class ListAbonnement: UIViewController {
     let scrollView = UIScrollView()
     let backgroundView = UIImageView()
     var arrAbonnements = [Abonnement]()
-    
+    let loading = loadingIndicator()
     //Detail View
     let viewContainerDetail = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fillFakeAbonnement()
-        backgroundView.setUpBackgroundImage(containerView: self.view)
-        setNavigationTitle()
-        setUpScrollView()
-        fillScrollView()
+        loading.startWithKeyWindows()
+        DispatchQueue.global().async {
+            self.arrAbonnements = APIRequestAbonnement().getAllAbonnement()
+            DispatchQueue.main.async {
+                self.removeCurrentSubFromlist()
+                self.backgroundView.setUpBackgroundImage(containerView: self.view)
+                self.setNavigationTitle()
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.removeFromKeyWindow()
+            }
+        }
+        
         
     }
-
-    func fillFakeAbonnement(){
-        arrAbonnements.append(Abonnement(id: 1, title: "Membre Premium", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", nbFreeCoffees: 7, percentage: 5, rationCoin: "1.5%"))
-        arrAbonnements.append(Abonnement(id: 2, title: "Membre Spécial", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", nbFreeCoffees: 5, percentage: 3, rationCoin: "1.3%"))
-        arrAbonnements.append(Abonnement(id: 3, title: "Membre Geek", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", nbFreeCoffees: 2, percentage: 2, rationCoin: "1.2%"))
-        arrAbonnements.append(Abonnement(id: 4, title: "Membre Occasionel", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", nbFreeCoffees: 1, percentage: 1, rationCoin: "1.0%"))
+    
+    func removeCurrentSubFromlist(){
+        if(arrAbonnements.count > 0){
+            var index = 0
+            for x in arrAbonnements{
+                if(x.id == Global.global.userInfo.abonnement.id){
+                    arrAbonnements.remove(at: index)
+                }
+                index += 1
+            }
+        }
     }
     
     //To make bar all white non translucent and appearing
@@ -43,8 +56,8 @@ class ListAbonnement: UIViewController {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Liste Abonnements"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.title = "Liste d'abonnements"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -57,30 +70,38 @@ class ListAbonnement: UIViewController {
 
     
     func fillScrollView(){
-        var alpha:CGFloat = 1
+       
         var newY = rh(28)
         var newYwhiteBut:CGFloat = rh(196)
+        
         if(arrAbonnements.count > 0){
             for x in arrAbonnements{
                 
                 let container = UIView()
                 container.frame = CGRect(x: rw(8), y: newY, width: rw(360), height: rh(179))
                 container.backgroundColor = UIColor.clear
+                container.tag = x.id
                 scrollView.addSubview(container)
-                
+             
                 let greenCard = UIButton()
                 greenCard.frame = CGRect(x: 0, y: 0, width: rw(360), height: rh(179))
-                greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0).withAlphaComponent(alpha)
+                //greenCard.backgroundColor = UIColor(red: 22.0 / 255.0, green: 233.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0).withAlphaComponent(alpha)
                 greenCard.tag = x.id
                 greenCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
                 greenCard.addTarget(self, action: #selector(performAnimationFlip(sender:)), for: .touchUpInside)
+                
+                let gradient = CAGradientLayer()
+                gradient.frame = greenCard.bounds
+                gradient.cornerRadius = 8
+                gradient.colors = [Utility().hexStringToUIColor(hex: "15EA6D").cgColor, Utility().hexStringToUIColor(hex: "#16E9A6").cgColor]
+                greenCard.layer.insertSublayer(gradient, at: 0)
                 
                 let abonnementButtonWhite = UIButton()
                 abonnementButtonWhite.frame = CGRect(x: 0, y: greenCard.frame.height - rh(65), width: rw(360), height: rh(65))
                 abonnementButtonWhite.backgroundColor = UIColor.white.withAlphaComponent(0.80)
                 abonnementButtonWhite.accessibilityIdentifier = "getPromo"
                 abonnementButtonWhite.isHidden = true
-                abonnementButtonWhite.addTarget(self, action: #selector(getAbonnement), for: .touchUpInside)
+                abonnementButtonWhite.addTarget(self, action: #selector(getAbonnement(sender:)), for: .touchUpInside)
                 abonnementButtonWhite.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 8, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
                 
                 let titleInButton = UILabel()
@@ -106,8 +127,6 @@ class ListAbonnement: UIViewController {
                 
                 newY += rh(206)
                 newYwhiteBut += (184)
-                alpha -= 0.20
-    
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
@@ -127,56 +146,79 @@ class ListAbonnement: UIViewController {
                 x.removeFromSuperview()
             }
             
+            //DESCRIPTION
             let textView = UILabel()
-            textView.frame = CGRect(x: rw(16), y: rh(12), width: rw(330), height: rh(70))
+            textView.frame = CGRect(x: rw(16), y: rh(5), width: rw(330), height: rh(70))
             textView.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             textView.font = UIFont(name: "Lato-Light", size: rw(16))
             textView.textAlignment = .left
-            textView.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+            textView.text = x.description
             textView.numberOfLines = 3
             textView.lineBreakMode = .byTruncatingHead
             textView.addCharactersSpacing(spacing: -0.85, text: textView.text!)
             sender.addSubview(textView)
             
-            let imageleft = UIImageView()
-            imageleft.frame = CGRect(x: rw(56), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageleft.image = UIImage(named: "cup_white")
-            sender.addSubview(imageleft)
+            //PERKS
+            let image1 = UIImageView()
+            image1.frame = CGRect(x: rw(36), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image1.image = UIImage(named: "gift")
+            sender.addSubview(image1)
             
-            let imageCenter = UIImageView()
-            imageCenter.frame = CGRect(x: rw(170), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageCenter.image = UIImage(named: "tag_white")
-            sender.addSubview(imageCenter)
+            //% RABAIS
+            let image2 = UIImageView()
+            image2.frame = CGRect(x: rw(119), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image2.image = UIImage(named: "tag_white")
+            sender.addSubview(image2)
             
-            let imageRight = UIImageView()
-            imageRight.frame = CGRect(x: rw(284), y: textView.frame.maxY + rh(20), width: rw(35), height: rw(35))
-            imageRight.image = UIImage(named: "coin_white")
-            sender.addSubview(imageRight)
+            //RATIO POINTS
+            let image3 = UIImageView()
+            image3.frame = CGRect(x: rw(207), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image3.image = UIImage(named: "coin_white")
+            sender.addSubview(image3)
             
+            //PRICE
+            let image4 = UIImageView()
+            image4.frame = CGRect(x: rw(296), y: textView.frame.maxY + rh(12), width: rw(33), height: rw(33))
+            image4.image = UIImage(named: "dollarsign")
+            sender.addSubview(image4)
+            
+            //PERKS
             let label1 = UILabel()
-            label1.frame = CGRect(x: rw(21), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label1.frame = CGRect(x: rw(6), y: image2.frame.maxY + rh(4), width: rw(90), height: rh(40))
             label1.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label1.font = UIFont(name: "Lato-Light", size: rw(16))
             label1.textAlignment = .center
-            label1.text = "1 café par mois"
+            label1.text = x.perk
+            label1.numberOfLines = 2
             sender.addSubview(label1)
             
+            //% RABAIS
             let label2 = UILabel()
-            label2.frame = CGRect(x: rw(133), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label2.frame = CGRect(x: rw(95), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(19))
             label2.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label2.font = UIFont(name: "Lato-Light", size: rw(16))
             label2.textAlignment = .center
-            label2.text = "3%"
+            label2.text = "\(x.discount)%"
             sender.addSubview(label2)
             
-            
+            //RATIO POINTS
             let label3 = UILabel()
-            label3.frame = CGRect(x: rw(247), y: imageCenter.frame.maxY + rh(8), width: rw(110), height: rh(19))
+            label3.frame = CGRect(x: rw(184), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(19))
             label3.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
             label3.font = UIFont(name: "Lato-Light", size: rw(16))
             label3.textAlignment = .center
-            label3.text = "1.2x"
+            label3.text = "\(x.point_reward)x"
             sender.addSubview(label3)
+            
+            //PRICE
+            let label4 = UILabel()
+            label4.frame = CGRect(x: rw(273), y: image2.frame.maxY + rh(12), width: rw(80), height: rh(18))
+            label4.textColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
+            label4.font = UIFont(name: "Lato-Light", size: rw(16))
+            label4.textAlignment = .center
+            label4.text = "\(x.price.floatValue.twoDecimal)$/mois"
+            label4.adjustsFontSizeToFitWidth = true
+            sender.addSubview(label4)
             
             sender.superview?.frame.size.height += rh(50)
             
@@ -222,7 +264,7 @@ class ListAbonnement: UIViewController {
         }
     }
 
-    func performAnimationFlip(sender:UIButton){
+    @objc func performAnimationFlip(sender:UIButton){
         //ANIMATION DE FLIP POUR LE BOUTON
         UIView.transition(with: sender, duration: 0.8, options: [.transitionFlipFromBottom,.showHideTransitionViews], animations: {
             self.updateGreenCard(sender:sender)
@@ -259,7 +301,7 @@ class ListAbonnement: UIViewController {
     
     //Get abonnement by id
     func getAbonnementBYID(id:Int)->Abonnement{
-        var abonnment:Abonnement = Abonnement(id: 0, title: "", description: "", nbFreeCoffees: 0, percentage: 0, rationCoin: "")
+        var abonnment:Abonnement = Abonnement(id: 0, title: "", description: "", perk: "", point_reward: 0, discount: 0, price: 0 as NSNumber)
         if(arrAbonnements.count > 0){
             for x in arrAbonnements{
                 if(x.id == id){
@@ -272,8 +314,17 @@ class ListAbonnement: UIViewController {
     }
 
     //Aderer a l'abonnement
-    func getAbonnement(){
-        
+    @objc func getAbonnement(sender:UIButton){
+        Utility().alertYesNo(message: "Voulez-vous adhérer à cette abonnement?",title: "Message",control: self,yesAction:{
+            self.loading.startWithKeyWindows()
+            DispatchQueue.global().async {
+                APIRequestAbonnement().modifyAbonnement(id_sub: sender.superview!.tag)
+                DispatchQueue.main.async{
+                    self.loading.removeFromKeyWindow()
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+            }
+        },noAction:nil,titleYes: "Oui",titleNo: "Cancel",style: .alert)
     }
 }
 

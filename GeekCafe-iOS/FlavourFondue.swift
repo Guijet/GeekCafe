@@ -11,15 +11,24 @@ import UIKit
 
 class FlavourFondue: UIViewController {
 
-    var arraySubitems = [Subitem]()
     let backgroundImage = UIImageView()
     let bolImage = UIImageView()
     let bottomScrollView = UIScrollView()
+
+    var infoItem:Item!
+    var price:NSNumber!
+    var priceId:NSNumber!
+    var nbChoix = 5
+    var toppingID:Int = 0
+    var toppingImage = UIImageView()
+    var isImageSet:Bool = false
+    var isSetCancel:Bool = false
+    var arrayImage:[UIImage] = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSubItems()
-        self.title = "Crêpe"
+        
+        self.title = "Fondue"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
         setUpImageCoffee()
@@ -31,7 +40,7 @@ class FlavourFondue: UIViewController {
     func setUpTopPart(){
         
         let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:"$\(price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -39,7 +48,7 @@ class FlavourFondue: UIViewController {
         view.addSubview(LBL_DTop1)
         
         let LBL_DTop2 = UILabel()
-        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(122),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez sur la crêpe le style de\n couvrement que vous désirez")
+        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(122),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Choisissez le style de votre fondue de\n quelle couvrement désirez-vous.")
         LBL_DTop2.numberOfLines = 2
         view.addSubview(LBL_DTop2)
     }
@@ -79,40 +88,108 @@ class FlavourFondue: UIViewController {
     
     func fillScrollView(){
         var newX:CGFloat = rw(33)
-        if(arraySubitems.count > 0){
-            for x in arraySubitems{
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
+                if(x.isTopping){
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
+                    let image = UIImageView()
+                    image.isUserInteractionEnabled = true
+                    image.addGestureRecognizer(tapGesture)
+                    image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
+                    image.layer.masksToBounds = false
+                    image.contentMode = .scaleAspectFit
+                    image.layer.cornerRadius = rw(25)
+                    image.getOptimizeImageAsync(url: x.image)
+                    image.tag = x.id
+                    bottomScrollView.addSubview(image)
+                    
+                    let titleItem = UILabel()
+                    titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(20)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                    titleItem.numberOfLines = 2
+                    titleItem.lineBreakMode = .byTruncatingTail
+                    bottomScrollView.addSubview(titleItem)
+                    
+                    if(x.price != 0){
+                        let additionnalPrice = UILabel()
+                        additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
+                        bottomScrollView.addSubview(additionnalPrice)
+                    }
                 
-                let image = UIImageView()
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(70), height: rw(40))
-                image.layer.masksToBounds = false
-                image.contentMode = .scaleAspectFit
-                image.layer.cornerRadius = rw(25)
-                image.image = x.image
-                image.tag = x.id
-                bottomScrollView.addSubview(image)
+                    newX += rw(98)
+                }
                 
-                let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX - rw(10),y:image.frame.maxY + rh(4),width:rw(90),height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
-                titleItem.numberOfLines = 2
-                titleItem.lineBreakMode = .byTruncatingTail
-                bottomScrollView.addSubview(titleItem)
-                
-                newX += rw(98)
             }
             bottomScrollView.contentSize = CGSize(width: newX, height: 1.0)
             
         }
     }
+
+
     
-    func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"chocBlanc")!, name: "Chocolat Blanc"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"pateBiscuit")!, name: "Pâte à biscuit"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"chocLait")!, name: "Chocolat au lait"))
+    @objc func nextPressed(){
+        if(toppingID != 0){
+            performSegue(withIdentifier:"toSubitemsFondue",sender: nil)
+        }
+        else{
+            Utility().alert(message: "Vous devez choisir une garniture pour accompagner votre fondue!", title: "Message", control: self)
+        }
+        
+    }
+
+    @objc func tapSubitem(sender:UITapGestureRecognizer){
+        if(!isImageSet){
+            toppingImage.frame = bolImage.frame
+            toppingImage.image = (sender.view! as! UIImageView).image
+            toppingImage.contentMode = .scaleAspectFit
+            //arrayImage.append((sender.view! as! UIImageView).image!)
+            self.view.addSubview(toppingImage)
+            setCancelButton()
+            isImageSet = true
+        }
+        else{
+            changeImageTopping(sender: sender.view! as! UIImageView)
+        }
+        toppingID = sender.view!.tag
     }
     
-    func nextPressed(){
-        performSegue(withIdentifier: "toSubitemsFondue", sender: nil)
+    func changeImageTopping(sender:UIImageView){
+        toppingImage.image = sender.image
+        arrayImage.append(sender.image!)
+        arrayImage.removeLast()
+    }
+    
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(removeImage))
+        self.navigationItem.rightBarButtonItem = cancel
+        isSetCancel = true
+    }
+    
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+        isSetCancel = false
+    }
+    
+    @objc func removeImage(){
+        toppingID = 0
+        toppingImage.removeFromSuperview()
+        removeBarCancelButton()
+        isImageSet = false
+        arrayImage.removeLast()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toSubitemsFondue"){
+            (segue.destination as! SubitemsFondue).infoItem = self.infoItem
+            (segue.destination as! SubitemsFondue).price = self.price
+            (segue.destination as! SubitemsFondue).priceId = self.priceId
+            (segue.destination as! SubitemsFondue).nbChoix = self.nbChoix
+            (segue.destination as! SubitemsFondue).toppingID = self.toppingID
+            (segue.destination as! SubitemsFondue).arrayImage = self.arrayImage
+            if(toppingID != 0){
+                (segue.destination as! SubitemsFondue).toppingImage = self.toppingImage.image
+            }
+            
+        }
     }
 
 }

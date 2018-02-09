@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpS-A5-Wcy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpS-A5-Wcy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation View Controller-->
         <scene sceneID="W94-ES-OMa">
             <objects>
-                <navigationController storyboardIdentifier="CommmandeMainPage" id="TpS-A5-Wcy" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="CommmandeMainPage" storyboardIdentifier="CommmandeMainPage" id="TpS-A5-Wcy" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HgP-6y-hTu">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -155,6 +156,27 @@
             </objects>
             <point key="canvasLocation" x="2350" y="-204"/>
         </scene>
+        <!--Choose Topping-->
+        <scene sceneID="1ix-bZ-kc0">
+            <objects>
+                <viewController id="6qo-kk-rka" customClass="ChooseTopping" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GY4-mE-dlt"/>
+                        <viewControllerLayoutGuide type="bottom" id="dBQ-c8-byi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6o7-lu-idu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="0kr-iy-9Bq" kind="show" identifier="toFlavourCrepe" id="nHP-xr-A3G"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AF1-Uc-G7w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2350" y="493"/>
+        </scene>
         <!--Flavour Crepe-->
         <scene sceneID="5ss-H5-jvz">
             <objects>
@@ -169,31 +191,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="tEY-Dk-whW" kind="show" identifier="toSubItemsCrepe" id="Zkq-Y3-SC0"/>
+                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromCrepe" id="2ag-o2-1Ln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eP7-eu-fJD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2350" y="493"/>
-        </scene>
-        <!--Subitems Crepe-->
-        <scene sceneID="8Ca-VI-Kna">
-            <objects>
-                <viewController id="tEY-Dk-whW" customClass="SubitemsCrepe" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZYE-3i-VKV"/>
-                        <viewControllerLayoutGuide type="bottom" id="xZc-t0-372"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ymS-qj-wIZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromCrepe" id="F0x-ku-uOF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="b4g-Pk-pOw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3158" y="493"/>
         </scene>
@@ -212,11 +213,30 @@
                     </view>
                     <connections>
                         <segue destination="nhH-ou-bgB" kind="show" identifier="toConfirmation" id="ftS-yC-fR4"/>
+                        <segue destination="G3c-XJ-n22" kind="show" identifier="toFailedOrder" id="ZtV-pI-gfD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ln3-IQ-kEh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4753" y="61"/>
+        </scene>
+        <!--Done Command Red-->
+        <scene sceneID="KkW-g4-Mi2">
+            <objects>
+                <viewController id="G3c-XJ-n22" customClass="DoneCommandRed" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7E2-uC-to3"/>
+                        <viewControllerLayoutGuide type="bottom" id="FZo-3n-tJB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jak-lI-izH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BtK-Si-aLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5745" y="-348"/>
         </scene>
         <!--Done Command Green-->
         <scene sceneID="1W2-wL-Bgi">
@@ -234,7 +254,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1T-Fw-ZJ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5612" y="61"/>
+            <point key="canvasLocation" x="5745" y="397"/>
         </scene>
         <!--Choose Size Crepe-->
         <scene sceneID="3DH-Ak-USQ">
@@ -250,7 +270,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="0kr-iy-9Bq" kind="show" identifier="toFlavourCrepe" id="8bJ-Od-OMj"/>
+                        <segue destination="6qo-kk-rka" kind="show" identifier="toCrepeTopping" id="AVN-7l-hmQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="npA-0N-0EA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -270,6 +290,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="Afs-PK-XC0" kind="show" identifier="toEndOrderFromCart" id="2C7-aM-F9v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jUL-DQ-SMG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -340,6 +363,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yAh-Sb-u9r"/>
+        <segue reference="2C7-aM-F9v"/>
     </inferredMetricsTieBreakers>
 </document>

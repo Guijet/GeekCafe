@@ -151,14 +151,14 @@ class SignUp2: UIViewController,UITextFieldDelegate{
         return true
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
     //
     //EVENT ON CLICK NEXT
     //
-    func nextPressed(sender:UIButton){
+    @objc func nextPressed(sender:UIButton){
         endEditing()
         if(TB_Email.text! != "" && TB_Telephone.text != ""){
             if(APIRequestLogin().verifyEmail(email: TB_Email.text!)){

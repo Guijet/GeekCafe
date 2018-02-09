@@ -8,29 +8,20 @@
 
 import UIKit
 
-struct breuvage{
-    init(id:Int,name:String,image:UIImage){
-        self.id = id
-        self.name = name
-        self.image = image
-    }
-    var id:Int
-    var name:String
-    var image:UIImage
-}
 
 class BrevageMain: UIViewController {
 
-    var arrayBreuvage = [breuvage]()
     let backgroundImage = UIImageView()
     let scrollView = UIScrollView()
+    
+    var listItemToPass:[ItemList]!
+    var infoItem:Item!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationTitle()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpScrollView()
-        fillArrayBreuvage()
         setUpScrollViewBreuvage()
     }
     
@@ -43,8 +34,8 @@ class BrevageMain: UIViewController {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Breuvages"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.title = "Cafés"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -57,15 +48,14 @@ class BrevageMain: UIViewController {
     
     func setUpScrollViewBreuvage(){
         var index:Int = 1
-        //17.5
         let firstX:CGFloat = rw(34.5)
         let secondX:CGFloat = rw(138.5)
         let thirdX:CGFloat = rw(242.5)
         
         var newY:CGFloat = rh(10)
         
-        if(arrayBreuvage.count > 0){
-            for x in arrayBreuvage{
+        if(listItemToPass.count > 0){
+            for x in listItemToPass{
                 let containerButton = UIButton()
                 containerButton.backgroundColor = UIColor.clear
                 containerButton.tag = x.id
@@ -86,7 +76,8 @@ class BrevageMain: UIViewController {
                 
                 let imageDrink = UIImageView()
                 imageDrink.frame = CGRect(x: ((containerButton.frame.width/2) - rw((65/2))), y: 0, width: rw(65), height: rw(100))
-                imageDrink.image = x.image
+                imageDrink.contentMode = .scaleAspectFit
+                imageDrink.getOptimizeImageAsync(url: x.image)
                 containerButton.addSubview(imageDrink)
                 
                 let titleDrink = UILabel()
@@ -104,16 +95,14 @@ class BrevageMain: UIViewController {
         }
     }
     
-    func drinkPressed(sender:UIButton){
+    @objc func drinkPressed(sender:UIButton){
+        infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
         performSegue(withIdentifier: "toChooseBrevageSize", sender: nil)
     }
     
-    func fillArrayBreuvage(){
-        for x in 1...13{
-            arrayBreuvage.append(breuvage(id: x, name: "breuvage\(x)", image: UIImage(named:"breuvageListimg")!))
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toChooseBrevageSize"){
+            (segue.destination as! ChooseBrevageSize).infoItem = self.infoItem
         }
     }
-    
-    
-
 }

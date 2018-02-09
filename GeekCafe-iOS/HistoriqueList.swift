@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoriqueList: UIViewController {
+class HistoriqueList: UIViewController,UIScrollViewDelegate{
 
     //Menu and container
     let menu = MenuClass()
@@ -17,21 +17,34 @@ class HistoriqueList: UIViewController {
     //Historique
     let scrollView = UIScrollView()
     var arrayHistory = [HistoryList]()
-    var structToPass:HistoryList = HistoryList(date: "", country: "", city: "", amount: "", id: 0, items: [Item]())
+    var HistoryListMeta:HistoryListMeta!
+    var idToPass:Int!
+    var historyToPass:HistoryList!
+    
+    var isNext:Bool!
+    var pageNumber:Int = 1
+    var nextString:String!
+    let loading = loadingIndicator()
+    
     
     override func viewDidLoad() {
-        //Fill fake info
-        fillFakeInfo()
-        
-        //Set up menu and container
         super.viewDidLoad()
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Historique")
-        
-        //Page Setup
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.HistoryListMeta = APIRequestHistory().getHisory(page: "\(self.pageNumber)")
+            self.arrayHistory = self.HistoryListMeta.Historic
+            self.scrollView.delegate = self
+            self.isNext = self.HistoryListMeta.Meta.isNext
+            self.nextString = self.HistoryListMeta.Meta.nextString
+            DispatchQueue.main.async {
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Historique")
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
 
     //Hide real nav bar for menu
@@ -73,7 +86,7 @@ class HistoriqueList: UIViewController {
                 date.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 date.font = UIFont(name: "Lato-Regular", size: rw(15))
                 date.textAlignment = .left
-                date.text = x.date
+                date.text = Utility().getCleanDate(date: x.date)//x.date
                 button.addSubview(date)
                 
                 let location = UILabel()
@@ -89,7 +102,7 @@ class HistoriqueList: UIViewController {
                 price.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
                 price.font = UIFont(name: "Lato-Regular", size: rw(18))
                 price.textAlignment = .right
-                price.text = "$ \(x.amount)"
+                price.text = "$ \(x.amount.floatValue.twoDecimal)"
                 button.addSubview(price)
                 
                 Utility().createHR(x: 0, y: button.frame.height - 1, width: view.frame.width, view: button, color: Utility().hexStringToUIColor(hex: "#979797").withAlphaComponent(0.25))
@@ -100,10 +113,50 @@ class HistoriqueList: UIViewController {
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
+        else{
+            let labelNoHistory = UILabel()
+            labelNoHistory.numberOfLines = 2
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Votre historique est présentement vide.\n Vous allez voir vos futurs commandes ici.")
+            labelNoHistory.numberOfLines = 2
+            scrollView.addSubview(labelNoHistory)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == scrollView{
+            if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height{
+                if(isNext){
+                    pageNumber += 1
+                    getMoreHistory(pageNumber: pageNumber, stringRequest: nextString)
+                }
+                else{return}
+            }
+        }
     }
     
     
-    func historyChoose(sender:UIButton){
+    func getMoreHistory(pageNumber: Int, stringRequest: String){
+        HistoryListMeta = APIRequestHistory().getHisory(page: "\(pageNumber)",stringRequest: stringRequest)
+        isNext = HistoryListMeta.Meta.isNext
+        nextString = HistoryListMeta.Meta.nextString
+        
+        let newArray = HistoryListMeta.Historic
+        for x in newArray{
+            arrayHistory.append(x)
+        }
+        reloadScrollView()
+    }
+    
+    func reloadScrollView(){
+        for x in scrollView.subviews{
+            x.removeFromSuperview()
+        }
+        fillScrollView()
+    }
+    
+    
+    @objc func historyChoose(sender:UIButton){
+        idToPass = sender.tag
         getHistoryByID(id: sender.tag)
         performSegue(withIdentifier: "toInfoHistory", sender: nil)
     }
@@ -112,7 +165,8 @@ class HistoriqueList: UIViewController {
         if(arrayHistory.count > 0){
             for x in arrayHistory{
                 if(id == x.id){
-                    structToPass = x
+                    
+                    historyToPass = x
                     break
                 }
             }
@@ -121,32 +175,15 @@ class HistoriqueList: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toInfoHistory"){
-            (segue.destination as! InfoHistory).structToPass = self.structToPass
+            (segue.destination as! InfoHistory).idToPass = self.idToPass
+            (segue.destination as! InfoHistory).historyToPass = self.historyToPass
         }
     }
     
-    func fillFakeInfo(){
-        
-        let item1 = Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Choco", price: "3.75")
-        let item2 = Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Caramel", price: "7.50")
-        let item3 = Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Vanille", price: "4.00")
-        let item4 = Item(image: UIImage(named:"item2")!, type: "Drink", flavour: "Nature", price: "2.50")
-        let item5 = Item(image: UIImage(named:"item3")!, type: "Drink", flavour: "Nature", price: "2.50")
-        let item6 = Item(image: UIImage(named:"item1")!, type: "Drink", flavour: "Caramel", price: "2.50")
-        let item7 = Item(image: UIImage(named:"item2")!, type: "Drink", flavour: "Nature", price: "2.50")
-        
-        let arrayItems:[Item] = [item1,item2,item3,item4,item4,item4,item4,item5,item6,item7]
-        
-        arrayHistory.append(HistoryList(date: "21 août 2017", country: "Canada", city: "Boisbriand", amount: "4.50", id: 1, items: arrayItems))
-        arrayHistory.append(HistoryList(date: "28 août 2017", country: "Canada", city: "Blainville", amount: "5.00", id: 2,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "04 août 2017", country: "Canada", city: "Rosemère", amount: "12.50", id: 3,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "14 août 2017", country: "Canada", city: "Laval", amount: "1.50", id: 4,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "10 août 2017", country: "Canada", city: "Montreal", amount: "7.50", id: 5,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "21 août 2017", country: "Canada", city: "Rosemère", amount: "1.75", id: 6,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "21 août 2017", country: "Canada", city: "Laval", amount: "12.75", id: 7,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "04 août 2017", country: "Canada", city: "Blainville", amount: "1.50", id: 8,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "14 août 2017", country: "Canada", city: "Boisbriand", amount: "55.30", id: 9,items: arrayItems))
-        arrayHistory.append(HistoryList(date: "14 août 2017", country: "Canada", city: "Boisbriand", amount: "55.30", id: 10,items: arrayItems))
+}
+
+extension Float {
+    var twoDecimal: String {
+        return String(format: "%.2f", self)
     }
-    
 }

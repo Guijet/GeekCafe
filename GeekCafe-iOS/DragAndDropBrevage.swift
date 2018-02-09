@@ -8,32 +8,40 @@
 
 import UIKit
 
-class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
-
-    var arraySubitems = [Subitem]()
+class DragAndDropBrevage: UIViewController{
+    
+    let LBL_Price = UILabel()
     let backgroundImage = UIImageView()
     let coffeImage = UIImageView()
     let bottomScrollView = UIScrollView()
     let panGesture = UIPanGestureRecognizer()
     
+    //View Items all info
+    var infoItem:Item!
+    var typeItem:String!
+    var priceItem:NSNumber!
+    var priceId:NSNumber!
+    var nbChoix:Int!
+    var initialPrice:Float = 0
+    var subitemsIds = [NSNumber]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        getSubItems()
-        panGesture.addTarget(self, action: #selector(dragView(sender:)))
-        panGesture.delegate = self
-        self.title = "Café"
+
+        self.title = "Cafés"
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         self.extendedLayoutIncludesOpaqueBars = true
         setUpImageCoffee()
         setUpTopPart()
         setUpBottom()
         fillScrollView()
+        initialPrice = priceItem.floatValue
     }
     
     func setUpTopPart(){
         
-        let LBL_Price = UILabel()
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$8.00")
+        
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "$\(priceItem.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let LBL_DTop1 = UILabel()
@@ -42,7 +50,7 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
         view.addSubview(LBL_DTop1)
         
         let LBL_DTop2 = UILabel()
-        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(137),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Glissez dans votre tasse ce que vous désirez")
+        LBL_DTop2.createLabel(frame: CGRect(x:0,y:rh(137),width:view.frame.width,height:rh(36)), textColor: Utility().hexStringToUIColor(hex: "#D6D6D6"), fontName: "Lato-Regular", fontSize: rw(13), textAignment: .center, text: "Choisissez ce que vous voulez dans votre café")
         view.addSubview(LBL_DTop2)
     }
     
@@ -81,24 +89,32 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
     
     func fillScrollView(){
         var newX:CGFloat = rw(33)
-        if(arraySubitems.count > 0){
-            for x in arraySubitems{
-                
+        if(infoItem.subitems.count > 0){
+            
+            for x in infoItem.subitems{
+                let tapGestureImage = UITapGestureRecognizer(target: self, action: #selector(tapSubitem(sender:)))
                 let image = UIImageView()
-                image.frame = CGRect(x: newX, y: rh(15), width: rw(50), height: rw(50))
-                image.layer.masksToBounds = false
-                image.layer.cornerRadius = rw(25)
-                image.image = x.image
-                image.tag = x.id
                 image.isUserInteractionEnabled = true
-                image.addGestureRecognizer(panGesture)
+                image.addGestureRecognizer(tapGestureImage)
+                image.frame = CGRect(x: newX, y: rh(10), width: rw(50), height: rw(50))
+                image.layer.masksToBounds = true
+                image.layer.cornerRadius = rw(25)
+                image.getOptimizeImageAsync(url: x.image)
+                image.tag = x.id
                 bottomScrollView.addSubview(image)
                 
                 let titleItem = UILabel()
-                titleItem.createLabel(frame: CGRect(x:image.frame.minX,y:image.frame.maxY + rh(6),width:image.frame.width,height:rh(30)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
+                titleItem.createLabel(frame: CGRect(x:image.frame.minX,y:image.frame.maxY,width:image.frame.width,height:rh(18)), textColor: Utility().hexStringToUIColor(hex: "666666"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .center, text: x.name)
                 titleItem.numberOfLines = 2
                 titleItem.lineBreakMode = .byTruncatingTail
                 bottomScrollView.addSubview(titleItem)
+                
+                if(x.price != 0){
+                    let additionnalPrice = UILabel()
+                    additionnalPrice.createLabel(frame: CGRect(x:image.frame.minX,y:titleItem.frame.maxY,width:image.frame.width,height:rh(15)), textColor: Utility().hexStringToUIColor(hex: "D6D6D6"), fontName: "Lato-Regular", fontSize: rw(8), textAignment: .center, text: "( + \(x.price.floatValue.twoDecimal)$ )")
+                    bottomScrollView.addSubview(additionnalPrice)
+                }
+                
                 
                 newX += rw(91.7)
             }
@@ -107,27 +123,117 @@ class DragAndDropBrevage: UIViewController,UIGestureRecognizerDelegate{
         }
     }
     
-    func getSubItems(){
-        arraySubitems.append(Subitem(id: 1, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 2, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 3, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 4, image: UIImage(named:"Milk")!, name: "Milk"))
-        arraySubitems.append(Subitem(id: 5, image: UIImage(named:"Cacao")!, name: "Cacao"))
-        arraySubitems.append(Subitem(id: 6, image: UIImage(named:"Milk")!, name: "Milk"))
+    func getItemsForOrder()->itemOrder{
+        let item = itemOrder(price_id: priceId, subItemIds: subitemsIds, image: infoItem.image, name: infoItem.name, type: infoItem.type, price: priceItem)
+        return item
     }
     
-    func dragView(sender:UIPanGestureRecognizer){
-        let translation = sender.translation(in: self.view)
-        if let view = sender.view {
-            view.center = CGPoint(x:view.center.x + translation.x,
-                                  y:view.center.y + translation.y)
+
+    @objc func tapSubitem(sender:UITapGestureRecognizer){
+        let imageTag = sender.view!.tag
+        updateBadge(imageViewSubitem:sender.view!)
+        subitemsIds.append(imageTag as NSNumber)
+        updatePriceSubitems(subItemId: imageTag)
+        if(subitemsIds.count > 0){
+            setCancelButton()
         }
-        sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
-    func nextPressed(){
+    func updateBadge(imageViewSubitem:UIView){
+        if(!isSetBadge(imageView: imageViewSubitem)){
+            buildBadgeView(imageViewSubitem: imageViewSubitem)
+        }
+        else{
+            updateBadgeLabel(imageView: imageViewSubitem)
+        }
+    }
+    
+    func buildBadgeView(imageViewSubitem:UIView){
+        let containerBadge = UIView()
+        containerBadge.frame = CGRect(x: rw(25), y: rh(5), width: rw(20), height: rw(20))
+        containerBadge.backgroundColor = Utility().hexStringToUIColor(hex: "#00DEAD")
+        containerBadge.layer.cornerRadius = rw(10)
+        containerBadge.accessibilityIdentifier = "Badge"
+        imageViewSubitem.addSubview(containerBadge)
+        
+        let lbl_number = UILabel()
+        lbl_number.frame = CGRect(x: 0, y: 0, width: rw(20), height: rw(20))
+        lbl_number.accessibilityIdentifier = "NumberItems"
+        lbl_number.textAlignment = .center
+        lbl_number.text = "1"
+        lbl_number.tag = 1
+        lbl_number.textColor = UIColor.white
+        lbl_number.font = UIFont(name:"Lato-Light",size:rw(11))
+        containerBadge.addSubview(lbl_number)
+    }
+    
+    func updateBadgeLabel(imageView:UIView){
+        for x in imageView.subviews{
+            if let badge = x as? UIView{
+                for y in badge.subviews{
+                    if let lbl = y as? UILabel{
+                        lbl.tag += 1
+                        lbl.text = "\(lbl.tag)"
+                    }
+                }
+            }
+        }
+    }
+    
+    func setCancelButton(){
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(resetSubItems))
+        self.navigationItem.rightBarButtonItem = cancel
+    }
+    
+    @objc func resetSubItems(){
+        for x in bottomScrollView.subviews{
+            for y in x.subviews{
+                if let badge = y as? UIView{
+                    if(badge.accessibilityIdentifier == "Badge"){
+                        badge.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        removeBarCancelButton()
+        priceItem = initialPrice as NSNumber
+        subitemsIds.removeAll()
+        LBL_Price.text = "$\(initialPrice.twoDecimal)"
+    }
+    
+    func removeBarCancelButton(){
+        self.navigationItem.setRightBarButton(nil, animated: false)
+    }
+    
+    func isSetBadge(imageView:UIView)->Bool{
+        if(imageView.subviews.count > 0){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func updatePriceSubitems(subItemId:Int){
+        
+        if(infoItem.subitems.count > 0){
+            for x in infoItem.subitems{
+                if(x.id == subItemId){
+                    let totalPrice = priceItem.floatValue + x.price.floatValue
+                    priceItem = totalPrice as NSNumber
+                    
+                    LBL_Price.text = "$\(priceItem.floatValue.twoDecimal)"
+                }
+            }
+        }
+        
+    }
+    
+    @objc func nextPressed(){
+        Global.global.itemsOrder.append(getItemsForOrder())
         performSegue(withIdentifier: "toEndOrderFromBrevage", sender: nil)
     }
+    
     
     
 }

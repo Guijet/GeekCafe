@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation View Controller-->
+        <scene sceneID="nkj-BK-b58">
+            <objects>
+                <navigationController restorationIdentifier="ProfileMainPage" storyboardIdentifier="ProfileMainPage" id="xKW-dd-j7X" customClass="navigationViewController" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EjF-JW-9ZA">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BMg-Q9-Gvr" kind="relationship" relationship="rootViewController" id="8E3-oI-qBT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6nb-qy-IBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1274" y="98"/>
+        </scene>
+        <!--Main Page Profile-->
+        <scene sceneID="CBN-Tb-qzz">
+            <objects>
+                <viewController id="BMg-Q9-Gvr" customClass="MainPageProfile" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="huf-gz-YXf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="rJM-K8-oiF"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OHZ-h5-Idi"/>
+                    <connections>
+                        <segue destination="rZp-WZ-ljO" kind="show" identifier="toModifyProfile" id="d6M-V9-A9M"/>
+                        <segue destination="BUx-2R-ZZx" kind="show" identifier="toTermsAndCondition" id="2oq-PZ-bcn"/>
+                        <segue destination="fgo-tz-CI5" kind="show" identifier="toRatings" id="zW7-Zh-Jfp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PsD-9C-zXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-471" y="98"/>
+        </scene>
+        <!--Terms And Condition-->
+        <scene sceneID="dyW-tE-PKE">
+            <objects>
+                <viewController id="BUx-2R-ZZx" customClass="TermsAndCondition" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I5U-Of-bq6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="YbZ-UO-F7b"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sMy-V9-MaU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="697" y="307"/>
+        </scene>
+        <!--Rate My App-->
+        <scene sceneID="FUL-9T-ZAB">
+            <objects>
+                <viewController id="fgo-tz-CI5" customClass="RateMyApp" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OT2-Fe-kwK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="Lga-cZ-8D7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6q-z8-9kZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="697" y="1115"/>
+        </scene>
+        <!--Modify Profile-->
+        <scene sceneID="ph3-L2-8qd">
+            <objects>
+                <viewController id="rZp-WZ-ljO" customClass="ModifyProfile" customModule="GeekCafe_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dAQ-dB-gEw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="lNl-3k-ssQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="56Z-cL-2HV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="698" y="-375"/>
+        </scene>
+    </scenes>
+</document>

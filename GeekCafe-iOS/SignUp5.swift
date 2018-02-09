@@ -28,7 +28,6 @@ class SignUp5: UIViewController {
     //Textview information
     let textView = UITextView()
     
-    
     var user:User!
     //user information
     var firstName:String!
@@ -143,24 +142,21 @@ class SignUp5: UIViewController {
         //Faire le loading des information de la carte
     }
     
-    func nextPressed(sender:UIButton){
+    //TODO ANIMATE THE ROOW VIEW CONTROLLER WHEN CHANGING STORYBOARD
+    @objc func nextPressed(sender:UIButton){
         //Create Account and add Global Card and UserInfo
-        if(APIRequestLogin().createAcount(first_name: firstName, last_name: lastName, gender: sexe, birth_date: birthdate, phone: phone, email: email, password: password)){
-            let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
-            let main = storyboard.instantiateViewController(withIdentifier: "MainPage")
+        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
             UIApplication.shared.keyWindow?.rootViewController = main
-        }
-        else{
-            Utility().alert(message: "Impossible de créer le compte réessayer plus tard", title: "Erreur", control: self)
-        }
-        
+        }, completion: nil)
     }
     
     func getValidEndDateCard(expM:String,expY:String)->String{
         var nExpM:String = ""
         var nExpY:String = ""
         
-        if(expM.characters.count < 2){
+        if(expM.count < 2){
             nExpM = "0\(expM)"
         }
         else{
@@ -168,7 +164,7 @@ class SignUp5: UIViewController {
         }
         
         var index = 0
-        for x in expY.characters{
+        for x in expY{
             if(index > 1){
                 nExpY.append(x)
             }
@@ -177,6 +173,7 @@ class SignUp5: UIViewController {
         return "\(nExpM)/\(nExpY)"
     }
     
+    //TODO: ONLY VISA FOR NOW NEED TO CHANGE IMAGE BASED ON PROVIDER CARD
     func getProviderImageCard(){
         
     }

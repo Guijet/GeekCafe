@@ -14,6 +14,8 @@ class DoneCommandGreen: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
+        Global.global.itemsOrder.removeAll()
         backgroundImage.setUpBackgroundImage(containerView: self.view)
         setUpPage()
     }
@@ -32,5 +34,17 @@ class DoneCommandGreen: UIViewController {
         let greenText = UILabel()
         greenText.createLabel(frame: CGRect(x:0,y:grayText.frame.maxY,width:view.frame.width,height:rh(40)), textColor: Utility().hexStringToUIColor(hex: "#16E9A6"), fontName: "Lato-Regular", fontSize: rw(35), textAignment: .center, text: "EST CONFIRMÉE".uppercased())
         view.addSubview(greenText)
+        
+        let toChronoButton = UIButton()
+        toChronoButton.createCreateButton(title: "Terminer", frame: CGRect(x:view.frame.midX - rw(100),y:rh(555),width:rw(200),height:rh(60)), fontSize: rw(22), containerView: self.view)
+        toChronoButton.addTarget(self, action: #selector(toChrono), for: .touchUpInside)
+    }
+    
+    @objc func toChrono(){
+        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, completion: nil)
     }
 }

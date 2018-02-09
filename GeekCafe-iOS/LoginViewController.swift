@@ -37,7 +37,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         setUpButton()
         animateIn()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        UserDefaults.standard.synchronize()
+        if let tokenTB = UserDefaults.standard.object(forKey: "FB_Token") as? String{
+            autoLoginFB(access_token: tokenTB)
+        }
+        else if let token = UserDefaults.standard.object(forKey: "Token") as? String{
+            autoLogin(token: token)
+        }
+        
+    }
     override func viewWillDisappear(_ animated: Bool) {
         self.view.endEditing(true)
     }
@@ -224,11 +233,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         return true
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
-    func editingChanged(sender:UITextField){
+    @objc func editingChanged(sender:UITextField){
         if(sender.text == ""){
             if(isGreenButtonActive){
                 TB_Password.text = ""
@@ -256,13 +265,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
     
 
     //When the user connect to the app
-    func connectButtonPressed(sender:UIButton){
+    @objc func connectButtonPressed(sender:UIButton){
         if(TB_Email.text! != "" && TB_Password.text! != ""){
             if(APIRequestLogin().login(password: TB_Password.text!, email: TB_Email.text!)){
                 if(APIRequestLogin().viewUser()){
                     let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                     let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
-                    UIApplication.shared.keyWindow?.rootViewController = main
+                    UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        UIApplication.shared.keyWindow?.rootViewController = main
+                    }, completion: nil)
                 }
                 else{
                     Utility().alert(message: "Impossible de retrouver les informations du compte", title: "Message", control: self)
@@ -277,11 +288,44 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         }
     }
     
-    func createAccountPressed(sender:UIButton){
+    @objc func createAccountPressed(sender:UIButton){
         performSegue(withIdentifier: "toCreateAccount", sender: nil)
     }
     
+    //
+    //
+    //AUTO LOGIN
+    //
+    //
+    func autoLogin(token:String){
+        if(APIRequestLogin().verifyToken(token: token)){
+            if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
+            else{
+                Utility().alert(message: "Erreur lors de la connexion", title: "Erreur", control: self)
+            }
+        }
+    }
     
+    func autoLoginFB(access_token:String){
+        if(APIRequestLogin().getTokenWithFB(access_token: access_token)){
+            if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+                let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+                
+            }
+        }
+    }
     
     //
     //
@@ -296,11 +340,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: { (connection, result, error) -> Void in
             if ((error) != nil)
             {
-                print("Error: \(String(describing: error))")
+                Utility().alert(message: "Error: \(String(describing: error))", title: "Erreur", control: self)
             }
             else{
-                //CREER LE COMPTE
-                print(String(describing: FBSDKAccessToken.current().tokenString!))
+                if(APIRequestLogin().facebookRequest(accessToken: FBSDKAccessToken.current().tokenString!)){
+                    if(APIRequestLogin().viewUser()){
+                        let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
+                        let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
+                        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                            UIApplication.shared.keyWindow?.rootViewController = main
+                        }, completion: nil)
+                    }
+                }
             }
         })
     }
@@ -320,7 +371,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
             fetchProfile()
         }
     }
-    
 }
 
 

@@ -1,20 +1,26 @@
 //
-//  Subitem.swift
+//  Subitems.swift
 //  GeekCafe-iOS
 //
-//  Created by Guillaume Jette on 2017-10-02.
+//  Created by Guillaume Jette on 2017-10-03.
 //  Copyright © 2017 Guillaume Jette. All rights reserved.
 //
 
 import UIKit
 
 struct Subitem{
-    init(id:Int,image:UIImage,name:String){
+    init(id:Int,name:String,price:NSNumber,image:String,isTopping:Bool,bigImage:String = ""){
         self.id = id
-        self.image = image
         self.name = name
+        self.price = price
+        self.image = image
+        self.isTopping = isTopping
+        self.bigImage = bigImage
     }
     var id:Int
-    var image:UIImage
     var name:String
+    var price:NSNumber
+    var image:String
+    var bigImage:String
+    var isTopping:Bool
 }
