@@ -75,7 +75,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(Global.global.userInfo.cards.count <= 0){
-            buttonAddCard.setTitle("Add payment method", for: .normal)
+            buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
         }
         buttonAddCard.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         buttonAddCard.addTarget(self, action: #selector(addCardPressed), for: .touchUpInside)
@@ -611,7 +611,6 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     
     @objc func removeViewIO(){
         TB_CardNumber.becomeFirstResponder()
-        self.navigationController?.navigationBar.isHidden = false
         contentViewIO.removeFromSuperview()
     }
 
@@ -622,5 +621,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         TB_CardHolderName.text = cardInfo.cardholderName
         removeViewIO()
     }
+    
+    
     
 }

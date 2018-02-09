@@ -25,6 +25,7 @@
 		460B12291F93F4DC00A79A62 /* Credits.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460B12281F93F4DC00A79A62 /* Credits.storyboard */; };
 		460B122B1F93F51100A79A62 /* MainPagePaiement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B122A1F93F51100A79A62 /* MainPagePaiement.swift */; };
 		460B314D1FCE91A100E19CB9 /* Splash.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460B314C1FCE91A100E19CB9 /* Splash.xcassets */; };
+		460B31501FCF4A1400E19CB9 /* UtilityCardIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B314F1FCF4A1400E19CB9 /* UtilityCardIO.swift */; };
 		460D5BCC1F702B4600245F27 /* Menu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460D5BCB1F702B4600245F27 /* Menu.xcassets */; };
 		460D5BCE1F702B8F00245F27 /* MenuClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460D5BCD1F702B8F00245F27 /* MenuClass.swift */; };
 		460F02831FC9FBF3007EFF93 /* GradialColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F02821FC9FBF3007EFF93 /* GradialColors.swift */; };
@@ -168,6 +169,7 @@
 		460B12281F93F4DC00A79A62 /* Credits.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Credits.storyboard; sourceTree = "<group>"; };
 		460B122A1F93F51100A79A62 /* MainPagePaiement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPagePaiement.swift; sourceTree = "<group>"; };
 		460B314C1FCE91A100E19CB9 /* Splash.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Splash.xcassets; sourceTree = "<group>"; };
+		460B314F1FCF4A1400E19CB9 /* UtilityCardIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityCardIO.swift; sourceTree = "<group>"; };
 		460D5BCB1F702B4600245F27 /* Menu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Menu.xcassets; sourceTree = "<group>"; };
 		460D5BCD1F702B8F00245F27 /* MenuClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuClass.swift; sourceTree = "<group>"; };
 		460F02821FC9FBF3007EFF93 /* GradialColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradialColors.swift; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 			children = (
 				468C71191F9E312F007141B3 /* FirstView.swift */,
 				468C711B1F9E41C0007141B3 /* BackgroundView.swift */,
+				460B314F1FCF4A1400E19CB9 /* UtilityCardIO.swift */,
 			);
 			name = "Login Views Classes";
 			sourceTree = "<group>";
@@ -1291,6 +1294,7 @@
 				463FF4F91F5F318700706DF1 /* UtilityLogin.swift in Sources */,
 				46D1DB891F5F56550008D3F7 /* SignUp3.swift in Sources */,
 				462CF6F01F60514B00326426 /* User.swift in Sources */,
+				460B31501FCF4A1400E19CB9 /* UtilityCardIO.swift in Sources */,
 				461A89961FB368480008AA5C /* Prices.swift in Sources */,
 				461D36301FBCB413004C2F54 /* TermsAndCondition.swift in Sources */,
 				467BC1211F82E4BD00C300AF /* FlavourFondue.swift in Sources */,
@@ -1523,7 +1527,7 @@
 				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1541,7 +1545,7 @@
 				CODE_SIGN_ENTITLEMENTS = "GeekCafe-iOS/GeekCafe-iOS.entitlements";
 				DEVELOPMENT_TEAM = 6WYLQZ268S;
 				INFOPLIST_FILE = "GeekCafe-iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Guijet.GeekCafe-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";

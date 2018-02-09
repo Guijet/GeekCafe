@@ -1,12 +1,12 @@
 
+//
+//  Utility.swift
+//  GeekCafe-iOS
+//
+//  Created by Guillaume Jette on 2017-09-06.
+//  Copyright © 2017 Guillaume Jette. All rights reserved.
+//
 
- //
- //  Utility.swift
- //  NIGHTPLANNER_V2
- //
- //  Created by Enterface Team on 2017-06-19.
- //  Copyright © 2017 Enterface . All rights reserved.
- //
  import Foundation
  import UIKit
  import ObjectiveC
@@ -366,21 +366,6 @@
         }
         //        adjustLayer(layer: view.layer, rootView: rootView)
     }
-    
-    //    func adjustLayer(layer : CALayer,rootView: UIView) {
-    //        let vHeight = rootView.frame.height
-    //        let vWidth = rootView.frame.width
-    //        let adjustWidth = (vWidth / 375.0)
-    //        let adjustHeight = (vHeight / 667.0)
-    //
-    //        layer.frame = CGRect(x: layer.frame.minX * adjustWidth, y: layer.frame.minY * adjustHeight, width: layer.frame.width * adjustWidth, height: layer.frame.height * adjustHeight)
-    //        if let s = layer.sublayers?[0] {
-    //            for x in layer.sublayers! {
-    //                adjustLayer(layer: x, rootView: rootView)
-    //            }
-    //        }
-    //
-    //    }
     
     func getWeekIndexOfDay(date: String) -> Int{
         let formatter  = DateFormatter()
@@ -851,50 +836,6 @@
         }
     }
     
-    //    func hideEveryThing(view: UIView, scrollview: UIScrollView){
-    //        let viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-    //        if let navigation = viewcontroller as? UINavigationController{
-    //            navigation.hidebar()
-    //        }
-    //        for x in view.subviews{
-    //            print(x.classForCoder)
-    //            if x != scrollview{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 0
-    //                }, completion: nil)
-    //            }
-    //        }
-    //        for x in scrollview.subviews{
-    //            if x != self{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 0
-    //                }, completion: nil)
-    //            }
-    //        }
-    //    }
-    //
-    //    func unhideEveryThing(view: UIView, scrollview: UIScrollView){
-    //        let viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-    //        if let navigation = viewcontroller as? UINavigationController{
-    //            navigation.showbar()
-    //        }
-    //        for x in view.subviews{
-    //            if x != scrollview{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 1
-    //
-    //                }, completion: nil)
-    //            }
-    //        }
-    //        for x in scrollview.subviews{
-    //            if x != self{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 1
-    //                }, completion: nil)
-    //            }
-    //        }
-    //    }
-    
     func changeBackground(view: UIView){
         if view.backgroundColor != .black{
             view.backgroundColor = .black
@@ -1054,40 +995,7 @@
     
     
     
-    func initAllButton(array: [String]) {
-       // var xAt: CGFloat = 0
-        
-//        for x in array {
-//            let v = UIView()
-//            v.frame = CGRect(x: xAt, y: 0, width: frame.width * (1 / CGFloat(array.count)) + CGFloat(15), height: frame.height)
-//            if(xAt != 0) {
-//                v.backgroundColor = colorNotSelected
-//                v.layer.zPosition = 0
-//            } else {
-//                v.backgroundColor = colorSelected
-//                v.layer.zPosition = 1
-//            }
-//            v.layer.cornerRadius = layer.cornerRadius
-//            v.clipsToBounds = clipsToBounds
-//            v.isUserInteractionEnabled = true
-//            v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectElement(sender:))))
-//
-//            //            let l = DesignLabel()
-//            //            l.awakeFromNib()
-//            //            l.textColor = Utility().hexStringToUIColor(hex: "#ACAFB3")
-//            //            l.text = x
-//            //            l.layer.zPosition = 2
-//            //            l.isUserInteractionEnabled = false
-//            //            l.font = UIFont(name: fontName, size: fontSize)
-//            //            l.frame = CGRect(x: 0, y: 0, width: v.frame.width, height: v.frame.height)
-//            //            l.textAlignment = .center
-//            //            v.addSubview(l)
-//            //            xAt +=  (frame.width * (1 / CGFloat(array.count)) - 15)
-//            //            buttonViews.append(v)
-//            //            addSubview(v)
-//        }
-        
-    }
+    func initAllButton(array: [String]) {}
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
