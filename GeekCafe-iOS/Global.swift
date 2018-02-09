@@ -14,4 +14,5 @@ final class Global{
     var userInfo:User!
     var fbResult:String!
     var itemsOrder:[itemOrder]!
+    var isFbUser:Bool!
 }

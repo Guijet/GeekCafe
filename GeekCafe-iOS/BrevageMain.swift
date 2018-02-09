@@ -34,8 +34,8 @@ class BrevageMain: UIViewController {
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Breuvages"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.title = "Cafés"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -76,6 +76,7 @@ class BrevageMain: UIViewController {
                 
                 let imageDrink = UIImageView()
                 imageDrink.frame = CGRect(x: ((containerButton.frame.width/2) - rw((65/2))), y: 0, width: rw(65), height: rw(100))
+                imageDrink.contentMode = .scaleAspectFit
                 imageDrink.getOptimizeImageAsync(url: x.image)
                 containerButton.addSubview(imageDrink)
                 
@@ -94,7 +95,7 @@ class BrevageMain: UIViewController {
         }
     }
     
-    func drinkPressed(sender:UIButton){
+    @objc func drinkPressed(sender:UIButton){
         infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
         performSegue(withIdentifier: "toChooseBrevageSize", sender: nil)
     }

@@ -116,7 +116,7 @@ class ChooseBrevageSize: UIViewController {
         buttonAdd.addTarget(self, action: #selector(buttonAddPressed), for: .touchUpInside)
     }
     
-    func buttonTopPressed(sender:UIButton){
+    @objc func buttonTopPressed(sender:UIButton){
         priceId = sender.tag as NSNumber
         
         LBL_Price.text = getPriceByID(id_price: sender.tag)
@@ -186,7 +186,7 @@ class ChooseBrevageSize: UIViewController {
         return price
     }
     
-    func buttonAddPressed(){
+    @objc func buttonAddPressed(){
 
         performSegue(withIdentifier: "toDragAndDropCafe", sender: nil)
     }

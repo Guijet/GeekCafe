@@ -29,13 +29,19 @@ class ChooseSizeCrepe: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        infoItem = APIRequestCommande().getItemInfo(item_id: listItemToPass[0].id)
-        setNavigationTitle()
-        backgroundImage.setUpBackgroundImage(containerView: self.view)
-        self.extendedLayoutIncludesOpaqueBars = true
-        setUpTopPart()
-        setDashedLines()
-        setButtonAdd()
+        DispatchQueue.global(qos:.background).async {
+            self.infoItem = APIRequestCommande().getItemInfo(item_id: self.listItemToPass[0].id)
+            DispatchQueue.main.async {
+                self.setNavigationTitle()
+                self.backgroundImage.setUpBackgroundImage(containerView: self.view)
+                self.extendedLayoutIncludesOpaqueBars = true
+                self.setUpTopPart()
+                self.setDashedLines()
+                self.setButtonAdd()
+            }
+        }
+        
+        
         
     }
     
@@ -49,12 +55,12 @@ class ChooseSizeCrepe: UIViewController {
     //Title and title color
     func setNavigationTitle(){
         self.title = "Crêpe"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpTopPart(){
         
-        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: String(format: "$%.2f", infoItem.prices[1].price.floatValue))
+        LBL_Price.createLabel(frame: CGRect(x:rw(226),y:rh(86),width:rw(124),height:rh(24)), textColor: Utility().hexStringToUIColor(hex: "#6CA642"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text:"$\(infoItem.prices[1].price.floatValue.twoDecimal)")
         view.addSubview(LBL_Price)
         
         let BTN_HeaderLeft = UIButton()
@@ -83,7 +89,7 @@ class ChooseSizeCrepe: UIViewController {
         BTN_HeaderCenter.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(12))
         view.addSubview(BTN_HeaderCenter)
         
-        price = infoItem.prices[1].price
+        self.price = infoItem.prices[1].price
         priceId = infoItem.prices[1].id as NSNumber
         
         let BTN_HeaderRight = UIButton()
@@ -128,9 +134,9 @@ class ChooseSizeCrepe: UIViewController {
         buttonAdd.addTarget(self, action: #selector(buttonAddPressed), for: .touchUpInside)
     }
     
-    func buttonTopPressed(sender:UIButton){
+    @objc func buttonTopPressed(sender:UIButton){
         priceId = sender.tag as NSNumber
-        LBL_Price.text = getPriceByID(id_price: sender.tag).floatValue.twoDecimal
+        LBL_Price.text = "$\(getPriceByID(id_price: sender.tag).floatValue.twoDecimal)"
         
         resetButtonStateTop()
         resetDashedViews()
@@ -199,17 +205,16 @@ class ChooseSizeCrepe: UIViewController {
         
     }
     
-    func buttonAddPressed(){
-        self.price = NSString(string:LBL_Price.text!).floatValue as NSNumber
-        performSegue(withIdentifier: "toFlavourCrepe", sender: nil)
+    @objc func buttonAddPressed(){
+        performSegue(withIdentifier: "toCrepeTopping", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toFlavourCrepe"){
-            (segue.destination as! FlavourCrepe).infoItem = self.infoItem
-            (segue.destination as! FlavourCrepe).price = self.price
-            (segue.destination as! FlavourCrepe).priceId = self.priceId
-            (segue.destination as! FlavourCrepe).nbChoix = self.nbChoix
+        if(segue.identifier == "toCrepeTopping"){
+            (segue.destination as! ChooseTopping).infoItem = self.infoItem
+            (segue.destination as! ChooseTopping).price = self.price
+            (segue.destination as! ChooseTopping).priceId = self.priceId
+            (segue.destination as! ChooseTopping).nbChoix = self.nbChoix
         }
     }
 

@@ -9,6 +9,7 @@
 import UIKit
 
 class Prices{
+    //WITH PRICE ARRAYS
     func getTotalBeforeTaxes(arrayPrices:[NSNumber])->NSNumber{
         var totalPrice:Float = 0
         for x in arrayPrices{
@@ -21,7 +22,16 @@ class Prices{
         return price * 0.1475 as NSNumber
     }
     
-    func getTotalWithTaxes(taxes:Float, price:Float)->NSNumber{
-        return (taxes + price) as NSNumber
+    
+    
+    func getTaxesWIthPrice(price:Float,saved:Float)->Float{
+        let total:Float = price - saved
+        print(total)
+        return total * 0.1475
+    }
+    
+    func getTotalWithTaxes(subTotal:Float,taxes:Float,saved:Float)->Float{
+        let total = subTotal - saved
+        return total + taxes
     }
 }

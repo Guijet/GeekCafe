@@ -22,3 +22,14 @@ struct HistoryList{
     var amount:NSNumber
     var id:Int
 }
+
+struct HistoryListMeta{
+    
+    init(Historic:[HistoryList],Meta:MetaPagination){
+        self.Historic = Historic
+        self.Meta = Meta
+    }
+    var Historic:[HistoryList]
+    var Meta:MetaPagination
+    
+}

@@ -9,18 +9,20 @@
 import UIKit
 
 struct Abonnement{
-    init(id:Int,title:String,description:String,nbFreeCoffees:Int,percentage:Int,rationCoin:String){
+    init(id:Int,title:String,description:String,perk:String,point_reward:NSNumber,discount:NSNumber,price:NSNumber){
         self.title = title
         self.id = id
         self.description = description
-        self.nbFreeCoffees = nbFreeCoffees
-        self.percentage = percentage
-        self.rationCoin = rationCoin
+        self.perk = perk
+        self.point_reward = point_reward
+        self.discount = discount
+        self.price = price
     }
     var id:Int
     var title:String
     var description:String
-    var nbFreeCoffees:Int
-    var percentage:Int
-    var rationCoin:String
+    var perk:String
+    var point_reward:NSNumber
+    var discount:NSNumber
+    var price:NSNumber
 }

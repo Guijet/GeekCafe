@@ -14,36 +14,38 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
 
     let menu = MenuClass()
     let containerView = UIView()
+    let bottomView = UIView()
     
-    var coordinates:[CLLocationCoordinate2D] = [CLLocationCoordinate2D]()
-    var searchLocation:CLLocation = CLLocation()
+    var searchCoords:CLLocationCoordinate2D!
+    var isKeyboardActive = false
+    var yTo:CGFloat = 0
+    
+    var searchedWorked:Bool = false
+    var arrayBranches = [Branch]()
     var markers = [GMSMarker]()
     var closestMarker = GMSMarker()
     let mapView = GMSMapView()
     let regionRadius: CLLocationDistance = 1000
     let TB_Search = UITextField()
-    var arrayDistance = [Double]()
-    var closestDistance:Double = 0.0
+    let loading = loadingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.loading.buildViewAndStartAnimate(view: self.view)
         self.menu.setUpMenu(view: self.view)
         self.setUpContainerView()
         self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Trouver un restaurant")
-        DispatchQueue.global().async {
-            self.fillFakeCoordinates()
+        DispatchQueue.global().sync {
+            self.arrayBranches = APIRequestMap().getLocations()
             DispatchQueue.main.async {
                 self.setUpMap()
                 self.applyMapStyle()
                 self.setUpPinOnMap()
                 self.setUpBottom()
+                self.loading.stopAnimatingAndRemove(view: self.view)
             }
-            //To find to closest pin send the adress in parameter or postalCode
-            //self.getLocationSearch(postalCode: "j7b1x2")
         }
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         focusMapToShowAllMarkers()
     }
@@ -65,7 +67,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     }
     
     func setUpBottom(){
-        let bottomView = UIView()
+        
         bottomView.frame = CGRect(x: 0, y: rh(547), width: view.frame.width, height: rh(120))
         bottomView.backgroundColor = UIColor.white
         bottomView.makeShadow(x: 0, y: 0, blur: 6, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.1, spread: 0)
@@ -77,6 +79,7 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         
         TB_Search.delegate = self
         TB_Search.frame = CGRect(x: LBL_CodePostalD.frame.minX, y: LBL_CodePostalD.frame.maxY, width: rw(141), height: rh(48))
+        TB_Search.returnKeyType = .done
         TB_Search.autocapitalizationType = .allCharacters
         TB_Search.autocorrectionType = .no
         TB_Search.placeholder = "Search..."
@@ -98,17 +101,17 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //Fill array de markers with coordinates
     //
     func setUpPinOnMap(){
-        for x in coordinates{
-            let marker = GMSMarker()
-            
-            marker.position = x
-            marker.title = "31 boul du faubourg, Boisbriand, J7F4G9"
-            marker.icon = UIImage(named:"pin_little")
-            marker.map = self.mapView
-            marker.opacity = 1.0
-            markers.append(marker)
+        if(arrayBranches.count > 0){
+            for x in arrayBranches{
+                let marker = GMSMarker()
+                marker.position = x.coordinates
+                marker.title = x.location
+                marker.icon = UIImage(named:"pin_little")
+                marker.map = self.mapView
+                marker.opacity = 1.0
+                markers.append(marker)
+            }
         }
-        
     }
     
     //Custom Markers
@@ -143,13 +146,16 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
     //Focus on all markers
     //
     func focusMapToShowAllMarkers() {
-        let myLocation: CLLocationCoordinate2D = self.markers.first!.position
-        var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
-        for marker in self.markers {
-            bounds = bounds.includingCoordinate(marker.position)
+        //TODO: ERROR FOUND NIL
+        if(arrayBranches.count > 0){
+            let myLocation: CLLocationCoordinate2D = self.markers.first!.position
+            var bounds: GMSCoordinateBounds = GMSCoordinateBounds(coordinate: myLocation, coordinate: myLocation)
+            for marker in self.markers {
+                bounds = bounds.includingCoordinate(marker.position)
+            }
+            let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
+            self.mapView.animate(with:update)
         }
-        let update = GMSCameraUpdate.fit(bounds, withPadding: 100)
-        self.mapView.animate(with:update)
     }
     
     //Focus on a single marker
@@ -161,83 +167,49 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         self.mapView.animate(with:update)
         self.mapView.animate(toZoom: 12)
     }
-
-    //Get closest pin the entered location
-    //
-    func getClosestDistance(arrayDistance:[Double])->Double{
-        var closestDistance:Double = 0
-        var index:Int = 0
-        if(arrayDistance.count > 0){
-            for x in arrayDistance{
-                if(index == 0){
-                    closestDistance = x
-                }
-                else{
-                    if(x < closestDistance){
-                        closestDistance = x
-                    }
-                }
-                index += 1
+    func getCoordinates(adresse:String){
+        let geocoder = CLGeocoder()
+        let address = adresse
+        geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                self.searchedWorked = false
+                Utility().alert(message: "Impossible de trouver la location avec ce code postal", title: "Error", control: self)
             }
-        }
-        return closestDistance
-    }
-    
-    //Get closest pin the entered location
-    //
-    func getClosestMarker(locationEntered:CLLocation)->GMSMarker{
-        
-        var closestMarker:GMSMarker = GMSMarker()
-        var closestDistance:Double = 0
-        var index:Int = 0
-        if(markers.count > 0){
-            for x in markers{
-                if(index == 0){
-                    closestDistance = locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude))
-                    closestMarker = x
-                }
-                else{
-                    if(locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude)) < closestDistance){
-                        closestDistance = locationEntered.distance(from: CLLocation(latitude: x.position.latitude, longitude:  x.position.longitude))
-                        closestMarker = x
-                    }
-                }
-                index += 1
-            }
-        }
-        return closestMarker
-    }
-    
-    //API Request to get locaton with adress entered
-    //
-    func getLocationSearch(postalCode:String){
-        
-        CLGeocoder().geocodeAddressString(postalCode, completionHandler: {(placemarks, error) in
-            if(error != nil){
-                print("There is an error")
-            }
-            else{
-                if let placemark = placemarks?.first{
-                    if let location = placemark.location{
-                        self.closestMarker = self.getClosestMarker(locationEntered: location)
-                    }
-                }
+            if let placemark = placemarks?.first {
+                self.searchedWorked = true
+                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                self.searchCoords = coordinates
+                self.zoomToClosestMarker(coordinatesSearched: placemark.location!)
             }
         })
     }
     
-    //
-    //
-    //Fill Coordinates
-    //
-    //
-    func fillFakeCoordinates(){
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.69179211), longitude: CLLocationDegrees(-73.644104)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.64764837), longitude: CLLocationDegrees(-73.85009766)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.68987354), longitude: CLLocationDegrees(-73.77868652)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.65244829), longitude: CLLocationDegrees(-74.09729004)))
-        coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(45.55637174), longitude: CLLocationDegrees(-73.90365601)))
+    func zoomToClosestMarker(coordinatesSearched:CLLocation){
+        if(markers.count > 0){
+            var firstRoll:Bool = true
+            var closesPin = GMSMarker()
+            var closestDistance:CGFloat = 0
+            for x in markers{
+                //Marker distance from entered values
+                let markerDistance:CGFloat = CGFloat(coordinatesSearched.distance(from: CLLocation(latitude: CLLocationDegrees(x.position.latitude), longitude: CLLocationDegrees(x.position.longitude))))
+                if(firstRoll){
+                    firstRoll = false
+                    closesPin = x
+                    closestDistance = markerDistance
+                }
+                else{
+                    if(closestDistance > markerDistance){
+                        closestDistance = markerDistance
+                        closesPin = x
+                    }
+                }
+            }
+            focusMapOnSingleMarker(marker: closesPin)
+            mapView.selectedMarker = closesPin
+        }
     }
+    
+    
     
     //
     //
@@ -250,10 +222,10 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
                 mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
             } else {
-                print("Unable to find style.json")
+                Utility().alert(message: "Impossible de trouver le style de la map", title: "Erreur", control: self)
             }
         } catch {
-            print("The style definition could not be loaded: \(error)")
+            Utility().alert(message: "Impossible de trouver le style de la map", title: "Erreur", control: self)
         }
     }
     
@@ -268,22 +240,63 @@ class TrouverRestoMainPage: UIViewController,GMSMapViewDelegate,UITextFieldDeleg
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Search){
-            if(textField.text!.characters.count > 5){
+            if(textField.text!.count > 5){
                 if (isBackSpace != -92) {
                     return false
                 }
             }
         }
-        
         return true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if(textField == TB_Search){
+            if(textField.text!.count >= 6){
+                getCoordinates(adresse: textField.text!)
+            }
+            else{
+                Utility().alert(message: "Format de code postal invalide.", title: "Erreur", control: self)
+            }
+        }
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func animateUp(){
+        yTo = containerView.frame.height - bottomView.frame.height
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.containerView.subviews{
+                x.center.y -= self.yTo
+            }
+        }, completion: { _ in
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
+    func animateDown(){
+        self.view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
+            for x in self.containerView.subviews{
+                x.center.y += self.yTo
+            }
+        }, completion: { _ in
+            self.view.isUserInteractionEnabled = true
+        })
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
+        if(!isKeyboardActive){
+            animateUp()
+            isKeyboardActive = true
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        if(isKeyboardActive){
+            animateDown()
+            isKeyboardActive = false
+        }
     }
     
 }

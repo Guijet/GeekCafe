@@ -15,6 +15,7 @@ class PatisserieMain: UIViewController{
     
     var listItemToPass:[ItemList]!
     var infoItem:Item!
+    var isBoisson:Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,14 @@ class PatisserieMain: UIViewController{
     
     //Title and title color
     func setNavigationTitle(){
-        self.title = "Pâtisseries"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Lato-Regular",size:rw(17))!, NSForegroundColorAttributeName:Utility().hexStringToUIColor(hex: "#AFAFAF")]
+        if(isBoisson){
+            self.title = "Boisson"
+        }
+        else{
+            self.title = "Patîsserie"
+        }
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name:"Lato-Regular",size:rw(17))!, NSAttributedStringKey.foregroundColor:Utility().hexStringToUIColor(hex: "#AFAFAF")]
     }
     
     func setUpScrollView(){
@@ -76,6 +83,7 @@ class PatisserieMain: UIViewController{
                 
                 let imagePatisserie = UIImageView()
                 imagePatisserie.frame = CGRect(x: ((containerButton.frame.width/2) - rw((70/2))), y: rh(9), width: rw(70), height: rh(82))
+                imagePatisserie.contentMode = .scaleAspectFit
                 imagePatisserie.getOptimizeImageAsync(url: x.image)
                 containerButton.addSubview(imagePatisserie)
                 
@@ -96,7 +104,7 @@ class PatisserieMain: UIViewController{
         }
     }
     
-    func patisseriePressed(sender:UIButton){
+    @objc func patisseriePressed(sender:UIButton){
         infoItem = APIRequestCommande().getItemInfo(item_id: sender.tag)
         performSegue(withIdentifier: "toChoosePatisserie", sender: nil)
     }

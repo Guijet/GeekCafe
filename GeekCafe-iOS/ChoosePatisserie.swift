@@ -20,7 +20,7 @@ class ChoosePatisserie: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Muffin"
+        self.title = infoItem.type
         backgroudImage.setUpBackgroundImage(containerView: self.view)
         setUpContainer()
         setUpPrice()
@@ -44,6 +44,7 @@ class ChoosePatisserie: UIViewController{
     func setUpImage(){
         let imageItems = UIImageView()
         imageItems.frame = CGRect(x: (view.frame.width/2) - rw(95), y: rw(80.45), width: rw(190), height: rw(190))
+        imageItems.contentMode = .scaleAspectFit
         imageItems.getOptimizeImageAsync(url: infoItem.image)
         containerView.addSubview(imageItems)
         
@@ -100,14 +101,14 @@ class ChoosePatisserie: UIViewController{
         buttonAdd.addTarget(self, action: #selector(addItem), for: .touchUpInside)
     }
     
-    func leftPressed(){
+    @objc func leftPressed(){
         if(numberOfItems > 1){
             numberOfItems -= 1
             labelNumberItems.text = String(numberOfItems)
         }
     }
     
-    func rightPressed(){
+    @objc func rightPressed(){
         if(numberOfItems < 99){
             numberOfItems += 1
             labelNumberItems.text = String(numberOfItems)
@@ -120,7 +121,7 @@ class ChoosePatisserie: UIViewController{
         return item
     }
     
-    func addItem(){
+    @objc func addItem(){
         addItemsToGlobalByNumber()
         performSegue(withIdentifier: "patisserieToEndOrder", sender: nil)
     }

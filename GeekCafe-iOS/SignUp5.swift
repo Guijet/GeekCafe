@@ -143,7 +143,7 @@ class SignUp5: UIViewController {
     }
     
     //TODO ANIMATE THE ROOW VIEW CONTROLLER WHEN CHANGING STORYBOARD
-    func nextPressed(sender:UIButton){
+    @objc func nextPressed(sender:UIButton){
         //Create Account and add Global Card and UserInfo
         let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
         let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
@@ -156,7 +156,7 @@ class SignUp5: UIViewController {
         var nExpM:String = ""
         var nExpY:String = ""
         
-        if(expM.characters.count < 2){
+        if(expM.count < 2){
             nExpM = "0\(expM)"
         }
         else{
@@ -164,7 +164,7 @@ class SignUp5: UIViewController {
         }
         
         var index = 0
-        for x in expY.characters{
+        for x in expY{
             if(index > 1){
                 nExpY.append(x)
             }

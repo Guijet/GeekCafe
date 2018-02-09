@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoriqueList: UIViewController {
+class HistoriqueList: UIViewController,UIScrollViewDelegate{
 
     //Menu and container
     let menu = MenuClass()
@@ -17,21 +17,34 @@ class HistoriqueList: UIViewController {
     //Historique
     let scrollView = UIScrollView()
     var arrayHistory = [HistoryList]()
+    var HistoryListMeta:HistoryListMeta!
     var idToPass:Int!
     var historyToPass:HistoryList!
     
+    var isNext:Bool!
+    var pageNumber:Int = 1
+    var nextString:String!
+    let loading = loadingIndicator()
+    
     
     override func viewDidLoad() {
-        //Fill fake info
-        //Set up menu and container
         super.viewDidLoad()
-        arrayHistory = APIRequestHistory().getHisory()
-        menu.setUpMenu(view: self.view)
-        setUpContainerView()
-        menu.setUpFakeNavBar(view: containerView, titleTop: "Historique")
-        //Page Setup
-        setUpScrollView()
-        fillScrollView()
+        loading.buildViewAndStartAnimate(view: self.view)
+        DispatchQueue.global().async {
+            self.HistoryListMeta = APIRequestHistory().getHisory(page: "\(self.pageNumber)")
+            self.arrayHistory = self.HistoryListMeta.Historic
+            self.scrollView.delegate = self
+            self.isNext = self.HistoryListMeta.Meta.isNext
+            self.nextString = self.HistoryListMeta.Meta.nextString
+            DispatchQueue.main.async {
+                self.menu.setUpMenu(view: self.view)
+                self.setUpContainerView()
+                self.menu.setUpFakeNavBar(view: self.containerView, titleTop: "Historique")
+                self.setUpScrollView()
+                self.fillScrollView()
+                self.loading.stopAnimatingAndRemove(view: self.view)
+            }
+        }
     }
 
     //Hide real nav bar for menu
@@ -100,10 +113,49 @@ class HistoriqueList: UIViewController {
             }
             scrollView.contentSize = CGSize(width: 1.0, height: newY)
         }
+        else{
+            let labelNoHistory = UILabel()
+            labelNoHistory.numberOfLines = 2
+            labelNoHistory.createLabel(frame: CGRect(x:0,y:rh(225),width:view.frame.width,height:60), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(16), textAignment: .center, text: "Votre historique est présentement vide.\n Vous allez voir vos futurs commandes ici.")
+            labelNoHistory.numberOfLines = 2
+            scrollView.addSubview(labelNoHistory)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == scrollView{
+            if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height{
+                if(isNext){
+                    pageNumber += 1
+                    getMoreHistory(pageNumber: pageNumber, stringRequest: nextString)
+                }
+                else{return}
+            }
+        }
     }
     
     
-    func historyChoose(sender:UIButton){
+    func getMoreHistory(pageNumber: Int, stringRequest: String){
+        HistoryListMeta = APIRequestHistory().getHisory(page: "\(pageNumber)",stringRequest: stringRequest)
+        isNext = HistoryListMeta.Meta.isNext
+        nextString = HistoryListMeta.Meta.nextString
+        
+        let newArray = HistoryListMeta.Historic
+        for x in newArray{
+            arrayHistory.append(x)
+        }
+        reloadScrollView()
+    }
+    
+    func reloadScrollView(){
+        for x in scrollView.subviews{
+            x.removeFromSuperview()
+        }
+        fillScrollView()
+    }
+    
+    
+    @objc func historyChoose(sender:UIButton){
         idToPass = sender.tag
         getHistoryByID(id: sender.tag)
         performSegue(withIdentifier: "toInfoHistory", sender: nil)

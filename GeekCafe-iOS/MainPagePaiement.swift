@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Stripe
+import AFNetworking
+import AVFoundation
 
 class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
 
@@ -14,7 +17,6 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     var arrayCards = [userCard]()
     let scrollView = UIScrollView()
     let containerView = UIView()
-    let load = loadingIndicator()
     let buttonAddCard = UIButton()
     
     //
@@ -28,6 +30,9 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     let containerViewCard = UIView()
     let contentViewIO = UIView()
     let cardIOView = CardIOView()
+    
+    //Loading VIew
+    let load = loadingIndicator()
     
     
     override func viewDidLoad() {
@@ -62,7 +67,16 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         buttonAddCard.frame = CGRect(x: 0, y: rh(601), width: view.frame.width, height: rh(66))
         buttonAddCard.backgroundColor = UIColor.white
         buttonAddCard.makeShadow(x: 0, y: 2, blur: 6, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
-        buttonAddCard.setTitle("Changer ma carte", for: .normal)
+        if(Global.global.userInfo.cards.count <= 0){
+            buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
+        }
+        else{
+            buttonAddCard.setTitle("Modifier ma méthode de paiement.", for: .normal)
+        }
+        
+        if(Global.global.userInfo.cards.count <= 0){
+            buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
+        }
         buttonAddCard.setTitleColor(Utility().hexStringToUIColor(hex: "#AFAFAF"), for: .normal)
         buttonAddCard.addTarget(self, action: #selector(addCardPressed), for: .touchUpInside)
         containerView.addSubview(buttonAddCard)
@@ -192,7 +206,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         })
     }
     
-    func deleteCardAnimation(sender:UIButton){
+    @objc func deleteCardAnimation(sender:UIButton){
         if(!isOpen(view: sender.superview!)){
             openButtonDelete(superView: sender.superview!,sender: sender)
         }
@@ -202,7 +216,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
     }
     
-    func deleteCard(sender:UIButton){
+    @objc func deleteCard(sender:UIButton){
         load.buildViewAndStartAnimate(view: self.view)
         DispatchQueue.global(qos:.background).async {
             if(APIRequestPaiement().deleteCard(card_token: Global.global.userInfo.cards[0].id_card)){
@@ -226,21 +240,24 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         containerViewCard.makeShadow(x: 0, y: 8, blur: 17, cornerRadius: 0.1, shadowColor: UIColor.black, shadowOpacity: 0.5, spread: 3)
         
         let header = UIView()
-        header.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(30))
+        header.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: rh(50))
         header.backgroundColor = Utility().hexStringToUIColor(hex: "#F7F7F7")
         containerViewCard.addSubview(header)
         
         let tapAddCard = UITapGestureRecognizer()
         tapAddCard.addTarget(self, action: #selector(addCard))
         
-        let labelAddCard = UILabel()
-        labelAddCard.isUserInteractionEnabled = true
-        labelAddCard.addGestureRecognizer(tapAddCard)
-        labelAddCard.createLabel(frame: CGRect(x: rw(20), y: rh(7), width: rw(200), height: rh(15)), textColor: Utility().hexStringToUIColor(hex: "#AFAFAF"), fontName: "Lato-Regular", fontSize: rw(11), textAignment: .left, text: "Modifier mode de paiement")
-        header.addSubview(labelAddCard)
+
+        let addButton = UIButton()
+        addButton.frame = CGRect(x: rw(245), y: rh(7.5), width: rw(100), height: rh(35))
+        addButton.setTitle("Ajouter Carte", for: .normal)
+        addButton.setTitleColor(Utility().hexStringToUIColor(hex: "#16E9A6"), for: .normal)
+        addButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(15))
+        addButton.addTarget(self, action: #selector(addOrChangeCard), for: .touchUpInside)
+        header.addSubview(addButton)
         
         let closeButton = UIButton()
-        closeButton.frame = CGRect(x: rw(300), y: 0, width: rw(60), height: rh(30))
+        closeButton.frame = CGRect(x: rw(20), y: rh(10), width: rw(60), height: rh(30))
         closeButton.setTitle("Fermer", for: .normal)
         closeButton.setTitleColor(Utility().hexStringToUIColor(hex: "#000000"), for: .normal)
         closeButton.titleLabel?.font = UIFont(name: "Lato-Regular", size: rw(13))
@@ -248,12 +265,12 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         header.addSubview(closeButton)
         
         
-        containerViewCard.frame = CGRect(x: 0, y: view.frame.maxY, width: view.frame.width, height: rh(350))
+        containerViewCard.frame = CGRect(x: 0, y: view.frame.maxY, width: view.frame.width, height: rh(370))
         containerViewCard.backgroundColor = Utility().hexStringToUIColor(hex: "#FFFFFF")
-        view.addSubview(containerViewCard)
+        containerView.addSubview(containerViewCard)
         
         let topCard = UIView()
-        topCard.frame = CGRect(x: rw(28), y: rh(57), width: rw(319), height: rh(172))
+        topCard.frame = CGRect(x: rw(28), y: rh(75), width: rw(319), height: rh(172))
         topCard.backgroundColor = UIColor.white
         topCard.makeShadow(x: 0, y: 2, blur: 7, cornerRadius: 5, shadowColor: UIColor.black, shadowOpacity: 0.12, spread: 0)
         containerViewCard.addSubview(topCard)
@@ -263,7 +280,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         labelCardNumber.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         labelCardNumber.font = UIFont(name: "Lato-Bold", size: rw(9))
         labelCardNumber.textAlignment = .left
-        labelCardNumber.text = "CARD NUMBER".uppercased()
+        labelCardNumber.text = "NUMÉRO CARTE".uppercased()
         topCard.addSubview(labelCardNumber)
         
         let cameraButton = UIButton()
@@ -292,7 +309,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         expirationDate.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         expirationDate.font = UIFont(name: "Lato-Bold", size: rw(9))
         expirationDate.textAlignment = .left
-        expirationDate.text = "EXPIRATION DATE".uppercased()
+        expirationDate.text = "DATE EXPIRATION".uppercased()
         topCard.addSubview(expirationDate)
         
         TB_Expiration.delegate = self
@@ -336,14 +353,14 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         labelCardHolder.textColor = Utility().hexStringToUIColor(hex: "#AFAFAF")
         labelCardHolder.font = UIFont(name: "Lato-Bold", size: rw(9))
         labelCardHolder.textAlignment = .left
-        labelCardHolder.text = "CARDHOLDER NAME".uppercased()
+        labelCardHolder.text = "NOM DÉTENTEUR".uppercased()
         topCard.addSubview(labelCardHolder)
         
         TB_CardHolderName.delegate = self
         TB_CardHolderName.autocorrectionType = .no
         TB_CardHolderName.frame = CGRect(x: rw(120), y: rh(129), width: rh(180), height: rh(17))
         TB_CardHolderName.textColor = Utility().hexStringToUIColor(hex: "#171616")
-        TB_CardHolderName.placeholder = "Card Holder Name"
+        TB_CardHolderName.placeholder = "Nom du détenteur de la carte"
         TB_CardHolderName.font = UIFont(name: "Lato-Regular", size: rw(14))
         TB_CardHolderName.setUpPlaceholder(color: Utility().hexStringToUIColor(hex: "#DCDCDC"), fontName: "Lato-Regular", fontSize: rw(12))
         TB_CardHolderName.textAlignment = .right
@@ -352,7 +369,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         Utility().createHR(x: rw(14), y: rh(149), width: rw(291), view: topCard, color: Utility().hexStringToUIColor(hex: "#EEEEEE"))
         
         let ouLBL = UILabel()
-        ouLBL.frame = CGRect(x: 0, y:rh(250), width: view.frame.width, height: containerView.rh(19))
+        ouLBL.frame = CGRect(x: 0, y:rh(272), width: view.frame.width, height: containerView.rh(19))
         ouLBL.text = "- OU -"
         ouLBL.textAlignment = .center
         ouLBL.font = UIFont(name: "Lato-Bold", size:rw(16))
@@ -360,7 +377,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         containerViewCard.addSubview(ouLBL)
         
         let BTN_CardIO = UIButton()
-        BTN_CardIO.createCreateButton(title: "Scanner votre carte", frame: CGRect(x:rw(38),y:rh(278),width:rw(300),height:rh(48)), fontSize: rw(13), containerView: containerViewCard)
+        BTN_CardIO.createCreateButton(title: "Scanner votre carte", frame: CGRect(x:rw(38),y:rh(300),width:rw(300),height:rh(48)), fontSize: rw(13), containerView: containerViewCard)
         BTN_CardIO.addTarget(self, action: #selector(showCardIOView), for: .touchUpInside)
         
         
@@ -371,27 +388,28 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         buildAddCardView()
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
-            self.containerViewCard.center.y -= self.rh(350)
+            self.containerViewCard.center.y -= self.rh(600)
         },completion: { _ in
             self.view.isUserInteractionEnabled = true
+            self.TB_CardNumber.becomeFirstResponder()
         })
     }
     
-    func animateBottomClose(){
+    @objc func animateBottomClose(){
         self.view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
-            self.containerViewCard.center.y += self.rh(350)
+            self.containerViewCard.center.y += self.rh(600)
         },completion: { _ in
             self.view.isUserInteractionEnabled = true
             self.containerViewCard.removeFromSuperview()
         })
     }
     
-    func addCardPressed(){
+    @objc func addCardPressed(){
         animateBottomOpen()
     }
     
-    func addCard(){
+    @objc func addCard(){
         print("perform selector for add card")
     }
     
@@ -412,6 +430,12 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
                 self.emptyScrollView()
                 self.fillScrollView()
                 self.load.stopAnimatingAndRemove(view: self.view)
+                if(Global.global.userInfo.cards.count <= 0){
+                    self.buttonAddCard.setTitle("Ajouter une méthode de paiement.", for: .normal)
+                }
+                else{
+                    self.buttonAddCard.setTitle("Modifier ma méthode de paiement.", for: .normal)
+                }
             }
         }
     }
@@ -431,7 +455,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         let isBackSpace = strcmp(char, "\\b")
         
         if(textField == TB_Expiration){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! == 2){
                 if (isBackSpace != -92) {
                     TB_Expiration.text?.append("/")
@@ -445,7 +469,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CVC){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if(lenght! > 2){
                 if (isBackSpace != -92) {
                     return false
@@ -454,7 +478,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         }
         
         if(textField == TB_CardNumber){
-            let lenght = textField.text?.characters.count
+            let lenght = textField.text?.count
             if (isBackSpace != -92) {
                 if(lenght == 4 || lenght == 9 || lenght == 14){
                     textField.text?.append(" ")
@@ -474,7 +498,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
     func splitCardNumberWithSpace(number:String)->String{
         var index:Int = 0
         var splitNumber:String = ""
-        for x in number.characters{
+        for x in number{
             splitNumber.append(x)
             if(index == 3){
                 splitNumber.append(" ")
@@ -491,12 +515,78 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         self.view.endEditing(true)
     }
     
+    
+    @objc func addOrChangeCard(){
+        if(TB_CVC.text != "" && TB_CardNumber.text != "" && TB_Expiration.text != "" && TB_CardHolderName.text != ""){
+            load.buildViewAndStartAnimate(view: self.view)
+            let cardNumber:String = self.TB_CardNumber.text!.components(separatedBy: .whitespaces).joined()
+            let cvv:String = self.TB_CVC.text!
+            let expMounth:String = self.splitExpiration(expiration: self.TB_Expiration.text!)[0]
+            let expYear:String = self.splitExpiration(expiration: self.TB_Expiration.text!)[1]
+            DispatchQueue.global(qos:.background).async {
+                self.getCardToken(cardNumber: cardNumber, cvv: cvv, expiryMonth: expMounth, expiryYear: expYear)
+                
+            }
+        }
+        else{
+            Utility().alert(message: "Vous devez remplir tout les champs", title: "Message", control: self)
+        }
+        
+    }
+    
+    func getCardToken(cardNumber:String,cvv:String,expiryMonth:String,expiryYear:String){
+        do {
+            
+            let stripCard = STPCard()
+            stripCard.number = cardNumber
+            stripCard.cvc = cvv
+            stripCard.expMonth = UInt(expiryMonth)!
+            stripCard.expYear = UInt("20\(expiryYear)")!
+            
+            try stripCard.validateReturningError()
+            STPAPIClient().createToken(with: stripCard, completion: { (token, error) -> Void in
+                DispatchQueue.main.async {
+                    self.load.stopAnimatingAndRemove(view: self.view)
+                }
+                if error == nil {
+                    if(APIRequestLogin().addPaymentMethod(card_token:token!.tokenId)){
+                        DispatchQueue.main.async {
+                            self.resetWhenCardAdded()
+                        }
+                    }
+                    else{
+                        Utility().alert(message: "Erreur avec la carte entrer", title: "Erreur", control: self)
+                    }
+                }
+                else{
+                    Utility().alert(message: "Erreur lors de la communication avec Stripe", title: "Erreur", control: self)
+                }
+            })
+        }
+        catch let _ as NSError{
+            Utility().alert(message: "Erreur lors de la communication avec Stripe", title: "Erreur", control: self)
+        }
+    }
+    
+    func resetWhenCardAdded(){
+        animateBottomClose()
+        TB_CardHolderName.text = ""
+        TB_Expiration.text = ""
+        TB_CardNumber.text = ""
+        TB_CVC.text = ""
+        refreshScrollView()
+    }
+    
+    func splitExpiration(expiration:String)->[String]{
+        let arrayString = expiration.components(separatedBy: "/")
+        return [arrayString[0],arrayString[1]]
+    }
     //
     //
     //CARD IO
     //
     //
-    func showCardIOView(sender:UIButton){
+    @objc func showCardIOView(sender:UIButton){
         endEditing()
         self.navigationController?.navigationBar.isHidden = true
         contentViewIO.frame = view.frame
@@ -519,9 +609,8 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         
     }
     
-    func removeViewIO(){
+    @objc func removeViewIO(){
         TB_CardNumber.becomeFirstResponder()
-        self.navigationController?.navigationBar.isHidden = false
         contentViewIO.removeFromSuperview()
     }
 
@@ -532,5 +621,7 @@ class MainPageCredit: UIViewController,UITextFieldDelegate,CardIOViewDelegate{
         TB_CardHolderName.text = cardInfo.cardholderName
         removeViewIO()
     }
+    
+    
     
 }

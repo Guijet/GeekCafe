@@ -16,6 +16,7 @@ class CommandeMainPage: UIViewController {
     let backgroundGeek = UIImageView()
     let scrollView = UIScrollView()
     var arrayItems = [ItemType]()
+    var isBoisson:Bool!
     
     //List items
     var listItemToPass:[ItemList]!
@@ -23,7 +24,8 @@ class CommandeMainPage: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Reseting the array of order
+        Global.global.itemsOrder.removeAll()
         //Menu set up
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -34,13 +36,14 @@ class CommandeMainPage: UIViewController {
         backgroundGeek.setUpBackgroundImage(containerView: self.containerView)
         setUpScrollView()
         fillScrollView()
-        createButton()
+        
     }
-    
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationItem.setHidesBackButton(false, animated:false)
+        if(Global.global.itemsOrder.count > 0){
+            createButton()
+        }
     }
 
     func setUpContainerView(){
@@ -69,9 +72,13 @@ class CommandeMainPage: UIViewController {
             let secondX:CGFloat = rh(209)
             
             for x in arrayItems{
+                if(index == 6){break}
                 //Button Set up
                 let buttonItem = UIButton()
-                if((index % 2) == 1){
+                if(index == 5){
+                    buttonItem.frame = CGRect(x: rw(118), y: rh(373), width: rw(139), height: rw(139))
+                }
+                else if((index % 2) == 1){
                     buttonItem.frame = CGRect(x: firstX, y: newY, width: rw(139), height: rw(139))
                 }
                 else{
@@ -87,8 +94,10 @@ class CommandeMainPage: UIViewController {
                 
                 //Image in button
                 let imageItem = UIImageView()
-                imageItem.frame = CGRect(x: rw(25), y: rh(15), width: rw(90), height: rw(90))
-                imageItem.getOptimizeImageAsync(url: x.image)
+                
+                imageItem.frame = CGRect(x: rw(19.5), y: rh(5), width: rw(100), height: rw(100))
+                imageItem.getOptimizeImageAsync(url: x.image) 
+                imageItem.contentMode = .scaleAspectFit
                 buttonItem.addSubview(imageItem)
                 
                 let titleItem = UILabel()
@@ -103,15 +112,15 @@ class CommandeMainPage: UIViewController {
     
     func createButton(){
         let doneButton = UIButton()
-        doneButton.createCreateButton(title: "Afficher ma commande", frame: CGRect(x: rw(73), y: rh(513), width: rw(230), height: rh(54)), fontSize: rw(20), containerView: scrollView)
+        doneButton.createCreateButton(title: "Afficher ma commande", frame: CGRect(x: rw(73), y: rh(604), width: rw(230), height: rh(54)), fontSize: rw(20), containerView: scrollView)
         doneButton.addTarget(self, action: #selector(seeOrder(sender:)), for: .touchUpInside)
     }
     
-    func seeOrder(sender:UIButton){
+    @objc func seeOrder(sender:UIButton){
         performSegue(withIdentifier: "toSeeCommande", sender: nil)
     }
     
-    func goToOrder(sender:UIButton){
+    @objc func goToOrder(sender:UIButton){
         
         listItemToPass = APIRequestCommande().getItemsList(id: sender.tag)
         
@@ -119,6 +128,7 @@ class CommandeMainPage: UIViewController {
             performSegue(withIdentifier: "toBreuvage", sender: nil)
         }
         else if(sender.accessibilityIdentifier == "Pâtisseries"){
+            isBoisson = false
             performSegue(withIdentifier: "toPatisserie", sender: nil)
         }
         else if(sender.accessibilityIdentifier == "Crêpes"){
@@ -126,6 +136,10 @@ class CommandeMainPage: UIViewController {
         }
         else if(sender.accessibilityIdentifier == "Fondues"){
             performSegue(withIdentifier: "toFondue", sender: nil)
+        }
+        else if(sender.accessibilityIdentifier == "Boissons"){
+            isBoisson = true
+            performSegue(withIdentifier: "toPatisserie", sender: nil)
         }
     }
     
@@ -135,6 +149,7 @@ class CommandeMainPage: UIViewController {
         }
         else if(segue.identifier == "toPatisserie"){
             (segue.destination as! PatisserieMain).listItemToPass = self.listItemToPass
+            (segue.destination as! PatisserieMain).isBoisson = self.isBoisson
         }
         else if(segue.identifier == "toCrepe"){
             (segue.destination as! ChooseSizeCrepe).listItemToPass = self.listItemToPass

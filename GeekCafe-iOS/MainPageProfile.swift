@@ -13,13 +13,19 @@ class MainPageProfile: UIViewController {
     let menu = MenuClass()
     let containerView = UIView()
     let scrollView = UIScrollView()
+    let profileImage = UIImageView()
     let backgroundImage = UIImageView()
     let switchNotif = UISwitch()
-    let titleOptions = ["Push Notifications","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
+    var titleOptions = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if(Global.global.isFbUser){
+            titleOptions = ["Notification Push","Évaluez notre application","Termes et conditions","Paiements"]
+        }
+        else{
+            titleOptions = ["Notification Push","Modifier mon profil","Évaluez notre application","Termes et conditions","Paiements"]
+        }
         //Menu and container
         menu.setUpMenu(view: self.view)
         setUpContainerView()
@@ -51,7 +57,7 @@ class MainPageProfile: UIViewController {
     }
     
     func setUpTopView(containerView:UIView){
-        let profileImage = UIImageView()
+        
         profileImage.frame = CGRect(x: rw(133), y: rh(36), width: rw(111), height: rw(111))
         profileImage.layer.cornerRadius = rw(111)/2
         profileImage.getOptimizeImageAsync(url: Global.global.userInfo.image_url)
@@ -60,10 +66,11 @@ class MainPageProfile: UIViewController {
         
         let name = UILabel()
         name.createLabel(frame: CGRect(x:rw(50),y:profileImage.frame.maxY + rh(10),width:view.frame.width - rw(100),height:rh(30)), textColor: Utility().hexStringToUIColor(hex:"#161616"), fontName: "Lato-Regular", fontSize: rw(25), textAignment: .center, text: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
+        name.adjustsFontSizeToFitWidth = true
         containerView.addSubview(name)
         
         let subscription = UILabel()
-        subscription.createLabel(frame: CGRect(x:rw(50),y:name.frame.maxY,width:view.frame.width - rw(100),height:rh(22)), textColor: Utility().hexStringToUIColor(hex:"#6CA642"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "Coffee Addicted Pro")
+        subscription.createLabel(frame: CGRect(x:rw(50),y:name.frame.maxY,width:view.frame.width - rw(100),height:rh(22)), textColor: Utility().hexStringToUIColor(hex:"#6CA642"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .center, text: "\(Global.global.userInfo.abonnement.title)")
         containerView.addSubview(subscription)
     
         let buttonChangeSub = UIButton()
@@ -75,11 +82,11 @@ class MainPageProfile: UIViewController {
         containerView.addSubview(buttonChangeSub)
         
         let LBL_CreditD = UILabel()
-        LBL_CreditD.createLabel(frame: CGRect(x:view.frame.width - rw(50),y:buttonChangeSub.frame.maxY + rh(16),width:rw(40),height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(10), textAignment: .left, text: "Crédit")
+        LBL_CreditD.createLabel(frame: CGRect(x:view.frame.width - rw(50),y:buttonChangeSub.frame.maxY + rh(14),width:rw(40),height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(12), textAignment: .left, text: "Points")
         containerView.addSubview(LBL_CreditD)
         
         let LBL_Money = UILabel()
-        LBL_Money.createLabel(frame: CGRect(x:(LBL_CreditD.frame.minX - (view.frame.width/2)) - rw(5),y:LBL_CreditD.frame.minY - rh(4),width:view.frame.width/2,height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(18), textAignment: .right, text: "10.00$")
+        LBL_Money.createLabel(frame: CGRect(x:(LBL_CreditD.frame.minX - (view.frame.width/2)) - rw(5),y:LBL_CreditD.frame.minY - rh(4),width:view.frame.width/2,height:rh(24)), textColor: Utility().hexStringToUIColor(hex:"#CDCDCD"), fontName: "Lato-Regular", fontSize: rw(20), textAignment: .right, text: "\(Global.global.userInfo.points)")
         containerView.addSubview(LBL_Money)
         
     }
@@ -138,27 +145,53 @@ class MainPageProfile: UIViewController {
         scrollView.contentSize = CGSize(width: 1.0, height: newY)
     }
     
-    func switchValueDidChange(sender:UISwitch!) {
+    @objc func switchValueDidChange(sender:UISwitch!) {
         UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
     
-    func changeSub(){
-        
+    @objc func changeSub(){
+        let storyboard = UIStoryboard(name: "Abonnement", bundle: nil)
+        let main = storyboard.instantiateViewController(withIdentifier: "AbonnementMain")
+        UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            UIApplication.shared.keyWindow?.rootViewController = main
+        }, completion: nil)
     }
     
-    func buttonPressed(sender:UIButton){
-        if(sender.tag == 2){
-            //To modify pofile
+    @objc func buttonPressed(sender:UIButton){
+        if(!Global.global.isFbUser){
+            if(sender.tag == 2){
+                performSegue(withIdentifier: "toModifyProfile", sender: nil)
+            }
+            else if(sender.tag == 3){
+                performSegue(withIdentifier: "toRatings", sender: nil)
+            }
+            else if(sender.tag == 4){
+                performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
+            }
+            else if(sender.tag == 5){
+                let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
         }
-        else if(sender.tag == 3){
-            //TO evaluez app
+        else if(Global.global.isFbUser){
+            if(sender.tag == 2){
+                performSegue(withIdentifier: "toRatings", sender: nil)
+            }
+            else if(sender.tag == 3){
+                performSegue(withIdentifier: "toTermsAndCondition", sender: nil)
+            }
+            else if(sender.tag == 4){
+                let storyboard = UIStoryboard(name: "Credits", bundle: nil)
+                let main = storyboard.instantiateViewController(withIdentifier: "MainCredit")
+                UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    UIApplication.shared.keyWindow?.rootViewController = main
+                }, completion: nil)
+            }
         }
-        else if(sender.tag == 4){
-            //To termes et condition
-        }
-        else if(sender.tag == 5){
-            //To Paiements
-        }
+        
     }
     
 }

@@ -233,11 +233,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         return true
     }
     
-    func endEditing(){
+    @objc func endEditing(){
         self.view.endEditing(true)
     }
     
-    func editingChanged(sender:UITextField){
+    @objc func editingChanged(sender:UITextField){
         if(sender.text == ""){
             if(isGreenButtonActive){
                 TB_Password.text = ""
@@ -265,7 +265,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
     
 
     //When the user connect to the app
-    func connectButtonPressed(sender:UIButton){
+    @objc func connectButtonPressed(sender:UIButton){
         if(TB_Email.text! != "" && TB_Password.text! != ""){
             if(APIRequestLogin().login(password: TB_Password.text!, email: TB_Email.text!)){
                 if(APIRequestLogin().viewUser()){
@@ -288,7 +288,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
         }
     }
     
-    func createAccountPressed(sender:UIButton){
+    @objc func createAccountPressed(sender:UIButton){
         performSegue(withIdentifier: "toCreateAccount", sender: nil)
     }
     
@@ -300,6 +300,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,FBSDKLoginButton
     func autoLogin(token:String){
         if(APIRequestLogin().verifyToken(token: token)){
             if(APIRequestLogin().viewUser()){
+                Global.global.userInfo.cards = APIRequestLogin().indexPaymentsMethod(cardHolderName: "\(Global.global.userInfo.firstname) \(Global.global.userInfo.lastname)")
                 let storyboard = UIStoryboard(name: "Dashboard", bundle: nil)
                 let main = storyboard.instantiateViewController(withIdentifier: "DashMain")
                 UIView.transition(with: UIApplication.shared.keyWindow!, duration: 0.3, options: .transitionCrossDissolve, animations: {

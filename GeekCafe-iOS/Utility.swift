@@ -1,18 +1,19 @@
 
+//
+//  Utility.swift
+//  GeekCafe-iOS
+//
+//  Created by Guillaume Jette on 2017-09-06.
+//  Copyright © 2017 Guillaume Jette. All rights reserved.
+//
 
- //
- //  Utility.swift
- //  NIGHTPLANNER_V2
- //
- //  Created by Enterface Team on 2017-06-19.
- //  Copyright © 2017 Enterface . All rights reserved.
- //
  import Foundation
  import UIKit
  import ObjectiveC
  class Utility {
     
     var mois = [String]()
+    
     var weekDay = [String]()
     
     
@@ -23,7 +24,7 @@
             cString.remove(at: cString.startIndex)
         }
         
-        if ((cString.characters.count) != 6) {
+        if ((cString.count) != 6) {
             return UIColor.gray
         }
         
@@ -43,7 +44,7 @@
         for x in 0 ... array.count - 1 {
             let randomI = Int(arc4random_uniform(UInt32(array.count)))
             if(randomI != x) {
-                swap(&array[x],&array[randomI])
+                array.swapAt(x, randomI)
             }
             
         }
@@ -101,12 +102,12 @@
     func alertYesNo(message: String,title: String,control: UIViewController,yesAction:(()->())?,noAction:(()->())?,titleYes: String,titleNo: String,style: UIAlertControllerStyle) {
         
         let attributedString = NSAttributedString(string: title, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 22)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 22)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let attributedMessage = NSAttributedString(string: message, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 16)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 16)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: style)
         refreshAlert.setValue(attributedString, forKey: "attributedTitle")
@@ -128,12 +129,12 @@
     func alertWithChoice(message: String,title: String,control: UIViewController,actionTitle1: String,actionTitle2: String,action1:(()->())?,action2:(()->())?,style: UIAlertControllerStyle) {
         
         let attributedString = NSAttributedString(string: title, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 22)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 22)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let attributedMessage = NSAttributedString(string: message, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 16)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 16)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: style)
         refreshAlert.setValue(attributedString, forKey: "attributedTitle")
@@ -164,12 +165,12 @@
     func alert(message: String,title: String,control:UIViewController) {
         
         let attributedString = NSAttributedString(string: title, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 22)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 22)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let attributedMessage = NSAttributedString(string: message, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 16)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 16)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
         refreshAlert.setValue(attributedString, forKey: "attributedTitle")
@@ -188,12 +189,12 @@
     func alert(message: String,title: String,control:UIViewController,f: (()->())?) {
         
         let attributedString = NSAttributedString(string: title, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 22)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 22)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let attributedMessage = NSAttributedString(string: message, attributes: [
-            NSFontAttributeName : UIFont(name: "Lato-Regular", size: 16)!,
-            NSForegroundColorAttributeName : UIColor.black])
+            NSAttributedStringKey.font : UIFont(name: "Lato-Regular", size: 16)!,
+            NSAttributedStringKey.foregroundColor : UIColor.black])
         
         let refreshAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
         refreshAlert.setValue(attributedString, forKey: "attributedTitle")
@@ -248,7 +249,7 @@
     }
     
     func previousView(control: UIViewController) -> UIViewController? {
-        if let navbar = control.navigationController as? UINavigationController{
+        if let navbar = control.navigationController{
             let i = navbar.viewControllers.index(of: control)
             return navbar.viewControllers[i!-1]
         }
@@ -297,9 +298,11 @@
         return "\(getDayOfWeek(date: date)), \(day) \(month)"
     }
     
+    //Test for swift 4 convertion from substring
     func getCleanDate(date:String)->String{
         //2017-10-25 00:50:33.000000
-        return date.substring(to: date.index(date.startIndex, offsetBy: 10))
+        let index = date.index(date.startIndex, offsetBy: 10)
+        return String(date[...index])
     }
     
     func getDayOfWeek(date: String) -> String{
@@ -365,21 +368,6 @@
         //        adjustLayer(layer: view.layer, rootView: rootView)
     }
     
-    //    func adjustLayer(layer : CALayer,rootView: UIView) {
-    //        let vHeight = rootView.frame.height
-    //        let vWidth = rootView.frame.width
-    //        let adjustWidth = (vWidth / 375.0)
-    //        let adjustHeight = (vHeight / 667.0)
-    //
-    //        layer.frame = CGRect(x: layer.frame.minX * adjustWidth, y: layer.frame.minY * adjustHeight, width: layer.frame.width * adjustWidth, height: layer.frame.height * adjustHeight)
-    //        if let s = layer.sublayers?[0] {
-    //            for x in layer.sublayers! {
-    //                adjustLayer(layer: x, rootView: rootView)
-    //            }
-    //        }
-    //
-    //    }
-    
     func getWeekIndexOfDay(date: String) -> Int{
         let formatter  = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -403,7 +391,7 @@
         let sArr = Array(sentence.utf8)
         var result: String = ""
         var indexToSeparate = 0
-        var charIndex = sentence.characters.count - 1
+        var charIndex = sentence.count - 1
         while( charIndex >= 0) {
             indexToSeparate += 1
             result = "\(String(Character(UnicodeScalar(sArr[charIndex]))))\(result)"
@@ -467,6 +455,7 @@
             }
             else if(method == "PUT"){
                 let putString = body
+                request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                 request.httpBody = putString.data(using: .utf8)
             }
             else if(method == "DELETE"){
@@ -485,13 +474,16 @@
             
             let task = session.dataTask(with: request) { data, response, error in
                 
-                let responseText: String = String(data: data!, encoding: String.Encoding.utf8)!
-                print(responseText)
+                
                 guard let data = data, error == nil else {                                                 // check for fundamental networking error
                     print("error=\(String(describing: error))")
+                    result = ["nil":"nil"]
                     finish = true
                     return
                 }
+                
+                let responseText: String = String(data: data, encoding: String.Encoding.utf8)!
+                print(responseText)
                 
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                     print("statusCode should be 200, buxt is \(httpStatus.statusCode)")
@@ -523,6 +515,22 @@
         while(!finish) { usleep(300) }
         return result
     }
+    
+    //5%
+    func getTPS(price:Float)->Float{
+        return price * 0.05
+    }
+    
+    //9.975%
+    func getTVQ(price:Float)->Float{
+        return price * 0.0975
+    }
+    
+    //14.975%
+    func getTotalTaxes(price:Float)->Float{
+        return price * 0.14975
+    }
+    
     
  }
  
@@ -637,16 +645,6 @@
         return val * (self.view.frame.height / 667)
     }
  }
- 
- extension UITableViewCell {
-    override func rw(_ val: CGFloat) -> CGFloat {
-        return val * (self.contentView.frame.width / 375)
-    }
-    override func rh(_ val: CGFloat) -> CGFloat {
-        return val * (self.contentView.frame.height / 667)
-    }
- }
- 
  
  
  var AssociatedObjectHandle: UInt8 = 0
@@ -839,50 +837,6 @@
         }
     }
     
-    //    func hideEveryThing(view: UIView, scrollview: UIScrollView){
-    //        let viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-    //        if let navigation = viewcontroller as? UINavigationController{
-    //            navigation.hidebar()
-    //        }
-    //        for x in view.subviews{
-    //            print(x.classForCoder)
-    //            if x != scrollview{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 0
-    //                }, completion: nil)
-    //            }
-    //        }
-    //        for x in scrollview.subviews{
-    //            if x != self{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 0
-    //                }, completion: nil)
-    //            }
-    //        }
-    //    }
-    //
-    //    func unhideEveryThing(view: UIView, scrollview: UIScrollView){
-    //        let viewcontroller = UIApplication.shared.keyWindow?.rootViewController
-    //        if let navigation = viewcontroller as? UINavigationController{
-    //            navigation.showbar()
-    //        }
-    //        for x in view.subviews{
-    //            if x != scrollview{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 1
-    //
-    //                }, completion: nil)
-    //            }
-    //        }
-    //        for x in scrollview.subviews{
-    //            if x != self{
-    //                UIView.animate(withDuration: 0.40, delay: 0, options: .curveEaseIn, animations: {
-    //                    x.alpha = 1
-    //                }, completion: nil)
-    //            }
-    //        }
-    //    }
-    
     func changeBackground(view: UIView){
         if view.backgroundColor != .black{
             view.backgroundColor = .black
@@ -982,14 +936,14 @@
         super.init(frame : frame)
     }
     
-    func selectElement(sender: UITapGestureRecognizer) {
+    @objc func selectElement(sender: UITapGestureRecognizer) {
         if(canSelect) {
             canSelect = false
             let lastSelectedView = buttonViews[selectedIndex()]
             
             
             DispatchQueue.global(qos: .background).async {
-                var viewAnim = UIView()
+                let viewAnim = UIView()
                 DispatchQueue.main.async {
                     viewAnim.backgroundColor = self.colorSelected
                     viewAnim.layer.zPosition = 1
@@ -1042,40 +996,7 @@
     
     
     
-    func initAllButton(array: [String]) {
-        var xAt: CGFloat = 0
-        
-        for x in array {
-            let v = UIView()
-            v.frame = CGRect(x: xAt, y: 0, width: frame.width * (1 / CGFloat(array.count)) + CGFloat(15), height: frame.height)
-            if(xAt != 0) {
-                v.backgroundColor = colorNotSelected
-                v.layer.zPosition = 0
-            } else {
-                v.backgroundColor = colorSelected
-                v.layer.zPosition = 1
-            }
-            v.layer.cornerRadius = layer.cornerRadius
-            v.clipsToBounds = clipsToBounds
-            v.isUserInteractionEnabled = true
-            v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectElement(sender:))))
-            
-            //            let l = DesignLabel()
-            //            l.awakeFromNib()
-            //            l.textColor = Utility().hexStringToUIColor(hex: "#ACAFB3")
-            //            l.text = x
-            //            l.layer.zPosition = 2
-            //            l.isUserInteractionEnabled = false
-            //            l.font = UIFont(name: fontName, size: fontSize)
-            //            l.frame = CGRect(x: 0, y: 0, width: v.frame.width, height: v.frame.height)
-            //            l.textAlignment = .center
-            //            v.addSubview(l)
-            //            xAt +=  (frame.width * (1 / CGFloat(array.count)) - 15)
-            //            buttonViews.append(v)
-            //            addSubview(v)
-        }
-        
-    }
+    func initAllButton(array: [String]) {}
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -1101,14 +1022,14 @@
  extension UITextField{
     
     func setUpPlaceholder(color:UIColor,fontName:String,fontSize:CGFloat){
-        self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSForegroundColorAttributeName : color,NSFontAttributeName : UIFont(name: fontName, size: fontSize)!])
+        self.attributedPlaceholder = NSAttributedString(string: self.placeholder!, attributes: [NSAttributedStringKey.foregroundColor : color,NSAttributedStringKey.font : UIFont(name: fontName, size: fontSize)!])
     }
  }
  
  extension UILabel {
     func addCharactersSpacing(spacing:CGFloat, text:String) {
         let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, text.characters.count))
+        attributedString.addAttribute(NSAttributedStringKey.kern, value: spacing, range: NSMakeRange(0, text.count))
         self.attributedText = attributedString
     }
     
